@@ -1,0 +1,9 @@
+Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat
+Upstream-Name: weather-indicator
+Upstream-Maintainer: UNKNOWN <UNKNOWN>
+Upstream-Source: UNKNOWN
+
+Files: *
+Copyright: (C) Sebastian MacDonald 2010 <sebas310@gmail.com>
+Copyright: (C) YYYY <Your Name> <Your E-mail>
+License: UNKNOWN
