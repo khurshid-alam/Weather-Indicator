@@ -1,0 +1,8 @@
+[Desktop Entry]
+_Name=Weather Indicator
+_Comment=WeatherIndicator application
+Categories=GNOME;Utility;
+Exec=weather-indicator
+Icon=weather-indicator
+Terminal=false
+Type=Application
