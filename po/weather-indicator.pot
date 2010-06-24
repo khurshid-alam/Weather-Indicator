@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-24 01:56-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:1
+msgid "Status Area"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:2
+msgid "Weather Indicator"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:3
+msgid ""
+"Your application has been created!\n"
+"\n"
+"To start changing this user interface, run 'quickly glade', which will open "
+"Glade so you can edit the default windows and dialogs.\n"
+"\n"
+"To change the behavior and edit the python code, run 'quickly edit', which "
+"will bring up a text editor."
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:8
+msgid "_Edit"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:9
+msgid "_File"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:10
+msgid "_Help"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:11
+msgid "_View"
+msgstr ""

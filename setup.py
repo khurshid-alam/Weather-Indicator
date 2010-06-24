@@ -1,7 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ### BEGIN LICENSE
-# This file is in the public domain
+# Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
+# This program is free software: you can redistribute it and/or modify it 
+# under the terms of the GNU General Public License version 3, as published 
+# by the Free Software Foundation.
+# 
+# This program is distributed in the hope that it will be useful, but 
+# WITHOUT ANY WARRANTY; without even the implied warranties of 
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+# PURPOSE.  See the GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License along 
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
 ###################### DO NOT TOUCH THIS (HEAD TO THE SECOND PART) ######################
@@ -77,13 +88,13 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='weather-indicator',
-    version='0.1',
-    #license='GPL-3',
-    #author='Your Name',
-    #author_email='email@ubuntu.com',
-    #description='UI for managing …',
-    #long_description='Here a longer description',
-    #url='https://launchpad.net/weather-indicator',
+    version='10.06',
+    license='GPL-3',
+    author='Sebastian MacDonald',
+    author_email='sebas310@gmail.com',
+    #description='A weather indicator for Ubuntus Indicator Applet',
+    #long_description='A weather indicator that displays information for one or multiple places in the world',
+    url='https://launchpad.net/weather-indicator',
     cmdclass={'install': InstallAndUpdateDataDirectory}
     )
 
