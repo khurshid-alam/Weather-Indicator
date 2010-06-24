@@ -62,7 +62,7 @@ def update_desktop_file(datadir):
 
         for line in fin:            
             if 'Icon=' in line:
-                line = "Icon=%s\n" % (datadir + 'media/icon.png')
+                line = "Icon=%s\n" % ('stock_weather-storm')
             fout.write(line)
         fout.flush()
         fout.close()
@@ -88,7 +88,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='weather-indicator',
-    version='10.06.1',
+    version='10.06.2',
     license='GPL-3',
     author='Sebastian MacDonald',
     author_email='sebas310@gmail.com',

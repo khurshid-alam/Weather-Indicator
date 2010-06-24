@@ -8,7 +8,7 @@
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <property name="program_name">Weather Indicator</property>
-    <property name="version">10.06.1</property>
+    <property name="version">10.06.2</property>
     <property name="copyright">Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com</property>
     <property name="website">https://launchpad.net/weather-indicator</property>
     <property name="license"># Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
