@@ -42,7 +42,7 @@ class weather_indicator:
         
         first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
         
-        self.rate = self.gconfClient.get_string("/apps/weather-indicator/refresh_rate")
+        self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         
         if first_run in (False, None):
             self.firsty()    
@@ -318,7 +318,7 @@ class weather_indicator:
         update_scale.set_digits(0)
         update_scale.set_size_request(300, -1)
         update_scale.set_value_pos(gtk.POS_RIGHT)
-        update_scale.set_value(int(self.gconfClient.get_string("/apps/weather-indicator/refresh_rate")))
+        update_scale.set_value(int(self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")))
         
         vbox_prefs.pack_start(alerter, False, False)
         vbox_prefs.pack_start(tipper, False, False)
@@ -338,7 +338,7 @@ class weather_indicator:
         
         window.show_all()
         
-        self.gconfClient.set_string("/apps/weather-indicator/refresh_rate", str(update_scale.get_value()))
+        self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(update_scale.get_value()))
         self.rate = update_scale.get_value()
         
     
