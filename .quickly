@@ -2,3 +2,4 @@ project = weather-indicator
 version = 0.4.2
 template = ubuntu-application
 lp_id = weather-indicator
+ppa = weather-indicator-experimental

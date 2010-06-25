@@ -42,8 +42,13 @@ class weather_indicator:
         
         first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
         
+        self.rate = self.gconfClient.get_string("/apps/weather-indicator/refresh_rate")
+        
         if first_run in (False, None):
-            self.firsty()
+            self.firsty()    
+        
+        if self.rate in (False, None):
+            self.gconfClient.set_string("/apps/weather-indicator/refresh_rate", '5')
         
         self.place = self.gconfClient.get_string("/apps/weather-indicator/place")
         self.places = self.place.split('|')
@@ -109,25 +114,12 @@ class weather_indicator:
         prefs_show.show()
         self.menu.append(prefs_show)
 
-        about_ico = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-        about_ico.connect("activate", self.about)
-        about_ico.show()
-        self.menu.append(about_ico)
-        
-        quitter = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        quitter.connect("activate", self.quit)
-        quitter.show()
-        self.menu.append(quitter)
-        
         self.update_weather()
         
         self.menu.show()        
         
         self.winder.set_menu(self.menu)
 
-    def quit(self, widget, data=None):
-        gtk.main_quit()
-    
     def update_weather(self, widget=None):
         current = self.get_weather(self.place)
         
@@ -152,7 +144,7 @@ class weather_indicator:
         elif current in ('mostly sunny',  'partly cloudy'):
             self.few_clouds()
         else:
-            self.snow()
+            self.err()
         
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         self.city_show.set_label(self.city)
@@ -161,7 +153,9 @@ class weather_indicator:
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
         
-        gobject.timeout_add(300000, self.update_weather)
+        
+        
+        gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
     def showers(self):
         self.winder.set_icon("stock_weather-showers")
@@ -188,7 +182,7 @@ class weather_indicator:
         self.winder.set_icon("stock_weather-severe")
     
     def err(self):
-        self.winder.set_icon("stock_weather-severe")
+        self.winder.set_icon("ubuntuone-client-error")
     
     def about(self, widget, data=None):
         dialog = gtk.AboutDialog()
@@ -274,10 +268,79 @@ class weather_indicator:
         #return the weather condition
         return weather
     
-    def prefs(self, widget):
+    def prefs(self, widget, tab='prefs'):
         window = gtk.Window()
         window.set_size_request(500, 300)
+        window.set_title("Weather Indicator")
+        
+        notery = gtk.Notebook()
+        
+        vbox_prefs = gtk.VBox(False, 0)
+        hupdater = gtk.HBox(False, 0)
+        htemp = gtk.HBox(True, 0)
+        hwind = gtk.HBox(True, 0)
+        
+        alerter = gtk.CheckButton("Use notificatoins to give severe weather notifications")
+        tipper = gtk.CheckButton("Show tips in menu")
+        temp_unit = gtk.Label()
+        temp_unit.set_markup("<big><b>Temperature Unit</b></big>")
+        temp_unit.set_justify(gtk.JUSTIFY_LEFT)
+        wind_unit = gtk.Label()
+        wind_unit.set_markup("<big><b>Wind Speed Unit</b></big>")
+        wind_unit.set_justify(gtk.JUSTIFY_LEFT)
+        update_label = gtk.Label()
+        update_label.set_markup("<big><b> Refresh Rate   </b></big>")
+        location_label = gtk.Label("Locations")
+        
+        temp_faren = gtk.RadioButton(group=None, label='Farenheit')
+        temp_cel = gtk.RadioButton(group=temp_faren, label='Celsius')
+        temp_kel = gtk.RadioButton(group=temp_faren, label='Kelvin')
+        
+        htemp.pack_start(temp_faren, False, False)
+        htemp.pack_start(temp_cel, False, False)
+        htemp.pack_start(temp_kel, False, False)
+        
+        wind_mph = gtk.RadioButton(group=None, label='mph')
+        wind_mps = gtk.RadioButton(group=wind_mph, label='m/s')
+        wind_kph = gtk.RadioButton(group=wind_mph, label='km/h')
+        wind_knots = gtk.RadioButton(group=wind_mph, label='knots')
+        wind_beau = gtk.RadioButton(group=wind_mph, label='Beaufort')
+        
+        hwind.pack_start(wind_mph, False, False)
+        hwind.pack_start(wind_mps, False, False)
+        hwind.pack_start(wind_kph, False, False)
+        hwind.pack_start(wind_knots, False, False)
+        hwind.pack_start(wind_beau, False, False)
+        
+        update_scale = gtk.HScale()
+        update_scale.set_range(1, 20)
+        update_scale.set_increments(1, 10)
+        update_scale.set_digits(0)
+        update_scale.set_size_request(300, -1)
+        update_scale.set_value_pos(gtk.POS_RIGHT)
+        update_scale.set_value(int(self.gconfClient.get_string("/apps/weather-indicator/refresh_rate")))
+        
+        vbox_prefs.pack_start(alerter, False, False)
+        vbox_prefs.pack_start(tipper, False, False)
+        vbox_prefs.pack_start(temp_unit, False, False)
+        vbox_prefs.pack_start(htemp, False, False)
+        vbox_prefs.pack_start(wind_unit, False, False)
+        vbox_prefs.pack_start(hwind, False, False)
+        vbox_prefs.pack_start(hupdater, False, False)
+        
+        hupdater.pack_start(update_label, False, False)
+        hupdater.pack_start(update_scale, False, False)
+        hupdater.pack_start(gtk.Label(' min'), False, False)
+        
+        notery.append_page(vbox_prefs, tab_label=gtk.Label('Preferences'))
+        
+        window.add(notery)
+        
         window.show_all()
+        
+        self.gconfClient.set_string("/apps/weather-indicator/refresh_rate", str(update_scale.get_value()))
+        self.rate = update_scale.get_value()
+        
     
 def main():
     gtk.main()
