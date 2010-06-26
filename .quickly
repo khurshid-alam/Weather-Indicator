@@ -2,5 +2,5 @@ project = weather-indicator
 version = 0.4.3
 template = ubuntu-application
 lp_id = weather-indicator
-ppa = weather-indicator-experimental
+ppa = weather-indicator/weather-indicator-experimental
 bzrbranch = lp:weather-indicator
