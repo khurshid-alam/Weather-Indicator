@@ -15,10 +15,12 @@ Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends},
  ${python:Depends},
- python-gconf,
- python-gobject,
  python-appindicator,
- python-gtk2,
- python-desktopcouch-records
-Description: UNKNOWN
- UNKNOWN
+ python-desktopcouch-records,
+ python-gconf,
+ python-apport,
+ python-gobject,
+ python-gtk2
+Description: A weather indicator for Ubuntus Indicator Applet
+ A weather indicator that displays information for one or multiple places
+ in the world

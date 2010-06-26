@@ -36,7 +36,7 @@ class weather_indicator:
     def __init__(self):
         self.winder = appindicator.Indicator ("weather-indicator", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
-        self.winder.set_attention_icon ("stock_weather-severe")
+        self.winder.set_attention_icon ("ubuntuone-client-error")
         
         self.gconfClient = gconf.client_get_default()
         
@@ -48,10 +48,11 @@ class weather_indicator:
             self.firsty()    
         
         if self.rate in (False, None):
-            self.gconfClient.set_string("/apps/weather-indicator/refresh_rate", '5')
+            self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
         
         self.place = self.gconfClient.get_string("/apps/weather-indicator/place")
         self.places = self.place.split('|')
+	print 'Location(s) :',self.places
         
         self.menu = gtk.Menu()
 
@@ -64,51 +65,65 @@ class weather_indicator:
         self.city_show.show_all()
         self.menu.append(self.city_show)'''
         
+	##City
         self.city_show = gtk.MenuItem()
         self.city_show.show()
         self.menu.append(self.city_show)
         
+	##Condition
         self.cond_show = gtk.MenuItem()
         self.cond_show.show()
         self.menu.append(self.cond_show)
-                
+        
+	##Temperature        
         self.temp_show = gtk.MenuItem()
         self.temp_show.show()
         self.menu.append(self.temp_show)
         
+	##Humidity
         self.humid_show = gtk.MenuItem()
         self.humid_show.show()
         self.menu.append(self.humid_show)
         
+	##Wind
         self.wind_show = gtk.MenuItem()
         self.wind_show.show()
         self.menu.append(self.wind_show)
         
+	##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
         
-        woo = 1
-        
+	##Cities
         for place in self.places:
             loco = gtk.RadioMenuItem(None, place)
             loco.show()
             self.menu.append(loco)
         
+	##Breaker
+        breaker = gtk.SeparatorMenuItem()
+        breaker.show()
         self.menu.append(breaker)
         
+	##Change City
         replace = gtk.MenuItem("Change City")
         replace.connect("activate", self.replacer)
         replace.show()
         self.menu.append(replace)
 
+	#Add City
         add = gtk.MenuItem("Add City")
         add.connect("activate", self.adder)
         add.show()
         self.menu.append(add)
 
+	##Breaker
+        breaker = gtk.SeparatorMenuItem()
+        breaker.show()
         self.menu.append(breaker)
-                
+        
+	##Preferences      
         prefs_show = gtk.MenuItem("Preferences")
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
@@ -125,7 +140,7 @@ class weather_indicator:
         
         self.condition = current
         
-        print current
+        print 'Update :',current
         
         current = current.lower()
         
@@ -152,9 +167,7 @@ class weather_indicator:
         self.temp_show.set_label(self.temp + ' °F' )
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
-        
-        
-        
+       
         gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
     def showers(self):
@@ -179,7 +192,7 @@ class weather_indicator:
     	self.winder.set_icon("stock_weather-snow")
         
     def severe(self):
-        self.winder.set_icon("stock_weather-severe")
+        self.winder.set_icon("weather-severe-alert")
     
     def err(self):
         self.winder.set_icon("ubuntuone-client-error")
@@ -312,14 +325,26 @@ class weather_indicator:
         hwind.pack_start(wind_knots, False, False)
         hwind.pack_start(wind_beau, False, False)
         
+        def on_changed(widget, scroll, value):
+            self.update_label.set_text(str(int(value))+' min')
+            self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(value))
+            self.rate = int(value) 
+       
         update_scale = gtk.HScale()
+        update_scale_changed_id = update_scale.connect("change-value", on_changed)
         update_scale.set_range(1, 20)
         update_scale.set_increments(1, 10)
         update_scale.set_digits(0)
+        update_scale.set_draw_value(False)
         update_scale.set_size_request(300, -1)
         update_scale.set_value_pos(gtk.POS_RIGHT)
         update_scale.set_value(int(self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")))
+        self.update_label = gtk.Label(str(int(update_scale.get_value()))+' min')
         
+
+        
+        
+
         vbox_prefs.pack_start(alerter, False, False)
         vbox_prefs.pack_start(tipper, False, False)
         vbox_prefs.pack_start(temp_unit, False, False)
@@ -330,9 +355,12 @@ class weather_indicator:
         
         hupdater.pack_start(update_label, False, False)
         hupdater.pack_start(update_scale, False, False)
-        hupdater.pack_start(gtk.Label(' min'), False, False)
+        hupdater.pack_start(self.update_label, False, False)
+
+	vbox_extforecast=gtk.VBox(False, 0)
         
         notery.append_page(vbox_prefs, tab_label=gtk.Label('Preferences'))
+	notery.append_page(vbox_extforecast, tab_label=gtk.Label('Extended Forecast'))
         
         window.add(notery)
         
@@ -340,7 +368,6 @@ class weather_indicator:
         
         self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(update_scale.get_value()))
         self.rate = update_scale.get_value()
-        
     
 def main():
     gtk.main()
@@ -349,5 +376,3 @@ def main():
 if __name__ == "__main__":
     indicator = weather_indicator()
     main()
-
-

@@ -36,7 +36,7 @@ class weather_indicator:
     def __init__(self):
         self.winder = appindicator.Indicator ("weather-indicator", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
-        self.winder.set_attention_icon ("stock_weather-severe")
+        self.winder.set_attention_icon("weather-severe-alert")
         
         self.gconfClient = gconf.client_get_default()
         
@@ -185,10 +185,10 @@ class weather_indicator:
     	self.winder.set_icon("stock_weather-snow")
         
     def severe(self):
-        self.winder.set_icon("stock_weather-severe")
+        self.winder.set_icon("weather-severe-alert")
     
     def err(self):
-        self.winder.set_icon("stock_weather-severe")
+        self.winder.set_icon("weather-severe-alert")
     
     def about(self, widget, data=None):
         dialog = gtk.AboutDialog()
