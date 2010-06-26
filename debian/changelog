@@ -1,3 +1,15 @@
+weather-indicator (10.06.7) lucid; urgency=low
+
+  * small cleanup and bugfix
+  * Fixed the annoying bug 597922. 4-space indentation everywhere.
+    Terminal becomes verbose
+  * Fixed the annoying bug
+  * Little code cleanup, refresh rate saved, better display of the
+    refresh rate, int for refresh rate, no more gtk errors
+  * Added a description for further deb packages
+
+ -- mehd36 <mehd36@hotmail.com>  Sat, 26 Jun 2010 19:50:57 +0200
+
 weather-indicator (10.06.6) lucid; urgency=low
 
   * New release.
