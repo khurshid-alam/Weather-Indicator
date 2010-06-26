@@ -1,3 +1,9 @@
+weather-indicator (10.06.8) lucid; urgency=low
+
+  * New release.
+
+ -- mehd36 <mehd36@hotmail.com>  Sun, 27 Jun 2010 01:13:01 +0200
+
 weather-indicator (10.06.7) lucid; urgency=low
 
   * small cleanup and bugfix
