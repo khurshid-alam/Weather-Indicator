@@ -41,18 +41,11 @@ class weather_indicator:
         self.gconfClient = gconf.client_get_default()
         
         first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
-        
         self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
-        
-        if first_run in (False, None):
-            self.firsty()    
         
         if self.rate in (False, None):
             self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
-        
-        self.place = self.gconfClient.get_string("/apps/weather-indicator/place")
-        self.places = self.place.split('|')
-	print 'Location(s) :',self.places
+            self.rate = self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         
         self.menu = gtk.Menu()
 
@@ -65,65 +58,73 @@ class weather_indicator:
         self.city_show.show_all()
         self.menu.append(self.city_show)'''
         
-	##City
+    ##City
         self.city_show = gtk.MenuItem()
         self.city_show.show()
         self.menu.append(self.city_show)
         
-	##Condition
+    ##Condition
         self.cond_show = gtk.MenuItem()
         self.cond_show.show()
         self.menu.append(self.cond_show)
         
-	##Temperature        
+    ##Temperature        
         self.temp_show = gtk.MenuItem()
         self.temp_show.show()
         self.menu.append(self.temp_show)
         
-	##Humidity
+    ##Humidity
         self.humid_show = gtk.MenuItem()
         self.humid_show.show()
         self.menu.append(self.humid_show)
         
-	##Wind
+    ##Wind
         self.wind_show = gtk.MenuItem()
         self.wind_show.show()
         self.menu.append(self.wind_show)
+                
+    ##If this is the first run : newlocation, then update the menu elements above.
+        if first_run in (False, None):
+            self.firsty()
         
-	##Breaker
+        self.place = self.gconfClient.get_string("/apps/weather-indicator/place")
+        self.places = self.place.split('|')
+        print 'Location(s) :',self.places        
+            
+    ##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
         
-	##Cities
+    ##Cities
         for place in self.places:
             loco = gtk.RadioMenuItem(None, place)
             loco.show()
             self.menu.append(loco)
         
-	##Breaker
+    ##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
         
-	##Change City
+    ##Change City
         replace = gtk.MenuItem("Change City")
         replace.connect("activate", self.replacer)
         replace.show()
         self.menu.append(replace)
 
-	#Add City
+    #Add City
         add = gtk.MenuItem("Add City")
         add.connect("activate", self.adder)
         add.show()
         self.menu.append(add)
 
-	##Breaker
+    ##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
         
-	##Preferences      
+    ##Preferences      
         prefs_show = gtk.MenuItem("Preferences")
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
@@ -189,7 +190,7 @@ class weather_indicator:
         self.winder.set_icon("stock_weather-sunny")
         
     def snow(self):
-    	self.winder.set_icon("stock_weather-snow")
+        self.winder.set_icon("stock_weather-snow")
         
     def severe(self):
         self.winder.set_icon("weather-severe-alert")
@@ -207,8 +208,8 @@ class weather_indicator:
         dialog.run()
         dialog.destroy()
 
-	def hide_dialog(self, widget, data):
-		widget.hide()
+    def hide_dialog(self, widget, data):
+        widget.hide()
     
     def firsty(self):
         self.getText()
@@ -220,33 +221,34 @@ class weather_indicator:
         self.getText(replace=False)
             
     def responseToDialog(self, entry, dialog, response):
-	    dialog.response(response)
-	    
+        dialog.response(response)
+        
     def getText(self, replace=True):
-	    dialog = gtk.MessageDialog(
-		    None,
-		    gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-		    gtk.MESSAGE_QUESTION,
-		    gtk.BUTTONS_OK,
-		    None)
-	    dialog.set_markup('Please enter your address:')
-	    entry = gtk.Entry()
-	    entry.connect("activate", self.responseToDialog, dialog, gtk.RESPONSE_OK)
-	    hbox = gtk.HBox()
-	    hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
-	    hbox.pack_end(entry)
-	    dialog.vbox.pack_end(hbox, True, True, 0)
-	    dialog.show_all()
-	    dialog.run()
-	    if replace == False:
-	        self.place = self.place + '|' + entry.get_text()
-	        self.gconfClient.set_string("/apps/weather-indicator/place", self.place)
-	    else:
-	        self.gconfClient.set_string("/apps/weather-indicator/place", entry.get_text())
-	    self.gconfClient.set_bool("/apps/weather-indicator/first_run", True)
-	    dialog.destroy()
-	    
-	    self.update_weather()
+        dialog = gtk.MessageDialog(
+            None,
+            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+            gtk.MESSAGE_QUESTION,
+            gtk.BUTTONS_OK,
+            None)
+        dialog.set_markup('Please enter your address:')
+        entry = gtk.Entry()
+        entry.connect("activate", self.responseToDialog, dialog, gtk.RESPONSE_OK)
+        hbox = gtk.HBox()
+        hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
+        hbox.pack_end(entry)
+        dialog.vbox.pack_end(hbox, True, True, 0)
+        dialog.show_all()
+        dialog.run()
+        if replace == False:
+            self.place = self.place + '|' + entry.get_text()
+            self.gconfClient.set_string("/apps/weather-indicator/place", self.place)
+        else:
+            self.place = entry.get_text()
+            self.gconfClient.set_string("/apps/weather-indicator/place", entry.get_text())
+        self.gconfClient.set_bool("/apps/weather-indicator/first_run", True)
+        dialog.destroy()
+        
+        self.update_weather()
         
     def get_weather(self, city):
 
@@ -337,13 +339,8 @@ class weather_indicator:
         update_scale.set_digits(0)
         update_scale.set_draw_value(False)
         update_scale.set_size_request(300, -1)
-        update_scale.set_value_pos(gtk.POS_RIGHT)
         update_scale.set_value(int(self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")))
-        self.update_label = gtk.Label(str(int(update_scale.get_value()))+' min')
-        
-
-        
-        
+        self.update_label = gtk.Label(str(int(update_scale.get_value()))+' min')       
 
         vbox_prefs.pack_start(alerter, False, False)
         vbox_prefs.pack_start(tipper, False, False)
@@ -357,17 +354,14 @@ class weather_indicator:
         hupdater.pack_start(update_scale, False, False)
         hupdater.pack_start(self.update_label, False, False)
 
-	vbox_extforecast=gtk.VBox(False, 0)
+        vbox_extforecast=gtk.VBox(False, 0)
         
         notery.append_page(vbox_prefs, tab_label=gtk.Label('Preferences'))
-	notery.append_page(vbox_extforecast, tab_label=gtk.Label('Extended Forecast'))
+        notery.append_page(vbox_extforecast, tab_label=gtk.Label('Extended Forecast'))
         
         window.add(notery)
         
         window.show_all()
-        
-        self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(update_scale.get_value()))
-        self.rate = update_scale.get_value()
     
 def main():
     gtk.main()
