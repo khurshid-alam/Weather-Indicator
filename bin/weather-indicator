@@ -141,7 +141,7 @@ class weather_indicator:
         
         self.condition = current
         
-        print 'Update :',current
+        print 'Update :',current,'(every',self.rate,'min.)'
         
         current = current.lower()
         
@@ -260,11 +260,14 @@ class weather_indicator:
             f = urllib2.urlopen(url)
         except:
             # if there was an error opening the url, return
+            self.temp = "Connexion Problem"
+            self.city = "Connexion Problem"
+            self.humid = "Connexion Problem"
+            self.wind = "Connexion Problem"
             return "Error opening url"
 
         # read contents to a string
         s = f.read()
-
         # extract weather condition data from xml string
         weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
         self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0]
