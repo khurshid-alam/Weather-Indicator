@@ -288,7 +288,7 @@ class weather_indicator:
         self.city = s.split("<city data=\"")[-1].split("\"")[0]
         self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
         self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
-        self.icon = s.split("<icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
+        self.icon = s.split("%\"/><icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
 
         # if there was an error getting the condition, the city is invalid
         if weather == "<?xml version=":
