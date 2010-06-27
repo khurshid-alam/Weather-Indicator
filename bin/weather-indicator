@@ -31,7 +31,6 @@ from threading import Timer
 import thread
 import locale
 
-
 class weather_indicator:
     def __init__(self):
         self.winder = appindicator.Indicator ("weather-indicator", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
@@ -42,7 +41,12 @@ class weather_indicator:
         
         first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
         self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
+        self.unit = self.gconfClient.get_string("/apps/weather-indicator/unit")
         
+        if self.unit in (False, None):
+            self.gconfClient.set_string("/apps/weather-indicator/unit", 'F')
+            self.unit = 'F'
+            
         if self.rate in (False, None):
             self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
             self.rate = self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
@@ -131,9 +135,7 @@ class weather_indicator:
         self.menu.append(prefs_show)
 
         self.update_weather()
-        
-        self.menu.show()        
-        
+        self.menu.show()
         self.winder.set_menu(self.menu)
 
     def update_weather(self, widget=None):
@@ -143,32 +145,32 @@ class weather_indicator:
         
         print 'Update :',current,'(every',self.rate,'min.)'
         
-        current = current.lower()
+        current = self.icon
         
-        if current in ('chance of storm', 'storm', 'thunderstorm', 'chance of tstorm'):
+        if current in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
             self.storms()
         elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance of snow'):
             self.snow()
         elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
             self.fog()
-        elif current in ('chance of rain',  'rain',  'chance of rain'):
+        elif current in ('chance_of rain',  'rain'):
             self.showers()
         elif current in ('sunny', 'clear'):
             self.clear()
-        elif current in ('mostly cloudy', 'cloudy'):
+        elif current in ('mostly_cloudy', 'cloudy'):
             self.cloudy()
-        elif current in ('mostly sunny',  'partly cloudy'):
+        elif current in ('mostly_sunny',  'partly_cloudy'):
             self.few_clouds()
         else:
             self.err()
-        
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
+        
         self.city_show.set_label(self.city)
         self.cond_show.set_label(self.condition)
-        self.temp_show.set_label(self.temp + ' °F' )
+        self.temp_show.set_label(self.temp)
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
-       
+        
         gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
     def showers(self):
@@ -251,29 +253,42 @@ class weather_indicator:
         self.update_weather()
         
     def get_weather(self, city):
-
         #create google weather api url
-        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city)
-
+        import locale
+        localebad = locale.getlocale()[0]
+        locale = localebad.split ('_')
+        #locale[0]
+        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city) + "&hl=" + locale[0]
+        
         try:
             # open google weather api url
             f = urllib2.urlopen(url)
+
         except:
             # if there was an error opening the url, return
             self.temp = "Connexion Problem"
             self.city = "Connexion Problem"
             self.humid = "Connexion Problem"
             self.wind = "Connexion Problem"
+            self.icon = "Connexion Problem"
             return "Error opening url"
-
-        # read contents to a string
+        
         s = f.read()
+        encoding = f.headers['content-type'].split('charset=')[-1]
+        s = unicode(s, encoding).encode('utf-8')
+        
         # extract weather condition data from xml string
         weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
-        self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0]
+        if self.unit == 'F':
+            self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
+        elif self.unit == 'C':
+            self.temp = s.split("<temp_c data=\"")[-1].split("\"")[0] + "°C"
+        else:
+            self.temp = str(int(s.split("<temp_c data=\"")[-1].split("\"")[0])+273) + "°K"
         self.city = s.split("<city data=\"")[-1].split("\"")[0]
-        self.humid = s.split("<humidity data=\"Humidity: ")[-1].split("\"")[0]
-        self.wind = s.split("<wind_condition data=\"Wind: ")[-1].split("\"")[0]
+        self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
+        self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
+        self.icon = s.split("<icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
 
         # if there was an error getting the condition, the city is invalid
         if weather == "<?xml version=":
@@ -310,13 +325,33 @@ class weather_indicator:
         update_label.set_markup("<big><b> Refresh Rate   </b></big>")
         location_label = gtk.Label("Locations")
         
-        temp_faren = gtk.RadioButton(group=None, label='Farenheit')
-        temp_cel = gtk.RadioButton(group=temp_faren, label='Celsius')
-        temp_kel = gtk.RadioButton(group=temp_faren, label='Kelvin')
+        def on_temp_changed(button, data):
+            if button.get_active() == True:  
+                self.gconfClient.set_string("/apps/weather-indicator/unit", data)
+                self.unit = data
+                self.update_weather()
+                print 'Unit changed :', self.unit  
         
-        htemp.pack_start(temp_faren, False, False)
-        htemp.pack_start(temp_cel, False, False)
-        htemp.pack_start(temp_kel, False, False)
+        temp = gtk.RadioButton(group=None, label='Fahrenheit')
+        if self.unit == 'F' :
+            temp.set_active(True)
+        temp.connect("toggled", on_temp_changed, 'F')
+        htemp.pack_start(temp, False, False)
+        temp.show()
+        
+        temp = gtk.RadioButton(group=temp, label='Celsius')
+        if self.unit == 'C' :
+            temp.set_active(True)
+        temp.connect("toggled", on_temp_changed, 'C')
+        htemp.pack_start(temp, False, False)
+        temp.show()
+        
+        temp = gtk.RadioButton(group=temp, label='Kelvin')
+        if self.unit == 'K' :
+            temp.set_active(True)
+        temp.connect("toggled", on_temp_changed, 'K')
+        htemp.pack_start(temp, False, False)
+        temp.show()
         
         wind_mph = gtk.RadioButton(group=None, label='mph')
         wind_mps = gtk.RadioButton(group=wind_mph, label='m/s')
@@ -330,13 +365,14 @@ class weather_indicator:
         hwind.pack_start(wind_knots, False, False)
         hwind.pack_start(wind_beau, False, False)
         
-        def on_changed(widget, scroll, value):
+        def on_update_changed(widget, scroll, value):
             self.update_label.set_text(str(int(value))+' min')
             self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(value))
-            self.rate = int(value) 
+            self.rate = int(value)
+            print 'Rate changed :',self.rate
        
         update_scale = gtk.HScale()
-        update_scale_changed_id = update_scale.connect("change-value", on_changed)
+        update_scale_changed_id = update_scale.connect("change-value", on_update_changed)
         update_scale.set_range(1, 20)
         update_scale.set_increments(1, 10)
         update_scale.set_digits(0)
