@@ -1,3 +1,12 @@
+weather-indicator (10.06.10) lucid; urgency=low
+
+  * began to solve the city bug - rate is changed for real - changed
+    description
+  * Fixed bug that made the app use the wrong day for forecast bis
+  * Fixed bug that made the app use the wrong day for forecast
+
+ -- mehd36 <mehd36@hotmail.com>  Mon, 28 Jun 2010 00:57:55 +0200
+
 weather-indicator (10.06.9) lucid; urgency=low
 
   * New release.

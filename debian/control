@@ -20,6 +20,6 @@ Depends: ${misc:Depends},
  python-appindicator,
  python-gtk2,
  python-desktopcouch-records
-Description: A weather indicator for Ubuntus Indicator Applet
+Description: A weather indicator for Ubuntu's Indicator Applet
  A weather indicator that displays information for one or multiple places
  in the world
