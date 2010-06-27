@@ -14,6 +14,7 @@ Package: weather-indicator
 Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends},
+ ${python:Depends}${misc:Depends},
  ${python:Depends},
  python-gconf,
  python-gobject,

@@ -1,12 +1,2 @@
 [encoding: UTF-8]
-[type: gettext/glade]data/ui/AboutWeatherIndicatorDialog.ui
-weather_indicator/weather_indicatorconfig.py
-bin/weather-indicator.py
-weather_indicator/__init__.py
-[type: gettext/glade]data/ui/WeatherIndicatorWindow.ui
-weather_indicator/helpers.py
-weather-indicator.desktop.in
-setup.py
-[type: gettext/glade]data/ui/PreferencesWeatherIndicatorDialog.ui
-weather_indicator/AboutWeatherIndicatorDialog.py
-weather_indicator/PreferencesWeatherIndicatorDialog.py
+bin/weather-indicator

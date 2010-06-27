@@ -77,11 +77,9 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
     def run(self):
         previous_value = update_data_path(self.prefix + '/share/weather-indicator/')
         update_desktop_file(self.prefix + '/share/weather-indicator/')
-        update_desktop_file(self.prefix + '/etc/xdg/autostart/')
+        update_desktop_file('/etc/xdg/autostart/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
-        
-
 
         
 ##################################################################################
@@ -90,7 +88,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='weather-indicator',
-    version='10.06.10',
+    version='10.06.11',
     license='GPL-3',
     author='Sebastian MacDonald',
     author_email='sebas310@gmail.com',
