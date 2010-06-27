@@ -1,5 +1,11 @@
 weather-indicator (10.06.9) lucid; urgency=low
 
+  * New release.
+
+ -- Mehdi Rejraji <mehdi@mehdi-laptop>  Sun, 27 Jun 2010 20:28:19 +0200
+
+weather-indicator (10.06.9) lucid; urgency=low
+
   * Temperature units work fine, internationalization from google
 
  -- mehd36 <mehd36@hotmail.com>  Sun, 27 Jun 2010 15:07:13 +0200
