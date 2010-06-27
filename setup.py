@@ -94,7 +94,7 @@ DistUtilsExtra.auto.setup(
     license='GPL-3',
     author='Sebastian MacDonald',
     author_email='sebas310@gmail.com',
-    description='A weather indicator for Ubuntus Indicator Applet',
+    description="A weather indicator for Ubuntu's Indicator Applet",
     long_description='A weather indicator that displays information for one or multiple places in the world',
     url='https://launchpad.net/weather-indicator',
     cmdclass={'install': InstallAndUpdateDataDirectory}

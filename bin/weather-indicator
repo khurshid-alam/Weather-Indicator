@@ -42,6 +42,10 @@ class weather_indicator:
         first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
         self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         self.unit = self.gconfClient.get_string("/apps/weather-indicator/unit")
+        self.placechosen = self.gconfClient.get_int("/apps/weather-indicator/placechosen")
+        
+        if self.placechosen in (False, None):
+            self.placechosen = 0
         
         if self.unit in (False, None):
             self.gconfClient.set_string("/apps/weather-indicator/unit", 'F')
@@ -91,8 +95,7 @@ class weather_indicator:
         if first_run in (False, None):
             self.firsty()
         
-        self.place = self.gconfClient.get_string("/apps/weather-indicator/place")
-        self.places = self.place.split('|')
+        self.places = eval(self.gconfClient.get_string("/apps/weather-indicator/places"))
         print 'Location(s) :',self.places        
             
     ##Breaker
@@ -133,13 +136,14 @@ class weather_indicator:
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
-
+        
+        self.place = self.places[self.placechosen]
         self.update_weather()
         self.menu.show()
         self.winder.set_menu(self.menu)
 
     def update_weather(self, widget=None):
-        current = self.get_weather(self.place)
+        current = self.get_weather(self.places[self.placechosen])
         
         self.condition = current
         
@@ -149,11 +153,11 @@ class weather_indicator:
         
         if current in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
             self.storms()
-        elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance of snow'):
+        elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
             self.snow()
         elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
             self.fog()
-        elif current in ('chance_of rain',  'rain'):
+        elif current in ('chance_of_rain',  'rain'):
             self.showers()
         elif current in ('sunny', 'clear'):
             self.clear()
@@ -171,7 +175,7 @@ class weather_indicator:
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
         
-        gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
+        self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
     def showers(self):
         self.winder.set_icon("stock_weather-showers")
@@ -242,11 +246,12 @@ class weather_indicator:
         dialog.show_all()
         dialog.run()
         if replace == False:
-            self.place = self.place + '|' + entry.get_text()
-            self.gconfClient.set_string("/apps/weather-indicator/place", self.place)
+            self.places.append(entry.get_text())
+            self.gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
         else:
-            self.place = entry.get_text()
-            self.gconfClient.set_string("/apps/weather-indicator/place", entry.get_text())
+            self.places = ['']
+            self.places[0] = entry.get_text()
+            self.gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
         self.gconfClient.set_bool("/apps/weather-indicator/first_run", True)
         dialog.destroy()
         
@@ -257,8 +262,8 @@ class weather_indicator:
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
-        #locale[0]
         url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city) + "&hl=" + locale[0]
+        print url
         
         try:
             # open google weather api url
@@ -322,7 +327,7 @@ class weather_indicator:
         wind_unit.set_markup("<big><b>Wind Speed Unit</b></big>")
         wind_unit.set_justify(gtk.JUSTIFY_LEFT)
         update_label = gtk.Label()
-        update_label.set_markup("<big><b> Refresh Rate   </b></big>")
+        update_label.set_markup("<big><b>Refresh Rate</b></big>")
         location_label = gtk.Label("Locations")
         
         def on_temp_changed(button, data):
@@ -368,6 +373,9 @@ class weather_indicator:
         def on_update_changed(widget, scroll, value):
             self.update_label.set_text(str(int(value))+' min')
             self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(value))
+            self.rate = int(value)
+            gobject.source_remove(self.rateid)
+            self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
             self.rate = int(value)
             print 'Rate changed :',self.rate
        
