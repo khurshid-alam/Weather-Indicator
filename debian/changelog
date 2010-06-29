@@ -1,0 +1,6 @@
+indicator-weather (10.06.14) lucid; urgency=low
+
+  * Now use glade, new preferences window. Changed the way cities are
+    stored. Files cleanup.
+
+ -- ridem <mehd36@hotmail.com>  Wed, 30 Jun 2010 00:58:52 +0200
