@@ -1,59 +1,72 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#
-# main.py
-# Copyright (C) Sebastian MacDonald 2010 <sebas310@gmail.com>
+### BEGIN LICENSE
+# Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
+# This program is free software: you can redistribute it and/or modify it 
+# under the terms of the GNU General Public License version 3, as published 
+# by the Free Software Foundation.
 # 
-# weather-indicator is free software: you can redistribute it and/or modify it
-# under the terms of the GNU General Public License as published by the
-# Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# This program is distributed in the hope that it will be useful, but 
+# WITHOUT ANY WARRANTY; without even the implied warranties of 
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+# PURPOSE.  See the GNU General Public License for more details.
 # 
-# weather-indicator is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-# See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along
+# You should have received a copy of the GNU General Public License along 
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+### END LICENSE
 
-
+import sys
+import os
+import gtk
 import pygtk
 pygtk.require('2.0')
-import gtk
 import gobject
 import appindicator
 import gconf
-import os
 import urllib2
 import time
 from threading import Timer
 import thread
 import locale
 
-class weather_indicator:
+import gettext
+from gettext import gettext as _
+gettext.textdomain('weather-indicator')
+
+# Add project root directory (enable symlink, and trunk execution).
+PROJECT_ROOT_DIRECTORY = os.path.abspath(
+    os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
+
+if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'weather_indicator'))
+    and PROJECT_ROOT_DIRECTORY not in sys.path):
+    sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
+    os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
+
+from weather_indicator.helpers import get_builder
+
+gconfClient = gconf.client_get_default()
+
+class Weather_Indicator:
     def __init__(self):
         self.winder = appindicator.Indicator ("weather-indicator", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
         
-        self.gconfClient = gconf.client_get_default()
-        
-        first_run = self.gconfClient.get_bool("/apps/weather-indicator/first_run")
-        self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
-        self.unit = self.gconfClient.get_string("/apps/weather-indicator/unit")
-        self.placechosen = self.gconfClient.get_int("/apps/weather-indicator/placechosen")
+        first_run = gconfClient.get_bool("/apps/weather-indicator/first_run")
+        self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
+        self.unit = gconfClient.get_string("/apps/weather-indicator/unit")
+        self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
         
         if self.placechosen in (False, None):
             self.placechosen = 0
         
         if self.unit in (False, None):
-            self.gconfClient.set_string("/apps/weather-indicator/unit", 'F')
+            gconfClient.set_string("/apps/weather-indicator/unit", 'F')
             self.unit = 'F'
             
         if self.rate in (False, None):
-            self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
-            self.rate = self.rate = self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")
+            gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
+            self.rate = self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         
         self.menu = gtk.Menu()
 
@@ -95,7 +108,15 @@ class weather_indicator:
         if first_run in (False, None):
             self.firsty()
         
-        self.places = eval(self.gconfClient.get_string("/apps/weather-indicator/places"))
+        ##WORKAROUND For new places registration
+        oldplace = gconfClient.get_string("/apps/weather-indicator/place")
+        newplaces = gconfClient.get_string("/apps/weather-indicator/places")
+        if not(oldplace in (False, None)) and newplaces in (False, None):
+            self.places = gconfClient.get_string("/apps/weather-indicator/place").split('|')
+            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+        ##Workaround end.
+            
+        self.places = eval(gconfClient.get_string("/apps/weather-indicator/places"))
         print 'Location(s) :',self.places        
             
     ##Breaker
@@ -203,16 +224,6 @@ class weather_indicator:
     
     def err(self):
         self.winder.set_icon("ubuntuone-client-error")
-    
-    def about(self, widget, data=None):
-        dialog = gtk.AboutDialog()
-        dialog.set_name('Weather-Indicator Applet')
-        dialog.set_version('0.0.2rev2')
-        dialog.set_authors(['Sebastian MacDonald <sebastian.macdonald@gmail.com>', 'Cullen Maglothin <cmaglothin@gmail.com>'])
-        dialog.set_comments('A simple weather indicator applet')
-        dialog.set_license('Distributed under the GPL license.\nhttp://www.gnu.org/licenses/')
-        dialog.run()
-        dialog.destroy()
 
     def hide_dialog(self, widget, data):
         widget.hide()
@@ -247,12 +258,12 @@ class weather_indicator:
         dialog.run()
         if replace == False:
             self.places.append(entry.get_text())
-            self.gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
         else:
             self.places = ['']
             self.places[0] = entry.get_text()
-            self.gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
-        self.gconfClient.set_bool("/apps/weather-indicator/first_run", True)
+            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+        gconfClient.set_bool("/apps/weather-indicator/first_run", True)
         dialog.destroy()
         
         self.update_weather()
@@ -263,7 +274,6 @@ class weather_indicator:
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
         url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city) + "&hl=" + locale[0]
-        print url
         
         try:
             # open google weather api url
@@ -305,115 +315,53 @@ class weather_indicator:
 
         #return the weather condition
         return weather
-    
-    def prefs(self, widget, tab='prefs'):
-        window = gtk.Window()
-        window.set_size_request(500, 300)
-        window.set_title("Weather Indicator")
         
-        notery = gtk.Notebook()
+    def prefs(self, widget):
+        prefswindow = WeatherIndicatorWindow()
         
-        vbox_prefs = gtk.VBox(False, 0)
-        hupdater = gtk.HBox(False, 0)
-        htemp = gtk.HBox(True, 0)
-        hwind = gtk.HBox(True, 0)
-        
-        alerter = gtk.CheckButton("Use notificatoins to give severe weather notifications")
-        tipper = gtk.CheckButton("Show tips in menu")
-        temp_unit = gtk.Label()
-        temp_unit.set_markup("<big><b>Temperature Unit</b></big>")
-        temp_unit.set_justify(gtk.JUSTIFY_LEFT)
-        wind_unit = gtk.Label()
-        wind_unit.set_markup("<big><b>Wind Speed Unit</b></big>")
-        wind_unit.set_justify(gtk.JUSTIFY_LEFT)
-        update_label = gtk.Label()
-        update_label.set_markup("<big><b>Refresh Rate</b></big>")
-        location_label = gtk.Label("Locations")
-        
-        def on_temp_changed(button, data):
-            if button.get_active() == True:  
-                self.gconfClient.set_string("/apps/weather-indicator/unit", data)
-                self.unit = data
-                self.update_weather()
-                print 'Unit changed :', self.unit  
-        
-        temp = gtk.RadioButton(group=None, label='Fahrenheit')
-        if self.unit == 'F' :
-            temp.set_active(True)
-        temp.connect("toggled", on_temp_changed, 'F')
-        htemp.pack_start(temp, False, False)
-        temp.show()
-        
-        temp = gtk.RadioButton(group=temp, label='Celsius')
-        if self.unit == 'C' :
-            temp.set_active(True)
-        temp.connect("toggled", on_temp_changed, 'C')
-        htemp.pack_start(temp, False, False)
-        temp.show()
-        
-        temp = gtk.RadioButton(group=temp, label='Kelvin')
-        if self.unit == 'K' :
-            temp.set_active(True)
-        temp.connect("toggled", on_temp_changed, 'K')
-        htemp.pack_start(temp, False, False)
-        temp.show()
-        
-        wind_mph = gtk.RadioButton(group=None, label='mph')
-        wind_mps = gtk.RadioButton(group=wind_mph, label='m/s')
-        wind_kph = gtk.RadioButton(group=wind_mph, label='km/h')
-        wind_knots = gtk.RadioButton(group=wind_mph, label='knots')
-        wind_beau = gtk.RadioButton(group=wind_mph, label='Beaufort')
-        
-        hwind.pack_start(wind_mph, False, False)
-        hwind.pack_start(wind_mps, False, False)
-        hwind.pack_start(wind_kph, False, False)
-        hwind.pack_start(wind_knots, False, False)
-        hwind.pack_start(wind_beau, False, False)
-        
-        def on_update_changed(widget, scroll, value):
-            self.update_label.set_text(str(int(value))+' min')
-            self.gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(value))
-            self.rate = int(value)
-            gobject.source_remove(self.rateid)
-            self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
-            self.rate = int(value)
-            print 'Rate changed :',self.rate
-       
-        update_scale = gtk.HScale()
-        update_scale_changed_id = update_scale.connect("change-value", on_update_changed)
-        update_scale.set_range(1, 20)
-        update_scale.set_increments(1, 10)
-        update_scale.set_digits(0)
-        update_scale.set_draw_value(False)
-        update_scale.set_size_request(300, -1)
-        update_scale.set_value(int(self.gconfClient.get_int("/apps/weather-indicator/refresh_rate")))
-        self.update_label = gtk.Label(str(int(update_scale.get_value()))+' min')       
+        prefswindow.show()
 
-        vbox_prefs.pack_start(alerter, False, False)
-        vbox_prefs.pack_start(tipper, False, False)
-        vbox_prefs.pack_start(temp_unit, False, False)
-        vbox_prefs.pack_start(htemp, False, False)
-        vbox_prefs.pack_start(wind_unit, False, False)
-        vbox_prefs.pack_start(hwind, False, False)
-        vbox_prefs.pack_start(hupdater, False, False)
-        
-        hupdater.pack_start(update_label, False, False)
-        hupdater.pack_start(update_scale, False, False)
-        hupdater.pack_start(self.update_label, False, False)
+class WeatherIndicatorWindow(gtk.Window):
+    __gtype_name__ = "WeatherIndicatorWindow"
+    def __new__(cls):
+        builder = get_builder('WeatherIndicatorWindow')
+        new_object = builder.get_object("weather_indicator_window")
+        new_object.finish_initializing(builder)
+        return new_object
 
-        vbox_extforecast=gtk.VBox(False, 0)
-        
-        notery.append_page(vbox_prefs, tab_label=gtk.Label('Preferences'))
-        notery.append_page(vbox_extforecast, tab_label=gtk.Label('Extended Forecast'))
-        
-        window.add(notery)
-        
-        window.show_all()
+    def finish_initializing(self, builder):
+        self.builder = builder
+        self.builder.connect_signals(self)
+        if wi.unit == 'F':
+            self.builder.get_object('fahrenheit').set_active(True)
+        elif wi.unit == 'C':
+            self.builder.get_object('celsius').set_active(True)
+        else:
+            self.builder.get_object('kelvin').set_active(True)
+        self.builder.get_object('rate').set_value(wi.rate)
+            
+    def on_temp_changed(window, button):
+        if button.get_active() == True:
+            gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
+            wi.unit = button.get_label()[0]
+            wi.update_weather()
+            print 'Unit changed :', wi.unit
     
+    def on_rate_changed(window, widget):
+        gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(widget.get_value()))
+        wi.rate = int(widget.get_value())
+        gobject.source_remove(wi.rateid)
+        wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
+        print 'Rate changed :',wi.rate
+    
+    #def on_destroy(self, widget, data=None):
+        #"""Called when the WeatherIndicatorWindow is closed."""
+        #gtk.main_quit()
+        
 def main():
     gtk.main()
     return 0
 
 if __name__ == "__main__":
-    indicator = weather_indicator()
+    wi = Weather_Indicator()
     main()

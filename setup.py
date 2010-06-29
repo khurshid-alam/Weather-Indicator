@@ -62,7 +62,7 @@ def update_desktop_file(datadir):
 
         for line in fin:            
             if 'Icon=' in line:
-                line = "Icon=%s\n" % ('stock_weather-storm')
+                line = "Icon=%s\n" % (datadir + 'media/icon.png')
             fout.write(line)
         fout.flush()
         fout.close()
@@ -77,9 +77,9 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
     def run(self):
         previous_value = update_data_path(self.prefix + '/share/weather-indicator/')
         update_desktop_file(self.prefix + '/share/weather-indicator/')
-        update_desktop_file('/etc/xdg/autostart/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
+
 
         
 ##################################################################################
@@ -87,8 +87,8 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 ##################################################################################
 
 DistUtilsExtra.auto.setup(
-    name='weather-indicator',
-    version='10.06.11',
+    name='indicator-weather',
+    version='10.06.13',
     license='GPL-3',
     author='Sebastian MacDonald',
     author_email='sebas310@gmail.com',
