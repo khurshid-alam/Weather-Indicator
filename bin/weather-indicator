@@ -118,39 +118,43 @@ class Weather_Indicator:
             
         self.places = eval(gconfClient.get_string("/apps/weather-indicator/places"))
         print 'Location(s) :',self.places        
-            
-    ##Breaker
-        breaker = gtk.SeparatorMenuItem()
-        breaker.show()
-        self.menu.append(breaker)
         
     ##Cities
-        for place in self.places:
-            loco = gtk.RadioMenuItem(None, place)
-            loco.show()
-            self.menu.append(loco)
+        if len(self.places) != 1:
+            ##Breaker
+            breaker = gtk.SeparatorMenuItem()
+            breaker.show()
+            self.menu.append(breaker)
+            
+            loco1 = gtk.RadioMenuItem(None, self.places[0])
+            loco1.show()
+            self.menu.append(loco1)
+            for place in self.places[1:]:
+                loco = gtk.RadioMenuItem(loco1, place)
+                loco.show()
+                self.menu.append(loco)
         
     ##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
         
-    ##Change City
-        replace = gtk.MenuItem("Change City")
-        replace.connect("activate", self.replacer)
-        replace.show()
-        self.menu.append(replace)
+    ###Change City
+        #replace = gtk.MenuItem("Change City")
+        #replace.connect("activate", self.replacer)
+        #replace.show()
+        #self.menu.append(replace)
 
-    #Add City
-        add = gtk.MenuItem("Add City")
-        add.connect("activate", self.adder)
-        add.show()
-        self.menu.append(add)
+    ##Add City
+        #add = gtk.MenuItem("Add City")
+        #add.connect("activate", self.adder)
+        #add.show()
+        #self.menu.append(add)
 
-    ##Breaker
-        breaker = gtk.SeparatorMenuItem()
-        breaker.show()
-        self.menu.append(breaker)
+    ###Breaker
+        #breaker = gtk.SeparatorMenuItem()
+        #breaker.show()
+        #self.menu.append(breaker)
         
     ##Preferences      
         prefs_show = gtk.MenuItem("Preferences")
@@ -339,22 +343,56 @@ class WeatherIndicatorWindow(gtk.Window):
         else:
             self.builder.get_object('kelvin').set_active(True)
         self.builder.get_object('rate').set_value(wi.rate)
+        end = len(wi.places)
+        for place in wi.places:
+            newplace = ['']
+            newplace[0]=place
+            self.builder.get_object('citieslist').append(newplace)
+
             
-    def on_temp_changed(window, button):
+    def on_temp_changed(self, button):
         if button.get_active() == True:
             gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
             wi.unit = button.get_label()[0]
             wi.update_weather()
             print 'Unit changed :', wi.unit
     
-    def on_rate_changed(window, widget):
+    def on_rate_changed(self, widget):
         gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(widget.get_value()))
         wi.rate = int(widget.get_value())
         gobject.source_remove(wi.rateid)
         wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
         print 'Rate changed :',wi.rate
+        
+    def on_remove_location(self,widget):
+        selection = self.builder.get_object('displaylist').get_selection()
+        result = selection.get_selected()
+        model, iter = result
+        if iter != None:
+            wi.places.remove(model[iter][0])
+            model.remove(iter)
+            gconfClient.set_string("/apps/weather-indicator/places", str(wi.places))
     
-    #def on_destroy(self, widget, data=None):
+    def on_edit_location(self, widget):
+        print 'TODO edit'
+        
+        ##UPDATE
+    
+    def on_add_location(self, widget):
+        wi.adder(None)
+        newplace = ['']
+        newplace[0]=wi.places[len(wi.places)-1]
+        self.builder.get_object('citieslist').append(newplace)
+        ##UPDATE LISTVIEW
+    
+    def on_wind_activate(self, widget):
+        pass
+        
+    def on_city_selected(self, widget):
+        print 'Place selected : ',self.builder.get_object('citieslist')[self.builder.get_object('displaylist').get_cursor()[0]][0]
+    
+    def on_destroy(self, widget, data=None):
+        pass
         #"""Called when the WeatherIndicatorWindow is closed."""
         #gtk.main_quit()
         

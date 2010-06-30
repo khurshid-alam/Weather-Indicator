@@ -1,0 +1,109 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-06-30 01:08+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:1
+msgid "<big>Locations</big>"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:2
+msgid "<big>Temperature Unit</big>"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:3
+msgid "<big>Update every (min.)</big>"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:4
+msgid "<big>Wind Speed Unit</big>"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:5
+msgid "Add"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:6
+msgid "Beaufort"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:7
+msgid "Celsius"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:8
+msgid "Edit"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:9
+msgid "Extended Forecast"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:10
+msgid "Fahrenheit"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:11
+msgid "Kelvin"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:12
+msgid "Remove"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:13
+msgid "Show tips in menu"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:14
+msgid "Use notifications to give severe weather alerts"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:15
+msgid "WIP"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:16
+msgid "Weather Indicator"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:17
+msgid "Weather Preferences"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:18
+msgid "km/h"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:19
+msgid "knots"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:20
+msgid "m/s"
+msgstr ""
+
+#: ../data/ui/WeatherIndicatorWindow.ui.h:21
+msgid "mph"
+msgstr ""
+
+#: ../weather-indicator.desktop.in.h:1
+msgid "Indicator applet for current weather conditions"
+msgstr ""
+
+#: ../weather-indicator.desktop.in.h:2
+msgid "Weather Indicator Applet"
+msgstr ""
