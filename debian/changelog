@@ -1,3 +1,10 @@
+weather-indicator (10.06.13) lucid; urgency=low
+
+  * implemented locations display-adding-removing, only diplay
+    radiomenuitem if more than 1, radiomenu groups
+
+ -- ridem <mehd36@hotmail.com>  Wed, 30 Jun 2010 15:06:16 +0200
+
 weather-indicator (10.06.12) lucid; urgency=low
 
   * New release.
