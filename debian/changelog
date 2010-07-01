@@ -1,5 +1,11 @@
 weather-indicator (10.06.13) lucid; urgency=low
 
+  * New release.
+
+ -- Mehdi Rejraji <mehdi@mehdi-laptop>  Wed, 30 Jun 2010 19:18:16 +0200
+
+weather-indicator (10.06.13) lucid; urgency=low
+
   * implemented locations display-adding-removing, only diplay
     radiomenuitem if more than 1, radiomenu groups
 

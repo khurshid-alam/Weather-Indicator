@@ -58,6 +58,7 @@ class Weather_Indicator:
         self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
         
         if self.placechosen in (False, None):
+            gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
             self.placechosen = 0
         
         if self.unit in (False, None):
@@ -127,10 +128,16 @@ class Weather_Indicator:
             self.menu.append(breaker)
             
             loco1 = gtk.RadioMenuItem(None, self.places[0])
+            if self.placechosen == 0:
+                loco1.set_active(True)
+            loco1.connect("toggled", self.on_city_changed)
             loco1.show()
             self.menu.append(loco1)
             for place in self.places[1:]:
                 loco = gtk.RadioMenuItem(loco1, place)
+                if self.places.index(place) == self.placechosen:
+                    loco.set_active(True)
+                loco.connect("toggled", self.on_city_changed)
                 loco.show()
                 self.menu.append(loco)
         
@@ -166,6 +173,12 @@ class Weather_Indicator:
         self.update_weather()
         self.menu.show()
         self.winder.set_menu(self.menu)
+        
+    def on_city_changed(self,widget):
+        if widget.get_active():
+            self.placechosen = self.places.index(widget.get_label())
+            gconfClient.set_int("/apps/weather-indicator/placechosen", self.placechosen)
+            self.update_weather()
 
     def update_weather(self, widget=None):
         current = self.get_weather(self.places[self.placechosen])
@@ -261,8 +274,14 @@ class Weather_Indicator:
         dialog.show_all()
         dialog.run()
         if replace == False:
-            self.places.append(entry.get_text())
-            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+            if not (entry.get_text() in self.places):
+                self.places.append(entry.get_text())
+                gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+                dialog.destroy()
+                return True
+            else:
+                dialog.destroy()
+                return False
         else:
             self.places = ['']
             self.places[0] = entry.get_text()
@@ -368,10 +387,12 @@ class WeatherIndicatorWindow(gtk.Window):
         selection = self.builder.get_object('displaylist').get_selection()
         result = selection.get_selected()
         model, iter = result
-        if iter != None:
+        if iter != None and len(wi.places)>1:
             wi.places.remove(model[iter][0])
+            wi.placechosen = 0
             model.remove(iter)
             gconfClient.set_string("/apps/weather-indicator/places", str(wi.places))
+            gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
     
     def on_edit_location(self, widget):
         print 'TODO edit'
@@ -379,10 +400,11 @@ class WeatherIndicatorWindow(gtk.Window):
         ##UPDATE
     
     def on_add_location(self, widget):
-        wi.adder(None)
-        newplace = ['']
-        newplace[0]=wi.places[len(wi.places)-1]
-        self.builder.get_object('citieslist').append(newplace)
+        success = wi.getText(replace=False)
+        if success:
+            newplace = ['']
+            newplace[0]=wi.places[len(wi.places)-1]
+            self.builder.get_object('citieslist').append(newplace)
         ##UPDATE LISTVIEW
     
     def on_wind_activate(self, widget):
