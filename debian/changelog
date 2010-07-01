@@ -1,3 +1,9 @@
+weather-indicator (10.07) lucid; urgency=low
+
+  * Enabled city swapping. Bug fixing
+
+ -- ridem <mehd36@hotmail.com>  Thu, 01 Jul 2010 03:29:50 +0200
+
 weather-indicator (10.06.13) lucid; urgency=low
 
   * New release.
