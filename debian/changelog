@@ -1,3 +1,10 @@
+weather-indicator (10.07.3) maverick; urgency=low
+
+  * Added extended forecast template
+  * Much proper code for preferences window
+
+ -- ridem <mehd36@hotmail.com>  Fri, 02 Jul 2010 22:54:45 +0200
+
 weather-indicator (10.07.2) maverick; urgency=low
 
   * New release.
