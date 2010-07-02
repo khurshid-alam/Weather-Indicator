@@ -71,7 +71,6 @@
                     <property name="receives_default">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_temp_changed"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -87,7 +86,6 @@
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">fahrenheit</property>
-                    <signal name="toggled" handler="on_temp_changed"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -103,7 +101,6 @@
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">fahrenheit</property>
-                    <signal name="toggled" handler="on_temp_changed"/>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -249,7 +246,6 @@
                     <property name="upper_stepper_sensitivity">on</property>
                     <property name="fill_level">20</property>
                     <property name="digits">0</property>
-                    <signal name="value_changed" handler="on_rate_changed"/>
                   </object>
                   <packing>
                     <property name="position">1</property>

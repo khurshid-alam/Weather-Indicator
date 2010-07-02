@@ -358,9 +358,7 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
         return new_object
 
     def finish_initializing(self, builder):
-        print builder
         self.builder = builder
-        self.builder.connect_signals(self)
         if wi.unit == 'F':
             self.builder.get_object('fahrenheit').set_active(True)
         elif wi.unit == 'C':
@@ -373,21 +371,8 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             newplace = ['']
             newplace[0]=place
             self.builder.get_object('citieslist').append(newplace)
-
             
-    def on_temp_changed(self, button):
-        if button.get_active() == True:
-            gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
-            wi.unit = button.get_label()[0]
-            wi.update_weather()
-            print 'Unit changed :', wi.unit
-    
-    def on_rate_changed(self, widget):
-        gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(widget.get_value()))
-        wi.rate = int(widget.get_value())
-        gobject.source_remove(wi.rateid)
-        wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
-        print 'Rate changed :',wi.rate
+        self.builder.connect_signals(self)
         
     def on_remove_location(self,widget):
         selection = self.builder.get_object('displaylist').get_selection()
@@ -402,8 +387,6 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
     
     def on_edit_location(self, widget):
         print 'TODO edit'
-        
-        ##UPDATE
     
     def on_add_location(self, widget):
         success = wi.getText(replace=False)
@@ -411,7 +394,6 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             newplace = ['']
             newplace[0]=wi.places[len(wi.places)-1]
             self.builder.get_object('citieslist').append(newplace)
-        ##UPDATE LISTVIEW
     
     def on_wind_activate(self, widget):
         pass
@@ -429,6 +411,22 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
 
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
+        ##Temperature##
+        for button in self.builder.get_object('fahrenheit').get_group():
+            if button.get_active() == True and button.get_label()[0] != wi.unit:
+                gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
+                wi.unit = button.get_label()[0]
+                wi.update_weather()
+                print 'Unit changed :', wi.unit
+                
+        ##Rate
+        if int(self.builder.get_object('rate').get_value()) != wi.rate:
+            gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(self.builder.get_object('rate').get_value()))
+            wi.rate = int(self.builder.get_object('rate').get_value())
+            gobject.source_remove(wi.rateid)
+            wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
+            print 'Rate changed :',wi.rate
+        
 
         # Make any updates to self._preferences here. e.g.
         #self._preferences["preference1"] = "value2"
