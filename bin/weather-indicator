@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
+# Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -55,6 +56,7 @@ class Weather_Indicator:
         first_run = gconfClient.get_bool("/apps/weather-indicator/first_run")
         self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         self.unit = gconfClient.get_string("/apps/weather-indicator/unit")
+        #self.windunit = gconfClient.get_string("/apps/weather-indicator/wind")
         self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
         
         if self.placechosen in (False, None):
@@ -64,6 +66,10 @@ class Weather_Indicator:
         if self.unit in (False, None):
             gconfClient.set_string("/apps/weather-indicator/unit", 'F')
             self.unit = 'F'
+        
+        #if self.wind in (False, None):
+            #gconfClient.set_string("/apps/weather-indicator/wind", 'mph')
+            #self.windunit = 'mph'
             
         if self.rate in (False, None):
             gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
@@ -83,8 +89,8 @@ class Weather_Indicator:
     ##City
         self.city_show = gtk.MenuItem()
         self.city_show.unset_flags(gtk.SENSITIVE)
+        self.menu.attach(self.city_show,1,2,0,1)
         self.city_show.show()
-        self.menu.append(self.city_show)
         
     ##Condition
         self.cond_show = gtk.MenuItem()
@@ -181,8 +187,11 @@ class Weather_Indicator:
         
         self.place = self.places[self.placechosen]
         self.update_weather()
-        self.menu.show()
+        
         self.winder.set_menu(self.menu)
+        #im = IndicatorMenu()
+        #self.winder.set_menu(im)
+        
         
     def on_city_changed(self,widget):
         if widget.get_active():
@@ -324,16 +333,18 @@ class Weather_Indicator:
         
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
-        s = unicode(s, encoding).encode('utf-8').replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"').replace("&#39;", "'")
+        s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
         
         # extract weather condition data from xml string
         weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
-        if firstrun:
-            unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-            if unitsystem == 'SI':
+        
+        unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
+        if firstrun and unitsystem == 'SI':
                 self.unit = 'C'
                 gconfClient.set_string("/apps/weather-indicator/unit", 'C')
-                
+                #self.windunit = 'km/h'
+                #gconfClient.set_string("/apps/weather-indicator/wind", 'km/h')
+        
         if self.unit == 'F':
             self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
         elif self.unit == 'C':
@@ -343,6 +354,47 @@ class Weather_Indicator:
         self.city = s.split("<city data=\"")[-1].split("\"")[0]
         self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
         self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
+        
+        #windvalue = int(''.join(filter(lambda x: x.isdigit(), self.wind)))
+        #if unitsystem == 'US':
+            #windvalue = int(round(float(windvalue*1.609344)))
+        #if self.windunit == 'm/s':
+            #windvalue = int(round(float(windvalue/3.6)))
+        #elif self.windunit == 'mph':
+            #print 'im here'
+            #windvalue = int(round(float(windvalue/1.609344)))
+            #print windvalue
+        #elif self.windunit == 'knots':
+            #windvalue = int(round(float(windvalue/1.852)))
+        #elif self.windunit == 'Beaufort':
+            #if windvalue < 1:
+                #windvalue = 0
+            #elif windvalue >= 1 and windvalue < 5:
+                #windvalue = 1
+            #elif windvalue >= 6 and windvalue < 11:
+                #windvalue = 2
+            #elif windvalue >= 12 and windvalue < 19:
+                #windvalue = 3
+            #elif windvalue >= 20 and windvalue < 28:
+                #windvalue = 4
+            #elif windvalue >= 29 and windvalue < 38:
+                #windvalue = 5
+            #elif windvalue >= 39 and windvalue < 49:
+                #windvalue = 6
+            #elif windvalue >= 50 and windvalue < 61:
+                #windvalue = 7
+            #elif windvalue >= 62 and windvalue < 74:
+                #windvalue = 8
+            #elif windvalue >= 75 and windvalue < 88:
+                #windvalue = 9
+            #elif windvalue >= 89 and windvalue < 102:
+                #windvalue = 10
+            #elif windvalue >= 103 and windvalue < 117:
+                #windvalue = 11
+            #elif windvalue >= 118:
+                #windvalue = 12
+        #self.wind = self.wind.replace((''.join(filter(lambda x: x.isdigit(), self.wind))),str(windvalue))
+        
         self.icon = s.split("%\"/><icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
 
         # if there was an error getting the condition, the city is invalid
@@ -381,6 +433,17 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             self.builder.get_object('celsius').set_active(True)
         else:
             self.builder.get_object('kelvin').set_active(True)
+        #if wi.windunit == 'm/s':
+            #self.builder.get_object('m/s').set_active(True)
+        #elif wi.windunit == 'km/h':
+            #self.builder.get_object('km/h').set_active(True)
+        #elif wi.windunit == 'mph':
+            #self.builder.get_object('mph').set_active(True)
+        #elif wi.windunit == 'knots':
+            #self.builder.get_object('knots').set_active(True)
+        #else:
+            #self.builder.get_object('Beaufort').set_active(True)
+        
         self.builder.get_object('rate').set_value(wi.rate)
         end = len(wi.places)
         for place in wi.places:
@@ -402,7 +465,8 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
     
     def on_edit_location(self, widget):
-        print 'TODO edit'
+        ep = EditPlace()
+        ep.show()
     
     def on_add_location(self, widget):
         success = wi.getText(replace=False)
@@ -427,12 +491,13 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
 
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
+        needupdate = False
         ##Temperature##
         for button in self.builder.get_object('fahrenheit').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
                 gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
                 wi.unit = button.get_label()[0]
-                wi.update_weather()
+                needupdate = True
                 print 'Unit changed :', wi.unit
                 
         ##Rate
@@ -442,8 +507,18 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             gobject.source_remove(wi.rateid)
             wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
             print 'Rate changed :',wi.rate
+            
+        ##Wind
+        #for button in self.builder.get_object('m/s').get_group():
+            #if button.get_active() == True and button.get_label() != wi.windunit:
+                #gconfClient.set_string("/apps/weather-indicator/wind", button.get_label())
+                #wi.windunit = button.get_label()
+                #needupdate = True
+                #print 'Wind changed :', wi.windunit
         
-
+        if needupdate:
+            wi.update_weather()
+        
         # Make any updates to self._preferences here. e.g.
         #self._preferences["preference1"] = "value2"
         #self._save_preferences()
@@ -456,7 +531,6 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
         """
         # Restore any changes to self._preferences here.
         self.destroy()
-        pass
         
 class ExtendedForecast(gtk.Window):
     __gtype_name__ = "ExtendedForecast"
@@ -472,7 +546,45 @@ class ExtendedForecast(gtk.Window):
     
     def on_destroy(self, widget, data=None):
         pass
+
+class EditPlace(gtk.MessageDialog):
+    __gtype_name__ = "EditPlace"
+    def __new__(cls):
+        builder = get_builder('EditPlace')
+        new_object = builder.get_object("edit_place")
+        new_object.finish_initializing(builder)
+        return new_object
         
+    def finish_initializing(self, builder):
+        self.builder = builder
+        self.builder.connect_signals(self)
+    
+    def ok(self, widget, data=None):
+        
+        ##APPLY CHANGES
+        self.destroy()
+        
+    def cancel(self, widget, data=None):
+        """The user has elected cancel changes.
+
+        Called before the dialog returns gtk.RESPONSE_CANCEL for run()
+        """
+        # Restore any changes to self._preferences here.
+        self.destroy()
+        
+
+#class IndicatorMenu(gtk.Menu):
+    #__gtype_name__ = "IndicatorMenu"
+    #def __new__(cls):
+        #builder = get_builder('IndicatorMenu')
+        #new_object = builder.get_object("indicator_menu")
+        #new_object.finish_initializing(builder)
+        #return new_object
+        
+    #def finish_initializing(self, builder):
+        #self.builder = builder
+        #self.builder.connect_signals(self)
+
 def main():
     gtk.main()
     return 0
