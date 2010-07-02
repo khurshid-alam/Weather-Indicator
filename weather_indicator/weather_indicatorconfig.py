@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
+# Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
