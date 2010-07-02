@@ -11,12 +11,11 @@
   </object>
   <object class="PreferencesWeatherIndicatorDialog" id="preferences_weather_indicator_dialog">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Weather Indicator Preferences</property>
+    <property name="title" translatable="yes">Weather Preferences</property>
     <property name="window_position">mouse</property>
     <property name="default_width">440</property>
     <property name="default_height">400</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -26,7 +25,7 @@
             <property name="visible">True</property>
             <child>
               <object class="GtkCheckButton" id="check_severe">
-                <property name="label" translatable="yes">Use notifications to give severe weather alerts</property>
+                <property name="label" translatable="yes">Use notifications to give weather alerts</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
@@ -324,10 +323,11 @@
                         <property name="visible">True</property>
                         <child>
                           <object class="GtkButton" id="add">
-                            <property name="label" translatable="yes">Add</property>
+                            <property name="label">gtk-add</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_add_location"/>
                           </object>
                           <packing>
@@ -338,10 +338,11 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="edit">
-                            <property name="label" translatable="yes">Edit</property>
+                            <property name="label">gtk-edit</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_edit_location"/>
                           </object>
                           <packing>
@@ -352,10 +353,11 @@
                         </child>
                         <child>
                           <object class="GtkButton" id="remove">
-                            <property name="label" translatable="yes">Remove</property>
+                            <property name="label">gtk-delete</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_remove_location"/>
                           </object>
                           <packing>
