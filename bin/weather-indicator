@@ -484,8 +484,37 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
     
     def on_edit_location(self, widget):
-        ep = EditPlace()
-        ep.show()
+        
+        def responseToDialog(entry, dialog, response):
+            dialog.response(response)
+            
+        selection = self.builder.get_object('displaylist').get_selection()
+        result = selection.get_selected()
+        model, iter = result
+        if iter !=None:
+            dialog = gtk.MessageDialog(
+                None,
+                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                gtk.MESSAGE_QUESTION,
+                gtk.BUTTONS_OK,
+                None)
+            dialog.set_markup('You can modify this place :')
+            entry = gtk.Entry()
+            entry.set_text(model[iter][0])
+            entry.connect("activate", responseToDialog, dialog, gtk.RESPONSE_OK)
+            hbox = gtk.HBox()
+            hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
+            hbox.pack_end(entry)
+            dialog.vbox.pack_end(hbox, True, True, 0)
+            dialog.show_all()
+            dialog.run()
+
+            ep = entry.get_text()
+            dialog.destroy()
+            if ep != '' and not (ep in wi.places):
+                wi.places[wi.places.index(model[iter][0])]=ep
+                gconfClient.set_string("/apps/weather-indicator/places", str(wi.places))
+                model.set_value(iter,0,ep)
     
     def on_add_location(self, widget):
         success = wi.getText(replace=False)
@@ -496,9 +525,6 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
     
     def on_wind_activate(self, widget):
         pass
-        
-    def on_city_selected(self, widget):
-        print 'Place selected : ',self.builder.get_object('citieslist')[self.builder.get_object('displaylist').get_cursor()[0]][0]
     
     def on_destroy(self, widget, data=None):
         pass
@@ -613,30 +639,34 @@ class ExtendedForecast(gtk.Window):
     def on_destroy(self, widget, data=None):
         pass
 
-class EditPlace(gtk.MessageDialog):
-    __gtype_name__ = "EditPlace"
-    def __new__(cls):
-        builder = get_builder('EditPlace')
-        new_object = builder.get_object("edit_place")
-        new_object.finish_initializing(builder)
-        return new_object
+#class EditPlace(gtk.MessageDialog):
+    #__gtype_name__ = "EditPlace"
+    #def __new__(cls):
+        #builder = get_builder('EditPlace')
+        #new_object = builder.get_object("edit_place")
+        #new_object.finish_initializing(builder)
+        #return new_object
         
-    def finish_initializing(self, builder):
-        self.builder = builder
-        self.builder.connect_signals(self)
+    #def finish_initializing(self, builder):
+        #self.builder = builder
+        #self.builder.connect_signals(self)
     
-    def ok(self, widget, data=None):
+    #def ok(self, widget, data=None):
+        #self.destroy()
+        #if self.builder.get_object("entry").get_text() != '':
+            #return self.builder.get_object("entry").get_text()
+        #else:
+            #return False
+        ###APPLY CHANGES
         
-        ##APPLY CHANGES
-        self.destroy()
-        
-    def cancel(self, widget, data=None):
-        """The user has elected cancel changes.
+    #def cancel(self, widget, data=None):
+        #"""The user has elected cancel changes.
 
-        Called before the dialog returns gtk.RESPONSE_CANCEL for run()
-        """
-        # Restore any changes to self._preferences here.
-        self.destroy()
+        #Called before the dialog returns gtk.RESPONSE_CANCEL for run()
+        #"""
+        ## Restore any changes to self._preferences here.
+        #self.destroy()
+        #return False
         
 
 #class IndicatorMenu(gtk.Menu):

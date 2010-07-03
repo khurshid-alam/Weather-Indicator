@@ -287,12 +287,10 @@
                             <property name="headers_clickable">False</property>
                             <property name="reorderable">True</property>
                             <property name="search_column">0</property>
-                            <signal name="cursor_changed" handler="on_city_selected"/>
                             <child>
                               <object class="GtkTreeViewColumn" id="City">
                                 <property name="title">City</property>
                                 <property name="reorderable">True</property>
-                                <signal name="clicked" handler="on_city_selected"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="City name"/>
                                   <attributes>
