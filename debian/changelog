@@ -1,3 +1,9 @@
+weather-indicator (10.07.5) maverick; urgency=low
+
+  * A start of extended forecast, + a correction by sebastian
+
+ -- ridem <mehd36@hotmail.com>  Sat, 03 Jul 2010 15:01:34 +0200
+
 weather-indicator (10.07.4) maverick; urgency=low
 
   * added wind support but disabled it : no wind support unless we
