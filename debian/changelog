@@ -1,3 +1,9 @@
+weather-indicator (10.07.6) maverick; urgency=low
+
+  * New release.
+
+ -- ridem <mehd36@hotmail.com>  Sat, 03 Jul 2010 15:08:59 +0200
+
 weather-indicator (10.07.5) maverick; urgency=low
 
   * A start of extended forecast, + a correction by sebastian
