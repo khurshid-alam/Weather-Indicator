@@ -1,3 +1,9 @@
+weather-indicator (10.07.7) lucid; urgency=low
+
+  * Modify city
+
+ -- ridem <mehd36@gmail.com>  Sun, 04 Jul 2010 14:36:44 +0200
+
 weather-indicator (10.07.6) maverick; urgency=low
 
   * New release.
