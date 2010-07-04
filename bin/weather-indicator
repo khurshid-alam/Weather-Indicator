@@ -57,7 +57,7 @@ class Weather_Indicator:
         first_run = gconfClient.get_bool("/apps/weather-indicator/first_run")
         self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         self.unit = gconfClient.get_string("/apps/weather-indicator/unit")
-        #self.windunit = gconfClient.get_string("/apps/weather-indicator/wind")
+        #WIND#self.windunit = gconfClient.get_string("/apps/weather-indicator/wind")
         self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
         
         if self.placechosen in (False, None):
