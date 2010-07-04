@@ -8,6 +8,7 @@
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Extended Forecast</property>
     <property name="window_position">mouse</property>
+    <property name="icon">../media/icon.png</property>
     <signal name="destroy" handler="on_destroy"/>
     <child>
       <object class="GtkVBox" id="mainvbox">
@@ -21,49 +22,69 @@
               <object class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkVBox" id="day1vbox">
+                  <object class="GtkAlignment" id="alignment3">
                     <property name="visible">True</property>
+                    <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkLabel" id="day1lbl">
+                      <object class="GtkVBox" id="day1vbox">
                         <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">&lt;big&gt;Today (fri.)&lt;/big&gt;</property>
-                        <property name="use_markup">True</property>
+                        <child>
+                          <object class="GtkLabel" id="day1lbl">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label">&lt;big&gt;Today (fri.)&lt;/big&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="day1image">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="pixel_size">50</property>
+                            <property name="icon_name">weather-showers</property>
+                          </object>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day1cond">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label">Partially cloudy</property>
+                            <property name="justify">fill</property>
+                            <property name="wrap">True</property>
+                            <property name="wrap_mode">word-char</property>
+                            <property name="width_chars">15</property>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day1temphigh">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label">High : 23&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day1templow">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label">Low : 19&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
                       </object>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="day1image">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="pixel_size">50</property>
-                        <property name="icon_name">weather-showers</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day1cond">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">Partially cloudy</property>
-                      </object>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day1temp">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">From 19&#xB0;C to 23&#xB0;C</property>
-                      </object>
-                      <packing>
-                        <property name="position">3</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -89,49 +110,69 @@
               <object class="GtkHBox" id="hbox3">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkVBox" id="day2vbox">
+                  <object class="GtkAlignment" id="alignment2">
                     <property name="visible">True</property>
+                    <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkLabel" id="day2lbl">
+                      <object class="GtkVBox" id="day2vbox">
                         <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">&lt;big&gt;Tomorrow (sat.)&lt;/big&gt;</property>
-                        <property name="use_markup">True</property>
+                        <child>
+                          <object class="GtkLabel" id="day2lbl">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Tomorrow (sat.)&lt;/big&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="day2image">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="pixel_size">50</property>
+                            <property name="icon_name">weather-storm</property>
+                          </object>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day2cond">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label">Couverture nuageuse partielle</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="wrap_mode">word-char</property>
+                            <property name="width_chars">15</property>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day2temphigh">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label">High : 26&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day2templow">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label">Low : 16&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
                       </object>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="day2image">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="pixel_size">50</property>
-                        <property name="icon_name">weather-storm</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day2cond">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">Thunderstorm</property>
-                      </object>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day2temp">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">From 16&#xB0;C to 26&#xB0;C</property>
-                      </object>
-                      <packing>
-                        <property name="position">3</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -157,51 +198,71 @@
               <object class="GtkHBox" id="hbox4">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkVBox" id="day3vbox">
+                  <object class="GtkAlignment" id="alignment4">
                     <property name="visible">True</property>
+                    <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkLabel" id="day3lbl">
+                      <object class="GtkVBox" id="day3vbox">
                         <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">&lt;big&gt;Sunday&lt;/big&gt;</property>
-                        <property name="use_markup">True</property>
+                        <child>
+                          <object class="GtkLabel" id="day3lbl">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label">&lt;big&gt;Sunday&lt;/big&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="day3image">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="pixel_size">50</property>
+                            <property name="icon_name">weather-fog</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day3cond">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label" translatable="yes">Fogs</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="wrap_mode">word-char</property>
+                            <property name="width_chars">15</property>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day3temphigh">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">High : 28&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day3templow">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">Low : 16&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
                       </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="day3image">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="pixel_size">50</property>
-                        <property name="icon_name">weather-fog</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day3cond">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">Fogs</property>
-                      </object>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day3temp">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">From 16&#xB0;C to 28&#xB0;C</property>
-                      </object>
-                      <packing>
-                        <property name="position">3</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>
@@ -226,49 +287,68 @@
               <object class="GtkHBox" id="hbox5">
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkVBox" id="day4vbox">
+                  <object class="GtkAlignment" id="alignment5">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkLabel" id="day4lbl">
+                      <object class="GtkVBox" id="day4vbox">
                         <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">&lt;big&gt;Monday&lt;/big&gt;</property>
-                        <property name="use_markup">True</property>
+                        <child>
+                          <object class="GtkLabel" id="day4lbl">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Monday&lt;/big&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="day4image">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="pixel_size">50</property>
+                            <property name="icon_name">weather-clear</property>
+                          </object>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day4cond">
+                            <property name="visible">True</property>
+                            <property name="ypad">10</property>
+                            <property name="label" translatable="yes">Clear</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="wrap_mode">word-char</property>
+                            <property name="width_chars">15</property>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day4temphigh">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">High : 26&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day4templow">
+                            <property name="visible">True</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">Low : 14&#xB0;C</property>
+                          </object>
+                          <packing>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
                       </object>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="day4image">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="pixel_size">50</property>
-                        <property name="icon_name">weather-clear</property>
-                      </object>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day4cond">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">Clear</property>
-                      </object>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="day4temp">
-                        <property name="visible">True</property>
-                        <property name="ypad">10</property>
-                        <property name="label" translatable="yes">From 14&#xB0;C to 26&#xB0;C</property>
-                      </object>
-                      <packing>
-                        <property name="position">3</property>
-                      </packing>
                     </child>
                   </object>
                   <packing>

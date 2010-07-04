@@ -15,6 +15,7 @@
     <property name="window_position">mouse</property>
     <property name="default_width">440</property>
     <property name="default_height">370</property>
+    <property name="icon">../media/icon.png</property>
     <property name="type_hint">normal</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">

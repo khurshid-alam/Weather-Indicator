@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-02 20:31+0200\n"
+"POT-Creation-Date: 2010-07-04 20:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
+msgid "<big>Monday</big>"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:2
+msgid "<big>Tomorrow (sat.)</big>"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:3
+msgid "Clear"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:4
 msgid "Extended Forecast"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:5
+msgid "Fogs"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:6
+msgid "High : 26&#xB0;C"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:7
+msgid "High : 28&#xB0;C"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:8
+msgid "Low : 14&#xB0;C"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui.h:9
+msgid "Low : 16&#xB0;C"
+msgstr ""
+
+#. ##Change City
+#. replace = gtk.MenuItem("Change City")
+#. replace.connect("activate", self.replacer)
+#. replace.show()
+#. self.menu.append(replace)
+#. #Add City
+#. add = gtk.MenuItem("Add City")
+#. add.connect("activate", self.adder)
+#. add.show()
+#. self.menu.append(add)
+#. ##Breaker
+#. breaker = gtk.SeparatorMenuItem()
+#. breaker.show()
+#. self.menu.append(breaker)
+#: ../bin/weather-indicator.py:179 ../data/ui/IndicatorMenu.ui.h:9
+msgid "Extended Forecast..."
+msgstr ""
+
+#. #Preferences
+#: ../bin/weather-indicator.py:184 ../data/ui/IndicatorMenu.ui.h:17
+msgid "Weather Preferences..."
+msgstr ""
+
+#: ../bin/weather-indicator.py:592
+msgid "Extended Forecast for "
+msgstr ""
+
+#: ../bin/weather-indicator.py:632
+#, python-format
+msgid "High : %s%s"
+msgstr ""
+
+#: ../bin/weather-indicator.py:636
+#, python-format
+msgid "Low : %s%s"
 msgstr ""
 
 #: ../weather-indicator.desktop.in.h:1
@@ -26,6 +95,71 @@ msgstr ""
 
 #: ../weather-indicator.desktop.in.h:2
 msgid "Weather Indicator Applet"
+msgstr ""
+
+#: ../data/ui/EditPlace.ui.h:1
+msgid "You can modify this place's label here :"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:1
+msgid "59&#xB0;F"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:2
+msgid "75&#xB0;F"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:3
+msgid "79&#xB0;F"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:5
+#, no-c-format
+msgid "90%"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:6
+msgid "City:"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:7
+msgid "Conditions:"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:8
+msgid "Dallas, TX"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:10
+msgid "Grab an umbrella, it looks like rain !"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:11
+msgid "Humidity:"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:12
+msgid "London, UK"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:13
+msgid "Partly Cloudy"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:14
+msgid "Richmond, VA"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:15
+msgid "S at 11 mph"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:16
+msgid "Temperature:"
+msgstr ""
+
+#: ../data/ui/IndicatorMenu.ui.h:18
+msgid "Wind:"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:1
@@ -65,7 +199,7 @@ msgid "Show tips in menu"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:10
-msgid "Use notifications to give severe weather alerts"
+msgid "Use notifications to give weather alerts"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:11
