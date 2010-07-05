@@ -29,6 +29,7 @@ import time
 from threading import Timer
 import thread
 import locale
+import pynotify
 from xml.dom.minidom import parseString
 
 import gettext
@@ -57,6 +58,7 @@ class Weather_Indicator:
         first_run = gconfClient.get_bool("/apps/weather-indicator/first_run")
         self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
         self.unit = gconfClient.get_string("/apps/weather-indicator/unit")
+        self.notif = gconfClient.get_string("/apps/weather-indicator/notif")
         #WIND#self.windunit = gconfClient.get_string("/apps/weather-indicator/wind")
         self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
         
@@ -67,6 +69,10 @@ class Weather_Indicator:
         if self.unit in (False, None):
             gconfClient.set_string("/apps/weather-indicator/unit", 'F')
             self.unit = 'F'
+            
+        if self.notif in (False, None):
+            gconfClient.set_string("/apps/weather-indicator/notif", 'N')
+            self.notif = 'N'
         
         #if self.wind in (False, None):
             #gconfClient.set_string("/apps/weather-indicator/wind", 'mph')
@@ -198,6 +204,7 @@ class Weather_Indicator:
         if widget.get_active():
             self.placechosen = self.places.index(widget.get_label())
             gconfClient.set_int("/apps/weather-indicator/placechosen", self.placechosen)
+            gconfClient.set_string("/apps/weather-indicator/current",'')
             self.update_weather()
 
     def update_weather(self, widget=None):
@@ -209,22 +216,24 @@ class Weather_Indicator:
         
         current = self.icon
         
-        if current in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
-            self.storms()
+        if current in ('chance_of_storm', 'storm'):
+            a=self.storms()
+        elif current in ('thunderstorm', 'chance_of_tstorm'):
+            a=self.severe()
         elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
-            self.snow()
+            a=self.snow()
         elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
-            self.fog()
+            a=self.fog()
         elif current in ('chance_of_rain',  'rain'):
-            self.showers()
+            a=self.showers()
         elif current in ('sunny', 'clear'):
-            self.clear()
+            a=self.clear()
         elif current in ('mostly_cloudy', 'cloudy'):
-            self.cloudy()
+            a=self.cloudy()
         elif current in ('mostly_sunny',  'partly_cloudy'):
-            self.few_clouds()
+            a=self.few_clouds()
         else:
-            self.err()
+            a=self.err()
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
         self.city_show.set_label(self.city)
@@ -233,34 +242,51 @@ class Weather_Indicator:
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
         
+        if self.notif != 'N' and a != False:
+	        if self.condition != gconfClient.get_string("/apps/weather-indicator/current") and self.notif == 'U':
+	            self.notify(self.condition, a)
+	        elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
+	            self.notify(self.condition,a,severe=True)
+	            
+        gconfClient.set_string("/apps/weather-indicator/current",self.condition)
+        
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
     def showers(self):
         self.winder.set_icon("stock_weather-showers")
+        return "stock_weather-showers"
         
     def storms(self):
         self.winder.set_icon("stock_weather-storm")
+        return "stock_weather-storm"
         
     def cloudy(self):
         self.winder.set_icon("stock_weather-cloudy")
+        return "stock_weather-cloudy"
         
     def few_clouds(self):
         self.winder.set_icon("weather-few-clouds")
+        return "weather-few-clouds"
     
     def fog(self):
-        self.winder.set_icon("stock_weather-fog")    
+        self.winder.set_icon("stock_weather-fog")
+        return "stock_weather-fog"  
         
     def clear(self):
         self.winder.set_icon("stock_weather-sunny")
+        return "stock_weather-sunny"
         
     def snow(self):
         self.winder.set_icon("stock_weather-snow")
+        return "stock_weather-snow"
         
     def severe(self):
         self.winder.set_icon("weather-severe-alert")
+        return "weather-severe-alert"
     
     def err(self):
         self.winder.set_icon("ubuntuone-client-error")
+        return False
 
     def hide_dialog(self, widget, data):
         widget.hide()
@@ -435,6 +461,19 @@ class Weather_Indicator:
     def extforecast(self,widget):
         forecastwd = ExtendedForecast()
         forecastwd.show()
+        
+    def notify(self,conditon,icon,severe=False):
+        if severe:
+			n = pynotify.Notification (_("Severe weather alert"),
+                self.condition,
+                icon)
+        else:
+		    n = pynotify.Notification (self.condition,
+               "",
+               icon)
+               
+        n.show ()
+
 
 class PreferencesWeatherIndicatorDialog(gtk.Dialog):
     __gtype_name__ = "PreferencesWeatherIndicatorDialog"
@@ -452,6 +491,13 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             self.builder.get_object('celsius').set_active(True)
         else:
             self.builder.get_object('kelvin').set_active(True)
+        if wi.notif == 'N':
+            self.builder.get_object('nonotif').set_active(True)
+        elif wi.notif == 'O':
+            self.builder.get_object('notifsevere').set_active(True)
+        else:
+            self.builder.get_object('notifall').set_active(True)            
+        
         #if wi.windunit == 'm/s':
             #self.builder.get_object('m/s').set_active(True)
         #elif wi.windunit == 'km/h':
@@ -544,6 +590,12 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
                 wi.unit = button.get_label()[0]
                 needupdate = True
                 print 'Unit changed :', wi.unit
+                
+        for button in self.builder.get_object('nonotif').get_group():
+            if button.get_active() == True and button.get_label()[0] != wi.notif:
+                gconfClient.set_string("/apps/weather-indicator/notif", button.get_label()[0])
+                wi.notif = button.get_label()[0]
+                print 'Notifications changed :', wi.notif
                 
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:

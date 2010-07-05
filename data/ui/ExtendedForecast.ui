@@ -55,7 +55,7 @@
                             <property name="visible">True</property>
                             <property name="ypad">10</property>
                             <property name="label">Partially cloudy</property>
-                            <property name="justify">fill</property>
+                            <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="width_chars">15</property>
