@@ -18,7 +18,8 @@ Depends: ${misc:Depends},
  python-gconf,
  python-gobject,
  python-appindicator,
- python-gtk2
+ python-gtk2,
+ python-notify
 Description: A weather indicator for Ubuntu's Indicator Applet
  A weather indicator that displays information for one or multiple places
  in the world
