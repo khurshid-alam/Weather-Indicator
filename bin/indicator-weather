@@ -96,7 +96,7 @@ class indicator_weather:
     ##City
         self.city_show = gtk.MenuItem()
         self.city_show.set_sensitive(False)
-        self.menu.attach(self.city_show,1,2,0,1)
+        self.menu.append(self.city_show)
         self.city_show.show()
         
     ##Condition
@@ -199,6 +199,46 @@ class indicator_weather:
         #im = IndicatorMenu()
         #self.winder.set_menu(im)
         
+    def rebuild_menu(self):
+        for item in self.menu.get_children()[5:len(self.menu.get_children())]:
+            item.destroy()
+        
+    ##Cities
+        if len(self.places) != 1:
+            ##Breaker
+            breaker = gtk.SeparatorMenuItem()
+            breaker.show()
+            self.menu.append(breaker)
+            
+            loco1 = gtk.RadioMenuItem(None, self.places[0])
+            if self.placechosen == 0:
+                loco1.set_active(True)
+            loco1.connect("toggled", self.on_city_changed)
+            loco1.show()
+            self.menu.append(loco1)
+            for place in self.places[1:]:
+                loco = gtk.RadioMenuItem(loco1, place)
+                if self.places.index(place) == self.placechosen:
+                    loco.set_active(True)
+                loco.connect("toggled", self.on_city_changed)
+                loco.show()
+                self.menu.append(loco)
+    ##Breaker
+        breaker = gtk.SeparatorMenuItem()
+        breaker.show()
+        self.menu.append(breaker)
+        
+        ext_show = gtk.MenuItem(_("Extended Forecast..."))
+        ext_show.connect("activate", self.extforecast)
+        ext_show.show()
+        self.menu.append(ext_show)
+    ##Preferences      
+        prefs_show = gtk.MenuItem(_("Weather Preferences..."))
+        prefs_show.connect("activate", self.prefs)
+        prefs_show.show()
+        self.menu.append(prefs_show)
+        
+        self.winder.set_menu(self.menu)
         
     def on_city_changed(self,widget):
         if widget.get_active():
@@ -211,7 +251,7 @@ class indicator_weather:
         
         self.condition = current
         
-        print 'Update :',current,'(every',self.rate,'min.)'
+        print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen]+')'
         
         current = self.icon
         
@@ -363,12 +403,11 @@ class indicator_weather:
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
         s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-        
+        self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
         # extract weather condition data from xml string
         if extended == False:
             weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
             
-            self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
             if firstrun and self.unitsystem == 'SI':
                     self.unit = 'C'
                     gconfClient.set_string("/apps/indicator-weather/unit", 'C')
@@ -444,10 +483,30 @@ class indicator_weather:
                 self.daysofweek.append([day_of_week.attributes["data"].value][0])
             self.lowdata=[]
             for low in parsed.getElementsByTagName("low"):
-                self.lowdata.append([low.attributes["data"].value][0])
+                if (wi.unit == 'C' and wi.unitsystem == 'SI') or (wi.unit == 'F' and wi.unitsystem == 'US'):
+                    self.lowdata.append([low.attributes["data"].value][0])
+                else:
+                    if wi.unit == 'C':
+                        self.lowdata.append(int((((int([low.attributes["data"].value][0]))-32)*5)/9))
+                    elif wi.unit == 'F':
+                        self.lowdata.append(int(((int([low.attributes["data"].value][0])*9)/5)+32))
+                    elif wi.unitsystem == 'SI':
+                        self.lowdata.append((int([low.attributes["data"].value][0]))+273)
+                    else:
+                        self.lowdata.append(int(((((int([low.attributes["data"].value][0]))-32)*5)/9)+273))
             self.highdata=[]
             for high in parsed.getElementsByTagName("high"):
-                self.highdata.append([high.attributes["data"].value][0])
+                if (wi.unit == 'C' and wi.unitsystem == 'SI') or (wi.unit == 'F' and wi.unitsystem == 'US'):
+                    self.highdata.append([high.attributes["data"].value][0])
+                else:
+                    if wi.unit == 'C':
+                        self.highdata.append(int((((int([high.attributes["data"].value][0]))-32)*5)/9))
+                    elif wi.unit == 'F':
+                        self.highdata.append(int(((int([high.attributes["data"].value][0])*9)/5)+32))
+                    elif wi.unitsystem == 'SI':
+                        self.highdata.append((int([high.attributes["data"].value][0]))+273)
+                    else:
+                        self.highdata.append(int(((((int([high.attributes["data"].value][0]))-32)*5)/9)+273))
             self.icons=[]
             for icon in parsed.getElementsByTagName("icon"):
                 self.icons.append([icon.attributes["data"].value][0].split("/ig/images/weather/")[-1].split(".gif")[0])
@@ -473,7 +532,6 @@ class indicator_weather:
 		    n = pynotify.Notification (self.condition,
                "",
                icon)
-               
         n.show ()
 
 
@@ -523,7 +581,7 @@ class PreferencesDialog(gtk.Dialog):
     def on_remove_location(self,widget):
         selection = self.builder.get_object('displaylist').get_selection()
         model, iter = selection.get_selected()
-        if iter != None and len(wi.places)>1:
+        if iter != None:
             model.remove(iter)
     
     def on_add_location(self, widget):
@@ -545,10 +603,10 @@ class PreferencesDialog(gtk.Dialog):
             dialog.vbox.pack_end(hbox, True, True, 0)
             dialog.show_all()
             dialog.run()
-
+            
             ap = entry.get_text()
             dialog.destroy()
-
+        ##CHECK AVAILABILITY
         
         if ap != '':
             newplace = list()
@@ -563,6 +621,7 @@ class PreferencesDialog(gtk.Dialog):
         #"""Called when the WeatherIndicatorWindow is closed."""
         #gtk.main_quit()
     def on_city_edited(self,widget,path,value):
+        ##CHECK AVAILABILITY
         self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
     
     def ok(self, widget, data=None):
@@ -602,6 +661,7 @@ class PreferencesDialog(gtk.Dialog):
         if newplaces != wi.places:
             wi.places = newplaces
             gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+            wi.rebuild_menu()
             
         ##Wind
         #for button in self.builder.get_object('m/s').get_group():
@@ -673,10 +733,12 @@ class ExtendedForecast(gtk.Window):
             i=i+1
             self.builder.get_object('day%scond' % str(i)).set_label(condition)
         i=0
-        if wi.unitsystem == 'SI':
+        if wi.unit == 'C':
             tempunit = '°C'
-        else:
+        elif wi.unit == 'F':
             tempunit = '°F'
+        else:
+            tempunit = '°K'
         for high in wi.highdata:
             i=i+1
             self.builder.get_object('day%stemphigh' % str(i)).set_label(_('High : %s%s') % (high,tempunit))
