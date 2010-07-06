@@ -1,4 +1,4 @@
-project = weather-indicator
+project = indicator-weather
 version = 0.4.3
 template = ubuntu-application
 lp_id = weather-indicator

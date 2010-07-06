@@ -15,7 +15,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-# THIS IS WeatherIndicator CONFIGURATION FILE
+# THIS IS IndicatorWeather CONFIGURATION FILE
 # YOU CAN PUT THERE SOME GLOBAL VALUE
 # Do not touch unless you know what you're doing.
 # you're warned :)
@@ -28,14 +28,14 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__weather_indicator_data_directory__ = '../data'
+__indicator_weather_data_directory__ = '../data'
 __license__ = 'GPL-3'
 
 import os
 
 import gettext
 from gettext import gettext as _
-gettext.textdomain('weather-indicator')
+gettext.textdomain('indicator-weather')
 
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""
@@ -52,16 +52,16 @@ def get_data_file(*path_segments):
 
 
 def get_data_path():
-    """Retrieve weather-indicator data path
+    """Retrieve indicator-weather data path
 
-    This path is by default <weather_indicator_lib_path>/../data/ in trunk
-    and /usr/share/weather-indicator in an installed version but this path
+    This path is by default <indicator_weather_lib_path>/../data/ in trunk
+    and /usr/share/indicator-weather in an installed version but this path
     is specified at installation time.
     """
 
     # Get pathname absolute or relative.
     path = os.path.join(
-        os.path.dirname(__file__), __weather_indicator_data_directory__)
+        os.path.dirname(__file__), __indicator_weather_data_directory__)
 
     abs_data_path = os.path.abspath(path)
     if not os.path.exists(abs_data_path):

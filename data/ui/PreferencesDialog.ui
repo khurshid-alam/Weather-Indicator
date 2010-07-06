@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <!-- interface-requires preferences_weather_indicator_dialog 1.0 -->
+  <!-- interface-requires preferences_dialog 1.0 -->
   <!-- interface-naming-policy project-wide -->
   <object class="GtkListStore" id="citieslist">
     <columns>
@@ -9,9 +9,9 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="PreferencesWeatherIndicatorDialog" id="preferences_weather_indicator_dialog">
+  <object class="PreferencesDialog" id="preferences_dialog">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Weather Preferences</property>
+    <property name="title" translatable="yes">Weather Indicator Preferences</property>
     <property name="resizable">False</property>
     <property name="window_position">mouse</property>
     <property name="default_width">440</property>
@@ -26,6 +26,29 @@
           <object class="GtkVBox" id="vboxpreferences">
             <property name="visible">True</property>
             <child>
+              <object class="GtkCheckButton" id="enableindicator">
+                <property name="label" translatable="yes">Enable the Weather Indicator Applet</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="receives_default">False</property>
+                <property name="xalign">0.019999999552965164</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHSeparator" id="hseparator1">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkLabel" id="notificationslabel">
                 <property name="visible">True</property>
                 <property name="xalign">0.02000001072883606</property>
@@ -33,7 +56,7 @@
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="position">0</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -49,12 +72,14 @@
                       <object class="GtkRadioButton" id="nonotif">
                         <property name="label" translatable="yes">No notifications</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                       </object>
                       <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -62,7 +87,7 @@
                       <object class="GtkRadioButton" id="notifsevere">
                         <property name="label" translatable="yes">Only use notifications to give severe weather alerts</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
                         <property name="draw_indicator">True</property>
                         <property name="group">nonotif</property>
@@ -77,7 +102,7 @@
                       <object class="GtkRadioButton" id="notifall">
                         <property name="label" translatable="yes">Use notifications to give every weather condition change</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="receives_default">False</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
@@ -93,18 +118,18 @@
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
               <object class="GtkCheckButton" id="check_tips">
                 <property name="label" translatable="yes">Show tips in menu</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
               </object>
               <packing>
-                <property name="position">2</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child>
@@ -116,7 +141,7 @@
                 <property name="justify">center</property>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child>
@@ -126,7 +151,7 @@
                   <object class="GtkRadioButton" id="fahrenheit">
                     <property name="label" translatable="yes">Fahrenheit</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
@@ -141,7 +166,7 @@
                   <object class="GtkRadioButton" id="celsius">
                     <property name="label" translatable="yes">Celsius</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">fahrenheit</property>
@@ -156,7 +181,7 @@
                   <object class="GtkRadioButton" id="kelvin">
                     <property name="label" translatable="yes">Kelvin</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">fahrenheit</property>
@@ -169,7 +194,7 @@
                 </child>
               </object>
               <packing>
-                <property name="position">4</property>
+                <property name="position">6</property>
               </packing>
             </child>
             <child>
@@ -179,7 +204,7 @@
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="position">5</property>
+                <property name="position">7</property>
               </packing>
             </child>
             <child>
@@ -188,7 +213,7 @@
                   <object class="GtkRadioButton" id="m/s">
                     <property name="label" translatable="yes">m/s</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="active">True</property>
                     <property name="draw_indicator">True</property>
@@ -204,7 +229,7 @@
                   <object class="GtkRadioButton" id="km/h">
                     <property name="label" translatable="yes">km/h</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">m/s</property>
@@ -220,7 +245,7 @@
                   <object class="GtkRadioButton" id="mph">
                     <property name="label" translatable="yes">mph</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">m/s</property>
@@ -236,7 +261,7 @@
                   <object class="GtkRadioButton" id="knots">
                     <property name="label" translatable="yes">knots</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">m/s</property>
@@ -252,7 +277,7 @@
                   <object class="GtkRadioButton" id="Beaufort">
                     <property name="label" translatable="yes">Beaufort</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">False</property>
                     <property name="draw_indicator">True</property>
                     <property name="group">m/s</property>
@@ -266,7 +291,7 @@
                 </child>
               </object>
               <packing>
-                <property name="position">6</property>
+                <property name="position">8</property>
               </packing>
             </child>
             <child>
@@ -296,7 +321,6 @@
                 <child>
                   <object class="GtkHScale" id="hscale_rate">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
                     <property name="update_policy">delayed</property>
                     <property name="adjustment">rate</property>
                     <property name="upper_stepper_sensitivity">on</property>
@@ -309,7 +333,7 @@
                 </child>
               </object>
               <packing>
-                <property name="position">7</property>
+                <property name="position">9</property>
               </packing>
             </child>
             <child>
@@ -320,7 +344,7 @@
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="position">8</property>
+                <property name="position">10</property>
               </packing>
             </child>
             <child>
@@ -334,14 +358,13 @@
                     <child>
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can_focus">False</property>
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="window_placement_set">True</property>
                         <child>
                           <object class="GtkTreeView" id="displaylist">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
                             <property name="model">citieslist</property>
                             <property name="headers_visible">False</property>
                             <property name="headers_clickable">False</property>
@@ -352,7 +375,10 @@
                                 <property name="title">City</property>
                                 <property name="reorderable">True</property>
                                 <child>
-                                  <object class="GtkCellRendererText" id="City name"/>
+                                  <object class="GtkCellRendererText" id="City name">
+                                    <property name="editable">True</property>
+                                    <signal name="edited" handler="on_city_edited"/>
+                                  </object>
                                   <attributes>
                                     <attribute name="text">0</attribute>
                                   </attributes>
@@ -376,11 +402,13 @@
                     <child>
                       <object class="GtkVButtonBox" id="vbuttonbox1">
                         <property name="visible">True</property>
+                        <property name="homogeneous">True</property>
+                        <property name="layout_style">spread</property>
                         <child>
                           <object class="GtkButton" id="add">
                             <property name="label">gtk-add</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">True</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_add_location"/>
@@ -392,25 +420,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton" id="edit">
-                            <property name="label">gtk-edit</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_edit_location"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkButton" id="remove">
                             <property name="label">gtk-delete</property>
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="receives_default">True</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_remove_location"/>
@@ -418,7 +431,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">False</property>
-                            <property name="position">2</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>
@@ -430,7 +443,7 @@
                 </child>
               </object>
               <packing>
-                <property name="position">9</property>
+                <property name="position">11</property>
               </packing>
             </child>
           </object>
@@ -446,7 +459,7 @@
               <object class="GtkButton" id="button2">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <signal name="clicked" handler="cancel"/>
@@ -461,7 +474,7 @@
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can_focus">False</property>
                 <property name="receives_default">True</property>
                 <property name="use_stock">True</property>
                 <signal name="clicked" handler="ok"/>

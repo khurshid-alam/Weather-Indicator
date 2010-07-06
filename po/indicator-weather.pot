@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-04 22:04+0200\n"
+"POT-Creation-Date: 2010-07-05 22:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,6 +52,14 @@ msgstr ""
 msgid "Low : 16&#xB0;C"
 msgstr ""
 
+#: ../indicator-weather.desktop.in.h:1
+msgid "Indicator applet for current weather conditions"
+msgstr ""
+
+#: ../indicator-weather.desktop.in.h:2
+msgid "Weather Indicator Applet"
+msgstr ""
+
 #. ##Change City
 #. replace = gtk.MenuItem("Change City")
 #. replace.connect("activate", self.replacer)
@@ -66,35 +74,31 @@ msgstr ""
 #. breaker = gtk.SeparatorMenuItem()
 #. breaker.show()
 #. self.menu.append(breaker)
-#: ../bin/weather-indicator.py:179 ../data/ui/IndicatorMenu.ui.h:9
+#: ../bin/indicator-weather.py:185 ../data/ui/IndicatorMenu.ui.h:9
 msgid "Extended Forecast..."
 msgstr ""
 
 #. #Preferences
-#: ../bin/weather-indicator.py:184 ../data/ui/IndicatorMenu.ui.h:17
+#: ../bin/indicator-weather.py:190 ../data/ui/IndicatorMenu.ui.h:17
 msgid "Weather Preferences..."
 msgstr ""
 
-#: ../bin/weather-indicator.py:592
+#: ../bin/indicator-weather.py:466
+msgid "Severe weather alert"
+msgstr ""
+
+#: ../bin/indicator-weather.py:643
 msgid "Extended Forecast for "
 msgstr ""
 
-#: ../bin/weather-indicator.py:632
+#: ../bin/indicator-weather.py:683
 #, python-format
 msgid "High : %s%s"
 msgstr ""
 
-#: ../bin/weather-indicator.py:636
+#: ../bin/indicator-weather.py:687
 #, python-format
 msgid "Low : %s%s"
-msgstr ""
-
-#: ../weather-indicator.desktop.in.h:1
-msgid "Indicator applet for current weather conditions"
-msgstr ""
-
-#: ../weather-indicator.desktop.in.h:2
-msgid "Weather Indicator Applet"
 msgstr ""
 
 #: ../data/ui/EditPlace.ui.h:1
@@ -167,57 +171,69 @@ msgid "<big>Locations</big>"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:2
-msgid "<big>Temperature Unit</big>"
+msgid "<big>Notifications</big>"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:3
-msgid "<big>Update every (min.)</big>"
+msgid "<big>Temperature Unit</big>"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:4
-msgid "<big>Wind Speed Unit</big>"
+msgid "<big>Update every (min.)</big>"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:5
-msgid "Beaufort"
+msgid "<big>Wind Speed Unit</big>"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:6
-msgid "Celsius"
+msgid "Beaufort"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:7
-msgid "Fahrenheit"
+msgid "Celsius"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:8
-msgid "Kelvin"
+msgid "Fahrenheit"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:9
-msgid "Show tips in menu"
+msgid "Kelvin"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:10
-msgid "Use notifications to give weather alerts"
+msgid "No notifications"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:11
-msgid "Weather Preferences"
+msgid "Only use notifications to give severe weather alerts"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:12
-msgid "km/h"
+msgid "Show tips in menu"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:13
-msgid "knots"
+msgid "Use notifications to give every weather condition change"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:14
-msgid "m/s"
+msgid "Weather Preferences"
 msgstr ""
 
 #: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:15
+msgid "km/h"
+msgstr ""
+
+#: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:16
+msgid "knots"
+msgstr ""
+
+#: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:17
+msgid "m/s"
+msgstr ""
+
+#: ../data/ui/PreferencesWeatherIndicatorDialog.ui.h:18
 msgid "mph"
 msgstr ""

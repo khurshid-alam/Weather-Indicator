@@ -34,53 +34,53 @@ from xml.dom.minidom import parseString
 
 import gettext
 from gettext import gettext as _
-gettext.textdomain('weather-indicator')
+gettext.textdomain('indicator-weather')
 
 # Add project root directory (enable symlink, and trunk execution).
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
 
-if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'weather_indicator'))
+if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     and PROJECT_ROOT_DIRECTORY not in sys.path):
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-from weather_indicator.helpers import get_builder
+from indicator_weather.helpers import get_builder
 
 gconfClient = gconf.client_get_default()
 
-class Weather_Indicator:
+class indicator_weather:
     def __init__(self):
-        self.winder = appindicator.Indicator ("weather-indicator", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
+        self.winder = appindicator.Indicator ("indicator-weather", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
         
-        first_run = gconfClient.get_bool("/apps/weather-indicator/first_run")
-        self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
-        self.unit = gconfClient.get_string("/apps/weather-indicator/unit")
-        self.notif = gconfClient.get_string("/apps/weather-indicator/notif")
-        #WIND#self.windunit = gconfClient.get_string("/apps/weather-indicator/wind")
-        self.placechosen = gconfClient.get_int("/apps/weather-indicator/placechosen")
+        first_run = gconfClient.get_bool("/apps/indicator-weather/first_run")
+        self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
+        self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
+        self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
+        #WIND#self.windunit = gconfClient.get_string("/apps/indicator-weather/wind")
+        self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
         
         if self.placechosen in (False, None):
-            gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
+            gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
             self.placechosen = 0
         
         if self.unit in (False, None):
-            gconfClient.set_string("/apps/weather-indicator/unit", 'F')
+            gconfClient.set_string("/apps/indicator-weather/unit", 'F')
             self.unit = 'F'
             
         if self.notif in (False, None):
-            gconfClient.set_string("/apps/weather-indicator/notif", 'N')
+            gconfClient.set_string("/apps/indicator-weather/notif", 'N')
             self.notif = 'N'
         
         #if self.wind in (False, None):
-            #gconfClient.set_string("/apps/weather-indicator/wind", 'mph')
+            #gconfClient.set_string("/apps/indicator-weather/wind", 'mph')
             #self.windunit = 'mph'
             
         if self.rate in (False, None):
-            gconfClient.set_int("/apps/weather-indicator/refresh_rate", 5)
-            self.rate = self.rate = gconfClient.get_int("/apps/weather-indicator/refresh_rate")
+            gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
+            self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
         
         self.menu = gtk.Menu()
 
@@ -128,14 +128,14 @@ class Weather_Indicator:
             self.firsty()
         
         ##WORKAROUND For new places registration
-        oldplace = gconfClient.get_string("/apps/weather-indicator/place")
-        newplaces = gconfClient.get_string("/apps/weather-indicator/places")
+        oldplace = gconfClient.get_string("/apps/indicator-weather/place")
+        newplaces = gconfClient.get_string("/apps/indicator-weather/places")
         if not(oldplace in (False, None)) and newplaces in (False, None):
-            self.places = gconfClient.get_string("/apps/weather-indicator/place").split('|')
-            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+            self.places = gconfClient.get_string("/apps/indicator-weather/place").split('|')
+            gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
         ##Workaround end.
             
-        self.places = eval(gconfClient.get_string("/apps/weather-indicator/places"))
+        self.places = eval(gconfClient.get_string("/apps/indicator-weather/places"))
         print 'Location(s) :',self.places        
         
     ##Cities
@@ -203,11 +203,10 @@ class Weather_Indicator:
     def on_city_changed(self,widget):
         if widget.get_active():
             self.placechosen = self.places.index(widget.get_label())
-            gconfClient.set_int("/apps/weather-indicator/placechosen", self.placechosen)
-            gconfClient.set_string("/apps/weather-indicator/current",'')
-            self.update_weather()
+            gconfClient.set_int("/apps/indicator-weather/placechosen", self.placechosen)
+            self.update_weather(False)
 
-    def update_weather(self, widget=None):
+    def update_weather(self, notif=True,widget=None):
         current = self.get_weather(self.places[self.placechosen])
         
         self.condition = current
@@ -242,13 +241,13 @@ class Weather_Indicator:
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
         
-        if self.notif != 'N' and a != False:
-	        if self.condition != gconfClient.get_string("/apps/weather-indicator/current") and self.notif == 'U':
+        if self.notif != 'N' and a != False and notif:
+	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
 	            self.notify(self.condition, a)
 	        elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
 	            self.notify(self.condition,a,severe=True)
 	            
-        gconfClient.set_string("/apps/weather-indicator/current",self.condition)
+        gconfClient.set_string("/apps/indicator-weather/current",self.condition)
         
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                             
@@ -298,8 +297,11 @@ class Weather_Indicator:
     def replacer(self, widget):
         self.getText()
         
-    def adder(self, widget):
-        self.getText(replace=False)
+    def adder(self):
+        #self.getText(replace=False)
+        ap = AddPlace()
+        ap.show()
+        return ap
             
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
@@ -323,17 +325,17 @@ class Weather_Indicator:
         if replace == False:
             if not (entry.get_text() in self.places):
                 self.places.append(entry.get_text())
-                gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
+                gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
                 dialog.destroy()
                 return True
             else:
                 dialog.destroy()
                 return False
         else:
-            self.places = ['']
-            self.places[0] = entry.get_text()
-            gconfClient.set_string("/apps/weather-indicator/places", str(self.places))
-        gconfClient.set_bool("/apps/weather-indicator/first_run", True)
+            self.places = list()
+            self.places.append(entry.get_text())
+            gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
+        gconfClient.set_bool("/apps/indicator-weather/first_run", True)
         dialog.destroy()
         
         self.update_weather()
@@ -369,9 +371,9 @@ class Weather_Indicator:
             self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
             if firstrun and self.unitsystem == 'SI':
                     self.unit = 'C'
-                    gconfClient.set_string("/apps/weather-indicator/unit", 'C')
+                    gconfClient.set_string("/apps/indicator-weather/unit", 'C')
                     #self.windunit = 'km/h'
-                    #gconfClient.set_string("/apps/weather-indicator/wind", 'km/h')
+                    #gconfClient.set_string("/apps/indicator-weather/wind", 'km/h')
             
             if self.unit == 'F':
                 self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
@@ -454,7 +456,7 @@ class Weather_Indicator:
                 self.conditions.append([condition.attributes["data"].value][0])
         
     def prefs(self, widget):
-        prefswindow = PreferencesWeatherIndicatorDialog()
+        prefswindow = PreferencesDialog()
         
         prefswindow.show()
         
@@ -475,11 +477,11 @@ class Weather_Indicator:
         n.show ()
 
 
-class PreferencesWeatherIndicatorDialog(gtk.Dialog):
-    __gtype_name__ = "PreferencesWeatherIndicatorDialog"
+class PreferencesDialog(gtk.Dialog):
+    __gtype_name__ = "PreferencesDialog"
     def __new__(cls):
-        builder = get_builder('PreferencesWeatherIndicatorDialog')
-        new_object = builder.get_object("preferences_weather_indicator_dialog")
+        builder = get_builder('PreferencesDialog')
+        new_object = builder.get_object("preferences_dialog")
         new_object.finish_initializing(builder)
         return new_object
 
@@ -512,31 +514,21 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
         self.builder.get_object('rate').set_value(wi.rate)
         end = len(wi.places)
         for place in wi.places:
-            newplace = ['']
-            newplace[0]=place
+            newplace = list()
+            newplace.append(place)
             self.builder.get_object('citieslist').append(newplace)
             
         self.builder.connect_signals(self)
         
     def on_remove_location(self,widget):
         selection = self.builder.get_object('displaylist').get_selection()
-        result = selection.get_selected()
-        model, iter = result
+        model, iter = selection.get_selected()
         if iter != None and len(wi.places)>1:
-            wi.places.remove(model[iter][0])
-            wi.placechosen = 0
             model.remove(iter)
-            gconfClient.set_string("/apps/weather-indicator/places", str(wi.places))
-            gconfClient.set_int("/apps/weather-indicator/placechosen", 0)
     
-    def on_edit_location(self, widget):
-        
+    def on_add_location(self, widget):
         def responseToDialog(entry, dialog, response):
             dialog.response(response)
-            
-        selection = self.builder.get_object('displaylist').get_selection()
-        result = selection.get_selected()
-        model, iter = result
         if iter !=None:
             dialog = gtk.MessageDialog(
                 None,
@@ -544,9 +536,8 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
                 gtk.MESSAGE_QUESTION,
                 gtk.BUTTONS_OK,
                 None)
-            dialog.set_markup('You can modify this place :')
+            dialog.set_markup('You can add a place :')
             entry = gtk.Entry()
-            entry.set_text(model[iter][0])
             entry.connect("activate", responseToDialog, dialog, gtk.RESPONSE_OK)
             hbox = gtk.HBox()
             hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
@@ -555,18 +546,13 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
             dialog.show_all()
             dialog.run()
 
-            ep = entry.get_text()
+            ap = entry.get_text()
             dialog.destroy()
-            if ep != '' and not (ep in wi.places):
-                wi.places[wi.places.index(model[iter][0])]=ep
-                gconfClient.set_string("/apps/weather-indicator/places", str(wi.places))
-                model.set_value(iter,0,ep)
-    
-    def on_add_location(self, widget):
-        success = wi.getText(replace=False)
-        if success:
-            newplace = ['']
-            newplace[0]=wi.places[len(wi.places)-1]
+
+        
+        if ap != '':
+            newplace = list()
+            newplace.append(ap)
             self.builder.get_object('citieslist').append(newplace)
     
     def on_wind_activate(self, widget):
@@ -576,6 +562,8 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
         pass
         #"""Called when the WeatherIndicatorWindow is closed."""
         #gtk.main_quit()
+    def on_city_edited(self,widget,path,value):
+        self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
     
     def ok(self, widget, data=None):
         """The user has elected to save the changes.
@@ -586,29 +574,39 @@ class PreferencesWeatherIndicatorDialog(gtk.Dialog):
         ##Temperature##
         for button in self.builder.get_object('fahrenheit').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
-                gconfClient.set_string("/apps/weather-indicator/unit", button.get_label()[0])
+                gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
                 wi.unit = button.get_label()[0]
                 needupdate = True
                 print 'Unit changed :', wi.unit
                 
         for button in self.builder.get_object('nonotif').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.notif:
-                gconfClient.set_string("/apps/weather-indicator/notif", button.get_label()[0])
+                gconfClient.set_string("/apps/indicator-weather/notif", button.get_label()[0])
                 wi.notif = button.get_label()[0]
                 print 'Notifications changed :', wi.notif
                 
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
-            gconfClient.set_int("/apps/weather-indicator/refresh_rate", int(self.builder.get_object('rate').get_value()))
+            gconfClient.set_int("/apps/indicator-weather/refresh_rate", int(self.builder.get_object('rate').get_value()))
             wi.rate = int(self.builder.get_object('rate').get_value())
             gobject.source_remove(wi.rateid)
             wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
             print 'Rate changed :',wi.rate
             
+        ##places
+        newplaces = list()
+        item = self.builder.get_object('citieslist').get_iter_first()
+        while ( item != None ):
+            newplaces.append(self.builder.get_object('citieslist').get_value (item, 0))
+            item = self.builder.get_object('citieslist').iter_next(item)
+        if newplaces != wi.places:
+            wi.places = newplaces
+            gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+            
         ##Wind
         #for button in self.builder.get_object('m/s').get_group():
             #if button.get_active() == True and button.get_label() != wi.windunit:
-                #gconfClient.set_string("/apps/weather-indicator/wind", button.get_label())
+                #gconfClient.set_string("/apps/indicator-weather/wind", button.get_label())
                 #wi.windunit = button.get_label()
                 #needupdate = True
                 #print 'Wind changed :', wi.windunit
@@ -693,7 +691,7 @@ class ExtendedForecast(gtk.Window):
     
     def on_destroy(self, widget, data=None):
         pass
-
+        
 #class EditPlace(gtk.MessageDialog):
     #__gtype_name__ = "EditPlace"
     #def __new__(cls):
@@ -741,5 +739,5 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    wi = Weather_Indicator()
+    wi = indicator_weather()
     main()

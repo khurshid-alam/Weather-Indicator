@@ -24,11 +24,11 @@ __all__ = [
 import os
 import gtk
 
-from weather_indicator.weather_indicatorconfig import get_data_file
+from indicator_weather.indicator_weatherconfig import get_data_file
 
 import gettext
 from gettext import gettext as _
-gettext.textdomain('weather-indicator')
+gettext.textdomain('indicator-weather')
 
 def get_builder(builder_file_name):
     """Return a fully-instantiated gtk.Builder instance from specified ui 
@@ -43,6 +43,6 @@ def get_builder(builder_file_name):
         ui_filename = None
 
     builder = gtk.Builder()
-    builder.set_translation_domain('weather-indicator')
+    builder.set_translation_domain('indicator-weather')
     builder.add_from_file(ui_filename)
     return builder

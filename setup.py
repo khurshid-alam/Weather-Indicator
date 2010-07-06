@@ -24,19 +24,19 @@ import sys
 try:
     import DistUtilsExtra.auto
 except ImportError:
-    print >> sys.stderr, 'To build weather-indicator you need https://launchpad.net/python-distutils-extra'
+    print >> sys.stderr, 'To build indicator-weather you need https://launchpad.net/python-distutils-extra'
     sys.exit(1)
 assert DistUtilsExtra.auto.__version__ >= '2.18', 'needs DistUtilsExtra.auto >= 2.18'
 
 def update_data_path(prefix, oldvalue=None):
 
     try:
-        fin = file('weather_indicator/weather_indicatorconfig.py', 'r')
+        fin = file('indicator_weather/indicator_weatherconfig.py', 'r')
         fout = file(fin.name + '.new', 'w')
 
         for line in fin:            
             fields = line.split(' = ') # Separate variable from value
-            if fields[0] == '__weather_indicator_data_directory__':
+            if fields[0] == '__indicator_weather_data_directory__':
                 # update to prefix, store oldvalue
                 if not oldvalue:
                     oldvalue = fields[1]
@@ -50,7 +50,7 @@ def update_data_path(prefix, oldvalue=None):
         fin.close()
         os.rename(fout.name, fin.name)
     except (OSError, IOError), e:
-        print ("ERROR: Can't find weather_indicator/weather_indicatorconfig.py")
+        print ("ERROR: Can't find indicator_weather/indicator_weatherconfig.py")
         sys.exit(1)
     return oldvalue
 
@@ -58,7 +58,7 @@ def update_data_path(prefix, oldvalue=None):
 def update_desktop_file(datadir):
 
     try:
-        fin = file('weather-indicator.desktop.in', 'r')
+        fin = file('indicator-weather.desktop.in', 'r')
         fout = file(fin.name + '.new', 'w')
 
         for line in fin:            
@@ -70,14 +70,14 @@ def update_desktop_file(datadir):
         fin.close()
         os.rename(fout.name, fin.name)
     except (OSError, IOError), e:
-        print ("ERROR: Can't find weather-indicator.desktop.in")
+        print ("ERROR: Can't find indicator-weather.desktop.in")
         sys.exit(1)
 
 
 class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
     def run(self):
-        previous_value = update_data_path(self.prefix + '/share/weather-indicator/')
-        update_desktop_file(self.prefix + '/share/weather-indicator/')
+        previous_value = update_data_path(self.prefix + '/share/indicator-weather/')
+        update_desktop_file(self.prefix + '/share/indicator-weather/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
 
@@ -88,7 +88,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 ##################################################################################
 
 DistUtilsExtra.auto.setup(
-    name='weather-indicator',
+    name='indicator-weather',
     version='10.07.9',
     license='GPL-3',
     author='Sebastian MacDonald | Mehdi Rejraji',
