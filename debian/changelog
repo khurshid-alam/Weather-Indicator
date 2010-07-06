@@ -1,0 +1,7 @@
+indicator-weather (10.07.10) lucid; urgency=low
+
+  * Now etended forecast uses chosen unit
+  * places addded/edited/removed only after Ok. Nice editing and
+    reordering
+
+ -- ridem <mehd36@gmail.com>  Tue, 06 Jul 2010 20:45:27 +0200
