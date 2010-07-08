@@ -177,10 +177,10 @@ class indicator_weather:
         prefs_show.show()
         self.menu.append(prefs_show)
         
-        place = gtk.MenuItem(_("Add a place..."))
-        place.connect("activate", self.placeadding)
-        place.show()
-        self.menu.append(place)
+        #place = gtk.MenuItem(_("Add a place..."))
+        #place.connect("activate", self.placeadding)
+        #place.show()
+        #self.menu.append(place)
         
         
         #im = IndicatorMenu()
