@@ -1,3 +1,9 @@
+indicator-weather (10.07.11) lucid; urgency=low
+
+  * No intrusion for the first run
+
+ -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:23:33 +0200
+
 indicator-weather (10.07.10) lucid; urgency=low
 
   * Now etended forecast uses chosen unit
