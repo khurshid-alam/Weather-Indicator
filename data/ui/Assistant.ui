@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires assistant 1.0 -->
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <!-- interface-local-resource-path ../media -->
+  <object class="Assistant" id="assistant">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Assistant to set up the weather indicator</property>
+    <property name="resizable">False</property>
+    <property name="window_position">mouse</property>
+    <child>
+      <object class="GtkAlignment" id="alignment1">
+        <property name="visible">True</property>
+        <property name="top_padding">100</property>
+        <property name="bottom_padding">100</property>
+        <property name="left_padding">10</property>
+        <property name="right_padding">10</property>
+        <child>
+          <object class="GtkLabel" id="label1">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Welcome. The following pages will help you adding a place to the Weather Indi</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">word-char</property>
+            <property name="ellipsize">end</property>
+            <property name="max_width_chars">50</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="page_type">intro</property>
+        <property name="title" translatable="yes">Welcome</property>
+      </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
+</interface>

@@ -26,8 +26,8 @@ import appindicator
 import gconf
 import urllib2
 import time
-from threading import Timer
-import thread
+#from threading import Timer
+#import thread
 import locale
 import pynotify
 from xml.dom.minidom import parseString
@@ -51,16 +51,17 @@ gconfClient = gconf.client_get_default()
 
 class indicator_weather:
     def __init__(self):
-        self.winder = appindicator.Indicator ("indicator-weather", "stock_weather-cloudy", appindicator.CATEGORY_APPLICATION_STATUS)
+        self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_APPLICATION_STATUS)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
         
-        first_run = gconfClient.get_bool("/apps/indicator-weather/first_run")
         self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
         self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
         self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
         #WIND#self.windunit = gconfClient.get_string("/apps/indicator-weather/wind")
         self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
+        self.places = gconfClient.get_string("/apps/indicator-weather/places")
+        self.placesid = gconfClient.get_string("/apps/indicator-weather/placesid")
         
         if self.placechosen in (False, None):
             gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
@@ -81,17 +82,26 @@ class indicator_weather:
         if self.rate in (False, None):
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
             self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
-        
+            
+        if self.places in (False, None, '[]', "['']",):
+            self.menu_noplace()
+        else:
+            self.places = eval(self.places)
+            self.menu_normal()
+            self.place = self.places[self.placechosen]
+            self.update_weather()
+            self.winder.set_menu(self.menu)
+            
+    def menu_noplace(self):
+        menu_noplace = gtk.Menu()
+        setup = gtk.MenuItem(_("Set Up Weather..."))
+        setup.connect("activate", self.addlocation)
+        setup.show()
+        menu_noplace.append(setup)
+        self.winder.set_menu(menu_noplace)
+    
+    def menu_normal(self):
         self.menu = gtk.Menu()
-
-        '''self.city_show = gtk.MenuItem()
-        self.city_table = gtk.Table(1, 2, True)
-        self.city_show.add(self.city_table)
-        city_adder = gtk.Label("City")
-        self.city_table.attach(city_adder, 0, 1, 0, 1)
-        city_adder.show()
-        self.city_show.show_all()
-        self.menu.append(self.city_show)'''
         
     ##City
         self.city_show = gtk.MenuItem()
@@ -123,20 +133,13 @@ class indicator_weather:
         self.wind_show.show()
         self.menu.append(self.wind_show)
                 
-    ##If this is the first run : newlocation, then update the menu elements above.
-        if first_run in (False, None):
-            self.firsty()
-        
-        ##WORKAROUND For new places registration
-        oldplace = gconfClient.get_string("/apps/indicator-weather/place")
-        newplaces = gconfClient.get_string("/apps/indicator-weather/places")
-        if not(oldplace in (False, None)) and newplaces in (False, None):
-            self.places = gconfClient.get_string("/apps/indicator-weather/place").split('|')
-            gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
-        ##Workaround end.
-            
-        self.places = eval(gconfClient.get_string("/apps/indicator-weather/places"))
-        print 'Location(s) :',self.places        
+        ###WORKAROUND For new places registration
+        #oldplace = gconfClient.get_string("/apps/indicator-weather/place")
+        #newplaces = gconfClient.get_string("/apps/indicator-weather/places")
+        #if not(oldplace in (False, None)) and newplaces in (False, None):
+            #self.places = gconfClient.get_string("/apps/indicator-weather/place").split('|')
+            #gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
+        ###Workaround end.
         
     ##Cities
         if len(self.places) != 1:
@@ -164,40 +167,28 @@ class indicator_weather:
         breaker.show()
         self.menu.append(breaker)
         
-    ###Change City
-        #replace = gtk.MenuItem("Change City")
-        #replace.connect("activate", self.replacer)
-        #replace.show()
-        #self.menu.append(replace)
-
-    ##Add City
-        #add = gtk.MenuItem("Add City")
-        #add.connect("activate", self.adder)
-        #add.show()
-        #self.menu.append(add)
-
-    ###Breaker
-        #breaker = gtk.SeparatorMenuItem()
-        #breaker.show()
-        #self.menu.append(breaker)
-        
-        
-        ext_show = gtk.MenuItem(_("Extended Forecast..."))
+        ext_show = gtk.MenuItem(_("Forecast..."))
         ext_show.connect("activate", self.extforecast)
         ext_show.show()
         self.menu.append(ext_show)
     ##Preferences      
-        prefs_show = gtk.MenuItem(_("Weather Preferences..."))
+        prefs_show = gtk.MenuItem(_("Preferences..."))
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
         
-        self.place = self.places[self.placechosen]
-        self.update_weather()
+        place = gtk.MenuItem(_("Add a place..."))
+        place.connect("activate", self.placeadding)
+        place.show()
+        self.menu.append(place)
         
-        self.winder.set_menu(self.menu)
+        
         #im = IndicatorMenu()
         #self.winder.set_menu(im)
+        
+    def placeadding(self,widget):
+        assistant = Assistant()
+        assistant.show()
         
     def rebuild_menu(self):
         for item in self.menu.get_children()[5:len(self.menu.get_children())]:
@@ -228,18 +219,19 @@ class indicator_weather:
         breaker.show()
         self.menu.append(breaker)
         
-        ext_show = gtk.MenuItem(_("Extended Forecast..."))
+        ext_show = gtk.MenuItem(_("Forecast..."))
         ext_show.connect("activate", self.extforecast)
         ext_show.show()
         self.menu.append(ext_show)
     ##Preferences      
-        prefs_show = gtk.MenuItem(_("Weather Preferences..."))
+        prefs_show = gtk.MenuItem(_("Preferences..."))
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
         
         self.winder.set_menu(self.menu)
-        
+
+    
     def on_city_changed(self,widget):
         if widget.get_active():
             self.placechosen = self.places.index(widget.get_label())
@@ -333,15 +325,6 @@ class indicator_weather:
     def firsty(self):
         self.get_weather('London, UK',True)
         self.getText()
-    
-    def replacer(self, widget):
-        self.getText()
-        
-    def adder(self):
-        #self.getText(replace=False)
-        ap = AddPlace()
-        ap.show()
-        return ap
             
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
@@ -375,13 +358,12 @@ class indicator_weather:
             self.places = list()
             self.places.append(entry.get_text())
             gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
-        gconfClient.set_bool("/apps/indicator-weather/first_run", True)
         dialog.destroy()
         
-        self.update_weather()
+        #self.update_weather()
         
     def get_weather(self, city, firstrun=False, extended=False):
-        #create google weather api url
+        
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
@@ -523,6 +505,13 @@ class indicator_weather:
         forecastwd = ExtendedForecast()
         forecastwd.show()
         
+    def addlocation(self,widget):
+        self.getText()
+        self.menu_normal()
+        self.place = self.places[self.placechosen]
+        self.update_weather(False)
+        self.winder.set_menu(self.menu)
+        
     def notify(self,conditon,icon,severe=False):
         if severe:
 			n = pynotify.Notification (_("Severe weather alert"),
@@ -660,8 +649,19 @@ class PreferencesDialog(gtk.Dialog):
             item = self.builder.get_object('citieslist').iter_next(item)
         if newplaces != wi.places:
             wi.places = newplaces
-            gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
-            wi.rebuild_menu()
+            if len(wi.places) >= 1:
+                gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+                if wi.place in wi.places:
+                    wi.placechosen = wi.places.index(wi.place)
+                else:
+                    wi.placechosen = 0
+                gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
+                wi.rebuild_menu()
+                needupdate = True
+            else:
+                wi.winder.set_icon("weather-clear")
+                wi.menu_noplace()
+                needupdate = False
             
         ##Wind
         #for button in self.builder.get_object('m/s').get_group():
@@ -672,7 +672,7 @@ class PreferencesDialog(gtk.Dialog):
                 #print 'Wind changed :', wi.windunit
         
         if needupdate:
-            wi.update_weather()
+            wi.update_weather(False)
         
         # Make any updates to self._preferences here. e.g.
         #self._preferences["preference1"] = "value2"
@@ -699,7 +699,7 @@ class ExtendedForecast(gtk.Window):
         self.builder = builder
         self.builder.connect_signals(self)
         
-        self.builder.get_object('extended_forecast').set_title(_('Extended Forecast for ')+wi.places[wi.placechosen])
+        self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen])
         
         wi.get_weather(wi.places[wi.placechosen],False,True)
         
@@ -782,7 +782,19 @@ class ExtendedForecast(gtk.Window):
         ## Restore any changes to self._preferences here.
         #self.destroy()
         #return False
+
+class Assistant(gtk.Assistant):
+    __gtype_name__ = "Assistant"
+    def __new__(cls):
+        builder = get_builder('Assistant')
+        new_object = builder.get_object("assistant")
+        new_object.finish_initializing(builder)
+        return new_object
         
+    def finish_initializing(self, builder):
+        self.builder = builder
+        self.builder.connect_signals(self)
+
 
 #class IndicatorMenu(gtk.Menu):
     #__gtype_name__ = "IndicatorMenu"
