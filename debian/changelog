@@ -1,3 +1,9 @@
+indicator-weather (10.07.12) lucid; urgency=low
+
+  * Work on assistant
+
+ -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:26:35 +0200
+
 indicator-weather (10.07.11) lucid; urgency=low
 
   * No intrusion for the first run
