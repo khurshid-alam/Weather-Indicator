@@ -86,7 +86,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='indicator-weather',
-    version='10.07.14',
+    version='10.07.15',
     license='GPL-3',
     author='Sebastian MacDonald | Mehdi Rejraji',
     author_email='sebas310@gmail.com',
