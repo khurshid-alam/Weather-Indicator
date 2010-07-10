@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-10 01:02+0200\n"
+"POT-Creation-Date: 2010-07-10 02:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,48 +140,74 @@ msgstr ""
 msgid "Weather Indicator Applet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:97
+#: ../bin/indicator-weather.py:98
 msgid "Set Up Weather..."
 msgstr ""
 
-#: ../bin/indicator-weather.py:170 ../bin/indicator-weather.py:222
+#: ../bin/indicator-weather.py:171 ../bin/indicator-weather.py:223
 msgid "Forecast..."
 msgstr ""
 
 #. #Preferences
-#: ../bin/indicator-weather.py:175 ../bin/indicator-weather.py:227
+#: ../bin/indicator-weather.py:176 ../bin/indicator-weather.py:228
 msgid "Preferences..."
 msgstr ""
 
-#: ../bin/indicator-weather.py:517
+#: ../bin/indicator-weather.py:518
 msgid "Severe weather alert"
 msgstr ""
 
-#: ../bin/indicator-weather.py:702
+#: ../bin/indicator-weather.py:704
 msgid "Weather Forecast for "
 msgstr ""
 
-#: ../bin/indicator-weather.py:744
+#: ../bin/indicator-weather.py:746
 #, python-format
 msgid "High : %s%s"
 msgstr ""
 
-#: ../bin/indicator-weather.py:748
+#: ../bin/indicator-weather.py:750
 #, python-format
 msgid "Low : %s%s"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
-msgid "Assistant to set up the weather indicator"
+msgid "<big>Rungis, France</big>"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:2
-msgid "Welcome"
+msgid "Assistant to set up the weather indicator"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:3
+msgid "Blahblaaaaah"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:4
+msgid "Confirmation"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:5
+msgid "Find a Place"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:6
+msgid "Find my location"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:7
 msgid ""
-"Welcome. The following pages will help you adding a place to the Weather Indi"
+"If yes, then you can apply and the weather applet will start\n"
+"working.\n"
+"Otherwise, you'll have to go back and set a new city."
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:10
+msgid "Is this the place you were looking for ? :"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:11
+msgid "The Place :"
 msgstr ""
 
 #: ../data/ui/IndicatorMenu.ui.h:1
