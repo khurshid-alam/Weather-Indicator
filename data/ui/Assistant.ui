@@ -1,43 +1,115 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires assistant 1.0 -->
   <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires assistant 1.0 -->
   <!-- interface-naming-policy project-wide -->
   <!-- interface-local-resource-path ../media -->
   <object class="Assistant" id="assistant">
     <property name="title" translatable="yes">Assistant to set up the weather indicator</property>
     <property name="resizable">False</property>
     <property name="window_position">mouse</property>
+    <property name="deletable">False</property>
     <signal name="apply" handler="on_apply"/>
     <signal name="cancel" handler="on_cancel"/>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkVBox" id="chooseunit">
         <property name="visible">True</property>
         <child>
-          <object class="GtkLabel" id="label1">
+          <object class="GtkLabel" id="chooseunitlbl">
             <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="yalign">0</property>
-            <property name="xpad">6</property>
-            <property name="ypad">6</property>
-            <property name="label" translatable="yes">Blahblaaaaah</property>
+            <property name="label" translatable="yes">Choose a unit type for temperature :</property>
           </object>
           <packing>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkHButtonBox" id="unitbox">
             <property name="visible">True</property>
+            <property name="spacing">5</property>
+            <property name="layout_style">spread</property>
             <child>
-              <object class="GtkLabel" id="label2">
+              <object class="GtkRadioButton" id="fahrenheit">
+                <property name="label" translatable="yes">Fahrenheit</property>
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="xpad">5</property>
-                <property name="label" translatable="yes">The Place :</property>
+                <property name="can_focus">False</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="celsius">
+                <property name="label" translatable="yes">Celsius</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">fahrenheit</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkRadioButton" id="kelvin">
+                <property name="label" translatable="yes">Kelvin</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">fahrenheit</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="title" translatable="yes">Choose a unit type</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkVBox" id="placeinput">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkLabel" id="lblplaceinput">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+            <property name="xpad">6</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">Please enter a location manually or let us try to find your location</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">word-char</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="placeinputhbox">
+            <property name="visible">True</property>
+            <property name="spacing">20</property>
+            <child>
+              <object class="GtkFixed" id="fixed3">
+                <property name="visible">True</property>
+              </object>
+              <packing>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -46,6 +118,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
+                <property name="text" translatable="yes">Enter Location</property>
                 <signal name="changed" handler="on_entry_edited"/>
               </object>
               <packing>
@@ -60,7 +133,7 @@
                 <property name="left_padding">10</property>
                 <property name="right_padding">10</property>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="findloc">
                     <property name="label" translatable="yes">Find my location</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -82,23 +155,20 @@
         </child>
       </object>
       <packing>
-        <property name="page_type">intro</property>
         <property name="title" translatable="yes">Add a place</property>
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="vbox3">
+      <object class="GtkVBox" id="wrongplace">
         <property name="visible">True</property>
         <property name="homogeneous">True</property>
         <child>
-          <object class="GtkLabel" id="label6">
+          <object class="GtkLabel" id="lblwrongplace">
             <property name="visible">True</property>
             <property name="xpad">20</property>
             <property name="label" translatable="yes">We're sorry, but we dind't find the city you were looking for. Go back and try again.</property>
             <property name="wrap">True</property>
             <property name="wrap_mode">word-char</property>
-            <property name="ellipsize">end</property>
-            <property name="max_width_chars">20</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -108,16 +178,18 @@
       </object>
     </child>
     <child>
-      <object class="GtkVBox" id="vbox2">
+      <object class="GtkVBox" id="confirmplace">
         <property name="visible">True</property>
         <child>
-          <object class="GtkLabel" id="label3">
+          <object class="GtkLabel" id="lblisthis">
             <property name="visible">True</property>
             <property name="xalign">0</property>
             <property name="yalign">0</property>
             <property name="xpad">6</property>
             <property name="ypad">6</property>
             <property name="label" translatable="yes">Is this the place you were looking for ? :</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">word-char</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -125,7 +197,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label4">
+          <object class="GtkLabel" id="lblplace">
             <property name="visible">True</property>
             <property name="label" translatable="yes">&lt;big&gt;Rungis, France&lt;/big&gt;</property>
             <property name="use_markup">True</property>
@@ -135,18 +207,14 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label5">
+          <object class="GtkLabel" id="lblif">
             <property name="visible">True</property>
             <property name="xalign">0</property>
             <property name="yalign">0</property>
             <property name="xpad">6</property>
             <property name="ypad">6</property>
-            <property name="label" translatable="yes">If yes, then you can apply and the weather applet will start
-working.
-Otherwise, you'll have to go back and set a new city.</property>
+            <property name="label" translatable="yes">If yes, then you can go on.Otherwise, you'll have to go back and set a new city.</property>
             <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
-            <property name="ellipsize">end</property>
           </object>
           <packing>
             <property name="position">2</property>
@@ -154,8 +222,208 @@ Otherwise, you'll have to go back and set a new city.</property>
         </child>
       </object>
       <packing>
+        <property name="title" translatable="yes">Confirm the place</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkVBox" id="label">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkLabel" id="lblwould">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">Would you like to label this location ?
+If yes, type it below. 
+If no, leave blank and go on.</property>
+          </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox4">
+            <property name="visible">True</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkFixed" id="fixed1">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entrylbl">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">&#x2022;</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkFixed" id="fixed2">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="title" translatable="yes">Label This Location</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkVBox" id="review">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkLabel" id="lblreview">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="xpad">6</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">Review your settings. You may go back and make changes if needed.</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">word-char</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="revunit">
+            <property name="visible">True</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkArrow" id="arrow1">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Temperature Unit:</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="unitlbl">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Celsius&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="revplace">
+            <property name="visible">True</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkArrow" id="arrow2">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl2">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Location:</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="placelbl">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Orange, Texas&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="revlabel">
+            <property name="visible">True</property>
+            <property name="spacing">5</property>
+            <child>
+              <object class="GtkArrow" id="arrow3">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="lbl3">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Label:</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="labellbl">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">&lt;b&gt;Home&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
         <property name="page_type">confirm</property>
-        <property name="title" translatable="yes">Confirm</property>
+        <property name="title" translatable="yes">Review your settings</property>
       </packing>
     </child>
   </object>

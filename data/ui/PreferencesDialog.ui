@@ -372,10 +372,7 @@
                                 <property name="title">City</property>
                                 <property name="reorderable">True</property>
                                 <child>
-                                  <object class="GtkCellRendererText" id="City name">
-                                    <property name="editable">True</property>
-                                    <signal name="edited" handler="on_city_edited"/>
-                                  </object>
+                                  <object class="GtkCellRendererText" id="City name"/>
                                   <attributes>
                                     <attribute name="text">0</attribute>
                                   </attributes>

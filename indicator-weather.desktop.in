@@ -1,7 +1,7 @@
 [Desktop Entry]
-_Name=Weather Indicator Applet
-_Comment=Indicator applet for current weather conditions
-GenericName=Weather Applet
+_Name=Weather Indicator Preferences
+_Comment=Set Up the Weather Indicator applet
+GenericName=Weather Indicator Preferences
 Categories=GNOME;Settings;
 Exec=indicator-weather --settings
 Icon=/usr/share/indicator-weather/media/icon.png

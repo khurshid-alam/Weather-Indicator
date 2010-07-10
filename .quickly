@@ -4,3 +4,4 @@ template = ubuntu-application
 lp_id = weather-indicator
 ppa = weather-indicator/weather-indicator-experimental
 bzrbranch = lp:weather-indicator
+dependencies = 

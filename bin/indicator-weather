@@ -27,6 +27,8 @@ import gconf
 import urllib2
 #import time
 import re
+import datetime
+import simplejson
 #from threading import Timer
 #import thread
 import locale
@@ -134,6 +136,17 @@ class indicator_weather:
         self.wind_show.show()
         self.menu.append(self.wind_show)
                 
+    ##Sunrise
+        self.sunrise_show = gtk.MenuItem()
+        self.sunrise_show.set_sensitive(False)
+        self.sunrise_show.show()
+        self.menu.append(self.sunrise_show)
+
+    ##Sunset
+        self.sunset_show = gtk.MenuItem()
+        self.sunset_show.set_sensitive(False)
+        self.sunset_show.show()
+        self.menu.append(self.sunset_show)
         ###WORKAROUND For new places registration
         #oldplace = gconfClient.get_string("/apps/indicator-weather/place")
         #newplaces = gconfClient.get_string("/apps/indicator-weather/places")
@@ -178,21 +191,16 @@ class indicator_weather:
         prefs_show.show()
         self.menu.append(prefs_show)
         
-        #place = gtk.MenuItem(_("Add a place..."))
-        #place.connect("activate", self.placeadding)
-        #place.show()
-        #self.menu.append(place)
-        
-        
         #im = IndicatorMenu()
         #self.winder.set_menu(im)
         
     def placeadding(self,widget):
+        self.placeadded = ''
         self.assistant = Assistant()
         self.assistant.show()
         
     def rebuild_menu(self):
-        for item in self.menu.get_children()[5:len(self.menu.get_children())]:
+        for item in self.menu.get_children()[7:len(self.menu.get_children())]:
             item.destroy()
         
     ##Cities
@@ -241,7 +249,14 @@ class indicator_weather:
 
     def update_weather(self, notif=True,widget=None):
         current = self.get_weather(self.places[self.placechosen])
-        
+        sunrise,sunset,timezone = self.get_sun(self.places[self.placechosen])
+        now = datetime.datetime.now().time()
+        sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
+        sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
+        if now<sunrise_t or now>sunset_t:
+            night = True
+        else:
+            night = False
         self.condition = current
         
         print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen]+')'
@@ -249,23 +264,47 @@ class indicator_weather:
         current = self.icon
         
         if current in ('chance_of_storm', 'storm'):
-            a=self.storms()
+            self.winder.set_icon("weather-storm")
+            a="weather-storm"
         elif current in ('thunderstorm', 'chance_of_tstorm'):
-            a=self.severe()
+            self.winder.set_icon("weather-severe-alert")
+            a="weather-severe-alert"
         elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
-            a=self.snow()
+            self.winder.set_icon("weather-snow")
+            a= "weather-snow"
         elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
-            a=self.fog()
-        elif current in ('chance_of_rain',  'rain'):
-            a=self.showers()
+            self.winder.set_icon("weather-fog")
+            a="weather-fog" 
+        elif current == 'rain':
+            self.winder.set_icon("weather-showers")
+            a="weather-showers"
+        elif current == 'chance_of_rain':
+            self.winder.set_icon("weather-showers-scattered")
+            a = "weather-showers-scattered"
         elif current in ('sunny', 'clear'):
-            a=self.clear()
+            if night:
+                self.winder.set_icon("weather-clear-night")
+                a="weather-clear-night"
+            else:
+                self.winder.set_icon("weather-clear")
+                a="weather-clear"
         elif current in ('mostly_cloudy', 'cloudy'):
-            a=self.cloudy()
+            if night:
+                self.winder.set_icon("weather-clouds-night")
+                a="weather-clouds-night"
+            else:
+                self.winder.set_icon("weather-clouds")
+                a="weather-clouds"
         elif current in ('mostly_sunny',  'partly_cloudy'):
-            a=self.few_clouds()
+            if night:
+                self.winder.set_icon("weather-few-clouds-night")
+                a="weather-few-clouds-night"
+            else:    
+                self.winder.set_icon("weather-few-clouds")
+                a="weather-few-clouds"
         else:
-            a=self.err()
+            self.winder.set_icon("ubuntuone-client-error")
+            a=False
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
         self.city_show.set_label(self.city)
@@ -273,6 +312,9 @@ class indicator_weather:
         self.temp_show.set_label(self.temp)
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
+        import time
+        self.sunrise_show.set_label(_('Sunrise: ')+time.strftime('%X',time.strptime(sunrise,'%H:%M:%S')))
+        self.sunset_show.set_label(_('Sunset: ')+time.strftime('%X',time.strptime(sunset,'%H:%M:%S')))
         
         if self.notif != 'N' and a != False and notif:
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
@@ -283,49 +325,6 @@ class indicator_weather:
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
         
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
-                            
-    def showers(self):
-        self.winder.set_icon("stock_weather-showers")
-        return "stock_weather-showers"
-        
-    def storms(self):
-        self.winder.set_icon("stock_weather-storm")
-        return "stock_weather-storm"
-        
-    def cloudy(self):
-        self.winder.set_icon("stock_weather-cloudy")
-        return "stock_weather-cloudy"
-        
-    def few_clouds(self):
-        self.winder.set_icon("weather-few-clouds")
-        return "weather-few-clouds"
-    
-    def fog(self):
-        self.winder.set_icon("stock_weather-fog")
-        return "stock_weather-fog"  
-        
-    def clear(self):
-        self.winder.set_icon("stock_weather-sunny")
-        return "stock_weather-sunny"
-        
-    def snow(self):
-        self.winder.set_icon("stock_weather-snow")
-        return "stock_weather-snow"
-        
-    def severe(self):
-        self.winder.set_icon("weather-severe-alert")
-        return "weather-severe-alert"
-    
-    def err(self):
-        self.winder.set_icon("ubuntuone-client-error")
-        return False
-
-    def hide_dialog(self, widget, data):
-        widget.hide()
-    
-    def firsty(self):
-        self.get_weather('London, UK',True)
-        self.getText()
             
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
@@ -362,7 +361,27 @@ class indicator_weather:
         dialog.destroy()
         
         #self.update_weather()
-        
+    def get_sun(self,city):
+        url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city)+'&sensor=false'
+        try:
+            result = simplejson.load(urllib2.urlopen(url))
+        except:
+            return error,error
+        lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
+        now = datetime.datetime.now()
+        url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
+        try:
+            f = urllib2.urlopen(url)
+        except:
+            return error,error
+        s=f.read()
+        parsed = parseString(s)
+        sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
+        sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
+        timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+        return sunrise,sunset,timezone
+            
+            
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         
         import locale
@@ -502,9 +521,9 @@ class indicator_weather:
                 self.conditions.append([condition.attributes["data"].value][0])
         
     def prefs(self, widget):
-        prefswindow = PreferencesDialog()
+        self.prefswindow = PreferencesDialog()
         
-        prefswindow.show()
+        self.prefswindow.show()
         
     def extforecast(self,widget):
         forecastwd = ExtendedForecast()
@@ -579,33 +598,8 @@ class PreferencesDialog(gtk.Dialog):
             model.remove(iter)
     
     def on_add_location(self, widget):
-        def responseToDialog(entry, dialog, response):
-            dialog.response(response)
-        if iter !=None:
-            dialog = gtk.MessageDialog(
-                None,
-                gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                gtk.MESSAGE_QUESTION,
-                gtk.BUTTONS_OK,
-                None)
-            dialog.set_markup('You can add a place :')
-            entry = gtk.Entry()
-            entry.connect("activate", responseToDialog, dialog, gtk.RESPONSE_OK)
-            hbox = gtk.HBox()
-            hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
-            hbox.pack_end(entry)
-            dialog.vbox.pack_end(hbox, True, True, 0)
-            dialog.show_all()
-            dialog.run()
-            
-            ap = entry.get_text()
-            dialog.destroy()
-        ##CHECK AVAILABILITY
-        
-        if ap != '':
-            newplace = list()
-            newplace.append(ap)
-            self.builder.get_object('citieslist').append(newplace)
+        self.assistant2 = Assistant2()
+        self.assistant2.show()
     
     def on_wind_activate(self, widget):
         pass
@@ -614,9 +608,9 @@ class PreferencesDialog(gtk.Dialog):
         pass
         #"""Called when the WeatherIndicatorWindow is closed."""
         #gtk.main_quit()
-    def on_city_edited(self,widget,path,value):
-        ##CHECK AVAILABILITY
-        self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
+    #def on_city_edited(self,widget,path,value):
+        ###CHECK AVAILABILITY
+        #self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
     
     def ok(self, widget, data=None):
         """The user has elected to save the changes.
@@ -800,6 +794,9 @@ class Assistant(gtk.Assistant):
     def finish_initializing(self, builder):
         self.builder = builder
         self.builder.connect_signals(self)
+        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("chooseunit"),True)
+        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("label"),True)
+        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("review"),True)
         self.builder.get_object("assistant").set_forward_page_func(self.get_city)
         
     def on_find_location(self,widget):
@@ -812,32 +809,95 @@ class Assistant(gtk.Assistant):
             self.builder.get_object("entry").set_text(m.group(1))
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
-            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox1"),False)
+            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("placeinput"),False)
         else:
-            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox1"),True)
+            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("placeinput"),True)
     
     def get_city(self,current_page):
-        label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
-        if not label in ('Error opening url','<?xml version='):
-            self.builder.get_object("label4").set_label('<big>'+label+'</big>')
-            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox2"),True)
-            return 2
-        else:
-            return 1
+        if self.builder.get_object("assistant").get_current_page() == 1:
+            self.label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
+            if not self.label in ('Error opening url','<?xml version='):
+                self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
+                self.builder.get_object("assistant").set_page_complete(self.builder.get_object("confirmplace"),True)
+                return 3
+            else:
+                return 2
+        elif self.builder.get_object("assistant").get_current_page() == 4:
+            lbl = self.builder.get_object("entrylbl").get_text()
+            if lbl == '':
+                self.builder.get_object("labellbl").set_label('<b>No Label</b>')
+                self.builder.get_object("lbl3").set_label('')
+            else:
+                self.builder.get_object("labellbl").set_label('<b>'+self.builder.get_object("entrylbl").get_text()+'</b>')
+                self.builder.get_object("lbl3").set_label('Label:')
+            for button in self.builder.get_object('fahrenheit').get_group():
+                if button.get_active() == True:
+                    self.builder.get_object("unitlbl").set_label('<b>'+button.get_label()+'</b>')
+            self.builder.get_object("placelbl").set_label('<b>'+self.label+'</b>')
+            
+        return self.builder.get_object("assistant").get_current_page() + 1
             
     def on_cancel(self,widget):
         self.destroy()
         
     def on_apply(self,widget):
-        place = self.builder.get_object("entry").get_text()
+        wi.placeadded = self.label
         self.hide()
         wi.places = list()
-        wi.places.append(place)
+        wi.places.append(wi.placeadded)
         gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
         wi.menu_normal()
         wi.place = wi.places[wi.placechosen]
         wi.update_weather(False)
         wi.winder.set_menu(wi.menu)
+        
+class Assistant2(gtk.Assistant):
+    __gtype_name__ = "Assistant2"
+    def __new__(cls):
+        builder = get_builder('Assistant2')
+        new_object = builder.get_object("assistant2")
+        new_object.finish_initializing(builder)
+        return new_object
+        
+    def finish_initializing(self, builder):
+        self.builder = builder
+        self.builder.connect_signals(self)
+        self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("label"),True)
+        self.builder.get_object("assistant2").set_forward_page_func(self.get_city)
+        
+    def on_find_location(self,widget):
+        def get_my_ip_address():
+            whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
+            return urllib2.urlopen(whatismyip).readlines()[0]
+        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+        m = re.search('City: (.*)', response)
+        if m:
+            self.builder.get_object("entry").set_text(m.group(1))
+    def on_entry_edited(self,widget):
+        if widget.get_text() == '':
+            self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("placeinput"),False)
+        else:
+            self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("placeinput"),True)
+    
+    def get_city(self,current_page):
+        if self.builder.get_object("assistant2").get_current_page() == 0:
+            self.label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
+            if not self.label in ('Error opening url','<?xml version='):
+                self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
+                self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
+                return 2
+            else:
+                return 1
+        return self.builder.get_object("assistant2").get_current_page() + 1
+            
+    def on_cancel(self,widget):
+        self.destroy()
+        
+    def on_apply(self,widget):
+        newplace = list()
+        newplace.append(self.label)
+        wi.prefswindow.builder.get_object('citieslist').append(newplace)
+        self.hide()
         
 #class IndicatorMenu(gtk.Menu):
     #__gtype_name__ = "IndicatorMenu"
