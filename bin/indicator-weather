@@ -63,6 +63,7 @@ class indicator_weather:
         self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
         #WIND#self.windunit = gconfClient.get_string("/apps/indicator-weather/wind")
         self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
+        self.labels = gconfClient.get_string("/apps/indicator-weather/places")
         self.places = gconfClient.get_string("/apps/indicator-weather/places")
         self.placesid = gconfClient.get_string("/apps/indicator-weather/placesid")
         
@@ -89,6 +90,7 @@ class indicator_weather:
         if self.places in (False, None, '[]', "['']",):
             self.menu_noplace()
         else:
+            
             self.places = eval(self.places)
             self.menu_normal()
             self.place = self.places[self.placechosen]
@@ -658,6 +660,8 @@ class PreferencesDialog(gtk.Dialog):
                 wi.rebuild_menu()
                 needupdate = True
             else:
+                wi.placechosen = 0
+                gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
                 gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
                 wi.winder.set_icon("weather-clear")
                 wi.menu_noplace()
