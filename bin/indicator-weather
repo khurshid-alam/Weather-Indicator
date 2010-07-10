@@ -25,7 +25,8 @@ import gobject
 import appindicator
 import gconf
 import urllib2
-import time
+#import time
+import re
 #from threading import Timer
 #import thread
 import locale
@@ -95,7 +96,7 @@ class indicator_weather:
     def menu_noplace(self):
         menu_noplace = gtk.Menu()
         setup = gtk.MenuItem(_("Set Up Weather..."))
-        setup.connect("activate", self.addlocation)
+        setup.connect("activate", self.placeadding)
         setup.show()
         menu_noplace.append(setup)
         self.winder.set_menu(menu_noplace)
@@ -659,6 +660,7 @@ class PreferencesDialog(gtk.Dialog):
                 wi.rebuild_menu()
                 needupdate = True
             else:
+                gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
                 wi.winder.set_icon("weather-clear")
                 wi.menu_noplace()
                 needupdate = False
@@ -794,8 +796,19 @@ class Assistant(gtk.Assistant):
     def finish_initializing(self, builder):
         self.builder = builder
         self.builder.connect_signals(self)
-
-
+        
+    def on_find_location(self,widget):
+        def get_my_ip_address():
+            whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
+            return urllib2.urlopen(whatismyip).readlines()[0]
+        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+        m = re.search('City: (.*)', response)
+        if m:
+            self.builder.get_object("entry").set_text(m.group(1))
+            
+    def on_cancel(self,widget):
+        self.destroy()
+        
 #class IndicatorMenu(gtk.Menu):
     #__gtype_name__ = "IndicatorMenu"
     #def __new__(cls):

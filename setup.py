@@ -20,7 +20,6 @@
 
 import os
 import sys
-
 try:
     import DistUtilsExtra.auto
 except ImportError:
@@ -80,8 +79,6 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
         update_desktop_file(self.prefix + '/share/indicator-weather/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
-
-
         
 ##################################################################################
 ###################### YOU SHOULD MODIFY ONLY WHAT IS BELOW ######################

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires assistant 1.0 -->
   <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires assistant 1.0 -->
   <!-- interface-naming-policy project-wide -->
   <!-- interface-local-resource-path ../media -->
   <object class="Assistant" id="assistant">
@@ -9,46 +9,134 @@
     <property name="title" translatable="yes">Assistant to set up the weather indicator</property>
     <property name="resizable">False</property>
     <property name="window_position">mouse</property>
+    <signal name="cancel" handler="on_cancel"/>
     <child>
-      <object class="GtkAlignment" id="alignment1">
+      <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="top_padding">100</property>
-        <property name="bottom_padding">100</property>
-        <property name="left_padding">10</property>
-        <property name="right_padding">10</property>
         <child>
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Welcome. The following pages will help you adding a place to the Weather Indi</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
-            <property name="ellipsize">end</property>
-            <property name="max_width_chars">50</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+            <property name="xpad">6</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">Blahblaaaaah</property>
           </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkHBox" id="hbox1">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="xpad">5</property>
+                <property name="label" translatable="yes">The Place :</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">&#x2022;</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkAlignment" id="alignment1">
+                <property name="visible">True</property>
+                <property name="top_padding">50</property>
+                <property name="bottom_padding">50</property>
+                <property name="left_padding">10</property>
+                <property name="right_padding">10</property>
+                <child>
+                  <object class="GtkButton" id="button1">
+                    <property name="label" translatable="yes">Find my location</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="receives_default">True</property>
+                    <property name="xalign">0</property>
+                    <signal name="clicked" handler="on_find_location"/>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
         </child>
       </object>
       <packing>
         <property name="page_type">intro</property>
-        <property name="title" translatable="yes">Welcome</property>
+        <property name="title" translatable="yes">Find a Place</property>
+        <property name="header_image">../media/icon.png</property>
       </packing>
     </child>
     <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
-    </child>
-    <child>
-      <placeholder/>
+      <object class="GtkVBox" id="vbox2">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkLabel" id="label3">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+            <property name="xpad">6</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">Is this the place you were looking for ? :</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label4">
+            <property name="visible">True</property>
+            <property name="label" translatable="yes">&lt;big&gt;Rungis, France&lt;/big&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label5">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="yalign">0</property>
+            <property name="xpad">6</property>
+            <property name="ypad">6</property>
+            <property name="label" translatable="yes">If yes, then you can apply and the weather applet will start
+working.
+Otherwise, you'll have to go back and set a new city.</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">word-char</property>
+            <property name="ellipsize">end</property>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="page_type">progress</property>
+        <property name="title" translatable="yes">Confirmation</property>
+        <property name="header_image">../media/icon.png</property>
+      </packing>
     </child>
     <child>
       <placeholder/>

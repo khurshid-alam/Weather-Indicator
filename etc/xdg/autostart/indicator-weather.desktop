@@ -2,8 +2,9 @@
 _Name=Weather Indicator Applet
 _Comment=Indicator applet for current weather conditions
 GenericName=Weather Applet
-Categories=GNOME;Settings;
-Exec=indicator-weather --settings
+Categories=GNOME;Utility;
+Exec=indicator-weather
 Icon=/usr/share/indicator-weather/media/icon.png
+NoDisplay=True
 Terminal=false
 Type=Application
