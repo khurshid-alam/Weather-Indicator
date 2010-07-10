@@ -1,3 +1,9 @@
+indicator-weather (10.07.14) lucid; urgency=low
+
+  * Autostart hidden and works, Assistant works, but needs polish now
+
+ -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 04:06:24 +0200
+
 indicator-weather (10.07.13) lucid; urgency=low
 
   * New release.
