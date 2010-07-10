@@ -1,3 +1,10 @@
+indicator-weather (10.07.13) lucid; urgency=low
+
+  * Autostart, right category, find location in assistant, assistant not
+    finished yet
+
+ -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 02:01:21 +0200
+
 indicator-weather (10.07.12) lucid; urgency=low
 
   * New release.
