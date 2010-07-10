@@ -15,11 +15,12 @@ Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends},
  ${python:Depends},
- python-gconf,
- python-gobject,
  python-appindicator,
- python-gtk2,
- python-notify
+ python-simplejson,
+ python-gconf,
+ python-notify,
+ python-gobject,
+ python-gtk2
 Description: A weather indicator for Ubuntu's Indicator Applet
  A weather indicator that displays information for one or multiple places
  in the world

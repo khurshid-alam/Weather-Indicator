@@ -1,3 +1,10 @@
+indicator-weather (10.07.15) lucid; urgency=low
+
+  * Sunlight-sunset added/night-day icons/ assistant made thanks to
+    cullen, but no label support for now
+
+ -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 21:32:53 +0200
+
 indicator-weather (10.07.14) lucid; urgency=low
 
   * Autostart hidden and works, Assistant works, but needs polish now
