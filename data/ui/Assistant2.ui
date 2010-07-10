@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <interface>
-  <!-- interface-requires assistant 1.0 -->
   <requires lib="gtk+" version="2.16"/>
+  <!-- interface-requires assistant 1.0 -->
   <!-- interface-naming-policy project-wide -->
   <!-- interface-local-resource-path ../media -->
   <object class="Assistant" id="assistant">
+    <property name="border_width">5</property>
     <property name="title" translatable="yes">Assistant to set up the weather indicator</property>
     <property name="resizable">False</property>
     <property name="window_position">mouse</property>
-    <signal name="apply" handler="on_apply"/>
     <signal name="cancel" handler="on_cancel"/>
     <child>
       <object class="GtkVBox" id="vbox1">
@@ -46,7 +46,6 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x2022;</property>
-                <signal name="changed" handler="on_entry_edited"/>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -63,7 +62,7 @@
                   <object class="GtkButton" id="button1">
                     <property name="label" translatable="yes">Find my location</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can_focus">False</property>
                     <property name="receives_default">True</property>
                     <property name="xalign">0</property>
                     <signal name="clicked" handler="on_find_location"/>
@@ -83,29 +82,9 @@
       </object>
       <packing>
         <property name="page_type">intro</property>
-        <property name="title" translatable="yes">Add a place</property>
+        <property name="title" translatable="yes">Find a Place</property>
+        <property name="header_image">../media/icon.png</property>
       </packing>
-    </child>
-    <child>
-      <object class="GtkVBox" id="vbox3">
-        <property name="visible">True</property>
-        <property name="homogeneous">True</property>
-        <child>
-          <object class="GtkLabel" id="label6">
-            <property name="visible">True</property>
-            <property name="xpad">20</property>
-            <property name="label" translatable="yes">We're sorry, but we dind't find the city you were looking for. Go back and try again.</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
-            <property name="ellipsize">end</property>
-            <property name="max_width_chars">20</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
     </child>
     <child>
       <object class="GtkVBox" id="vbox2">
@@ -155,8 +134,15 @@ Otherwise, you'll have to go back and set a new city.</property>
       </object>
       <packing>
         <property name="page_type">confirm</property>
-        <property name="title" translatable="yes">Confirm</property>
+        <property name="title" translatable="yes">Confirmation</property>
+        <property name="header_image">../media/icon.png</property>
       </packing>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>

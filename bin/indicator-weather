@@ -188,8 +188,8 @@ class indicator_weather:
         #self.winder.set_menu(im)
         
     def placeadding(self,widget):
-        assistant = Assistant()
-        assistant.show()
+        self.assistant = Assistant()
+        self.assistant.show()
         
     def rebuild_menu(self):
         for item in self.menu.get_children()[5:len(self.menu.get_children())]:
@@ -363,7 +363,7 @@ class indicator_weather:
         
         #self.update_weather()
         
-    def get_weather(self, city, firstrun=False, extended=False):
+    def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         
         import locale
         localebad = locale.getlocale()[0]
@@ -389,76 +389,80 @@ class indicator_weather:
         self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
         # extract weather condition data from xml string
         if extended == False:
-            weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
-            
-            if firstrun and self.unitsystem == 'SI':
-                    self.unit = 'C'
-                    gconfClient.set_string("/apps/indicator-weather/unit", 'C')
-                    #self.windunit = 'km/h'
-                    #gconfClient.set_string("/apps/indicator-weather/wind", 'km/h')
-            
-            if self.unit == 'F':
-                self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
-            elif self.unit == 'C':
-                self.temp = s.split("<temp_c data=\"")[-1].split("\"")[0] + "°C"
+            if onlycity:
+                return s.split("<city data=\"")[-1].split("\"")[0]
             else:
-                self.temp = str(int(s.split("<temp_c data=\"")[-1].split("\"")[0])+273) + "°K"
-            self.city = s.split("<city data=\"")[-1].split("\"")[0]
-            self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
-            self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
-            
-            #windvalue = int(''.join(filter(lambda x: x.isdigit(), self.wind)))
-            #if unitsystem == 'US':
-                #windvalue = int(round(float(windvalue*1.609344)))
-            #if self.windunit == 'm/s':
-                #windvalue = int(round(float(windvalue/3.6)))
-            #elif self.windunit == 'mph':
-                #print 'im here'
-                #windvalue = int(round(float(windvalue/1.609344)))
-                #print windvalue
-            #elif self.windunit == 'knots':
-                #windvalue = int(round(float(windvalue/1.852)))
-            #elif self.windunit == 'Beaufort':
-                #if windvalue < 1:
-                    #windvalue = 0
-                #elif windvalue >= 1 and windvalue < 5:
-                    #windvalue = 1
-                #elif windvalue >= 6 and windvalue < 11:
-                    #windvalue = 2
-                #elif windvalue >= 12 and windvalue < 19:
-                    #windvalue = 3
-                #elif windvalue >= 20 and windvalue < 28:
-                    #windvalue = 4
-                #elif windvalue >= 29 and windvalue < 38:
-                    #windvalue = 5
-                #elif windvalue >= 39 and windvalue < 49:
-                    #windvalue = 6
-                #elif windvalue >= 50 and windvalue < 61:
-                    #windvalue = 7
-                #elif windvalue >= 62 and windvalue < 74:
-                    #windvalue = 8
-                #elif windvalue >= 75 and windvalue < 88:
-                    #windvalue = 9
-                #elif windvalue >= 89 and windvalue < 102:
-                    #windvalue = 10
-                #elif windvalue >= 103 and windvalue < 117:
-                    #windvalue = 11
-                #elif windvalue >= 118:
-                    #windvalue = 12
-            #self.wind = self.wind.replace((''.join(filter(lambda x: x.isdigit(), self.wind))),str(windvalue))
-            
-            self.icon = s.split("%\"/><icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
-    
-            # if there was an error getting the condition, the city is invalid
-            if weather == "<?xml version=":
-                self.temp = "Invalid city"
-                self.city = "Invalid city"
-                self.humid = "Invalid city"
-                self.wind = "Invalid city"
-                return "Invalid city"
-    
-            #return the weather condition
-            return weather
+                
+                weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
+                self.city = s.split("<city data=\"")[-1].split("\"")[0]
+                if firstrun and self.unitsystem == 'SI':
+                        self.unit = 'C'
+                        gconfClient.set_string("/apps/indicator-weather/unit", 'C')
+                        #self.windunit = 'km/h'
+                        #gconfClient.set_string("/apps/indicator-weather/wind", 'km/h')
+                
+                if self.unit == 'F':
+                    self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
+                elif self.unit == 'C':
+                    self.temp = s.split("<temp_c data=\"")[-1].split("\"")[0] + "°C"
+                else:
+                    self.temp = str(int(s.split("<temp_c data=\"")[-1].split("\"")[0])+273) + "°K"
+                
+                self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
+                self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
+                
+                #windvalue = int(''.join(filter(lambda x: x.isdigit(), self.wind)))
+                #if unitsystem == 'US':
+                    #windvalue = int(round(float(windvalue*1.609344)))
+                #if self.windunit == 'm/s':
+                    #windvalue = int(round(float(windvalue/3.6)))
+                #elif self.windunit == 'mph':
+                    #print 'im here'
+                    #windvalue = int(round(float(windvalue/1.609344)))
+                    #print windvalue
+                #elif self.windunit == 'knots':
+                    #windvalue = int(round(float(windvalue/1.852)))
+                #elif self.windunit == 'Beaufort':
+                    #if windvalue < 1:
+                        #windvalue = 0
+                    #elif windvalue >= 1 and windvalue < 5:
+                        #windvalue = 1
+                    #elif windvalue >= 6 and windvalue < 11:
+                        #windvalue = 2
+                    #elif windvalue >= 12 and windvalue < 19:
+                        #windvalue = 3
+                    #elif windvalue >= 20 and windvalue < 28:
+                        #windvalue = 4
+                    #elif windvalue >= 29 and windvalue < 38:
+                        #windvalue = 5
+                    #elif windvalue >= 39 and windvalue < 49:
+                        #windvalue = 6
+                    #elif windvalue >= 50 and windvalue < 61:
+                        #windvalue = 7
+                    #elif windvalue >= 62 and windvalue < 74:
+                        #windvalue = 8
+                    #elif windvalue >= 75 and windvalue < 88:
+                        #windvalue = 9
+                    #elif windvalue >= 89 and windvalue < 102:
+                        #windvalue = 10
+                    #elif windvalue >= 103 and windvalue < 117:
+                        #windvalue = 11
+                    #elif windvalue >= 118:
+                        #windvalue = 12
+                #self.wind = self.wind.replace((''.join(filter(lambda x: x.isdigit(), self.wind))),str(windvalue))
+                
+                self.icon = s.split("%\"/><icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
+        
+                # if there was an error getting the condition, the city is invalid
+                if weather == "<?xml version=":
+                    self.temp = "Invalid city"
+                    self.city = "Invalid city"
+                    self.humid = "Invalid city"
+                    self.wind = "Invalid city"
+                    return "Invalid city"
+        
+                #return the weather condition
+                return weather
         else:
             parsed = parseString(s)
             self.daysofweek=[]
@@ -796,6 +800,7 @@ class Assistant(gtk.Assistant):
     def finish_initializing(self, builder):
         self.builder = builder
         self.builder.connect_signals(self)
+        self.builder.get_object("assistant").set_forward_page_func(self.get_city)
         
     def on_find_location(self,widget):
         def get_my_ip_address():
@@ -805,9 +810,34 @@ class Assistant(gtk.Assistant):
         m = re.search('City: (.*)', response)
         if m:
             self.builder.get_object("entry").set_text(m.group(1))
+    def on_entry_edited(self,widget):
+        if widget.get_text() == '':
+            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox1"),False)
+        else:
+            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox1"),True)
+    
+    def get_city(self,current_page):
+        label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
+        if not label in ('Error opening url','<?xml version='):
+            self.builder.get_object("label4").set_label('<big>'+label+'</big>')
+            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("vbox2"),True)
+            return 2
+        else:
+            return 1
             
     def on_cancel(self,widget):
         self.destroy()
+        
+    def on_apply(self,widget):
+        place = self.builder.get_object("entry").get_text()
+        self.hide()
+        wi.places = list()
+        wi.places.append(place)
+        gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+        wi.menu_normal()
+        wi.place = wi.places[wi.placechosen]
+        wi.update_weather(False)
+        wi.winder.set_menu(wi.menu)
         
 #class IndicatorMenu(gtk.Menu):
     #__gtype_name__ = "IndicatorMenu"
