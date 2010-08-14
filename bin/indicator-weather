@@ -846,6 +846,8 @@ class Assistant(gtk.Assistant):
         
     def on_apply(self,widget):
         wi.placeadded = self.label
+        wi.unit = self.builder.get_object("unitlbl").get_text()[0]
+        gconfClient.set_string("/apps/indicator-weather/unit", str(wi.unit))
         self.hide()
         wi.places = list()
         wi.places.append(wi.placeadded)
