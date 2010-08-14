@@ -397,11 +397,11 @@ class indicator_weather:
 
         except:
             # if there was an error opening the url, return
-            self.temp = "Connexion Problem"
-            self.city = "Connexion Problem"
-            self.humid = "Connexion Problem"
-            self.wind = "Connexion Problem"
-            self.icon = "Connexion Problem"
+            self.temp = "Connection Problem"
+            self.city = "Connection Problem"
+            self.humid = "Connection Problem"
+            self.wind = "Connection Problem"
+            self.icon = "Connection Problem"
             return "Error opening url"
         
         s = f.read()
