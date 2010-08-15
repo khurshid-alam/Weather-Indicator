@@ -5,6 +5,8 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkListStore" id="citieslist">
     <columns>
+      <!-- column-name Label -->
+      <column type="gchararray"/>
       <!-- column-name City -->
       <column type="gchararray"/>
     </columns>
