@@ -386,6 +386,9 @@ class indicator_weather:
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         
+        if ((len(city) == 1) or (city == "Enter Location")):
+            return ""
+            
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
