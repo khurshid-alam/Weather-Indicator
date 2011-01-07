@@ -107,7 +107,7 @@ class indicator_weather:
     
     def menu_normal(self):
         self.menu = gtk.Menu()
-        
+            
     ##City
         self.city_show = gtk.MenuItem()
         self.city_show.set_sensitive(False)
@@ -242,7 +242,6 @@ class indicator_weather:
         
         self.winder.set_menu(self.menu)
 
-    
     def on_city_changed(self,widget):
         if widget.get_active():
             self.placechosen = self.places.index(widget.get_label())
@@ -251,18 +250,26 @@ class indicator_weather:
 
     def update_weather(self, notif=True,widget=None):
         current = self.get_weather(self.places[self.placechosen])
-	result = self.get_sun(self.places[self.placechosen])
-	if result == None:
-		return
-	else:
-		sunrise,sunset,timezone = result
-		now = datetime.datetime.now().time()
-        	sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
-        	sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
-        if now<sunrise_t or now>sunset_t:
-            night = True
+        result = self.get_sun(self.places[self.placechosen])
+        if result != None:
+			sunrise,sunset,timezone = result
+			now = datetime.datetime.now().time()
+			sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
+			sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
+			if now<sunrise_t or now>sunset_t:
+				night = True
+			else:
+				night = False
         else:
-            night = False
+			for item in self.menu.get_children()[0:len(self.menu.get_children())]:
+				item.destroy()
+			self.problem_show = gtk.MenuItem(_("Connection problem"))
+			self.problem_show.set_sensitive(False)
+			self.problem_show.show()
+			self.menu.append(self.problem_show)
+			self.winder.set_icon("ubuntuone-client-error")
+			return
+		
         self.condition = current
         
         print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen]+')'
@@ -319,8 +326,9 @@ class indicator_weather:
         self.humid_show.set_label(self.humid)
         self.wind_show.set_label(self.wind)
         import time
-        self.sunrise_show.set_label(_('Sunrise: ')+time.strftime('%X',time.strptime(sunrise,'%H:%M:%S')))
-        self.sunset_show.set_label(_('Sunset: ')+time.strftime('%X',time.strptime(sunset,'%H:%M:%S')))
+        if result != None:
+			self.sunrise_show.set_label(_('Sunrise: ')+time.strftime('%X',time.strptime(sunrise,'%H:%M:%S')))
+			self.sunset_show.set_label(_('Sunset: ')+time.strftime('%X',time.strptime(sunset,'%H:%M:%S')))
         
         if self.notif != 'N' and a != False and notif:
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
@@ -353,7 +361,7 @@ class indicator_weather:
         dialog.run()
         if replace == False:
             if not (entry.get_text() in self.places):
-                self.places.append(entry.get_text())
+                self.places.appednd(entry.get_text())
                 gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
                 dialog.destroy()
                 return True
@@ -371,25 +379,20 @@ class indicator_weather:
         url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city)+'&sensor=false'
         try:
             result = simplejson.load(urllib2.urlopen(url))
-	except urllib2.URLError, error:
-	    return None
-        lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
-        now = datetime.datetime.now()
-        url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
-        try:
+            lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
+            now = datetime.datetime.now()
+            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
             f = urllib2.urlopen(url)
-	except urllib2.URLError, error:
-	    return None
-        s=f.read()
-        parsed = parseString(s)
-        sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-        sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
-        timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-        return sunrise,sunset,timezone
-            
+            s=f.read()
+            parsed = parseString(s)
+            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
+            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
+            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+            return sunrise,sunset,timezone
+        except urllib2.URLError, error:
+			return None
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
-        
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
@@ -399,14 +402,14 @@ class indicator_weather:
             # open google weather api url
             f = urllib2.urlopen(url)
 
-        except:
+        except urllib2.URLError, error:
             # if there was an error opening the url, return
-            self.temp = "Connexion Problem"
-            self.city = "Connexion Problem"
-            self.humid = "Connexion Problem"
-            self.wind = "Connexion Problem"
-            self.icon = "Connexion Problem"
-            return "Error opening url"
+            self.temp = _("Connection problem")
+            self.city = _("Connection problem")
+            self.humid = _("Connection problem")
+            self.wind = _("Connection problem")
+            self.icon = _("Connection problem")
+            return _("Connection problem")
         
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
@@ -528,7 +531,6 @@ class indicator_weather:
         
     def prefs(self, widget):
         self.prefswindow = PreferencesDialog()
-        
         self.prefswindow.show()
         
     def extforecast(self,widget):
