@@ -251,10 +251,14 @@ class indicator_weather:
 
     def update_weather(self, notif=True,widget=None):
         current = self.get_weather(self.places[self.placechosen])
-        sunrise,sunset,timezone = self.get_sun(self.places[self.placechosen])
-        now = datetime.datetime.now().time()
-        sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
-        sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
+	result = self.get_sun(self.places[self.placechosen])
+	if result == None:
+		return
+	else:
+		sunrise,sunset,timezone = result
+		now = datetime.datetime.now().time()
+        	sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
+        	sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
         if now<sunrise_t or now>sunset_t:
             night = True
         else:
@@ -367,15 +371,15 @@ class indicator_weather:
         url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city)+'&sensor=false'
         try:
             result = simplejson.load(urllib2.urlopen(url))
-        except:
-            return error,error
+	except urllib2.URLError, error:
+	    return None
         lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
         now = datetime.datetime.now()
         url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
         try:
             f = urllib2.urlopen(url)
-        except:
-            return error,error
+	except urllib2.URLError, error:
+	    return None
         s=f.read()
         parsed = parseString(s)
         sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
