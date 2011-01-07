@@ -54,7 +54,7 @@ gconfClient = gconf.client_get_default()
 
 class indicator_weather:
     def __init__(self):
-        self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_APPLICATION_STATUS)
+        self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
         
