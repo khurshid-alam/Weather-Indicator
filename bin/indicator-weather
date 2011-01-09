@@ -396,13 +396,9 @@ class indicator_weather:
 			return None
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
-<<<<<<< TREE
         
         if ((len(city) == 1) or (city == "Enter Location")):
             return ""
-            
-=======
->>>>>>> MERGE-SOURCE
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
@@ -414,21 +410,12 @@ class indicator_weather:
 
         except urllib2.URLError, error:
             # if there was an error opening the url, return
-<<<<<<< TREE
-            self.temp = "Connection Problem"
-            self.city = "Connection Problem"
-            self.humid = "Connection Problem"
-            self.wind = "Connection Problem"
-            self.icon = "Connection Problem"
-            return "Error opening url"
-=======
             self.temp = _("Connection problem")
             self.city = _("Connection problem")
             self.humid = _("Connection problem")
             self.wind = _("Connection problem")
             self.icon = _("Connection problem")
             return _("Connection problem")
->>>>>>> MERGE-SOURCE
         
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
@@ -877,12 +864,6 @@ class Assistant(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-<<<<<<< TREE
-        wi.placeadded = self.label
-        wi.unit = self.builder.get_object("unitlbl").get_text()[0]
-        gconfClient.set_string("/apps/indicator-weather/unit", str(wi.unit))
-        self.hide()
-=======
         _city_name = self.label
         _city_label = self.builder.get_object("entrylbl").get_text()
         places = list()
@@ -892,7 +873,6 @@ class Assistant(gtk.Assistant):
         places.append(_city_label)
 
         wi.placeadded = _city_name
->>>>>>> MERGE-SOURCE
         wi.places = list()
         wi.places.append(places)
         
