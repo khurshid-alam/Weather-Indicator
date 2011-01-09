@@ -164,14 +164,14 @@ class indicator_weather:
             breaker.show()
             self.menu.append(breaker)
             
-            loco1 = gtk.RadioMenuItem(None, self.places[0])
+            loco1 = gtk.RadioMenuItem(None, self.places[0][1])
             if self.placechosen == 0:
                 loco1.set_active(True)
             loco1.connect("toggled", self.on_city_changed)
             loco1.show()
             self.menu.append(loco1)
             for place in self.places[1:]:
-                loco = gtk.RadioMenuItem(loco1, place)
+                loco = gtk.RadioMenuItem(loco1, place[1])
                 if self.places.index(place) == self.placechosen:
                     loco.set_active(True)
                 loco.connect("toggled", self.on_city_changed)
@@ -212,14 +212,14 @@ class indicator_weather:
             breaker.show()
             self.menu.append(breaker)
             
-            loco1 = gtk.RadioMenuItem(None, self.places[0])
+            loco1 = gtk.RadioMenuItem(None, self.places[0][1])
             if self.placechosen == 0:
                 loco1.set_active(True)
             loco1.connect("toggled", self.on_city_changed)
             loco1.show()
             self.menu.append(loco1)
             for place in self.places[1:]:
-                loco = gtk.RadioMenuItem(loco1, place)
+                loco = gtk.RadioMenuItem(loco1, place[1])
                 if self.places.index(place) == self.placechosen:
                     loco.set_active(True)
                 loco.connect("toggled", self.on_city_changed)
@@ -245,7 +245,10 @@ class indicator_weather:
     
     def on_city_changed(self,widget):
         if widget.get_active():
-            self.placechosen = self.places.index(widget.get_label())
+            for place in self.places:
+                if (place[1] == widget.get_label()):
+                    self.placechosen = self.places.index(place)
+                    break
             gconfClient.set_int("/apps/indicator-weather/placechosen", self.placechosen)
             self.update_weather(False)
 
@@ -261,7 +264,7 @@ class indicator_weather:
             night = False
         self.condition = current
         
-        print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen]+')'
+        print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
         
         current = self.icon
         
@@ -309,7 +312,7 @@ class indicator_weather:
             a=False
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
-        self.city_show.set_label(self.city)
+        self.city_show.set_label(self.cityLabel)
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(self.temp)
         self.humid_show.set_label(self.humid)
@@ -350,7 +353,7 @@ class indicator_weather:
         if replace == False:
             if not (entry.get_text() in self.places):
                 self.places.append(entry.get_text())
-                gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
+                gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
                 dialog.destroy()
                 return True
             else:
@@ -359,12 +362,12 @@ class indicator_weather:
         else:
             self.places = list()
             self.places.append(entry.get_text())
-            gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
+            gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
         dialog.destroy()
         
         #self.update_weather()
     def get_sun(self,city):
-        url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city)+'&sensor=false'
+        url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city[0])+'&sensor=false'
         try:
             result = simplejson.load(urllib2.urlopen(url))
         except:
@@ -389,7 +392,7 @@ class indicator_weather:
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
-        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city) + "&hl=" + locale[0]
+        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city[0]) + "&hl=" + locale[0]
         
         try:
             # open google weather api url
@@ -416,6 +419,7 @@ class indicator_weather:
                 
                 weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
                 self.city = s.split("<city data=\"")[-1].split("\"")[0]
+                self.cityLabel = city[1]
                 if firstrun and self.unitsystem == 'SI':
                         self.unit = 'C'
                         gconfClient.set_string("/apps/indicator-weather/unit", 'C')
@@ -478,6 +482,7 @@ class indicator_weather:
                 if weather == "<?xml version=":
                     self.temp = "Invalid city"
                     self.city = "Invalid city"
+                    self.cityLabel = "Invalid city"
                     self.humid = "Invalid city"
                     self.wind = "Invalid city"
                     return "Invalid city"
@@ -588,7 +593,9 @@ class PreferencesDialog(gtk.Dialog):
         end = len(wi.places)
         for place in wi.places:
             newplace = list()
-            newplace.append(place)
+            newplace.append(place[0])
+            newplace.append(place[1])
+            
             self.builder.get_object('citieslist').append(newplace)
             
         self.builder.connect_signals(self)
@@ -646,7 +653,10 @@ class PreferencesDialog(gtk.Dialog):
         newplaces = list()
         item = self.builder.get_object('citieslist').get_iter_first()
         while ( item != None ):
-            newplaces.append(self.builder.get_object('citieslist').get_value (item, 0))
+            newplace = list()
+            newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
+            newplace.append(self.builder.get_object('citieslist').get_value (item, 1))
+            newplaces.append(newplace)
             item = self.builder.get_object('citieslist').iter_next(item)
         if newplaces != wi.places:
             wi.places = newplaces
@@ -662,7 +672,7 @@ class PreferencesDialog(gtk.Dialog):
             else:
                 wi.placechosen = 0
                 gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
-                gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+                gconfClient.set_string("/apps/indicator-weather/places", str([wi.places]))
                 wi.winder.set_icon("weather-clear")
                 wi.menu_noplace()
                 needupdate = False
@@ -703,7 +713,7 @@ class ExtendedForecast(gtk.Window):
         self.builder = builder
         self.builder.connect_signals(self)
         
-        self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen])
+        self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         
         wi.get_weather(wi.places[wi.placechosen],False,True)
         
@@ -819,7 +829,7 @@ class Assistant(gtk.Assistant):
     
     def get_city(self,current_page):
         if self.builder.get_object("assistant").get_current_page() == 1:
-            self.label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
+            self.label = wi.get_weather([self.builder.get_object("entry").get_text()],onlycity=True)
             if not self.label in ('Error opening url','<?xml version='):
                 self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
                 self.builder.get_object("assistant").set_page_complete(self.builder.get_object("confirmplace"),True)
@@ -845,12 +855,26 @@ class Assistant(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
+<<<<<<< TREE
         wi.placeadded = self.label
         wi.unit = self.builder.get_object("unitlbl").get_text()[0]
         gconfClient.set_string("/apps/indicator-weather/unit", str(wi.unit))
         self.hide()
+=======
+        _city_name = self.label
+        _city_label = self.builder.get_object("entrylbl").get_text()
+        places = list()
+        places.append(_city_name)
+        if (_city_label == ''):
+            _city_label = _city_name
+        places.append(_city_label)
+
+        wi.placeadded = _city_name
+>>>>>>> MERGE-SOURCE
         wi.places = list()
-        wi.places.append(wi.placeadded)
+        wi.places.append(places)
+        
+        self.hide()
         gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
         wi.menu_normal()
         wi.place = wi.places[wi.placechosen]
@@ -887,7 +911,7 @@ class Assistant2(gtk.Assistant):
     
     def get_city(self,current_page):
         if self.builder.get_object("assistant2").get_current_page() == 0:
-            self.label = wi.get_weather(self.builder.get_object("entry").get_text(),onlycity=True)
+            self.label = wi.get_weather([self.builder.get_object("entry").get_text()],onlycity=True)
             if not self.label in ('Error opening url','<?xml version='):
                 self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
                 self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
@@ -900,8 +924,13 @@ class Assistant2(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
+        _city_name = self.label
+        _city_label = self.builder.get_object("entrylbl").get_text()
         newplace = list()
-        newplace.append(self.label)
+        newplace.append(_city_name)
+        if (_city_label == ''):
+            _city_label = _city_name
+        newplace.append(_city_label)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         self.hide()
         
