@@ -376,8 +376,8 @@ class indicator_weather:
             self.places.append(entry.get_text())
             gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
         dialog.destroy()
+        self.update_weather()
         
-        #self.update_weather()
     def get_sun(self,city):
         url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city[0])+'&sensor=false'
         try:
@@ -396,14 +396,12 @@ class indicator_weather:
 			return None
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
-        
-        if ((len(city) == 1) or (city == "Enter Location")):
+        if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
         import locale
         localebad = locale.getlocale()[0]
         locale = localebad.split ('_')
         url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city[0]) + "&hl=" + locale[0]
-        
         try:
             # open google weather api url
             f = urllib2.urlopen(url)
@@ -562,7 +560,6 @@ class indicator_weather:
                "",
                icon)
         n.show ()
-
 
 class PreferencesDialog(gtk.Dialog):
     __gtype_name__ = "PreferencesDialog"
@@ -723,7 +720,6 @@ class ExtendedForecast(gtk.Window):
         self.builder.connect_signals(self)
         
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
-        
         wi.get_weather(wi.places[wi.placechosen],False,True)
         
         self.builder.get_object('day1lbl').set_label('<big>'+wi.daysofweek[0].capitalize()+'</big>')
@@ -826,10 +822,11 @@ class Assistant(gtk.Assistant):
         def get_my_ip_address():
             whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
             return urllib2.urlopen(whatismyip).readlines()[0]
-        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-        m = re.search('City: (.*)', response)
-        if m:
-            self.builder.get_object("entry").set_text(m.group(1))
+            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+            m = re.search('City: (.*)', response)
+            if m:
+                self.builder.get_object("entry").set_text(m.group(1))
+                
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
             self.builder.get_object("assistant").set_page_complete(self.builder.get_object("placeinput"),False)
