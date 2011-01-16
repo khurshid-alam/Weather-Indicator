@@ -1,3 +1,10 @@
+indicator-weather (11.01.16~lucid1) lucid; urgency=low
+
+  * Fix for Bug #618108 "Label is not shown in the dialogs when specified"
+  * Fix for Bug #604265 "First configuration weather unit setting not saved"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 16 Jan 2011 14:17:27 +0200
+
 indicator-weather (10.07.16) lucid; urgency=low
 
   * Bugfix : list index out of range fixed
