@@ -418,6 +418,7 @@ class indicator_weather:
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
         s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
+        print "Full data:" + s
         self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
         # extract weather condition data from xml string
         if extended == False:
@@ -443,8 +444,8 @@ class indicator_weather:
                 
                 self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
                 self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
-                
                 #windvalue = int(''.join(filter(lambda x: x.isdigit(), self.wind)))
+                
                 #if unitsystem == 'US':
                     #windvalue = int(round(float(windvalue*1.609344)))
                 #if self.windunit == 'm/s':
@@ -760,11 +761,11 @@ class ExtendedForecast(gtk.Window):
             tempunit = '°K'
         for high in wi.highdata:
             i=i+1
-            self.builder.get_object('day%stemphigh' % str(i)).set_label(_('High: ') + '%s%s') % (high,tempunit))
+            self.builder.get_object('day%stemphigh' % str(i)).set_label((_('High: ')+'%s%s') % (high,tempunit))
         i=0
         for low in wi.lowdata:
             i=i+1
-            self.builder.get_object('day%stemplow' % str(i)).set_label(_('Low: ') +'%s%s') % (low,tempunit))
+            self.builder.get_object('day%stemplow' % str(i)).set_label((_('Low: ')+'%s%s') % (low,tempunit))
         
     
     def close(self, widget, data=None):
@@ -937,18 +938,6 @@ class Assistant2(gtk.Assistant):
         newplace.append(_city_name)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         self.hide()
-        
-#class IndicatorMenu(gtk.Menu):
-    #__gtype_name__ = "IndicatorMenu"
-    #def __new__(cls):
-        #builder = get_builder('IndicatorMenu')
-        #new_object = builder.get_object("indicator_menu")
-        #new_object.finish_initializing(builder)
-        #return new_object
-        
-    #def finish_initializing(self, builder):
-        #self.builder = builder
-        #self.builder.connect_signals(self)
 
 def main():
     gtk.main()
