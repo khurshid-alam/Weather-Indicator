@@ -599,8 +599,8 @@ class PreferencesDialog(gtk.Dialog):
         end = len(wi.places)
         for place in wi.places:
             newplace = list()
-            newplace.append(place[0])
             newplace.append(place[1])
+            newplace.append(place[0])
             
             self.builder.get_object('citieslist').append(newplace)
             
@@ -660,8 +660,8 @@ class PreferencesDialog(gtk.Dialog):
         item = self.builder.get_object('citieslist').get_iter_first()
         while ( item != None ):
             newplace = list()
-            newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
             newplace.append(self.builder.get_object('citieslist').get_value (item, 1))
+            newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
             newplaces.append(newplace)
             item = self.builder.get_object('citieslist').iter_next(item)
         if newplaces != wi.places:
@@ -926,10 +926,10 @@ class Assistant2(gtk.Assistant):
         _city_name = self.label
         _city_label = self.builder.get_object("entrylbl").get_text()
         newplace = list()
-        newplace.append(_city_name)
         if (_city_label == ''):
             _city_label = _city_name
         newplace.append(_city_label)
+        newplace.append(_city_name)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         self.hide()
         
