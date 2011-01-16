@@ -760,11 +760,11 @@ class ExtendedForecast(gtk.Window):
             tempunit = '°K'
         for high in wi.highdata:
             i=i+1
-            self.builder.get_object('day%stemphigh' % str(i)).set_label(_('High : %s%s') % (high,tempunit))
+            self.builder.get_object('day%stemphigh' % str(i)).set_label(_('High: ') + '%s%s') % (high,tempunit))
         i=0
         for low in wi.lowdata:
             i=i+1
-            self.builder.get_object('day%stemplow' % str(i)).set_label(_('Low : %s%s') % (low,tempunit))
+            self.builder.get_object('day%stemplow' % str(i)).set_label(_('Low: ') +'%s%s') % (low,tempunit))
         
     
     def close(self, widget, data=None):
