@@ -872,6 +872,11 @@ class Assistant(gtk.Assistant):
         wi.placeadded = _city_name
         wi.places = list()
         wi.places.append(places)
+
+        for button in self.builder.get_object('fahrenheit').get_group():
+            if button.get_active() == True and button.get_label()[0] != wi.unit:
+                gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
+                wi.unit = button.get_label()[0]
         
         self.hide()
         gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
