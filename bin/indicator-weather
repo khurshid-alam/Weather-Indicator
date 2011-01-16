@@ -418,7 +418,6 @@ class indicator_weather:
         s = f.read()
         encoding = f.headers['content-type'].split('charset=')[-1]
         s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-        print "Full data:" + s
         self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
         # extract weather condition data from xml string
         if extended == False:
