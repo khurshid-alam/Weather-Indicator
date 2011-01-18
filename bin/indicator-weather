@@ -1040,16 +1040,13 @@ class Assistant2(gtk.Assistant):
         if self.builder.get_object("assistant2").get_current_page() == 0:
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
-            print "City name "+self.city_name
             self.location = Location(MetricSystem.SI, WindUnits.MPS)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
-                print "city was found"
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
                 return 2
             else:
-                print "city was not found"
                 return 1
         return self.builder.get_object("assistant2").get_current_page() + 1
             
@@ -1057,16 +1054,16 @@ class Assistant2(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-        #FIXME: might be an empty label?
-        self.location.set_label(self.builder.get_object("entrylbl").get_text())
+        self.new_label = self.builder.get_object("entrylbl").get_text()
+        if self.new_label == '':
+            self.location.set_label(self.city_name)
+        else:
+            self.location.set_label(self.new_label)
         newplace = list()
         newplace.append(self.location.label)
         newplace.append(self.location.code)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         self.hide()
-        #newlocation = list()
-        #newlocation.append(self.location)
-        #wi.prefswindow.builder.get_object('locationslist').append(newlocation)
 
 def main():
     gtk.main()
