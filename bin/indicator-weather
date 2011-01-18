@@ -65,9 +65,16 @@ class Location(object):
         self.__lat = None
         self.__lon = None
 
-    #String representation of an object
-    def __str__(self):
-        return "%s#%s#%s" % (self.__label, self.__location.get_city_name(), self.__location.get_code())
+    # Get a full city name
+    def get_full_city_name(self):
+        # We're getting a parent here, as 'location' here is actually a weather station
+        self.__city = self.__location.get_parent()
+        self.__full_city_name = ""
+        while (self.__city.get_parent() != None):
+            self.__full_city_name += "%s, " % self.__city.get_name()
+            self.__city = self.__city.get_parent()
+        self.__full_city_name += "%s" % self.__city.get_name()
+        return self.__full_city_name
 
     #Internal proc - iterate by known locations to find a city by its name
     def __find_city_by_name (self, node, city_name):
@@ -948,7 +955,7 @@ class Assistant(gtk.Assistant):
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 print "city was found"
-                self.builder.get_object("lblplace").set_label('<big>'+self.city_name+'</big>')
+                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("assistant").set_page_complete(self.builder.get_object("confirmplace"),True)
                 return 3
             else:
@@ -1038,7 +1045,7 @@ class Assistant2(gtk.Assistant):
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 print "city was found"
-                self.builder.get_object("lblplace").set_label('<big>'+self.city_name+'</big>')
+                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
                 return 2
             else:
