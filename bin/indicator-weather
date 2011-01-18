@@ -25,12 +25,8 @@ import gobject
 import appindicator
 import gconf
 import urllib2
-#import time
 import re
 import datetime
-import simplejson
-#from threading import Timer
-#import thread
 import locale
 import pynotify
 from xml.dom.minidom import parseString
