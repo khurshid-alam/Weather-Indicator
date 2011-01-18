@@ -34,6 +34,7 @@ import simplejson
 import locale
 import pynotify
 from xml.dom.minidom import parseString
+import time
 
 import gettext
 from gettext import gettext as _
@@ -65,43 +66,55 @@ class Location(object):
         self.__metric_system = metric_system
         self.__wind_units = wind_units
         self.__found = False
+        self.__lat = None
+        self.__lon = None
 
     #String representation of an object
     def __str__(self):
         return "%s#%s#%s" % (self.__label, self.__location.get_city_name(), self.__location.get_code())
 
-    def __iter__(self):
-        def generate_data():
-            yield self.__label
-            yield self.__location
-        return generate_data()
-
-    #Internal proc - iterate by known locations to find a city
-    def find_city (self, node, city_name):
+    #Internal proc - iterate by known locations to find a city by its name
+    def __find_city_by_name (self, node, city_name):
         if (node.get_name() == city_name):
             #FIXME: City may have several weather stations - we're selecting the first one only
             if (node.get_children() != None):
                 return node.get_children()[0];
         else:
             for obj in node.get_children():
-                possible_city = self.find_city(obj, city_name)
+                possible_city = self.__find_city_by_name(obj, city_name)
+                if (possible_city != None):
+                    return possible_city;
+    
+    #Internal proc - iterate by known locations to find city by its code
+    def __find_city_by_code (self, node, city_code):
+        if (node.get_code() == city_code):
+            return node;
+        else:
+            for obj in node.get_children():
+                possible_city = self.__find_city_by_code(obj, city_code)
                 if (possible_city != None):
                     return possible_city;
 
     #Fill in location attribute, looking up by location name
-    def find_city_by_name(self, city_name):
-        location = self.find_city(gweather.location_new_world(False), city_name)
+    def find_city_by_name (self, city_name):
+        location = self.__find_city_by_name(gweather.location_new_world(False), city_name)
+        self.prepare_location(location)
+
+    #Fill in location attribute, looking up by location code
+    def find_city_by_code (self, city_code):
+        location = self.__find_city_by_code(gweather.location_new_world(False), city_code)
+        self.prepare_location(location)
+
+    def prepare_location(self, location):
         if (location != None):
             self.__location = location
             self.__code = location.get_code()
-            self.prepare_location_by_code(self.__code)
+            self.__lat = location.get_coords()[0]
+            self.__lon = location.get_coords()[1]
+            self.__report_fetcher = metar.ReportFetcher(self.__code)
+            self.__found = True
         else:
             self.__found = False
-
-    def prepare_location_by_code(self, value):
-        self.__report_fetcher = metar.ReportFetcher(value)
-        self.__found = True
-        self.__code = value
 
     def set_label(self, value):
         self.__label = value
@@ -118,16 +131,32 @@ class Location(object):
     def label(self):
         return self.__label
 
+    @property
+    def weather(self):
+        return self.__weather
+
+    #Get sun status
+    def get_sun_data(self):
+        if (self.found):
+            now = datetime.datetime.now()
+            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
+            f = urllib2.urlopen(url)
+            s=f.read()
+            parsed = parseString(s)
+            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
+            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
+            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+            return (sunrise, sunset, timezone)
+        else:
+            print "Can't gather sun data on empty location"
+
     #Update weather data and store weather object
     def update_weather_data(self):
         if (self.__report_fetcher != None):
             self.__fetched_report = self.__report_fetcher.FetchReport()
-            self.__parsed_report = metar.ReportParser(self.__fetched_report).ParseReport()
-            self.__weather = Weather(self.__parsed_report, self.__metric_system, self.__wind_units)
-
-    @property
-    def weather(self):
-        return self.__weather
+            self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
+            self.__sun_report = self.get_sun_data();
+            self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
 
 class MetricSystem:
     SI = 1
@@ -144,13 +173,33 @@ class Weather(object):
     Data object to parse metar weather object and convert units
     """
 
-    def __init__(self, report, metric_system, wind_unit):
-        self.__report = report
+    def __init__(self, weather_report, sun_report, metric_system, wind_unit):
+        self.__report = weather_report
+        self.__sun = sun_report
         self.__metric_system = metric_system
         self.__wind_unit = wind_unit
 
+        #formatting sun data
+        now = datetime.datetime.now().time()
+        #FIXME: this is ugly
+        self.__sunrise = self.__sun[0]
+        self.__sunset = self.__sun[1]
+        self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
+        self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
+        if now<self.__sunrise_t or now>self.__sunset_t:
+            self.__night = True
+        else:
+			self.__night = False
+
+    
+    def isNight(self):
+        return self.__night
+
     def isReportCorrect(self):
         return True if self.__report != None else False
+
+    def getPureCondition(self):
+        return self.__report.getWeather()
 
     def getCondition(self):
         #FIXME: Translation!
@@ -224,27 +273,11 @@ class Weather(object):
             _unit  = "F"
         return "%s: %s %s" % (_("Wind Chill"), _value, _unit)
 
-    def getAbbreviatedWind(self):
-        #FIXME: Code is being duplicated here slightly
-        if (self.__wind_unit == WindUnits.MPS):
-            _wind_speed_value = self.__report.getWindSpeed()
-            _wind_speed_unit  = _("m\s")
-        if (self.__wind_unit == WindUnits.MPH):
-            _wind_speed_value = self.__report.getWindSpeedMilesPerHour()
-            _wind_speed_unit  = _("mph")
-        if (self.__wind_unit == WindUnits.BEAUFORT):
-            _wind_speed_value = self.__report.getWindSpeedMilesPerHour()
-            _wind_speed_unit  = ""
-        if (self.__wind_unit == WindUnits.KNOTS):
-            _wind_speed_value = self.__report.getWindSpeedMilesPerHour()
-            _wind_speed_unit  = _("knot(s)")
-        if (self.__metric_system == MetricSystem.SI):
-            _wind_chill_value = self.__report.getWindchill()
-            _wind_chill_unit  = "C"
-        else:
-            _wind_chill_value = self.__report.getWindchillF()
-            _wind_chill_unit  = "F"
-        return "%s: %s %s %s, %s %s" % (_("Wind"), self.__report.getWindDirection(), _wind_speed_value, _wind_speed_unit, _wind_chill_value, _wind_chill_unit)
+    def getSunrise(self):
+        return "%s: %s" % (_("Sunrise"), time.strftime('%X',time.strptime(self.__sunrise,'%H:%M:%S')))
+
+    def getSunset(self):
+        return "%s: %s" % (_("Sunset"), time.strftime('%X',time.strptime(self.__sunset,'%H:%M:%S')))
 
 class indicator_weather:
     def __init__(self):
@@ -386,9 +419,6 @@ class indicator_weather:
         prefs_show.show()
         self.menu.append(prefs_show)
         
-        #im = IndicatorMenu()
-        #self.winder.set_menu(im)
-        
     def placeadding(self,widget):
         self.placeadded = ''
         self.assistant = Assistant()
@@ -445,18 +475,8 @@ class indicator_weather:
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
-        current = self.get_weather(self.places[self.placechosen])
-        result = self.get_sun(self.places[self.placechosen])
-        if result != None:
-			sunrise,sunset,timezone = result
-			now = datetime.datetime.now().time()
-			sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
-			sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
-			if now<sunrise_t or now>sunset_t:
-				night = True
-			else:
-				night = False
-        else:
+        weather = self.get_weather(self.places[self.placechosen])
+        if weather == None:
 			for item in self.menu.get_children()[0:len(self.menu.get_children())]:
 				item.destroy()
 			self.problem_show = gtk.MenuItem(_("Connection problem"))
@@ -466,46 +486,48 @@ class indicator_weather:
 			self.winder.set_icon("ubuntuone-client-error")
 			return
 		
-        self.condition = current
+        self.condition = weather.getPureCondition()
         
-        print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
-        
-        current = self.icon
-        
-        if current in ('chance_of_storm', 'storm'):
+        print 'Update :',weather.getPureCondition(),'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
+
+        #WTF?
+        #current = self.icon
+
+        #FIXME: move this endless if to Weather object
+        if self.condition in ('chance_of_storm', 'storm'):
             self.winder.set_icon("weather-storm")
             a="weather-storm"
-        elif current in ('thunderstorm', 'chance_of_tstorm'):
+        elif self.condition in ('thunderstorm', 'chance_of_tstorm'):
             self.winder.set_icon("weather-severe-alert")
             a="weather-severe-alert"
-        elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
+        elif self.condition in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
             self.winder.set_icon("weather-snow")
             a= "weather-snow"
-        elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
+        elif self.condition in ('dust',  'fog',  'smoke',  'haze',  'mist'):
             self.winder.set_icon("weather-fog")
             a="weather-fog" 
-        elif current == 'rain':
+        elif self.condition == 'rain':
             self.winder.set_icon("weather-showers")
             a="weather-showers"
-        elif current == 'chance_of_rain':
+        elif self.condition == 'chance_of_rain':
             self.winder.set_icon("weather-showers-scattered")
             a = "weather-showers-scattered"
-        elif current in ('sunny', 'clear'):
-            if night:
+        elif self.condition in ('sunny', 'clear'):
+            if weather.isNight:
                 self.winder.set_icon("weather-clear-night")
                 a="weather-clear-night"
             else:
                 self.winder.set_icon("weather-clear")
                 a="weather-clear"
-        elif current in ('mostly_cloudy', 'cloudy'):
-            if night:
+        elif self.condition in ('mostly_cloudy', 'cloudy'):
+            if weather.isNight:
                 self.winder.set_icon("weather-clouds-night")
                 a="weather-clouds-night"
             else:
                 self.winder.set_icon("weather-clouds")
                 a="weather-clouds"
-        elif current in ('mostly_sunny',  'partly_cloudy'):
-            if night:
+        elif self.condition in ('mostly_sunny',  'partly_cloudy'):
+            if weather.isNight:
                 self.winder.set_icon("weather-few-clouds-night")
                 a="weather-few-clouds-night"
             else:    
@@ -516,15 +538,13 @@ class indicator_weather:
             a=False
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
-        self.city_show.set_label(self.cityLabel)
+        self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
-        self.temp_show.set_label(self.temp)
-        self.humid_show.set_label(self.humid)
-        self.wind_show.set_label(self.wind)
-        import time
-        if result != None:
-			self.sunrise_show.set_label(_('Sunrise: ')+time.strftime('%X',time.strptime(sunrise,'%H:%M:%S')))
-			self.sunset_show.set_label(_('Sunset: ')+time.strftime('%X',time.strptime(sunset,'%H:%M:%S')))
+        self.temp_show.set_label(weather.getTemperature())
+        self.humid_show.set_label(weather.getHumidity())
+        self.wind_show.set_label(weather.getWindSpeed())
+        self.sunrise_show.set_label(weather.getSunrise())
+        self.sunset_show.set_label(weather.getSunset())
         
         if self.notif != 'N' and a != False and notif:
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
@@ -570,67 +590,23 @@ class indicator_weather:
             gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
         dialog.destroy()
         self.update_weather()
-        
-    def get_sun(self,city):
-        url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city[0])+'&sensor=false'
-        try:
-            result = simplejson.load(urllib2.urlopen(url))
-            lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
-            now = datetime.datetime.now()
-            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
-            print "Trying to sun for city " + city[0] 
-            f = urllib2.urlopen(url)
-            s=f.read()
-            parsed = parseString(s)
-            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
-            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-            return sunrise,sunset,timezone
-        except urllib2.URLError, error:
-			return None
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
-        import locale
-        localebad = locale.getlocale()[0]
-        locale = localebad.split ('_')
-        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city[0]) + "&hl=" + locale[0]
-        try:
-            # open google weather api url
-            print "Trying to get weather for city " + city[0]
-            location = Location(MetricSystem.SI, WindUnits.MPS)
-            location.prepare_location_by_code(city[0])
-            location.update_weather_data()
-            if (location.weather.isReportCorrect() == False):
-                print "report is empty";
-            else:
-                print "Got report";
-            #f = urllib2.urlopen(url)
-
-        except urllib2.URLError, error:
-            # if there was an error opening the url, return
-            self.temp = _("Connection problem")
-            self.city = _("Connection problem")
-            self.humid = _("Connection problem")
-            self.wind = _("Connection problem")
-            self.icon = _("Connection problem")
-            return _("Connection problem")
-        
-        #s = f.read()
-        #encoding = f.headers['content-type'].split('charset=')[-1]
-        #s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-        #self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-        # extract weather condition data from xml string
-        if extended == False:
-            self.temp = location.weather.getTemperature()
-            self.city = city[1]
-            self.cityLabel = city[1]
-            self.humid = location.weather.getHumidity()
-            self.wind = location.weather.getAbbreviatedWind()
-            self.icon = location.weather.getPixmap()
-            return location.weather.getCondition()
+        location = Location(MetricSystem.SI, WindUnits.MPS)
+        if (location.find_city_by_code(city[0]) == False):
+            print "location with code %s not found" % city[0]
+        location.update_weather_data()
+        if (location.weather.isReportCorrect() == False):
+            print "report is empty";
         else:
+            print "Got report";
+      
+        if extended == False:
+            return location.weather
+        else:
+            #FIXME: extended report should be gathered from Google
             parsed = parseString(s)
             self.daysofweek=[]
             for day_of_week in parsed.getElementsByTagName("day_of_week"):
