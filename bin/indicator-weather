@@ -437,6 +437,12 @@ class indicator_weather:
         setup.connect("activate", self.placeadding)
         setup.show()
         menu_noplace.append(setup)
+
+        quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        quit.connect("activate", self.quit)
+        quit.show()
+        menu_noplace.append(quit)
+
         self.winder.set_menu(menu_noplace)
     
     def menu_normal(self):
@@ -526,6 +532,11 @@ class indicator_weather:
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
+
+        quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        quit.connect("activate", self.quit)
+        quit.show()
+        self.menu.append(quit)
         
     def placeadding(self,widget):
         self.placeadded = ''
@@ -570,6 +581,11 @@ class indicator_weather:
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
+
+        quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        quit.connect("activate", self.quit)
+        quit.show()
+        self.menu.append(quit)
         
         self.winder.set_menu(self.menu)
 
@@ -702,6 +718,9 @@ class indicator_weather:
         else:
 		    n = pynotify.Notification (self.condition,"",icon)
         n.show ()
+
+    def quit(self, widget, data=None):
+        gtk.main_quit()
 
 class PreferencesDialog(gtk.Dialog):
     __gtype_name__ = "PreferencesDialog"
