@@ -216,7 +216,6 @@ class Location:
             self.conditions.append([condition.attributes["data"].value][0])
         return self.conditions
         
-
 class MetricSystem:
     SI = 1
     IMPERIAL = 2
@@ -231,12 +230,47 @@ class Weather:
     """
     Data object to parse metar weather object and convert units
     """
+    
+    #Available conditions and their icons
+    # The following format is used:
+    # pymetar name: (translated name, day icon name, night icon name, is severe) 
+    _WeatherConditions = {
+        #FIXME: Do we really have to copypaste these key values?
+        "clear sky"            : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
+        "clear"                : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
+
+        "broken clouds"        : ( _("Broken clouds"),     "weather-few-clouds",        "weather-few-clouds-night",  False),
+        "scattered clouds"     : ( _("Scattered clouds"),  "weather-overcast",          "weather-overcast",          False),
+        "few clouds"           : ( _("Few clouds"),        "weather-clouds",            "weather-clouds-night",      False),
+        "overcast"             : ( _("Overcast"),          "weather-overcast",          "weather-overcast",          False),
+        "snow"                 : ( _("Snow"),              "weather-snow",              "weather-snow",              False),
+        "showers"              : ( _("Showers"),           "weather-showers",           "weather-showers",           False),
+        "scattered Showers"    : ( _("Scattered Showers"), "weather-showers-scattered", "weather-showers-scattered", False),
+        "fog"                  : ( _("Fog"),               "weather-fog",               "weather-fog",               False),
+        "storm"                : ( _("Storm"),             "weather-storm",             "weather-storm",             True),
+    }
 
     def __init__(self, weather_report, sun_report, metric_system, wind_unit):
         self.__report = weather_report
         self.__sun = sun_report
         self.__metric_system = metric_system
         self.__wind_unit = wind_unit
+        self.__current_condition = None
+
+        self.__get_weather_conditions = self.__report.getWeather()
+        self.__get_conditions = self.__report.getConditions()
+        self.__get_sky_conditions = self.__report.getSkyConditions()
+        print "getWeather: "      , self.__get_weather_conditions
+        print "getConditions: "   , self.__get_conditions
+        print "getSkyConditions: ", self.__get_sky_conditions
+        if (self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getWeather().lower())
+        if (self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getConditions()[0].lower())
+        if (self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getSkyConditions().lower())
+
+        print "condition:", self.__current_condition
 
         #formatting sun data
         now = datetime.datetime.now().time()
@@ -249,7 +283,6 @@ class Weather:
             self.__night = True
         else:
 			self.__night = False
-
     
     def isNight(self):
         return self.__night
@@ -257,19 +290,35 @@ class Weather:
     def isReportCorrect(self):
         return True if self.__report != None else False
 
+    def isSevereCondition(self):
+        if self.__current_condition != None:
+            return self.__current_condition[3]
+        else:
+            print "BUG: Severe condition is empty!"
+            return False;
+
     def getPureCondition(self):
-        return self.__report.getWeather()
+        if self.__current_condition != None:
+            return self.__current_condition[0]
+        else:
+            print "BUG: Condition name is empty!"
+            return "BUG: Condition name is empty!";
 
     def getCondition(self):
-        #FIXME: Translation!
-        return "%s: %s" % (_("Condition"), self.__report.getWeather())
+        return "%s: %s" % (_("Condition"), self.getPureCondition())
 
     def getSkyCondition(self):
         return "%s: %s" % (_("Sky"), self.__report.getSkyConditions())
 
     def getPixmap(self):
-        #FIXME: get pixmap name depending on the condition, time and sky
-        return "weather-snow"
+        if self.__current_condition != None:
+            if self.isNight:
+                return self.__current_condition[2]
+            else:
+                return self.__current_condition[1]
+        else:
+            print "BUG: Cannot get icon for weather condition"
+            return "ubuntuone-client-offline"
 
     def getHumidity(self):
         return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
@@ -546,52 +595,14 @@ class indicator_weather:
 			return
 		
         self.condition = weather.getPureCondition()
+        self.icon = weather.getPixmap()
+        if (self.icon == False):
+			self.winder.set_icon("ubuntuone-client-error")
+        else:
+        	self.winder.set_icon(self.icon)
         
         print 'Update :',weather.getPureCondition(),'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
 
-        #FIXME: move this endless if to Weather object
-        if self.condition in ('chance_of_storm', 'storm'):
-            self.winder.set_icon("weather-storm")
-            a="weather-storm"
-        elif self.condition in ('thunderstorm', 'chance_of_tstorm'):
-            self.winder.set_icon("weather-severe-alert")
-            a="weather-severe-alert"
-        elif self.condition in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
-            self.winder.set_icon("weather-snow")
-            a= "weather-snow"
-        elif self.condition in ('dust',  'fog',  'smoke',  'haze',  'mist'):
-            self.winder.set_icon("weather-fog")
-            a="weather-fog" 
-        elif self.condition == 'rain':
-            self.winder.set_icon("weather-showers")
-            a="weather-showers"
-        elif self.condition == 'chance_of_rain':
-            self.winder.set_icon("weather-showers-scattered")
-            a = "weather-showers-scattered"
-        elif self.condition in ('sunny', 'clear'):
-            if weather.isNight:
-                self.winder.set_icon("weather-clear-night")
-                a="weather-clear-night"
-            else:
-                self.winder.set_icon("weather-clear")
-                a="weather-clear"
-        elif self.condition in ('mostly_cloudy', 'cloudy'):
-            if weather.isNight:
-                self.winder.set_icon("weather-clouds-night")
-                a="weather-clouds-night"
-            else:
-                self.winder.set_icon("weather-clouds")
-                a="weather-clouds"
-        elif self.condition in ('mostly_sunny',  'partly_cloudy'):
-            if weather.isNight:
-                self.winder.set_icon("weather-few-clouds-night")
-                a="weather-few-clouds-night"
-            else:    
-                self.winder.set_icon("weather-few-clouds")
-                a="weather-few-clouds"
-        else:
-            self.winder.set_icon("ubuntuone-client-error")
-            a=False
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
         self.city_show.set_label(self.places[self.placechosen][1])
@@ -600,13 +611,14 @@ class indicator_weather:
         self.humid_show.set_label(weather.getHumidity())
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
-        self.sunset_show.set_label(weather.getSunset())
+        self.sunset_show.set_label(weather.getSunset())       
         
-        if self.notif != 'N' and a != False and notif:
+        if self.notif != 'N' and weather.isSevereCondition():
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
-	            self.notify(self.condition, a)
-	        elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
-	            self.notify(self.condition,a,severe=True)
+	            self.notify(self.condition, self.icon)
+            #FIXME: Fix notitfications on severe events
+            #elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
+	        #    self.notify(self.condition, self.icon, severe=True)
 	            
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
         
@@ -688,9 +700,7 @@ class indicator_weather:
                 self.condition,
                 icon)
         else:
-		    n = pynotify.Notification (self.condition,
-               "",
-               icon)
+		    n = pynotify.Notification (self.condition,"",icon)
         n.show ()
 
 class PreferencesDialog(gtk.Dialog):
