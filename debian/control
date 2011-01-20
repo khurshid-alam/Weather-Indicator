@@ -6,7 +6,7 @@ Build-Depends: cdbs (>= 0.4.43),
  python,
  python-support (>= 0.6.4),
  python-distutils-extra (>= 2.10)
-Maintainer: Sebastian MacDonald | Mehdi Rejraji <sebas310@gmail.com>
+Maintainer: Vadim Rutkovsky <roignac@gmail.com>
 Standards-Version: 3.8.3
 XS-Python-Version: current
 
@@ -20,7 +20,9 @@ Depends: ${misc:Depends},
  python-gconf,
  python-notify,
  python-gobject,
- python-gtk2
+ python-gtk2,
+ python-pymetar,
+ python-gweather
 Description: A weather indicator for Ubuntu's Indicator Applet
  A weather indicator that displays information for one or multiple places
  in the world

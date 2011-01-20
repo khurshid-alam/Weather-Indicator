@@ -25,19 +25,19 @@ import gobject
 import appindicator
 import gconf
 import urllib2
-#import time
 import re
 import datetime
-import simplejson
-#from threading import Timer
-#import thread
 import locale
 import pynotify
 from xml.dom.minidom import parseString
+import time
 
 import gettext
 from gettext import gettext as _
 gettext.textdomain('indicator-weather')
+
+from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
+import pymetar as metar
 
 # Add project root directory (enable symlink, and trunk execution).
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
@@ -51,6 +51,341 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 from indicator_weather.helpers import get_builder
 
 gconfClient = gconf.client_get_default()
+
+class Location:
+    """
+    Data object which contains the name of a city (label), its GWeather object "location"
+    """
+
+    #Initialize an object with a label
+    def __init__(self, metric_system, wind_units):
+        self.__metric_system = metric_system
+        self.__wind_units = wind_units
+        self.__found = False
+        self.__lat = None
+        self.__lon = None
+
+    # Get a full city name
+    def get_full_city_name(self):
+        # We're getting a parent here, as 'location' here is actually a weather station
+        self.__city = self.__location.get_parent()
+        self.__full_city_name = ""
+        while (self.__city.get_parent() != None):
+            self.__full_city_name += "%s, " % self.__city.get_name()
+            self.__city = self.__city.get_parent()
+        self.__full_city_name += "%s" % self.__city.get_name()
+        return self.__full_city_name
+
+    #Internal proc - iterate by known locations to find a city by its name
+    def __find_city_by_name (self, node, city_name):
+        if (node.get_name() == city_name):
+            #FIXME: City may have several weather stations - we're selecting the first one only
+            if (node.get_children() != None):
+                return node.get_children()[0];
+        else:
+            for obj in node.get_children():
+                possible_city = self.__find_city_by_name(obj, city_name)
+                if (possible_city != None):
+                    return possible_city;
+    
+    #Internal proc - iterate by known locations to find city by its code
+    def __find_city_by_code (self, node, city_code):
+        if (node.get_code() == city_code):
+            return node;
+        else:
+            for obj in node.get_children():
+                possible_city = self.__find_city_by_code(obj, city_code)
+                if (possible_city != None):
+                    return possible_city;
+
+    #Fill in location attribute, looking up by location name
+    def find_city_by_name (self, city_name):
+        location = self.__find_city_by_name(gweather.location_new_world(False), city_name)
+        self.prepare_location(location)
+
+    #Fill in location attribute, looking up by location code
+    def find_city_by_code (self, city_code):
+        location = self.__find_city_by_code(gweather.location_new_world(False), city_code)
+        self.prepare_location(location)
+
+    #Prepare metar reporter for the location
+    def prepare_location(self, location):
+        if (location != None):
+            self.__location = location
+            self.__code = location.get_code()
+            self.__lat = location.get_coords()[0]
+            self.__lon = location.get_coords()[1]
+            self.__report_fetcher = metar.ReportFetcher(self.__code)
+            self.__found = True
+        else:
+            self.__found = False
+
+    def set_label(self, value):
+        self.__label = value
+
+    @property
+    def code(self):
+        return self.__code
+
+    @property
+    def found(self):
+        return self.__found
+
+    @property
+    def label(self):
+        return self.__label
+
+    @property
+    def weather(self):
+        return self.__weather
+
+    #Get sun status
+    def get_sun_data(self):
+        if (self.found):
+            now = datetime.datetime.now()
+            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
+            f = urllib2.urlopen(url)
+            s=f.read()
+            parsed = parseString(s)
+            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
+            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
+            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+            return (sunrise, sunset, timezone)
+        else:
+            print "Can't gather sun data on empty location"
+
+    #Update weather data and store weather object
+    def update_weather_data(self):
+        if (self.__report_fetcher != None):
+            self.__fetched_report = self.__report_fetcher.FetchReport()
+            self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
+            self.__sun_report = self.get_sun_data();
+            self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
+
+    #Get and store forecast data - use Google
+    def prepare_forecast_data(self):
+        import locale
+        localebad = locale.getlocale()[0]
+        locale = localebad.split ('_')
+        #Here we generate a string, compiled of latitude and longitude for location
+        self.coord_string = (",,,%.6f,%.6f" % (self.__lat, self.__lon)).replace(".","")
+        url = "http://www.google.com/ig/api?weather=" + self.coord_string + "&hl=" + locale[0]
+        print "url:\n%s" % url
+        f = urllib2.urlopen(url)
+        s = f.read()
+        encoding = f.headers['content-type'].split('charset=')[-1]
+        s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
+        self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
+        self.__parsedforecast = parseString(s)
+        #FIXME: check for errors here
+
+    #Parse a list of days of week with forecast data
+    def get_forecast_daysofweek(self):
+        self.daysofweek = []
+        for day_of_week in self.__parsedforecast.getElementsByTagName("day_of_week"):
+                self.daysofweek.append([day_of_week.attributes["data"].value][0])
+        return self.daysofweek
+
+    #Parse high values for forecast data
+    def get_forecast_highdata(self):
+        self.highdata = []
+        for high in self.__parsedforecast.getElementsByTagName("high"):
+                #FIXME: convert values here and further
+                self.highdata.append([high.attributes["data"].value][0])
+        return self.highdata
+
+    #Parse low values for forecast data
+    def get_forecast_lowdata(self):
+        self.lowdata = []
+        for low in self.__parsedforecast.getElementsByTagName("low"):
+                #FIXME: WTF? see original code
+                self.lowdata.append([low.attributes["data"].value][0])
+        return self.lowdata
+
+    #Parse icons for forecast data
+    def get_forecast_icons(self):
+        self.icons = []
+        for icon in self.__parsedforecast.getElementsByTagName("icon"):
+                self.icons.append([icon.attributes["data"].value][0].split("/ig/images/weather/")[-1].split(".gif")[0])
+        return self.icons
+
+    #Parse conditions for forecast data
+    def get_forecast_conditions(self):
+        self.conditions = []
+        for condition in self.__parsedforecast.getElementsByTagName("condition"):
+            self.conditions.append([condition.attributes["data"].value][0])
+        return self.conditions
+        
+class MetricSystem:
+    SI = 1
+    IMPERIAL = 2
+
+class WindUnits:
+    MPS = 1
+    MPH = 2
+    BEAUFORT = 3
+    KNOTS = 4
+
+class Weather:
+    """
+    Data object to parse metar weather object and convert units
+    """
+    
+    #Available conditions and their icons
+    # The following format is used:
+    # pymetar name: (translated name, day icon name, night icon name, is severe) 
+    _WeatherConditions = {
+        #FIXME: Do we really have to copypaste these key values?
+        "clear sky"            : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
+        "clear"                : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
+
+        "broken clouds"        : ( _("Broken clouds"),     "weather-few-clouds",        "weather-few-clouds-night",  False),
+        "scattered clouds"     : ( _("Scattered clouds"),  "weather-overcast",          "weather-overcast",          False),
+        "few clouds"           : ( _("Few clouds"),        "weather-clouds",            "weather-clouds-night",      False),
+        "overcast"             : ( _("Overcast"),          "weather-overcast",          "weather-overcast",          False),
+        "snow"                 : ( _("Snow"),              "weather-snow",              "weather-snow",              False),
+        "showers"              : ( _("Showers"),           "weather-showers",           "weather-showers",           False),
+        "scattered Showers"    : ( _("Scattered Showers"), "weather-showers-scattered", "weather-showers-scattered", False),
+        "fog"                  : ( _("Fog"),               "weather-fog",               "weather-fog",               False),
+        "storm"                : ( _("Storm"),             "weather-storm",             "weather-storm",             True),
+    }
+
+    def __init__(self, weather_report, sun_report, metric_system, wind_unit):
+        self.__report = weather_report
+        self.__sun = sun_report
+        self.__metric_system = metric_system
+        self.__wind_unit = wind_unit
+        self.__current_condition = None
+
+        self.__get_weather_conditions = self.__report.getWeather()
+        self.__get_conditions = self.__report.getConditions()
+        self.__get_sky_conditions = self.__report.getSkyConditions()
+        print "getWeather: "      , self.__get_weather_conditions
+        print "getConditions: "   , self.__get_conditions
+        print "getSkyConditions: ", self.__get_sky_conditions
+        if (self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getWeather().lower())
+        if (self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getConditions()[0].lower())
+        if (self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None):
+            self.__current_condition = self._WeatherConditions.get(self.__report.getSkyConditions().lower())
+
+        print "condition:", self.__current_condition
+
+        #formatting sun data
+        now = datetime.datetime.now().time()
+        #FIXME: this is ugly
+        self.__sunrise = self.__sun[0]
+        self.__sunset = self.__sun[1]
+        self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
+        self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
+        if now<self.__sunrise_t or now>self.__sunset_t:
+            self.__night = True
+        else:
+			self.__night = False
+    
+    def isNight(self):
+        return self.__night
+
+    def isReportCorrect(self):
+        return True if self.__report != None else False
+
+    def isSevereCondition(self):
+        if self.__current_condition != None:
+            return self.__current_condition[3]
+        else:
+            print "BUG: Severe condition is empty!"
+            return False;
+
+    def getPureCondition(self):
+        if self.__current_condition != None:
+            return self.__current_condition[0]
+        else:
+            print "BUG: Condition name is empty!"
+            return "BUG: Condition name is empty!";
+
+    def getCondition(self):
+        return "%s: %s" % (_("Condition"), self.getPureCondition())
+
+    def getSkyCondition(self):
+        return "%s: %s" % (_("Sky"), self.__report.getSkyConditions())
+
+    def getPixmap(self):
+        if self.__current_condition != None:
+            if self.isNight:
+                return self.__current_condition[2]
+            else:
+                return self.__current_condition[1]
+        else:
+            print "BUG: Cannot get icon for weather condition"
+            return "ubuntuone-client-offline"
+
+    def getHumidity(self):
+        return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
+
+    def getDewPoint(self):
+        if (self.__metric_system == MetricSystem.SI):
+            _value = self.__report.getDewPointCelsius()
+            _unit  = "C"
+        else:
+            _value = self.__report.getDewPointFahrenheit()
+            _unit  = "F"
+        return "%s: %s %s" % (_("Dew Point"), _value, _unit)
+
+    def getPressure(self):
+        return "%s: %s %s" % (_("Pressure"), self.__report.getPressure(), "hPa")
+
+    def getTemperature(self):
+        if (self.__metric_system == MetricSystem.SI):
+            _value = self.__report.getTemperatureCelsius()
+            _unit  = "C"
+        else:
+            _value = self.__report.getTemperatureFahrenheit()
+            _unit  = "F"
+        return "%s: %s %s" % (_("Temperature"), _value, _unit)
+
+    def getVisibility(self):
+        if (self.__metric_system == MetricSystem.SI):
+            _value = self.__report.getVisibilityKilometers()
+            _unit  = _("km")
+        else:
+            _value = self.__report.getVisibilityMiles()
+            _unit  = _("mile(s)")
+        return "%s: %s %s" % (_("Visibility"), _value, _unit)
+
+    def getWindDirection(self):
+        #FIXME: return a "SW" instead of "280" degrees values
+        return "%s: %s" % (_("Wind Direction"), self.__report.getWindDirection())
+
+    def getWindSpeed(self):
+        if (self.__wind_unit == WindUnits.MPS):
+            _value = self.__report.getWindSpeed()
+            _unit  = _("m\s")
+        if (self.__wind_unit == WindUnits.MPH):
+            _value = self.__report.getWindSpeedMilesPerHour()
+            _unit  = _("mph")
+        if (self.__wind_unit == WindUnits.BEAUFORT):
+            _value = self.__report.getWindSpeedMilesPerHour()
+            _unit  = ""
+        if (self.__wind_unit == WindUnits.KNOTS):
+            _value = self.__report.getWindSpeedMilesPerHour()
+            _unit  = _("knot(s)")
+        return "%s: %s %s" % (_("Wind Speed"), _value, _unit)
+
+    def getWindChill(self):
+        if (self.__metric_system == MetricSystem.SI):
+            _value = self.__report.getWindchill()
+            _unit  = "C"
+        else:
+            _value = self.__report.getWindchillF()
+            _unit  = "F"
+        return "%s: %s %s" % (_("Wind Chill"), _value, _unit)
+
+    def getSunrise(self):
+        return "%s: %s" % (_("Sunrise"), time.strftime('%X',time.strptime(self.__sunrise,'%H:%M:%S')))
+
+    def getSunset(self):
+        return "%s: %s" % (_("Sunset"), time.strftime('%X',time.strptime(self.__sunset,'%H:%M:%S')))
 
 class indicator_weather:
     def __init__(self):
@@ -90,7 +425,6 @@ class indicator_weather:
         if self.places in (False, None, '[]', "['']",):
             self.menu_noplace()
         else:
-            
             self.places = eval(self.places)
             self.menu_normal()
             self.place = self.places[self.placechosen]
@@ -193,9 +527,6 @@ class indicator_weather:
         prefs_show.show()
         self.menu.append(prefs_show)
         
-        #im = IndicatorMenu()
-        #self.winder.set_menu(im)
-        
     def placeadding(self,widget):
         self.placeadded = ''
         self.assistant = Assistant()
@@ -252,18 +583,8 @@ class indicator_weather:
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
-        current = self.get_weather(self.places[self.placechosen])
-        result = self.get_sun(self.places[self.placechosen])
-        if result != None:
-			sunrise,sunset,timezone = result
-			now = datetime.datetime.now().time()
-			sunrise_t = datetime.time(int(sunrise.split(':')[0]), int(sunrise.split(':')[1]), int(sunrise.split(':')[2]))
-			sunset_t = datetime.time(int(sunset.split(':')[0]), int(sunset.split(':')[1]), int(sunset.split(':')[2]))
-			if now<sunrise_t or now>sunset_t:
-				night = True
-			else:
-				night = False
-        else:
+        weather = self.get_weather(self.places[self.placechosen])
+        if weather == None:
 			for item in self.menu.get_children()[0:len(self.menu.get_children())]:
 				item.destroy()
 			self.problem_show = gtk.MenuItem(_("Connection problem"))
@@ -273,71 +594,31 @@ class indicator_weather:
 			self.winder.set_icon("ubuntuone-client-error")
 			return
 		
-        self.condition = current
-        
-        print 'Update :',current,'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
-        
-        current = self.icon
-        
-        if current in ('chance_of_storm', 'storm'):
-            self.winder.set_icon("weather-storm")
-            a="weather-storm"
-        elif current in ('thunderstorm', 'chance_of_tstorm'):
-            self.winder.set_icon("weather-severe-alert")
-            a="weather-severe-alert"
-        elif current in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
-            self.winder.set_icon("weather-snow")
-            a= "weather-snow"
-        elif current in ('dust',  'fog',  'smoke',  'haze',  'mist'):
-            self.winder.set_icon("weather-fog")
-            a="weather-fog" 
-        elif current == 'rain':
-            self.winder.set_icon("weather-showers")
-            a="weather-showers"
-        elif current == 'chance_of_rain':
-            self.winder.set_icon("weather-showers-scattered")
-            a = "weather-showers-scattered"
-        elif current in ('sunny', 'clear'):
-            if night:
-                self.winder.set_icon("weather-clear-night")
-                a="weather-clear-night"
-            else:
-                self.winder.set_icon("weather-clear")
-                a="weather-clear"
-        elif current in ('mostly_cloudy', 'cloudy'):
-            if night:
-                self.winder.set_icon("weather-clouds-night")
-                a="weather-clouds-night"
-            else:
-                self.winder.set_icon("weather-clouds")
-                a="weather-clouds"
-        elif current in ('mostly_sunny',  'partly_cloudy'):
-            if night:
-                self.winder.set_icon("weather-few-clouds-night")
-                a="weather-few-clouds-night"
-            else:    
-                self.winder.set_icon("weather-few-clouds")
-                a="weather-few-clouds"
+        self.condition = weather.getPureCondition()
+        self.icon = weather.getPixmap()
+        if (self.icon == False):
+			self.winder.set_icon("ubuntuone-client-error")
         else:
-            self.winder.set_icon("ubuntuone-client-error")
-            a=False
+        	self.winder.set_icon(self.icon)
+        
+        print 'Update :',weather.getPureCondition(),'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
+
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
         
-        self.city_show.set_label(self.cityLabel)
+        self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
-        self.temp_show.set_label(self.temp)
-        self.humid_show.set_label(self.humid)
-        self.wind_show.set_label(self.wind)
-        import time
-        if result != None:
-			self.sunrise_show.set_label(_('Sunrise: ')+time.strftime('%X',time.strptime(sunrise,'%H:%M:%S')))
-			self.sunset_show.set_label(_('Sunset: ')+time.strftime('%X',time.strptime(sunset,'%H:%M:%S')))
+        self.temp_show.set_label(weather.getTemperature())
+        self.humid_show.set_label(weather.getHumidity())
+        self.wind_show.set_label(weather.getWindSpeed())
+        self.sunrise_show.set_label(weather.getSunrise())
+        self.sunset_show.set_label(weather.getSunset())       
         
-        if self.notif != 'N' and a != False and notif:
+        if self.notif != 'N' and weather.isSevereCondition():
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
-	            self.notify(self.condition, a)
-	        elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
-	            self.notify(self.condition,a,severe=True)
+	            self.notify(self.condition, self.icon)
+            #FIXME: Fix notitfications on severe events
+            #elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
+	        #    self.notify(self.condition, self.icon, severe=True)
 	            
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
         
@@ -377,163 +658,26 @@ class indicator_weather:
             gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
         dialog.destroy()
         self.update_weather()
-        
-    def get_sun(self,city):
-        url = 'http://maps.google.com/maps/api/geocode/json?address='+urllib2.quote(city[0])+'&sensor=false'
-        try:
-            result = simplejson.load(urllib2.urlopen(url))
-            lat,lon = result['results'][0]['geometry']['location']['lat'],result['results'][0]['geometry']['location']['lng']
-            now = datetime.datetime.now()
-            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (lat,lon,now.day,now.month)
-            f = urllib2.urlopen(url)
-            s=f.read()
-            parsed = parseString(s)
-            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
-            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-            return sunrise,sunset,timezone
-        except urllib2.URLError, error:
-			return None
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
-        import locale
-        localebad = locale.getlocale()[0]
-        locale = localebad.split ('_')
-        url = "http://www.google.com/ig/api?weather=" + urllib2.quote(city[0]) + "&hl=" + locale[0]
-        try:
-            # open google weather api url
-            f = urllib2.urlopen(url)
-
-        except urllib2.URLError, error:
-            # if there was an error opening the url, return
-            self.temp = _("Connection problem")
-            self.city = _("Connection problem")
-            self.humid = _("Connection problem")
-            self.wind = _("Connection problem")
-            self.icon = _("Connection problem")
-            return _("Connection problem")
-        
-        s = f.read()
-        encoding = f.headers['content-type'].split('charset=')[-1]
-        s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-        self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-        # extract weather condition data from xml string
+        location = Location(MetricSystem.SI, WindUnits.MPS)
+        if (location.find_city_by_code(city[0]) == False):
+            print "location with code %s not found" % city[0]    
         if extended == False:
-            if onlycity:
-                return s.split("<city data=\"")[-1].split("\"")[0]
-            else:
-                
-                weather = s.split("<current_conditions><condition data=\"")[-1].split("\"")[0]
-                self.city = s.split("<city data=\"")[-1].split("\"")[0]
-                self.cityLabel = city[1]
-                if firstrun and self.unitsystem == 'SI':
-                        self.unit = 'C'
-                        gconfClient.set_string("/apps/indicator-weather/unit", 'C')
-                        #self.windunit = 'km/h'
-                        #gconfClient.set_string("/apps/indicator-weather/wind", 'km/h')
-                
-                if self.unit == 'F':
-                    self.temp = s.split("<temp_f data=\"")[-1].split("\"")[0] + "°F"
-                elif self.unit == 'C':
-                    self.temp = s.split("<temp_c data=\"")[-1].split("\"")[0] + "°C"
-                else:
-                    self.temp = str(int(s.split("<temp_c data=\"")[-1].split("\"")[0])+273) + "°K"
-                
-                self.humid = s.split("<humidity data=\"")[-1].split("\"")[0]
-                self.wind = s.split("<wind_condition data=\"")[-1].split("\"")[0]
-                #windvalue = int(''.join(filter(lambda x: x.isdigit(), self.wind)))
-                
-                #if unitsystem == 'US':
-                    #windvalue = int(round(float(windvalue*1.609344)))
-                #if self.windunit == 'm/s':
-                    #windvalue = int(round(float(windvalue/3.6)))
-                #elif self.windunit == 'mph':
-                    #print 'im here'
-                    #windvalue = int(round(float(windvalue/1.609344)))
-                    #print windvalue
-                #elif self.windunit == 'knots':
-                    #windvalue = int(round(float(windvalue/1.852)))
-                #elif self.windunit == 'Beaufort':
-                    #if windvalue < 1:
-                        #windvalue = 0
-                    #elif windvalue >= 1 and windvalue < 5:
-                        #windvalue = 1
-                    #elif windvalue >= 6 and windvalue < 11:
-                        #windvalue = 2
-                    #elif windvalue >= 12 and windvalue < 19:
-                        #windvalue = 3
-                    #elif windvalue >= 20 and windvalue < 28:
-                        #windvalue = 4
-                    #elif windvalue >= 29 and windvalue < 38:
-                        #windvalue = 5
-                    #elif windvalue >= 39 and windvalue < 49:
-                        #windvalue = 6
-                    #elif windvalue >= 50 and windvalue < 61:
-                        #windvalue = 7
-                    #elif windvalue >= 62 and windvalue < 74:
-                        #windvalue = 8
-                    #elif windvalue >= 75 and windvalue < 88:
-                        #windvalue = 9
-                    #elif windvalue >= 89 and windvalue < 102:
-                        #windvalue = 10
-                    #elif windvalue >= 103 and windvalue < 117:
-                        #windvalue = 11
-                    #elif windvalue >= 118:
-                        #windvalue = 12
-                #self.wind = self.wind.replace((''.join(filter(lambda x: x.isdigit(), self.wind))),str(windvalue))
-                
-                self.icon = s.split("%\"/><icon data=\"/ig/images/weather/")[-1].split(".gif\"")[0]
-        
-                # if there was an error getting the condition, the city is invalid
-                if weather == "<?xml version=":
-                    self.temp = "Invalid city"
-                    self.city = "Invalid city"
-                    self.cityLabel = "Invalid city"
-                    self.humid = "Invalid city"
-                    self.wind = "Invalid city"
-                    return "Invalid city"
-        
-                #return the weather condition
-                return weather
+            location.update_weather_data()
+            if (location.weather.isReportCorrect() == False):
+                print "report is empty";
+            return location.weather
         else:
-            parsed = parseString(s)
-            self.daysofweek=[]
-            for day_of_week in parsed.getElementsByTagName("day_of_week"):
-                self.daysofweek.append([day_of_week.attributes["data"].value][0])
-            self.lowdata=[]
-            for low in parsed.getElementsByTagName("low"):
-                if (wi.unit == 'C' and wi.unitsystem == 'SI') or (wi.unit == 'F' and wi.unitsystem == 'US'):
-                    self.lowdata.append([low.attributes["data"].value][0])
-                else:
-                    if wi.unit == 'C':
-                        self.lowdata.append(int((((int([low.attributes["data"].value][0]))-32)*5)/9))
-                    elif wi.unit == 'F':
-                        self.lowdata.append(int(((int([low.attributes["data"].value][0])*9)/5)+32))
-                    elif wi.unitsystem == 'SI':
-                        self.lowdata.append((int([low.attributes["data"].value][0]))+273)
-                    else:
-                        self.lowdata.append(int(((((int([low.attributes["data"].value][0]))-32)*5)/9)+273))
-            self.highdata=[]
-            for high in parsed.getElementsByTagName("high"):
-                if (wi.unit == 'C' and wi.unitsystem == 'SI') or (wi.unit == 'F' and wi.unitsystem == 'US'):
-                    self.highdata.append([high.attributes["data"].value][0])
-                else:
-                    if wi.unit == 'C':
-                        self.highdata.append(int((((int([high.attributes["data"].value][0]))-32)*5)/9))
-                    elif wi.unit == 'F':
-                        self.highdata.append(int(((int([high.attributes["data"].value][0])*9)/5)+32))
-                    elif wi.unitsystem == 'SI':
-                        self.highdata.append((int([high.attributes["data"].value][0]))+273)
-                    else:
-                        self.highdata.append(int(((((int([high.attributes["data"].value][0]))-32)*5)/9)+273))
-            self.icons=[]
-            for icon in parsed.getElementsByTagName("icon"):
-                self.icons.append([icon.attributes["data"].value][0].split("/ig/images/weather/")[-1].split(".gif")[0])
-            self.conditions=[]
-            for condition in parsed.getElementsByTagName("condition"):
-                self.conditions.append([condition.attributes["data"].value][0])
+            #FIXME: extended report should be gathered from Google
+            location.prepare_forecast_data()
+            self.daysofweek = location.get_forecast_daysofweek()
+            self.lowdata    = location.get_forecast_lowdata()
+            self.highdata   = location.get_forecast_highdata()
+            self.icons      = location.get_forecast_icons()
+            self.conditions = location.get_forecast_conditions()
         
     def prefs(self, widget):
         self.prefswindow = PreferencesDialog()
@@ -556,9 +700,7 @@ class indicator_weather:
                 self.condition,
                 icon)
         else:
-		    n = pynotify.Notification (self.condition,
-               "",
-               icon)
+		    n = pynotify.Notification (self.condition,"",icon)
         n.show ()
 
 class PreferencesDialog(gtk.Dialog):
@@ -628,7 +770,7 @@ class PreferencesDialog(gtk.Dialog):
         #self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
     
     def ok(self, widget, data=None):
-        """The user has elected to save the changes.
+        """The user has selected to save the changes.
 
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
@@ -822,10 +964,11 @@ class Assistant(gtk.Assistant):
         def get_my_ip_address():
             whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
             return urllib2.urlopen(whatismyip).readlines()[0]
-            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-            m = re.search('City: (.*)', response)
-            if m:
-                self.builder.get_object("entry").set_text(m.group(1))
+
+        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+        m = re.search('City: (.*)', response)
+        if m:
+            self.builder.get_object("entry").set_text(m.group(1))
                 
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
@@ -835,25 +978,33 @@ class Assistant(gtk.Assistant):
     
     def get_city(self,current_page):
         if self.builder.get_object("assistant").get_current_page() == 1:
-            self.label = wi.get_weather([self.builder.get_object("entry").get_text()],onlycity=True)
-            if not self.label in ('Error opening url','<?xml version='):
-                self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
+            self.city_name = self.builder.get_object("entry").get_text()
+            #FIXME: Use new switches - metric system and Wind Units
+            print "City name "+self.city_name
+            self.location = Location(MetricSystem.SI, WindUnits.MPS)
+            self.location.find_city_by_name(self.city_name)
+            if self.location.found:
+                print "city was found"
+                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("assistant").set_page_complete(self.builder.get_object("confirmplace"),True)
                 return 3
             else:
+                print "city not found"
                 return 2
         elif self.builder.get_object("assistant").get_current_page() == 4:
             lbl = self.builder.get_object("entrylbl").get_text()
             if lbl == '':
-                self.builder.get_object("labellbl").set_label('<b>No Label</b>')
+                self.location.set_label(self.city_name)
                 self.builder.get_object("lbl3").set_label('')
             else:
-                self.builder.get_object("labellbl").set_label('<b>'+self.builder.get_object("entrylbl").get_text()+'</b>')
+                self.location.set_label(self.builder.get_object("entrylbl").get_text())
                 self.builder.get_object("lbl3").set_label('Label:')
+
+            self.builder.get_object("labellbl").set_label('<b>%s</b>' % self.location.label)
             for button in self.builder.get_object('fahrenheit').get_group():
                 if button.get_active() == True:
                     self.builder.get_object("unitlbl").set_label('<b>'+button.get_label()+'</b>')
-            self.builder.get_object("placelbl").set_label('<b>'+self.label+'</b>')
+            self.builder.get_object("placelbl").set_label('<b>'+self.city_name+'</b>')
             
         return self.builder.get_object("assistant").get_current_page() + 1
             
@@ -861,17 +1012,18 @@ class Assistant(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-        _city_name = self.label
-        _city_label = self.builder.get_object("entrylbl").get_text()
-        places = list()
-        places.append(_city_name)
-        if (_city_label == ''):
-            _city_label = _city_name
-        places.append(_city_label)
+        newplace = list()
+        newplace.append(self.location.code)
+        newplace.append(self.location.label)
 
-        wi.placeadded = _city_name
+        wi.placeadded = self.location.label
         wi.places = list()
-        wi.places.append(places)
+        wi.places.append(newplace)
+
+        newlocation = list()
+        newlocation.append(self.location)
+        wi.locations = list()
+        wi.locations.append(newlocation)
 
         for button in self.builder.get_object('fahrenheit').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
@@ -907,6 +1059,7 @@ class Assistant2(gtk.Assistant):
         m = re.search('City: (.*)', response)
         if m:
             self.builder.get_object("entry").set_text(m.group(1))
+
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
             self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("placeinput"),False)
@@ -915,9 +1068,12 @@ class Assistant2(gtk.Assistant):
     
     def get_city(self,current_page):
         if self.builder.get_object("assistant2").get_current_page() == 0:
-            self.label = wi.get_weather([self.builder.get_object("entry").get_text()],onlycity=True)
-            if not self.label in ('Error opening url','<?xml version='):
-                self.builder.get_object("lblplace").set_label('<big>'+self.label+'</big>')
+            self.city_name = self.builder.get_object("entry").get_text()
+            #FIXME: Use new switches - metric system and Wind Units
+            self.location = Location(MetricSystem.SI, WindUnits.MPS)
+            self.location.find_city_by_name(self.city_name)
+            if self.location.found:
+                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
                 return 2
             else:
@@ -928,13 +1084,14 @@ class Assistant2(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-        _city_name = self.label
-        _city_label = self.builder.get_object("entrylbl").get_text()
+        self.new_label = self.builder.get_object("entrylbl").get_text()
+        if self.new_label == '':
+            self.location.set_label(self.city_name)
+        else:
+            self.location.set_label(self.new_label)
         newplace = list()
-        if (_city_label == ''):
-            _city_label = _city_name
-        newplace.append(_city_label)
-        newplace.append(_city_name)
+        newplace.append(self.location.label)
+        newplace.append(self.location.code)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         self.hide()
 
