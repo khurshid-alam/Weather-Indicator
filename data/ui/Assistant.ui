@@ -17,7 +17,7 @@
         <child>
           <object class="GtkLabel" id="chooseunitlbl">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">Choose a unit type for temperature :</property>
+            <property name="label" translatable="yes">Choose your metric scale:</property>
           </object>
           <packing>
             <property name="position">0</property>
@@ -29,8 +29,8 @@
             <property name="spacing">5</property>
             <property name="layout_style">spread</property>
             <child>
-              <object class="GtkRadioButton" id="fahrenheit">
-                <property name="label" translatable="yes">Fahrenheit</property>
+              <object class="GtkRadioButton" id="si">
+                <property name="label" translatable="yes">SI</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
@@ -43,33 +43,18 @@
               </packing>
             </child>
             <child>
-              <object class="GtkRadioButton" id="celsius">
-                <property name="label" translatable="yes">Celsius</property>
+              <object class="GtkRadioButton" id="imperial">
+                <property name="label" translatable="yes">Imperial</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
-                <property name="group">fahrenheit</property>
+                <property name="group">si</property>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="kelvin">
-                <property name="label" translatable="yes">Kelvin</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">fahrenheit</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -314,7 +299,7 @@ If no, leave blank and go on.</property>
               <object class="GtkLabel" id="lbl">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
-                <property name="label" translatable="yes">Temperature Unit:</property>
+                <property name="label" translatable="yes">Metric Scale:</property>
                 <property name="use_markup">True</property>
               </object>
               <packing>

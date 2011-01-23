@@ -527,8 +527,13 @@ class indicator_weather:
             self.placechosen = 0
         
         if self.unit in (False, None):
-            gconfClient.set_string("/apps/indicator-weather/unit", 'F')
-            self.unit = 'F'
+            gconfClient.set_string("/apps/indicator-weather/unit", 'S')
+            self.unit = 'S'
+        else:
+            if (self.unit == 'S'):
+                self.metric_system = MetricSystem.SI
+            else:
+                self.metric_system = MetricSystem.IMPERIAL
             
         if self.notif in (False, None):
             gconfClient.set_string("/apps/indicator-weather/notif", 'N')
@@ -798,7 +803,7 @@ class indicator_weather:
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
-        location = Location(MetricSystem.SI, WindUnits.MPS)
+        location = Location(self.metric_system, WindUnits.MPS)
         if (location.find_city_by_code(city[0]) == False):
             print "location with code %s not found" % city[0]    
         if extended == False:
@@ -852,12 +857,10 @@ class PreferencesDialog(gtk.Dialog):
 
     def finish_initializing(self, builder):
         self.builder = builder
-        if wi.unit == 'F':
-            self.builder.get_object('fahrenheit').set_active(True)
-        elif wi.unit == 'C':
-            self.builder.get_object('celsius').set_active(True)
-        else:
-            self.builder.get_object('kelvin').set_active(True)
+        if wi.unit == 'S':
+            self.builder.get_object('si').set_active(True)
+        elif wi.unit == 'I':
+            self.builder.get_object('imperial').set_active(True)
         if wi.notif == 'N':
             self.builder.get_object('nonotif').set_active(True)
         elif wi.notif == 'O':
@@ -914,11 +917,15 @@ class PreferencesDialog(gtk.Dialog):
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
         needupdate = False
-        ##Temperature##
-        for button in self.builder.get_object('fahrenheit').get_group():
+        ##Metric System##
+        for button in self.builder.get_object('si').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
                 gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
                 wi.unit = button.get_label()[0]
+                if wi.unit == 'S':
+                    wi.metric_system = MetricSystem.SI
+                else:
+                    wi.metric_system = MetricSystem.IMPERIAL
                 needupdate = True
                 print 'Unit changed :', wi.unit
                 
@@ -1120,7 +1127,7 @@ class Assistant(gtk.Assistant):
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
             print "City name "+self.city_name
-            self.location = Location(MetricSystem.SI, WindUnits.MPS)
+            self.location = Location(self.metric_system, WindUnits.MPS)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 print "city was found"
@@ -1140,7 +1147,7 @@ class Assistant(gtk.Assistant):
                 self.builder.get_object("lbl3").set_label('Label:')
 
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % self.location.label)
-            for button in self.builder.get_object('fahrenheit').get_group():
+            for button in self.builder.get_object('si').get_group():
                 if button.get_active() == True:
                     self.builder.get_object("unitlbl").set_label('<b>'+button.get_label()+'</b>')
             self.builder.get_object("placelbl").set_label('<b>'+self.city_name+'</b>')
@@ -1164,7 +1171,7 @@ class Assistant(gtk.Assistant):
         wi.locations = list()
         wi.locations.append(newlocation)
 
-        for button in self.builder.get_object('fahrenheit').get_group():
+        for button in self.builder.get_object('si').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
                 gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
                 wi.unit = button.get_label()[0]
@@ -1209,7 +1216,7 @@ class Assistant2(gtk.Assistant):
         if self.builder.get_object("assistant2").get_current_page() == 0:
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
-            self.location = Location(MetricSystem.SI, WindUnits.MPS)
+            self.location = Location(wi.metric_system, WindUnits.MPS)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
