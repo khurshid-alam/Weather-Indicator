@@ -147,8 +147,10 @@ class Location:
             f = urllib2.urlopen(url)
             s=f.read()
             parsed = parseString(s)
-            sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-            sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
+            sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
+            sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
+            #sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
+            #sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
             timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
             return (sunrise, sunset, timezone)
         else:
@@ -393,6 +395,7 @@ class Weather:
         now = datetime.datetime.now().time()
         #FIXME: this is ugly
         self.__sunrise = self.__sun[0]
+        print "Sunrise time " + self.__sun[0]
         self.__sunset = self.__sun[1]
         self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
         self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
