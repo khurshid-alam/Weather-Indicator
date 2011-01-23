@@ -539,7 +539,7 @@ class indicator_weather:
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
             self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
             
-        if self.places in (False, None, '[]', "['']",):
+        if self.places in (False, None, '', '[]', "['']",):
             self.menu_noplace()
         else:
             self.places = eval(self.places)
