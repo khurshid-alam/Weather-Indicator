@@ -1,4 +1,4 @@
-indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr120~natty1) natty; urgency=low
 
   * Fix for LP: #703681 "Indicator-Weather doesn't recheck for Internet	connectivity"
   * Fix for LP: #703842 "Menus look pale in Ambiance theme"
@@ -7,8 +7,9 @@ indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
   * Fix for LP: #706148 "indicator doesn't respect temperature scale preferences (Fahrenheit, Celsius)"
   * Fix for LP: #703819 "Weather indicator confuses time"
   * Fix for LP: #703838 "Weather Indicator should have a Quit menu entry"
+  * Fix for LP: #606481 "indicator-weather crashes on startup"
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Fri, 21 Jan 2011 01:25:53 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 23 Jan 2011 16:09:15 +0200
 
 indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
 
