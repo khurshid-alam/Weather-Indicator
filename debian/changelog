@@ -1,5 +1,17 @@
 indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
 
+  * Fix for LP: #703681 "Indicator-Weather doesn't recheck for Internet	connectivity"
+  * Fix for LP: #703842 "Menus look pale in Ambiance theme"
+  * Fix for LP: #703617 "Use icons of ubuntus date indicator"
+  * Fix for LP: #703693 "Weather applet does not start (icon missing)"
+  * Fix for LP: #706148 "indicator doesn't respect temperature scale preferences (Fahrenheit, Celsius)"
+  * Fix for LP: #703819 "Weather indicator confuses time"
+  * Fix for LP: #703838 "Weather Indicator should have a Quit menu entry"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Fri, 21 Jan 2011 01:25:53 +0200
+
+indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
+
   * Migrate to gweather + pymetar data sources
   * Fix for LP: #703730 "indicator-weather doesn't display an icon for some cities"
   * Fix for LP: #703838 "Weather Indicator should have a Quit menu entry"

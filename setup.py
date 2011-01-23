@@ -86,10 +86,10 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='indicator-weather',
-    version='10.07.16',
+    version='11.01.16',
     license='GPL-3',
-    author='Sebastian MacDonald | Mehdi Rejraji',
-    author_email='sebas310@gmail.com',
+    author='Vadim Rutkovsky | Sebastian MacDonald | Mehdi Rejraji',
+    author_email='roignac@gmail.com',
     description="A weather indicator for Ubuntu's Indicator Applet",
     long_description='A weather indicator that displays information for one or multiple places in the world',
     url='https://launchpad.net/weather-indicator',

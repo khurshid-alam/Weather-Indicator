@@ -39,6 +39,8 @@ gettext.textdomain('indicator-weather')
 from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
 import pymetar as metar
 
+import gtkcrashhandler
+
 # Add project root directory (enable symlink, and trunk execution).
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.realpath(sys.argv[0]))))
@@ -1288,5 +1290,6 @@ def main():
     return 0
 
 if __name__ == "__main__":
+    gtkcrashhandler.initialize("indicator-weather",_("We're terribly sorry. Could you help us fix the problem by reporting the crash?"), True)
     wi = indicator_weather()
     main()
