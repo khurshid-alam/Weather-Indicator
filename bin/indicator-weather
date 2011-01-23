@@ -191,17 +191,35 @@ class Location:
     #Parse high values for forecast data
     def get_forecast_highdata(self):
         self.highdata = []
-        for high in self.__parsedforecast.getElementsByTagName("high"):
-                #FIXME: convert values here and further
+        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
+            #correct scale selected
+            for high in self.__parsedforecast.getElementsByTagName("high"):
                 self.highdata.append([high.attributes["data"].value][0])
+        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
+            #convert from SI to imperial
+            for high in self.__parsedforecast.getElementsByTagName("high"):
+                self.highdata.append(int(((int([high.attributes["data"].value][0])*9)/5)+32))
+        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
+            #convert from imperial to SI
+            for high in self.__parsedforecast.getElementsByTagName("high"):
+                self.highdata.append(int((((int([high.attributes["data"].value][0]))-32)*5)/9))
         return self.highdata
 
     #Parse low values for forecast data
     def get_forecast_lowdata(self):
         self.lowdata = []
-        for low in self.__parsedforecast.getElementsByTagName("low"):
-                #FIXME: WTF? see original code
+        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
+            #correct scale selected
+            for low in self.__parsedforecast.getElementsByTagName("low"):
                 self.lowdata.append([low.attributes["data"].value][0])
+        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
+            #convert from SI to imperial
+            for low in self.__parsedforecast.getElementsByTagName("low"):
+                self.lowdata.append(int(((int([low.attributes["data"].value][0])*9)/5)+32))
+        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
+            #convert from imperial to SI
+            for low in parsed.getElementsByTagName("low"):
+                self.lowdata.append(int((((int([low.attributes["data"].value][0]))-32)*5)/9))
         return self.lowdata
 
     #Parse icons for forecast data
@@ -1040,12 +1058,10 @@ class ExtendedForecast(gtk.Window):
             i=i+1
             self.builder.get_object('day%scond' % str(i)).set_label(condition)
         i=0
-        if wi.unit == 'C':
+        if wi.unit == 'S':
             tempunit = '°C'
-        elif wi.unit == 'F':
+        elif wi.unit == 'I':
             tempunit = '°F'
-        else:
-            tempunit = '°K'
         for high in wi.highdata:
             i=i+1
             self.builder.get_object('day%stemphigh' % str(i)).set_label((_('High: ')+'%s%s') % (high,tempunit))
