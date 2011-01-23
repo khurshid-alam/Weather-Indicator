@@ -593,43 +593,43 @@ class indicator_weather:
             
     ##City
         self.city_show = gtk.MenuItem()
-        self.city_show.set_sensitive(False)
+        self.city_show.set_sensitive(True)
         self.menu.append(self.city_show)
         self.city_show.show()
         
     ##Condition
         self.cond_show = gtk.MenuItem()
-        self.cond_show.set_sensitive(False)
+        self.cond_show.set_sensitive(True)
         self.cond_show.show()
         self.menu.append(self.cond_show)
         
     ##Temperature        
         self.temp_show = gtk.MenuItem()
-        self.temp_show.set_sensitive(False)
+        self.temp_show.set_sensitive(True)
         self.temp_show.show()
         self.menu.append(self.temp_show)
         
     ##Humidity
         self.humid_show = gtk.MenuItem()
-        self.humid_show.set_sensitive(False)
+        self.humid_show.set_sensitive(True)
         self.humid_show.show()
         self.menu.append(self.humid_show)
         
     ##Wind
         self.wind_show = gtk.MenuItem()
-        self.wind_show.set_sensitive(False)
+        self.wind_show.set_sensitive(True)
         self.wind_show.show()
         self.menu.append(self.wind_show)
                 
     ##Sunrise
         self.sunrise_show = gtk.MenuItem()
-        self.sunrise_show.set_sensitive(False)
+        self.sunrise_show.set_sensitive(True)
         self.sunrise_show.show()
         self.menu.append(self.sunrise_show)
 
     ##Sunset
         self.sunset_show = gtk.MenuItem()
-        self.sunset_show.set_sensitive(False)
+        self.sunset_show.set_sensitive(True)
         self.sunset_show.show()
         self.menu.append(self.sunset_show)
         ###WORKAROUND For new places registration
