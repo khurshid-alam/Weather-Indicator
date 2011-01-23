@@ -144,25 +144,33 @@ class Location:
         if (self.found):
             now = datetime.datetime.now()
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
-            f = urllib2.urlopen(url)
-            s=f.read()
-            parsed = parseString(s)
-            sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
-            sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
+            try:
+                f = urllib2.urlopen(url)
+                s=f.read()
+                parsed = parseString(s)
+                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
+                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
             #sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
             #sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
-            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-            return (sunrise, sunset, timezone)
+                timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+                return (sunrise, sunset, timezone)
+            except urllib2.URLError:
+                print "error reaching url %s" % url
+                return ("", "", "")
         else:
             print "Can't gather sun data on empty location"
 
     #Update weather data and store weather object
     def update_weather_data(self):
         if (self.__report_fetcher != None):
-            self.__fetched_report = self.__report_fetcher.FetchReport()
-            self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
-            self.__sun_report = self.get_sun_data();
-            self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
+            try:
+                self.__fetched_report = self.__report_fetcher.FetchReport()
+                self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
+                self.__sun_report = self.get_sun_data();
+                self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
+            except urllib2.URLError:
+                self.__found = False
+                print "error fetching report"
 
     #Get and store forecast data - use Google
     def prepare_forecast_data(self):
@@ -173,12 +181,15 @@ class Location:
         self.coord_string = (",,,%.6f,%.6f" % (self.__lat, self.__lon)).replace(".","")
         url = "http://www.google.com/ig/api?weather=" + self.coord_string + "&hl=" + locale[0]
         print "url:\n%s" % url
-        f = urllib2.urlopen(url)
-        s = f.read()
-        encoding = f.headers['content-type'].split('charset=')[-1]
-        s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-        self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-        self.__parsedforecast = parseString(s)
+        try:
+            f = urllib2.urlopen(url)
+            s = f.read()
+            encoding = f.headers['content-type'].split('charset=')[-1]
+            s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
+            self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
+            self.__parsedforecast = parseString(s)
+        except urllib2.URLError:
+            print "error reaching url %s" % url
         #FIXME: check for errors here
 
     #Parse a list of days of week with forecast data
@@ -742,6 +753,7 @@ class indicator_weather:
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
+        self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
 			for item in self.menu.get_children()[0:len(self.menu.get_children())]:
@@ -780,9 +792,7 @@ class indicator_weather:
 	        #    self.notify(self.condition, self.icon, severe=True)
 	            
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
-        
-        self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
-            
+                
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
         
@@ -826,9 +836,11 @@ class indicator_weather:
             print "location with code %s not found" % city[0]    
         if extended == False:
             location.update_weather_data()
-            if (location.weather.isReportCorrect() == False):
+            if (location.found == False) or (location.weather.isReportCorrect() == False):
                 print "report is empty";
-            return location.weather
+                return None;
+            else:
+                return location.weather
         else:
             #FIXME: extended report should be gathered from Google
             location.prepare_forecast_data()
@@ -1125,12 +1137,18 @@ class Assistant(gtk.Assistant):
     def on_find_location(self,widget):
         def get_my_ip_address():
             whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
-            return urllib2.urlopen(whatismyip).readlines()[0]
-
-        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-        m = re.search('City: (.*)', response)
-        if m:
-            self.builder.get_object("entry").set_text(m.group(1))
+            try:
+                return urllib2.urlopen(whatismyip).readlines()[0]
+            except urllib2.URLError:
+                print "error reaching url %s" % whatismyip
+                return ""
+        try:
+            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+            m = re.search('City: (.*)', response)
+            if m:
+                self.builder.get_object("entry").set_text(m.group(1))
+        except urllib2.URLError:
+            print "error reaching url %s" % whatismyip
                 
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
@@ -1216,11 +1234,19 @@ class Assistant2(gtk.Assistant):
     def on_find_location(self,widget):
         def get_my_ip_address():
             whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
-            return urllib2.urlopen(whatismyip).readlines()[0]
-        response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-        m = re.search('City: (.*)', response)
-        if m:
-            self.builder.get_object("entry").set_text(m.group(1))
+            try:
+                return urllib2.urlopen(whatismyip).readlines()[0]
+            except urllib2.URLError:
+                print "error reaching url %s" % whatismyip
+                return ""
+        try:
+            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
+            m = re.search('City: (.*)', response)
+            if m:
+                self.builder.get_object("entry").set_text(m.group(1))
+        except urllib2.URLError:
+            print "error reaching url http://api.hostip.info/get_html.php?ip=%s" % get_my_ip_address()
+            return ""
 
     def on_entry_edited(self,widget):
         if widget.get_text() == '':
