@@ -236,18 +236,135 @@ class Weather:
     # pymetar name: (translated name, day icon name, night icon name, is severe) 
     _WeatherConditions = {
         #FIXME: Do we really have to copypaste these key values?
-        "clear sky"            : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
-        "clear"                : ( _("Clear sky"),         "weather-clear",             "weather-clear-night",       False),
 
-        "broken clouds"        : ( _("Broken clouds"),     "weather-few-clouds",        "weather-few-clouds-night",  False),
-        "scattered clouds"     : ( _("Scattered clouds"),  "weather-overcast",          "weather-overcast",          False),
-        "few clouds"           : ( _("Few clouds"),        "weather-clouds",            "weather-clouds-night",      False),
-        "overcast"             : ( _("Overcast"),          "weather-overcast",          "weather-overcast",          False),
-        "snow"                 : ( _("Snow"),              "weather-snow",              "weather-snow",              False),
-        "showers"              : ( _("Showers"),           "weather-showers",           "weather-showers",           False),
-        "scattered Showers"    : ( _("Scattered Showers"), "weather-showers-scattered", "weather-showers-scattered", False),
-        "fog"                  : ( _("Fog"),               "weather-fog",               "weather-fog",               False),
-        "storm"                : ( _("Storm"),             "weather-storm",             "weather-storm",             True),
+        #Clear
+        "sunny"                   : ( _("Sunny"),          "weather-clear", False),
+        "mostly sunny"            : ( _("Mostly sunny"),   "weather-clear", False),
+        "partly sunny"            : ( _("Partly sunny"),   "weather-clear", False),
+        "clear"                   : ( _("Clear"),          "weather-clear", False),
+        "clear sky"               : ( _("Clear sky"),      "weather-clear", False),
+        "becoming sunny"          : ( _("Becoming sunny"), "weather-clear", False),
+
+        #Clouds
+        "mostly cloudy"           : ( _("Mostly cloudy"),     "weather-clouds",   False),
+        "increasing clouds"       : ( _("Increasing clouds"), "weather-clouds",   False),
+        "decreasing clouds"       : ( _("Decreasing clouds"), "weather-clouds",   False),
+        "broken clouds"           : ( _("Broken clouds"),     "weather-clouds",   False),
+        "scattered clouds"        : ( _("Scattered clouds"),  "weather-overcast", False),
+        "overcast"                : ( _("Overcast"),          "weather-overcast", False),
+
+        #Few clouds
+        "few clouds"              : ( _("Few clouds"),       "weather-few-clouds", False),
+        "partly cloudy"           : ( _("Partly cloudy"),    "weather-few-clouds", False),
+        "becoming cloudy"         : ( _("Becoming cloudy"),  "weather-few-clouds", False),
+        "clearing"                : ( _("Clearing"),         "weather-few-clouds", False),
+        "gradual clearing"        : ( _("Gradual clearing"), "weather-few-clouds", False),
+        "clearing late"           : ( _("Clearing late"),    "weather-few-clouds", False),
+
+        #Fog
+        "fog"                     : ( _("Fog"),                  "weather-fog", False),
+        "patchy fog"              : ( _("Patchy fog"),           "weather-fog", False),
+        "dense fog"               : ( _("Dense fog"),            "weather-fog", False),
+        "areas fog"               : ( _("Areas fog"),            "weather-fog", False),
+        "blowing dust"            : ( _("Blowing dust"),         "weather-fog", False),
+        "blowing sand"            : ( _("Blowing sand"),         "weather-fog", False),
+        "patchy haze"             : ( _("Patchy haze"),          "weather-fog", False),
+        "areas haze"              : ( _("Areas haze"),           "weather-fog", False),
+        "haze"                    : ( _("Haze"),                 "weather-fog", False),
+        "patchy ice fog"          : ( _("Patchy ice fog"),       "weather-fog", False),
+        "areas ice fog"           : ( _("Areas ice fog"),        "weather-fog", False),
+        "ice fog"                 : ( _("Ice fog"),              "weather-fog", False),
+        "patchy freezing fog"     : ( _("Patchy freezing fog"),  "weather-fog", False),
+        "areas freezing fog"      : ( _("Areas freezing fog"),   "weather-fog", False),
+        "freezing fog"            : ( _("Freezing fog"),         "weather-fog", False),
+        "freezing spray"          : ( _("Freezing spray"),       "weather-fog", False),
+        "patchy smoke"            : ( _("Patchy smoke"),         "weather-fog", False),
+        "areas smoke"             : ( _("Areas smoke"),          "weather-fog", False),
+        "smoke"                   : ( _("Smoke"),                "weather-fog", False),
+        "patchy ash"              : ( _("Patchy ash"),           "weather-fog", False),
+        "areas ash"               : ( _("Areas ash"),            "weather-fog", False),
+        "ash"                     : ( _("Ash"),                  "weather-fog", False),
+        "volcanic ash"            : ( _("Volcanic ash"),         "weather-fog", False),
+        
+
+        #Snow
+        "blowing snow"               : ( _("Blowing snow"),               "weather-snow", False),
+        "blizzard"                   : ( _("Blizzard"),                   "weather-snow", False),
+        "patchy ice crystals"        : ( _("Patchy ice crystals"),        "weather-snow", False),
+        "areas ice crystals"         : ( _("Areas ice crystals"),         "weather-snow", False),
+        "ice crystals"               : ( _("Ice crystals"),               "weather-snow", False),
+        "patchy frost"               : ( _("Patchy frost"),               "weather-snow", False),
+        "areas frost"                : ( _("Areas frost"),                "weather-snow", False),
+        "frost"                      : ( _("Frost"),                      "weather-snow", False),
+        "slight chance snow showers" : ( _("Slight chance snow showers"), "weather-snow", False),
+        "chance snow showers"        : ( _("Chance snow showers"),        "weather-snow", False),
+        "snow showers likely"        : ( _("Snow showers likely"),        "weather-snow", False),
+        "snow showers"               : ( _("Snow showers"),               "weather-snow", False),
+        "slight chance snow/rain"    : ( _("Slight chance snow/rain"),    "weather-snow", False),
+        "chance snow/rain"           : ( _("Chance snow/rain"),           "weather-snow", False),
+        "snow/rain likely"           : ( _("Snow/rain likely"),           "weather-snow", False),
+        "snow/rain"                  : ( _("Snow/rain"),                  "weather-snow", False),
+        "slight chance wintry mix"   : ( _("Slight chance wintry mix"),   "weather-snow", False),
+        "chance wintry mix"          : ( _("Chance wintry mix"),          "weather-snow", False),
+        "wintry mix likely"          : ( _("Wintry mix likely"),          "weather-snow", False),
+        "wintry mix"                 : ( _("Wintry mix"),                 "weather-snow", False),
+        "slight chance snow/sleet"   : ( _("Slight chance snow/sleet"),   "weather-snow", False),
+        "chance snow/sleet"          : ( _("Chance snow/sleet"),          "weather-snow", False),
+        "snow/sleet likely"          : ( _("Snow/sleet likely"),          "weather-snow", False),
+        "snow/sleet"                 : ( _("Snow/sleet"),                 "weather-snow", False),
+
+        #Rain
+        "slight chance sleet"            : ( _("Slight chance sleet"),           "weather-showers", False),
+        "chance sleet"                   : ( _("Chance sleet"),                  "weather-showers", False),
+        "sleet likely"                   : ( _("Sleet likely"),                  "weather-showers", False),
+        "sleet"                          : ( _("Sleet"),                         "weather-showers", False),
+        "slight chance rain showers"     : ( _("Slight chance rain showers"),    "weather-showers", False),
+        "chance rain showers"            : ( _("Chance rain showers"),           "weather-showers", False),
+        "rain showers likely"            : ( _("Rain showers likely"),           "weather-showers", False),
+        "rain showers"                   : ( _("Rain showers"),                  "weather-showers", False),
+        "slight chance rain"             : ( _("Slight chance rain"),            "weather-showers", False),
+        "chance rain"                    : ( _("Chance rain"),                   "weather-showers", False),
+        "rain likely"                    : ( _("Rain likely"),                   "weather-showers", False),
+        "rain"                           : ( _("Rain"),                          "weather-showers", False),
+        "heavy rain"                     : ( _("Heavy rain"),                    "weather-showers", False),
+        "slight chance drizzle"          : ( _("Slight chance drizzle"),         "weather-showers", False),
+        "chance drizzle"                 : ( _("Chance drizzle"),                "weather-showers", False),
+        "drizzle likely"                 : ( _("Drizzle likely"),                "weather-showers", False),
+        "drizzle"                        : ( _("Drizzle"),                       "weather-showers", False),
+        "slight chance freezing rain"    : ( _("Slight chance freezing rain"),   "weather-showers", False),
+        "chance freezing rain"           : ( _("Chance freezing rain"),          "weather-showers", False),
+        "freezing rain likely"           : ( _("Freezing rain likely"),          "weather-showers", False),
+        "freezing rain"                  : ( _("Freezing rain"),                 "weather-showers", False),
+        "slight chance freezing drizzle" : ( _("Slight chance freezing drizzle"),"weather-showers", False),
+        "chance freezing drizzle"        : ( _("Chance freezing drizzle"),       "weather-showers", False),
+        "freezing drizzle likely"        : ( _("Freezing drizzle likely"),       "weather-showers", False),
+        "freezing drizzle"               : ( _("Freezing drizzle"),              "weather-showers", False),
+        "slight chance rain/freezing rain"    : ( _("Slight chance rain/freezing rain"),   "weather-showers", False), 
+        "chance rain/freezing rain"           : ( _("Chance rain/freezing rain"),          "weather-showers", False),
+        "rain/freezing rain likely"           : ( _("Rain/freezing rain likely"),          "weather-showers", False),
+        "rain/freezing rain"                  : ( _("Rain/freezing rain"),                 "weather-showers", False),
+
+        #Storms
+        "storm"                           : ( _("Storm"),                       "weather-storm", True),
+        "isolated thunderstorms"          : ( _("Isolated thunderstorms"),      "weather-storm", True),
+        "slight chance thunderstorms"     : ( _("Slight chance thunderstorms"), "weather-storm", True),
+        "chance thunderstorms"            : ( _("Chance thunderstorms"),        "weather-storm", True),
+        "thunderstorms likely"            : ( _("Thunderstorms likely"),        "weather-storm", True),
+        "thunderstorm"                    : ( _("Thunderstorms"),               "weather-storm", True),
+        "severe thunderstorms"            : ( _("Severe thunderstorms"),        "weather-storm", True),
+        "water spout"                     : ( _("Water spout"),                 "weather-storm", True)
+    }
+
+    # Night icons for weather conditions
+    _Night_Icons = {
+        "weather-storm"      : "weather-storm",
+        "weather-showers"    : "weather-showers",
+        "weather-snow"       : "weather-snow",
+        "weather-fog"        : "weather-fog",
+        "weather-few-clouds" : "weather-few-clouds-night",
+        "weather-overcast"   : "weather-overcast",
+        "weather-clouds"     : "weather-clouds-night",
+        "weather-clear"      : "weather-clear-night"
     }
 
     def __init__(self, weather_report, sun_report, metric_system, wind_unit):
@@ -292,7 +409,7 @@ class Weather:
 
     def isSevereCondition(self):
         if self.__current_condition != None:
-            return self.__current_condition[3]
+            return self.__current_condition[2]
         else:
             print "BUG: Severe condition is empty!"
             return False;
@@ -313,7 +430,7 @@ class Weather:
     def getPixmap(self):
         if self.__current_condition != None:
             if self.isNight:
-                return self.__current_condition[2]
+                return self._Night_Icons.get(self.__current_condition[1])
             else:
                 return self.__current_condition[1]
         else:
