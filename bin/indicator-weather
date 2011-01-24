@@ -1161,7 +1161,7 @@ class Assistant(gtk.Assistant):
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
             print "City name "+self.city_name
-            self.location = Location(self.metric_system, WindUnits.MPS)
+            self.location = Location(wi.metric_system, WindUnits.MPS)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 print "city was found"
