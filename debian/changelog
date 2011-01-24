@@ -1,3 +1,10 @@
+indicator-weather (11.01.16+bzr123~lucid1) lucid; urgency=low
+
+  * Fix for LP: #706805 "indicator-weather crashed with AttributeError in get_city(): 'Assistant' object has no attribute 'metric_system'"
+  * Added an option to choose wind units
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 24 Jan 2011 23:59:41 +0200
+
 indicator-weather (11.01.16+bzr121~lucid1) lucid; urgency=low
 
   * Urgent fix for LP: #706796 "indicator-weather crashed with ImportError in __main__: No module named gtkcrashhandler"

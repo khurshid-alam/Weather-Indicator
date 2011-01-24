@@ -319,6 +319,7 @@ class Weather:
         
 
         #Snow
+        "light snow"                 : ( _("Light snow"),                 "weather-snow", False),
         "blowing snow"               : ( _("Blowing snow"),               "weather-snow", False),
         "blizzard"                   : ( _("Blizzard"),                   "weather-snow", False),
         "patchy ice crystals"        : ( _("Patchy ice crystals"),        "weather-snow", False),
@@ -345,35 +346,35 @@ class Weather:
         "snow/sleet"                 : ( _("Snow/sleet"),                 "weather-snow", False),
 
         #Rain
-        "slight chance sleet"            : ( _("Slight chance sleet"),           "weather-showers", False),
-        "chance sleet"                   : ( _("Chance sleet"),                  "weather-showers", False),
-        "sleet likely"                   : ( _("Sleet likely"),                  "weather-showers", False),
-        "sleet"                          : ( _("Sleet"),                         "weather-showers", False),
-        "slight chance rain showers"     : ( _("Slight chance rain showers"),    "weather-showers", False),
-        "chance rain showers"            : ( _("Chance rain showers"),           "weather-showers", False),
-        "rain showers likely"            : ( _("Rain showers likely"),           "weather-showers", False),
-        "rain showers"                   : ( _("Rain showers"),                  "weather-showers", False),
-        "slight chance rain"             : ( _("Slight chance rain"),            "weather-showers", False),
-        "chance rain"                    : ( _("Chance rain"),                   "weather-showers", False),
-        "rain likely"                    : ( _("Rain likely"),                   "weather-showers", False),
-        "rain"                           : ( _("Rain"),                          "weather-showers", False),
-        "heavy rain"                     : ( _("Heavy rain"),                    "weather-showers", False),
-        "slight chance drizzle"          : ( _("Slight chance drizzle"),         "weather-showers", False),
-        "chance drizzle"                 : ( _("Chance drizzle"),                "weather-showers", False),
-        "drizzle likely"                 : ( _("Drizzle likely"),                "weather-showers", False),
-        "drizzle"                        : ( _("Drizzle"),                       "weather-showers", False),
-        "slight chance freezing rain"    : ( _("Slight chance freezing rain"),   "weather-showers", False),
-        "chance freezing rain"           : ( _("Chance freezing rain"),          "weather-showers", False),
-        "freezing rain likely"           : ( _("Freezing rain likely"),          "weather-showers", False),
-        "freezing rain"                  : ( _("Freezing rain"),                 "weather-showers", False),
-        "slight chance freezing drizzle" : ( _("Slight chance freezing drizzle"),"weather-showers", False),
-        "chance freezing drizzle"        : ( _("Chance freezing drizzle"),       "weather-showers", False),
-        "freezing drizzle likely"        : ( _("Freezing drizzle likely"),       "weather-showers", False),
-        "freezing drizzle"               : ( _("Freezing drizzle"),              "weather-showers", False),
-        "slight chance rain/freezing rain"    : ( _("Slight chance rain/freezing rain"),   "weather-showers", False), 
-        "chance rain/freezing rain"           : ( _("Chance rain/freezing rain"),          "weather-showers", False),
-        "rain/freezing rain likely"           : ( _("Rain/freezing rain likely"),          "weather-showers", False),
-        "rain/freezing rain"                  : ( _("Rain/freezing rain"),                 "weather-showers", False),
+        "slight chance sleet"              : ( _("Slight chance sleet"),              "weather-showers", False),
+        "chance sleet"                     : ( _("Chance sleet"),                     "weather-showers", False),
+        "sleet likely"                     : ( _("Sleet likely"),                     "weather-showers", False),
+        "sleet"                            : ( _("Sleet"),                            "weather-showers", False),
+        "slight chance rain showers"       : ( _("Slight chance rain showers"),       "weather-showers", False),
+        "chance rain showers"              : ( _("Chance rain showers"),              "weather-showers", False),
+        "rain showers likely"              : ( _("Rain showers likely"),              "weather-showers", False),
+        "rain showers"                     : ( _("Rain showers"),                     "weather-showers", False),
+        "slight chance rain"               : ( _("Slight chance rain"),               "weather-showers", False),
+        "chance rain"                      : ( _("Chance rain"),                      "weather-showers", False),
+        "rain likely"                      : ( _("Rain likely"),                      "weather-showers", False),
+        "rain"                             : ( _("Rain"),                             "weather-showers", False),
+        "heavy rain"                       : ( _("Heavy rain"),                       "weather-showers", False),
+        "slight chance drizzle"            : ( _("Slight chance drizzle"),            "weather-showers", False),
+        "chance drizzle"                   : ( _("Chance drizzle"),                   "weather-showers", False),
+        "drizzle likely"                   : ( _("Drizzle likely"),                   "weather-showers", False),
+        "drizzle"                          : ( _("Drizzle"),                          "weather-showers", False),
+        "slight chance freezing rain"      : ( _("Slight chance freezing rain"),      "weather-showers", False),
+        "chance freezing rain"             : ( _("Chance freezing rain"),             "weather-showers", False),
+        "freezing rain likely"             : ( _("Freezing rain likely"),             "weather-showers", False),
+        "freezing rain"                    : ( _("Freezing rain"),                    "weather-showers", False),
+        "slight chance freezing drizzle"   : ( _("Slight chance freezing drizzle"),   "weather-showers", False),
+        "chance freezing drizzle"          : ( _("Chance freezing drizzle"),          "weather-showers", False),
+        "freezing drizzle likely"          : ( _("Freezing drizzle likely"),          "weather-showers", False),
+        "freezing drizzle"                 : ( _("Freezing drizzle"),                 "weather-showers", False),
+        "slight chance rain/freezing rain" : ( _("Slight chance rain/freezing rain"), "weather-showers", False), 
+        "chance rain/freezing rain"        : ( _("Chance rain/freezing rain"),        "weather-showers", False),
+        "rain/freezing rain likely"        : ( _("Rain/freezing rain likely"),        "weather-showers", False),
+        "rain/freezing rain"               : ( _("Rain/freezing rain"),               "weather-showers", False),
 
         #Storms
         "storm"                           : ( _("Storm"),                       "weather-storm", True),
@@ -408,14 +409,14 @@ class Weather:
         self.__get_weather_conditions = self.__report.getWeather()
         self.__get_conditions = self.__report.getConditions()
         self.__get_sky_conditions = self.__report.getSkyConditions()
-        print "getWeather: "      , self.__get_weather_conditions
+        print "getWeather: '%s'" % self.__get_weather_conditions
         print "getConditions: "   , self.__get_conditions
         print "getSkyConditions: ", self.__get_sky_conditions
-        if (self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None):
+        if ((self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None)):
             self.__current_condition = self._WeatherConditions.get(self.__report.getWeather().lower())
-        if (self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None):
+        elif ((self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None)):
             self.__current_condition = self._WeatherConditions.get(self.__report.getConditions()[0].lower())
-        if (self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None):
+        elif ((self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None)):
             self.__current_condition = self._WeatherConditions.get(self.__report.getSkyConditions().lower())
 
         print "condition:", self.__current_condition
