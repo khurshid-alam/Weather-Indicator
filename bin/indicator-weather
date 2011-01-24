@@ -509,15 +509,15 @@ class Weather:
     def getWindSpeed(self):
         if (self.__wind_unit == WindUnits.MPS):
             _value = self.__report.getWindSpeed()
-            _unit  = _("m\s")
+            _unit  = _("mps")
         if (self.__wind_unit == WindUnits.MPH):
             _value = self.__report.getWindSpeedMilesPerHour()
             _unit  = _("mph")
         if (self.__wind_unit == WindUnits.BEAUFORT):
-            _value = self.__report.getWindSpeedMilesPerHour()
+            _value = self.__report.getWindSpeedBeaufort()
             _unit  = ""
         if (self.__wind_unit == WindUnits.KNOTS):
-            _value = self.__report.getWindSpeedMilesPerHour()
+            _value = self.__report.getWindSpeedKnots()
             _unit  = _("knot(s)")
         return "%s: %s %s" % (_("Wind Speed"), _value, _unit)
 
@@ -545,7 +545,7 @@ class indicator_weather:
         self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
         self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
         self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
-        #WIND#self.windunit = gconfClient.get_string("/apps/indicator-weather/wind")
+        self.wind = gconfClient.get_string("/apps/indicator-weather/wind")
         self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
         self.labels = gconfClient.get_string("/apps/indicator-weather/places")
         self.places = gconfClient.get_string("/apps/indicator-weather/places")
@@ -568,9 +568,18 @@ class indicator_weather:
             gconfClient.set_string("/apps/indicator-weather/notif", 'N')
             self.notif = 'N'
         
-        #if self.wind in (False, None):
-            #gconfClient.set_string("/apps/indicator-weather/wind", 'mph')
-            #self.windunit = 'mph'
+        if self.wind in (False, None):
+            gconfClient.set_string("/apps/indicator-weather/wind", 'mph')
+            self._wind_unit = WindUnits.MPH
+        else:
+            if (self.wind == 'mph'):
+                self._wind_unit = WindUnits.MPH
+            elif (self.wind == 'mps'):
+                self._wind_unit = WindUnits.MPS
+            elif (self.wind == 'beaufort'):
+                self._wind_unit = WindUnits.BEAUFORT
+            elif (self.wind == 'knots'):
+                self._wind_unit = WindUnits.KNOTS
             
         if self.rate in (False, None):
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
@@ -643,13 +652,6 @@ class indicator_weather:
         self.sunset_show.set_sensitive(True)
         self.sunset_show.show()
         self.menu.append(self.sunset_show)
-        ###WORKAROUND For new places registration
-        #oldplace = gconfClient.get_string("/apps/indicator-weather/place")
-        #newplaces = gconfClient.get_string("/apps/indicator-weather/places")
-        #if not(oldplace in (False, None)) and newplaces in (False, None):
-            #self.places = gconfClient.get_string("/apps/indicator-weather/place").split('|')
-            #gconfClient.set_string("/apps/indicator-weather/places", str(self.places))
-        ###Workaround end.
         
     ##Cities
         if len(self.places) != 1:
@@ -831,7 +833,7 @@ class indicator_weather:
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
-        location = Location(self.metric_system, WindUnits.MPS)
+        location = Location(self.metric_system, self._wind_unit)
         if (location.find_city_by_code(city[0]) == False):
             print "location with code %s not found" % city[0]    
         if extended == False:
@@ -898,16 +900,14 @@ class PreferencesDialog(gtk.Dialog):
         else:
             self.builder.get_object('notifall').set_active(True)            
         
-        #if wi.windunit == 'm/s':
-            #self.builder.get_object('m/s').set_active(True)
-        #elif wi.windunit == 'km/h':
-            #self.builder.get_object('km/h').set_active(True)
-        #elif wi.windunit == 'mph':
-            #self.builder.get_object('mph').set_active(True)
-        #elif wi.windunit == 'knots':
-            #self.builder.get_object('knots').set_active(True)
-        #else:
-            #self.builder.get_object('Beaufort').set_active(True)
+        if wi.wind == 'mps':
+            self.builder.get_object('mps').set_active(True)
+        elif wi.wind == 'mph':
+            self.builder.get_object('mph').set_active(True)
+        elif wi.wind == 'knots':
+            self.builder.get_object('knots').set_active(True)
+        else:
+            self.builder.get_object('beaufort').set_active(True)
         
         self.builder.get_object('rate').set_value(wi.rate)
         end = len(wi.places)
@@ -929,10 +929,7 @@ class PreferencesDialog(gtk.Dialog):
     def on_add_location(self, widget):
         self.assistant2 = Assistant2()
         self.assistant2.show()
-    
-    def on_wind_activate(self, widget):
-        pass
-    
+       
     def on_destroy(self, widget, data=None):
         pass
         #"""Called when the WeatherIndicatorWindow is closed."""
@@ -947,7 +944,7 @@ class PreferencesDialog(gtk.Dialog):
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
         needupdate = False
-        ##Metric System##
+        # Metric System
         for button in self.builder.get_object('si').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.unit:
                 gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
@@ -958,7 +955,25 @@ class PreferencesDialog(gtk.Dialog):
                     wi.metric_system = MetricSystem.IMPERIAL
                 needupdate = True
                 print 'Unit changed :', wi.unit
-                
+
+        # Wind Units
+        for button in self.builder.get_object('mps').get_group():
+            if button.get_active() == True and button.get_label().lower() != wi.wind:
+                gconfClient.set_string("/apps/indicator-weather/wind", button.get_label().lower())
+                wi.wind = button.get_label().lower()
+                #FIXME: thats ugly
+                if (wi.wind == 'mph'):
+                    wi._wind_unit = WindUnits.MPH
+                elif (wi.wind == 'mps'):
+                    wi._wind_unit = WindUnits.MPS
+                elif (wi.wind == 'beaufort'):
+                    wi._wind_unit = WindUnits.BEAUFORT
+                elif (wi.wind == 'knots'):
+                    wi._wind_unit = WindUnits.KNOTS
+                needupdate = True
+                print 'Wind Unit changed :', wi.wind
+
+        # Notifications
         for button in self.builder.get_object('nonotif').get_group():
             if button.get_active() == True and button.get_label()[0] != wi.notif:
                 gconfClient.set_string("/apps/indicator-weather/notif", button.get_label()[0])
@@ -1120,6 +1135,7 @@ class ExtendedForecast(gtk.Window):
 
 class Assistant(gtk.Assistant):
     __gtype_name__ = "Assistant"
+    
     def __new__(cls):
         builder = get_builder('Assistant')
         new_object = builder.get_object("assistant")
@@ -1161,7 +1177,7 @@ class Assistant(gtk.Assistant):
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
             print "City name "+self.city_name
-            self.location = Location(wi.metric_system, WindUnits.MPS)
+            self.location = Location(wi.metric_system, wi._wind_unit)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 print "city was found"
@@ -1209,6 +1225,20 @@ class Assistant(gtk.Assistant):
             if button.get_active() == True and button.get_label()[0] != wi.unit:
                 gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
                 wi.unit = button.get_label()[0]
+
+        for button in self.builder.get_object('mps').get_group():
+            if button.get_active() == True and button.get_label().lower() != wi.wind:
+                gconfClient.set_string("/apps/indicator-weather/wind", button.get_label().lower())
+                wi.unit = button.get_label().lower()
+                #FIXME: thats ugly
+                if (wi.wind == 'mph'):
+                    wi._wind_unit = WindUnits.MPH
+                elif (wi.wind == 'mps'):
+                    wi._wind_unit = WindUnits.MPS
+                elif (wi.wind == 'beaufort'):
+                    wi._wind_unit = WindUnits.BEAUFORT
+                elif (wi.wind == 'knots'):
+                    wi._wind_unit = WindUnits.KNOTS
         
         self.hide()
         gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
@@ -1258,7 +1288,7 @@ class Assistant2(gtk.Assistant):
         if self.builder.get_object("assistant2").get_current_page() == 0:
             self.city_name = self.builder.get_object("entry").get_text()
             #FIXME: Use new switches - metric system and Wind Units
-            self.location = Location(wi.metric_system, WindUnits.MPS)
+            self.location = Location(wi.metric_system, wi._wind_unit)
             self.location.find_city_by_name(self.city_name)
             if self.location.found:
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
