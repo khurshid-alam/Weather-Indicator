@@ -1142,56 +1142,91 @@ class Assistant(gtk.Assistant):
         new_object = builder.get_object("assistant")
         new_object.finish_initializing(builder)
         return new_object
-        
+
+    # Generate a treeview model for gweather data
+    def generate_treeview(self):
+        #FIXME: Move this to WI object
+        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
+        node = gweather.location_new_world(True)
+        self.parse_gweather_locations(node, None)
+        return self.__all_locations_store
+
+    # Recursevly parse locations
+    def parse_gweather_locations(self, node, parent):
+        children = node.get_children()
+        if len(children) > 0:
+            for i in children:
+                timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
+                is_city = i.get_level() is gweather.LOCATION_CITY
+                node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
+
+                # Iterate through children
+                self.parse_gweather_locations(i, node_iter)
+        elif node.get_level() is gweather.LOCATION_COUNTRY:
+            for i in node.get_timezones():
+                if i.get_name() is not None:
+                    self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
+
+    # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):
         self.builder = builder
         self.builder.connect_signals(self)
-        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("chooseunit"),True)
-        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("label"),True)
-        self.builder.get_object("assistant").set_page_complete(self.builder.get_object("review"),True)
-        self.builder.get_object("assistant").set_forward_page_func(self.get_city)
-        
-    def on_find_location(self,widget):
-        def get_my_ip_address():
-            whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
-            try:
-                return urllib2.urlopen(whatismyip).readlines()[0]
-            except urllib2.URLError:
-                print "error reaching url %s" % whatismyip
-                return ""
-        try:
-            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-            m = re.search('City: (.*)', response)
-            if m:
-                self.builder.get_object("entry").set_text(m.group(1))
-        except urllib2.URLError:
-            print "error reaching url %s" % whatismyip
-                
-    def on_entry_edited(self,widget):
-        if widget.get_text() == '':
-            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("placeinput"),False)
-        else:
-            self.builder.get_object("assistant").set_page_complete(self.builder.get_object("placeinput"),True)
-    
+        self.assistant = self.builder.get_object("assistant")
+        self.assistant.set_page_complete(self.builder.get_object("chooseunit"),True)
+        self.assistant.set_page_complete(self.builder.get_object("label"),True)
+        self.assistant.set_page_complete(self.builder.get_object("review"),True)
+        self.assistant.set_page_complete(self.builder.get_object("confirmplace"),True)
+        # Fill in tree
+        self.__all_locations_view = self.builder.get_object("treeview-locations")
+        column = gtk.TreeViewColumn("Location", gtk.CellRendererText(), text=0)
+        column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+        self.__all_locations_view.append_column(column)
+        self.__all_locations_view.set_fixed_height_mode(True)
+
+        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
+        self.__all_locations_store.set_sort_column_id(0, gtk.SORT_ASCENDING)
+        self.generate_treeview()
+        self.__all_locations_view.set_model(self.__all_locations_store)
+        self.__all_locations_selection = self.__all_locations_view.get_selection()
+        self.__all_locations_selection.connect("changed", self.on_selection_changed)
+
+        self.assistant.set_forward_page_func(self.get_city)
+
+    #Callback for row selection
+    def on_selection_changed(self,selection):
+        self.assistant.set_page_complete(self.builder.get_object("placeinput"),False)
+        if selection.count_selected_rows() != 0:
+            select_iter = selection.get_selected()[1]
+            if self.is_location_and_leaf_node(select_iter):
+                self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
+
+    #Check, that selected row is a leaf and enable "next" button    
+    def is_location_and_leaf_node(self, iter):
+        row = self.__all_locations_store[iter]
+        is_leaf_node = not self.__all_locations_store.iter_has_child(iter)
+        return row[0] is not None and row[1] is not None and is_leaf_node
+
+    # Create a location out of a tree
     def get_city(self,current_page):
-        if self.builder.get_object("assistant").get_current_page() == 1:
-            self.city_name = self.builder.get_object("entry").get_text()
-            #FIXME: Use new switches - metric system and Wind Units
-            print "City name "+self.city_name
+        if self.assistant.get_current_page() == 2:
+            select_iter = self.__all_locations_selection.get_selected()[1]
+            city_iter = self.__all_locations_store[select_iter]
+            self.city_code = city_iter[3]
             self.location = Location(wi.metric_system, wi._wind_unit)
-            self.location.find_city_by_name(self.city_name)
+            self.location.find_city_by_code(self.city_code)
             if self.location.found:
-                print "city was found"
+                print "city was found " + self.location.get_full_city_name()
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
-                self.builder.get_object("assistant").set_page_complete(self.builder.get_object("confirmplace"),True)
-                return 3
+                self.assistant.set_current_page(3)
+                return 4
             else:
                 print "city not found"
-                return 2
-        elif self.builder.get_object("assistant").get_current_page() == 4:
+                self.assistant.set_current_page(2)
+                return 3
+        elif self.assistant.get_current_page() == 4:
             lbl = self.builder.get_object("entrylbl").get_text()
             if lbl == '':
-                self.location.set_label(self.city_name)
+                self.location.set_label(self.location.get_full_city_name())
                 self.builder.get_object("lbl3").set_label('')
             else:
                 self.location.set_label(self.builder.get_object("entrylbl").get_text())
@@ -1201,9 +1236,9 @@ class Assistant(gtk.Assistant):
             for button in self.builder.get_object('si').get_group():
                 if button.get_active() == True:
                     self.builder.get_object("unitlbl").set_label('<b>'+button.get_label()+'</b>')
-            self.builder.get_object("placelbl").set_label('<b>'+self.city_name+'</b>')
+            self.builder.get_object("placelbl").set_label('<b>'+self.location.get_full_city_name()+'</b>')
             
-        return self.builder.get_object("assistant").get_current_page() + 1
+        return self.assistant.get_current_page() + 1
             
     def on_cancel(self,widget):
         self.destroy()
@@ -1255,7 +1290,31 @@ class Assistant2(gtk.Assistant):
         new_object = builder.get_object("assistant2")
         new_object.finish_initializing(builder)
         return new_object
-        
+
+    # Generate a treeview model for gweather data
+    def generate_treeview(self):
+        #FIXME: Move this to WI object
+        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
+        node = gweather.location_new_world(True)
+        self.parse_gweather_locations(node, None)
+        return self.__all_locations_store
+
+    # Recursevly parse locations
+    def parse_gweather_locations(self, node, parent):
+        children = node.get_children()
+        if len(children) > 0:
+            for i in children:
+                timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
+                is_city = i.get_level() is gweather.LOCATION_CITY
+                node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
+
+                # Iterate through children
+                self.parse_gweather_locations(i, node_iter)
+        elif node.get_level() is gweather.LOCATION_COUNTRY:
+            for i in node.get_timezones():
+                if i.get_name() is not None:
+                    self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
+
     def finish_initializing(self, builder):
         self.builder = builder
         self.builder.connect_signals(self)

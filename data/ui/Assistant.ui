@@ -154,65 +154,31 @@
             <property name="wrap_mode">word-char</property>
           </object>
           <packing>
-            <property name="expand">False</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="placeinputhbox">
-            <property name="visible">True</property>
-            <property name="spacing">20</property>
-            <child>
-              <object class="GtkFixed" id="fixed3">
+            <object class="GtkScrolledWindow" id="treebox">
                 <property name="visible">True</property>
-              </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="invisible_char">&#x2022;</property>
-                <property name="text" translatable="yes">Enter Location</property>
-                <signal name="changed" handler="on_entry_edited"/>
-              </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkAlignment" id="alignment1">
-                <property name="visible">True</property>
-                <property name="top_padding">50</property>
-                <property name="bottom_padding">50</property>
-                <property name="left_padding">10</property>
-                <property name="right_padding">10</property>
+                <property name="hscrollbar-policy">1</property>
+                <property name="vscrollbar-policy">1</property>
                 <child>
-                  <object class="GtkButton" id="findloc">
-                    <property name="label" translatable="yes">Find my location</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="xalign">0</property>
-                    <signal name="clicked" handler="on_find_location"/>
-                  </object>
+                    <object class="GtkTreeView" id="treeview-locations">
+                        <property name="visible">True</property>
+                        <property name="show-expanders">True</property>
+                        <property name="headers-visible">False</property>
+                        <property name="height-request">250</property>
+                        <property name="fixed-height-mode">True</property>
+                    </object>
                 </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
+            </object>
+            <packing>
                 <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
+            </packing>
         </child>
       </object>
       <packing>
-        <property name="title" translatable="yes">Add a place</property>
+            <property name="title" translatable="yes">Add a place</property>
       </packing>
     </child>
     <child>
