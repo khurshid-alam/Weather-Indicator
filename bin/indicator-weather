@@ -31,6 +31,7 @@ import locale
 import pynotify
 from xml.dom.minidom import parseString
 import time
+import math
 
 import gettext
 from gettext import gettext as _
@@ -492,10 +493,15 @@ class Weather:
         else:
             _value = self.__report.getTemperatureFahrenheit()
             _unit  = "F"
-        return "%s %s" % (_value, _unit)
+        return "%0.1f %s" % (_value, _unit)
 
     def getTemperature(self):
         return "%s: %s" % (_("Temperature"), self.getPureTemperature())
+
+    def getHumidex(self):
+        self.vapour_pressure = 6.11 * math.exp(5417.7530 * ( (1/273.16) - (1/(self.__report.getDewPointCelsius()+273.16))))
+        self.humidex = self.__report.getTemperatureCelsius() + (0.5555)*(self.vapour_pressure  - 10.0);
+        return "%s: %0.1f" % (_("Humidex"), self.humidex)
 
     def getVisibility(self):
         if (self.__metric_system == MetricSystem.SI):
@@ -523,7 +529,7 @@ class Weather:
         if (self.__wind_unit == WindUnits.KNOTS):
             _value = self.__report.getWindSpeedKnots()
             _unit  = _("knot(s)")
-        return "%s: %s %s" % (_("Wind Speed"), _value, _unit)
+        return "%s: %0.1f %s" % (_("Wind Speed"), _value, _unit)
 
     def getWindChill(self):
         if (self.__metric_system == MetricSystem.SI):
@@ -636,6 +642,12 @@ class indicator_weather:
         self.temp_show.set_sensitive(True)
         self.temp_show.show()
         self.menu.append(self.temp_show)
+
+    ##Humidex        
+        self.humidex_show = gtk.MenuItem()
+        self.humidex_show.set_sensitive(True)
+        self.humidex_show.show()
+        self.menu.append(self.humidex_show)
         
     ##Humidity
         self.humid_show = gtk.MenuItem()
@@ -703,55 +715,6 @@ class indicator_weather:
         quit.show()
         self.menu.append(quit)
         
-    def rebuild_menu(self):
-        if self.menu == None:
-            self.menu = gtk.Menu()
-
-        for item in self.menu.get_children()[7:len(self.menu.get_children())]:
-            item.destroy()
-        
-    ##Cities
-        if len(self.places) != 1:
-            ##Breaker
-            breaker = gtk.SeparatorMenuItem()
-            breaker.show()
-            self.menu.append(breaker)
-            
-            loco1 = gtk.RadioMenuItem(None, self.places[0][1])
-            if self.placechosen == 0:
-                loco1.set_active(True)
-            loco1.connect("toggled", self.on_city_changed)
-            loco1.show()
-            self.menu.append(loco1)
-            for place in self.places[1:]:
-                loco = gtk.RadioMenuItem(loco1, place[1])
-                if self.places.index(place) == self.placechosen:
-                    loco.set_active(True)
-                loco.connect("toggled", self.on_city_changed)
-                loco.show()
-                self.menu.append(loco)
-    ##Breaker
-        breaker = gtk.SeparatorMenuItem()
-        breaker.show()
-        self.menu.append(breaker)
-        
-        ext_show = gtk.MenuItem(_("Forecast..."))
-        ext_show.connect("activate", self.extforecast)
-        ext_show.show()
-        self.menu.append(ext_show)
-    ##Preferences      
-        prefs_show = gtk.MenuItem(_("Preferences..."))
-        prefs_show.connect("activate", self.prefs)
-        prefs_show.show()
-        self.menu.append(prefs_show)
-
-        quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        quit.connect("activate", self.quit)
-        quit.show()
-        self.menu.append(quit)
-        
-        self.winder.set_menu(self.menu)
-
     def on_city_changed(self,widget):
         if widget.get_active():
             for place in self.places:
@@ -762,6 +725,7 @@ class indicator_weather:
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
+        self.sunset_show.set_label("")
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
@@ -788,6 +752,7 @@ class indicator_weather:
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(weather.getTemperature())
+        self.humidex_show.set_label(weather.getHumidex())
         self.humid_show.set_label(weather.getHumidity())
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
