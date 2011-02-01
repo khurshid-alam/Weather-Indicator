@@ -548,9 +548,13 @@ class indicator_weather:
         self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
         self.wind = gconfClient.get_string("/apps/indicator-weather/wind")
         self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
-        self.labels = gconfClient.get_string("/apps/indicator-weather/places")
         self.places = gconfClient.get_string("/apps/indicator-weather/places")
-        self.placesid = gconfClient.get_string("/apps/indicator-weather/placesid")
+
+        #Setting default values
+        self.metric_system = MetricSystem.SI
+        self._wind_unit = WindUnits.MPH
+        self.place = None
+        self.menu = None
         
         if self.placechosen in (False, None):
             gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
@@ -690,12 +694,16 @@ class indicator_weather:
         prefs_show.show()
         self.menu.append(prefs_show)
 
+    ##Quit
         quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         quit.connect("activate", self.quit)
         quit.show()
         self.menu.append(quit)
         
     def rebuild_menu(self):
+        if self.menu == None:
+            self.menu = gtk.Menu()
+
         for item in self.menu.get_children()[7:len(self.menu.get_children())]:
             item.destroy()
         
@@ -997,12 +1005,13 @@ class PreferencesDialog(gtk.Dialog):
             wi.places = newplaces
             if len(wi.places) >= 1:
                 gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
-                if (wi.place != None) and (wi.place in wi.places):
+                if (type(wi.place) != None) and (wi.place in wi.places):
                     wi.placechosen = wi.places.index(wi.place)
                 else:
                     wi.placechosen = 0
                 gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
-                wi.rebuild_menu()
+                wi.menu_normal()
+                wi.winder.set_menu(wi.menu)
                 needupdate = True
             else:
                 wi.placechosen = 0
