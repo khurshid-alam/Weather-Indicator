@@ -598,7 +598,7 @@ class indicator_weather:
     def menu_noplace(self):
         menu_noplace = gtk.Menu()
         setup = gtk.MenuItem(_("Set Up Weather..."))
-        setup.connect("activate", self.placeadding)
+        setup.connect("activate", self.prefs)
         setup.show()
         menu_noplace.append(setup)
 
@@ -694,11 +694,6 @@ class indicator_weather:
         quit.connect("activate", self.quit)
         quit.show()
         self.menu.append(quit)
-        
-    def placeadding(self,widget):
-        self.placeadded = ''
-        self.assistant = Assistant()
-        self.assistant.show()
         
     def rebuild_menu(self):
         for item in self.menu.get_children()[7:len(self.menu.get_children())]:
@@ -911,13 +906,13 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('beaufort').set_active(True)
         
         self.builder.get_object('rate').set_value(wi.rate)
-        end = len(wi.places)
-        for place in wi.places:
-            newplace = list()
-            newplace.append(place[1])
-            newplace.append(place[0])
+        if wi.places != None:
+            for place in wi.places:
+                newplace = list()
+                newplace.append(place[1])
+                newplace.append(place[0])
             
-            self.builder.get_object('citieslist').append(newplace)
+                self.builder.get_object('citieslist').append(newplace)
             
         self.builder.connect_signals(self)
         
@@ -928,8 +923,8 @@ class PreferencesDialog(gtk.Dialog):
             model.remove(iter)
     
     def on_add_location(self, widget):
-        self.assistant2 = Assistant2()
-        self.assistant2.show()
+        self.assistant = Assistant()
+        self.assistant.show()
        
     def on_destroy(self, widget, data=None):
         pass
@@ -1002,7 +997,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.places = newplaces
             if len(wi.places) >= 1:
                 gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
-                if wi.place in wi.places:
+                if (wi.place != None) and (wi.place in wi.places):
                     wi.placechosen = wi.places.index(wi.place)
                 else:
                     wi.placechosen = 0
@@ -1140,7 +1135,7 @@ class Assistant(gtk.Assistant):
     def __new__(cls):
         builder = get_builder('Assistant')
         new_object = builder.get_object("assistant")
-        new_object.finish_initializing(builder)
+        new_object.finish_initializing(builder)  
         return new_object
 
     # Generate a treeview model for gweather data
@@ -1169,10 +1164,10 @@ class Assistant(gtk.Assistant):
 
     # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):
+        print "Finished initalizing"
         self.builder = builder
         self.builder.connect_signals(self)
         self.assistant = self.builder.get_object("assistant")
-        self.assistant.set_page_complete(self.builder.get_object("chooseunit"),True)
         self.assistant.set_page_complete(self.builder.get_object("label"),True)
         self.assistant.set_page_complete(self.builder.get_object("review"),True)
         self.assistant.set_page_complete(self.builder.get_object("confirmplace"),True)
@@ -1208,7 +1203,8 @@ class Assistant(gtk.Assistant):
 
     # Create a location out of a tree
     def get_city(self,current_page):
-        if self.assistant.get_current_page() == 2:
+        print "Get city, cur page %s" % self.assistant.get_current_page()
+        if self.assistant.get_current_page() == 1:
             select_iter = self.__all_locations_selection.get_selected()[1]
             city_iter = self.__all_locations_store[select_iter]
             self.city_code = city_iter[3]
@@ -1217,13 +1213,13 @@ class Assistant(gtk.Assistant):
             if self.location.found:
                 print "city was found " + self.location.get_full_city_name()
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
-                self.assistant.set_current_page(3)
-                return 4
-            else:
-                print "city not found"
                 self.assistant.set_current_page(2)
                 return 3
-        elif self.assistant.get_current_page() == 4:
+            else:
+                print "city not found"
+                self.assistant.set_current_page(1)
+                return 2
+        elif self.assistant.get_current_page() == 3:
             lbl = self.builder.get_object("entrylbl").get_text()
             if lbl == '':
                 self.location.set_label(self.location.get_full_city_name())
@@ -1233,9 +1229,6 @@ class Assistant(gtk.Assistant):
                 self.builder.get_object("lbl3").set_label('Label:')
 
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % self.location.label)
-            for button in self.builder.get_object('si').get_group():
-                if button.get_active() == True:
-                    self.builder.get_object("unitlbl").set_label('<b>'+button.get_label()+'</b>')
             self.builder.get_object("placelbl").set_label('<b>'+self.location.get_full_city_name()+'</b>')
             
         return self.assistant.get_current_page() + 1
@@ -1244,129 +1237,6 @@ class Assistant(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-        newplace = list()
-        newplace.append(self.location.code)
-        newplace.append(self.location.label)
-
-        wi.placeadded = self.location.label
-        wi.places = list()
-        wi.places.append(newplace)
-
-        newlocation = list()
-        newlocation.append(self.location)
-        wi.locations = list()
-        wi.locations.append(newlocation)
-
-        for button in self.builder.get_object('si').get_group():
-            if button.get_active() == True and button.get_label()[0] != wi.unit:
-                gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
-                wi.unit = button.get_label()[0]
-
-        for button in self.builder.get_object('mps').get_group():
-            if button.get_active() == True and button.get_label().lower() != wi.wind:
-                gconfClient.set_string("/apps/indicator-weather/wind", button.get_label().lower())
-                wi.unit = button.get_label().lower()
-                #FIXME: thats ugly
-                if (wi.wind == 'mph'):
-                    wi._wind_unit = WindUnits.MPH
-                elif (wi.wind == 'mps'):
-                    wi._wind_unit = WindUnits.MPS
-                elif (wi.wind == 'beaufort'):
-                    wi._wind_unit = WindUnits.BEAUFORT
-                elif (wi.wind == 'knots'):
-                    wi._wind_unit = WindUnits.KNOTS
-        
-        self.hide()
-        gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
-        wi.menu_normal()
-        wi.place = wi.places[wi.placechosen]
-        wi.update_weather(False)
-        wi.winder.set_menu(wi.menu)
-        
-class Assistant2(gtk.Assistant):
-    __gtype_name__ = "Assistant2"
-    def __new__(cls):
-        builder = get_builder('Assistant2')
-        new_object = builder.get_object("assistant2")
-        new_object.finish_initializing(builder)
-        return new_object
-
-    # Generate a treeview model for gweather data
-    def generate_treeview(self):
-        #FIXME: Move this to WI object
-        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
-        node = gweather.location_new_world(True)
-        self.parse_gweather_locations(node, None)
-        return self.__all_locations_store
-
-    # Recursevly parse locations
-    def parse_gweather_locations(self, node, parent):
-        children = node.get_children()
-        if len(children) > 0:
-            for i in children:
-                timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
-                is_city = i.get_level() is gweather.LOCATION_CITY
-                node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
-
-                # Iterate through children
-                self.parse_gweather_locations(i, node_iter)
-        elif node.get_level() is gweather.LOCATION_COUNTRY:
-            for i in node.get_timezones():
-                if i.get_name() is not None:
-                    self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
-
-    def finish_initializing(self, builder):
-        self.builder = builder
-        self.builder.connect_signals(self)
-        self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("label"),True)
-        self.builder.get_object("assistant2").set_forward_page_func(self.get_city)
-        
-    def on_find_location(self,widget):
-        def get_my_ip_address():
-            whatismyip = 'http://www.whatismyip.com/automation/n09230945.asp'
-            try:
-                return urllib2.urlopen(whatismyip).readlines()[0]
-            except urllib2.URLError:
-                print "error reaching url %s" % whatismyip
-                return ""
-        try:
-            response = urllib2.urlopen('http://api.hostip.info/get_html.php?ip=%s' % get_my_ip_address()).read()
-            m = re.search('City: (.*)', response)
-            if m:
-                self.builder.get_object("entry").set_text(m.group(1))
-        except urllib2.URLError:
-            print "error reaching url http://api.hostip.info/get_html.php?ip=%s" % get_my_ip_address()
-            return ""
-
-    def on_entry_edited(self,widget):
-        if widget.get_text() == '':
-            self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("placeinput"),False)
-        else:
-            self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("placeinput"),True)
-    
-    def get_city(self,current_page):
-        if self.builder.get_object("assistant2").get_current_page() == 0:
-            self.city_name = self.builder.get_object("entry").get_text()
-            #FIXME: Use new switches - metric system and Wind Units
-            self.location = Location(wi.metric_system, wi._wind_unit)
-            self.location.find_city_by_name(self.city_name)
-            if self.location.found:
-                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
-                self.builder.get_object("assistant2").set_page_complete(self.builder.get_object("confirmplace"),True)
-                return 2
-            else:
-                return 1
-        return self.builder.get_object("assistant2").get_current_page() + 1
-            
-    def on_cancel(self,widget):
-        self.destroy()
-        
-    def on_apply(self,widget):
-        self.new_label = self.builder.get_object("entrylbl").get_text()
-        if self.new_label == '':
-            self.location.set_label(self.city_name)
-        else:
-            self.location.set_label(self.new_label)
         newplace = list()
         newplace.append(self.location.label)
         newplace.append(self.location.code)

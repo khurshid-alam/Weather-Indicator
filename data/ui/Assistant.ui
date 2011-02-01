@@ -12,134 +12,6 @@
     <signal name="apply" handler="on_apply"/>
     <signal name="cancel" handler="on_cancel"/>
     <child>
-      <object class="GtkVBox" id="chooseunit">
-        <property name="visible">True</property>
-        <child>
-          <object class="GtkLabel" id="chooseunitlbl">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">Choose your metric scale:</property>
-          </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkHButtonBox" id="unitbox">
-            <property name="visible">True</property>
-            <property name="spacing">5</property>
-            <property name="layout_style">spread</property>
-            <child>
-              <object class="GtkRadioButton" id="si">
-                <property name="label" translatable="yes">SI</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="imperial">
-                <property name="label" translatable="yes">Imperial</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">si</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkLabel" id="choosewindunitlbl">
-            <property name="visible">True</property>
-            <property name="label" translatable="yes">Choose your wind units:</property>
-          </object>
-          <packing>
-            <property name="position">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkHButtonBox" id="windunitbox">
-            <property name="visible">True</property>
-            <property name="spacing">5</property>
-            <property name="layout_style">spread</property>
-            <child>
-              <object class="GtkRadioButton" id="mps">
-                <property name="label" translatable="yes">MPS</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">4</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="mph">
-                <property name="label" translatable="yes">MPH</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">mps</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">5</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="beaufort">
-                <property name="label" translatable="yes">Beafort</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">mps</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">6</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkRadioButton" id="knots">
-                <property name="label" translatable="yes">Knots</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">mps</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">7</property>
-              </packing>
-            </child>
-          </object>
-        </child>
-       </object>
-      <packing>
-        <property name="title" translatable="yes">Set metric scale and wind units</property>
-      </packing> 
-    </child>
-    <child>
       <object class="GtkVBox" id="placeinput">
         <property name="visible">True</property>
         <child>
@@ -321,47 +193,6 @@ If no, leave blank and go on.</property>
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="revunit">
-            <property name="visible">True</property>
-            <property name="spacing">5</property>
-            <child>
-              <object class="GtkArrow" id="arrow1">
-                <property name="visible">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="lbl">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">Metric Scale:</property>
-                <property name="use_markup">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="unitlbl">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">&lt;b&gt;Celsius&lt;/b&gt;</property>
-                <property name="use_markup">True</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkHBox" id="revplace">
             <property name="visible">True</property>
             <property name="spacing">5</property>
@@ -399,7 +230,7 @@ If no, leave blank and go on.</property>
             </child>
           </object>
           <packing>
-            <property name="position">2</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -440,7 +271,7 @@ If no, leave blank and go on.</property>
             </child>
           </object>
           <packing>
-            <property name="position">3</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
