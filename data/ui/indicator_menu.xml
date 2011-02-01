@@ -1,9 +1,0 @@
-<glade-catalog name="indicator_menu" domain="glade-3" 
-               depends="gtk+" version="1.0">
-  <glade-widget-classes>
-    <glade-widget-class title="Indicator Menu" name="IndicatorMenu" 
-                        generic-name="IndicatorMenu" parent="GtkMenu"
-                        icon-name="widget-gtk-menu"/>
-  </glade-widget-classes>
-
-</glade-catalog>

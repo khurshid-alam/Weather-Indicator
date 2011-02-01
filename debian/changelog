@@ -1,4 +1,4 @@
-indicator-weather (11.01.16-rc1+bzr132~lucid1) lucid; urgency=low
+indicator-weather (11.01.16+bzr132-rc1~lucid1) lucid; urgency=low
 
   * Release Candidate 1
   * Fix for LP: #670796 "weather indicator does not wake up after suspend"
