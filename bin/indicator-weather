@@ -485,14 +485,17 @@ class Weather:
     def getPressure(self):
         return "%s: %s %s" % (_("Pressure"), self.__report.getPressure(), "hPa")
 
-    def getTemperature(self):
+    def getPureTemperature(self):
         if (self.__metric_system == MetricSystem.SI):
             _value = self.__report.getTemperatureCelsius()
             _unit  = "C"
         else:
             _value = self.__report.getTemperatureFahrenheit()
             _unit  = "F"
-        return "%s: %s %s" % (_("Temperature"), _value, _unit)
+        return "%s %s" % (_value, _unit)
+
+    def getTemperature(self):
+        return "%s: %s" % (_("Temperature"), self.getPureTemperature())
 
     def getVisibility(self):
         if (self.__metric_system == MetricSystem.SI):
@@ -788,7 +791,8 @@ class indicator_weather:
         self.humid_show.set_label(weather.getHumidity())
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
-        self.sunset_show.set_label(weather.getSunset())       
+        self.sunset_show.set_label(weather.getSunset())
+        self.winder.set_label(weather.getPureTemperature())
         
         if self.notif != 'N' and weather.isSevereCondition():
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
