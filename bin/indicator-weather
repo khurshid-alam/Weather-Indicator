@@ -101,12 +101,12 @@ class Location:
 
     #Fill in location attribute, looking up by location name
     def find_city_by_name (self, city_name):
-        location = self.__find_city_by_name(gweather.location_new_world(False), city_name)
+        location = self.__find_city_by_name(gweather.location_new_world(True), city_name)
         self.prepare_location(location)
 
     #Fill in location attribute, looking up by location code
     def find_city_by_code (self, city_code):
-        location = self.__find_city_by_code(gweather.location_new_world(False), city_code)
+        location = self.__find_city_by_code(gweather.location_new_world(True), city_code)
         self.prepare_location(location)
 
     #Prepare metar reporter for the location
@@ -121,6 +121,17 @@ class Location:
         else:
             self.__found = False
 
+    #Get continent name for radar map
+    def getContinent(self):
+        if (self.__location != None):
+            self.__city = self.__location
+            self.__continent_name = ""
+            self.__city = self.__city.get_parent()
+            while (self.__city.get_parent().get_parent() != None):
+                self.__city = self.__city.get_parent()
+            self.__continent_name = self.__city.get_name()
+            return self.__continent_name
+        
     def set_label(self, value):
         self.__label = value
 
@@ -142,6 +153,7 @@ class Location:
 
     #Get sun status
     def get_sun_data(self):
+        return ("00:00:00", "00:00:00", "00:00:00")
         if (self.found):
             now = datetime.datetime.now()
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
@@ -157,7 +169,7 @@ class Location:
                 return (sunrise, sunset, timezone)
             except urllib2.URLError:
                 print "error reaching url %s" % url
-                return ("", "", "")
+                return ("00:00:00", "00:00:00", "00:00:00")
         else:
             print "Can't gather sun data on empty location"
 
@@ -699,10 +711,11 @@ class indicator_weather:
         breaker.show()
         self.menu.append(breaker)
         
-        ext_show = gtk.MenuItem(_("Forecast..."))
+        ext_show = gtk.MenuItem(_("Forecast"))
         ext_show.connect("activate", self.extforecast)
         ext_show.show()
         self.menu.append(ext_show)
+
     ##Preferences      
         prefs_show = gtk.MenuItem(_("Preferences..."))
         prefs_show.connect("activate", self.prefs)
@@ -770,52 +783,20 @@ class indicator_weather:
                 
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
-        
-    def getText(self, replace=True):
-        dialog = gtk.MessageDialog(
-            None,
-            gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-            gtk.MESSAGE_QUESTION,
-            gtk.BUTTONS_OK,
-            None)
-        dialog.set_markup('Please enter your address:')
-        entry = gtk.Entry()
-        entry.connect("activate", self.responseToDialog, dialog, gtk.RESPONSE_OK)
-        hbox = gtk.HBox()
-        hbox.pack_start(gtk.Label("Address:"), False, 5, 5)
-        hbox.pack_end(entry)
-        dialog.vbox.pack_end(hbox, True, True, 0)
-        dialog.show_all()
-        dialog.run()
-        if replace == False:
-            if not (entry.get_text() in self.places):
-                self.places.append(entry.get_text())
-                gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
-                dialog.destroy()
-                return True
-            else:
-                dialog.destroy()
-                return False
-        else:
-            self.places = list()
-            self.places.append(entry.get_text())
-            gconfClient.set_string("/apps/indicator-weather/places", str([self.places]))
-        dialog.destroy()
-        self.update_weather()
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
             return ""
-        location = Location(self.metric_system, self._wind_unit)
-        if (location.find_city_by_code(city[0]) == False):
+        self.current_location = Location(self.metric_system, self._wind_unit)
+        if (self.current_location.find_city_by_code(city[0]) == False):
             print "location with code %s not found" % city[0]    
         if extended == False:
-            location.update_weather_data()
-            if (location.found == False) or (location.weather.isReportCorrect() == False):
+            self.current_location.update_weather_data()
+            if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
                 print "report is empty";
                 return None;
             else:
-                return location.weather
+                return self.current_location.weather
         else:
             #FIXME: extended report should be gathered from Google
             location.prepare_forecast_data()
@@ -829,16 +810,9 @@ class indicator_weather:
         self.prefswindow = PreferencesDialog()
         self.prefswindow.show()
         
-    def extforecast(self,widget):
+    def extforecast(self, widget):
         forecastwd = ExtendedForecast()
         forecastwd.show()
-        
-    def addlocation(self,widget):
-        self.getText()
-        self.menu_normal()
-        self.place = self.places[self.placechosen]
-        self.update_weather(False)
-        self.winder.set_menu(self.menu)
         
     def notify(self,conditon,icon,severe=False):
         if severe:
