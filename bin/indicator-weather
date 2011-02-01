@@ -798,13 +798,12 @@ class indicator_weather:
             else:
                 return self.current_location.weather
         else:
-            #FIXME: extended report should be gathered from Google
-            location.prepare_forecast_data()
-            self.daysofweek = location.get_forecast_daysofweek()
-            self.lowdata    = location.get_forecast_lowdata()
-            self.highdata   = location.get_forecast_highdata()
-            self.icons      = location.get_forecast_icons()
-            self.conditions = location.get_forecast_conditions()
+            self.current_location.prepare_forecast_data()
+            self.daysofweek = self.current_location.get_forecast_daysofweek()
+            self.lowdata    = self.current_location.get_forecast_lowdata()
+            self.highdata   = self.current_location.get_forecast_highdata()
+            self.icons      = self.current_location.get_forecast_icons()
+            self.conditions = self.current_location.get_forecast_conditions()
         
     def prefs(self, widget):
         self.prefswindow = PreferencesDialog()
