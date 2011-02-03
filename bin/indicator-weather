@@ -72,11 +72,15 @@ class Location:
         # We're getting a parent here, as 'location' here is actually a weather station
         self.__city = self.__location.get_parent()
         self.__full_city_name = ""
-        while (self.__city.get_parent() != None):
+        while (self.__city.get_parent().get_parent() != None):
             self.__full_city_name += "%s, " % self.__city.get_name()
             self.__city = self.__city.get_parent()
         self.__full_city_name += "%s" % self.__city.get_name()
         return self.__full_city_name
+
+    #Get short city name
+    def get_short_city_name(self):
+        return self.__location.get_parent().get_name()
 
     #Internal proc - iterate by known locations to find a city by its name
     def __find_city_by_name (self, node, city_name):
@@ -154,7 +158,7 @@ class Location:
 
     #Get sun status
     def get_sun_data(self):
-        return ("00:00:00", "00:00:00", "00:00:00")
+        #return ("00:00:00", "00:00:00", "00:00:00")
         if (self.found):
             now = datetime.datetime.now()
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
@@ -1165,6 +1169,7 @@ class Assistant(gtk.Assistant):
             if self.location.found:
                 print "city was found " + self.location.get_full_city_name()
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
+                self.builder.get_object("entrylbl").set_text(self.location.get_short_city_name())
                 self.assistant.set_current_page(2)
                 return 3
             else:
