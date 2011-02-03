@@ -900,41 +900,53 @@ class PreferencesDialog(gtk.Dialog):
         """
         needupdate = False
         # Metric System
-        for button in self.builder.get_object('si').get_group():
-            if button.get_active() == True and button.get_label()[0] != wi.unit:
-                gconfClient.set_string("/apps/indicator-weather/unit", button.get_label()[0])
-                wi.unit = button.get_label()[0]
-                if wi.unit == 'S':
-                    wi.metric_system = MetricSystem.SI
-                else:
-                    wi.metric_system = MetricSystem.IMPERIAL
-                needupdate = True
-                print 'Unit changed :', wi.unit
+        metric_systems = [('si',       "S", MetricSystem.SI),
+                          ('imperial', "I", MetricSystem.IMPERIAL)]
+
+        for metric_system in metric_systems:
+            if self.builder.get_object(metric_system[0]).get_active():
+                new_unit = metric_system[1]
+                new_metric_system = metric_system[2]
+
+        if (wi.unit != new_unit):
+            wi.unit = new_unit
+            wi.metric_system = new_metric_system
+            gconfClient.set_string("/apps/indicator-weather/unit", wi.unit)
+            needupdate = True
+            print 'Unit changed :', wi.unit
 
         # Wind Units
-        for button in self.builder.get_object('mps').get_group():
-            if button.get_active() == True and button.get_label().lower() != wi.wind:
-                gconfClient.set_string("/apps/indicator-weather/wind", button.get_label().lower())
-                wi.wind = button.get_label().lower()
-                #FIXME: thats ugly
-                if (wi.wind == 'mph'):
-                    wi._wind_unit = WindUnits.MPH
-                elif (wi.wind == 'mps'):
-                    wi._wind_unit = WindUnits.MPS
-                elif (wi.wind == 'beaufort'):
-                    wi._wind_unit = WindUnits.BEAUFORT
-                elif (wi.wind == 'knots'):
-                    wi._wind_unit = WindUnits.KNOTS
-                needupdate = True
-                print 'Wind Unit changed :', wi.wind
+        wind_systems = [('mps',      "mps",      WindUnits.MPS),
+                        ('mph',      "mph",      WindUnits.MPH),
+                        ('beaufort', "beaufort", WindUnits.BEAUFORT),
+                        ('knots',    "knots",    WindUnits.KNOTS)]
+
+        for wind_system in wind_systems:
+            if self.builder.get_object(wind_system[0]).get_active():
+                new_wind_unit   = wind_system[1]
+                new_wind_system = wind_system[2]
+
+        if (wi.wind != new_wind_unit):
+            wi.wind = new_wind_unit
+            wi._wind_unit = new_wind_system
+            gconfClient.set_string("/apps/indicator-weather/wind", wi.wind)
+            needupdate = True
+            print 'Wind Unit changed :', wi.wind
 
         # Notifications
-        for button in self.builder.get_object('nonotif').get_group():
-            if button.get_active() == True and button.get_label()[0] != wi.notif:
-                gconfClient.set_string("/apps/indicator-weather/notif", button.get_label()[0])
-                wi.notif = button.get_label()[0]
-                print 'Notifications changed :', wi.notif
-                
+        notifications = [('nonotif',     "N"),
+                         ('notifsevere', "O"),
+                         ('notifall',    "U")]
+        for notification in notifications:
+            if self.builder.get_object(notification[0]).get_active():
+                new_notification  = notification[1]
+
+        if (wi.notif != new_notification):
+            wi.notif = new_notification
+            gconfClient.set_string("/apps/indicator-weather/notif", wi.notif)
+            needupdate = True
+            print 'Notifications changed :', wi.notif
+
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", int(self.builder.get_object('rate').get_value()))
