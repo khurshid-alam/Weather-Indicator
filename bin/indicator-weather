@@ -273,7 +273,7 @@ class WindUnits:
     MPS = 1
     MPH = 2
     BEAUFORT = 3
-    KNOTS = 4
+    #KNOTS = 4
 
 class Weather:
     """
@@ -543,9 +543,9 @@ class Weather:
         if (self.__wind_unit == WindUnits.BEAUFORT):
             _value = self.__report.getWindSpeedBeaufort()
             _unit  = ""
-        if (self.__wind_unit == WindUnits.KNOTS):
-            _value = self.__report.getWindSpeedKnots()
-            _unit  = _("knot(s)")
+        #if (self.__wind_unit == WindUnits.KNOTS):
+        #    _value = self.__report.getWindSpeedKnots()
+        #    _unit  = _("knot(s)")
         return "%s: %0.1f %s" % (_("Wind Speed"), _value, _unit)
 
     def getWindChill(self):
@@ -609,8 +609,8 @@ class indicator_weather:
                 self._wind_unit = WindUnits.MPS
             elif (self.wind == 'beaufort'):
                 self._wind_unit = WindUnits.BEAUFORT
-            elif (self.wind == 'knots'):
-                self._wind_unit = WindUnits.KNOTS
+            #elif (self.wind == 'knots'):
+            #    self._wind_unit = WindUnits.KNOTS
             
         if self.rate in (False, None):
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
@@ -855,8 +855,8 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('mps').set_active(True)
         elif wi.wind == 'mph':
             self.builder.get_object('mph').set_active(True)
-        elif wi.wind == 'knots':
-            self.builder.get_object('knots').set_active(True)
+        #elif wi.wind == 'knots':
+        #    self.builder.get_object('knots').set_active(True)
         else:
             self.builder.get_object('beaufort').set_active(True)
         
@@ -918,8 +918,8 @@ class PreferencesDialog(gtk.Dialog):
         # Wind Units
         wind_systems = [('mps',      "mps",      WindUnits.MPS),
                         ('mph',      "mph",      WindUnits.MPH),
-                        ('beaufort', "beaufort", WindUnits.BEAUFORT),
-                        ('knots',    "knots",    WindUnits.KNOTS)]
+                        ('beaufort', "beaufort", WindUnits.BEAUFORT)]
+                        #('knots',    "knots",    WindUnits.KNOTS)]
 
         for wind_system in wind_systems:
             if self.builder.get_object(wind_system[0]).get_active():
