@@ -1,3 +1,11 @@
+indicator-weather (11.01.16+bzr145-rc2~natty1) natty; urgency=low
+
+  * Release Candidate 2 quick fix #2
+  * Updated settings store logic
+  * Removed knots - caused exceptions, see Bug #712434 in pymetar
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 03 Feb 2011 15:10:26 +0200
+
 indicator-weather (11.01.16+bzr142-rc2~natty1) natty; urgency=low
 
   * Release Candidate 2 quick fix
