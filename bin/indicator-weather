@@ -868,15 +868,19 @@ class PreferencesDialog(gtk.Dialog):
                 newplace.append(place[0])
             
                 self.builder.get_object('citieslist').append(newplace)
+            self.builder.get_object('button1').set_sensitive(True)
             
         self.builder.connect_signals(self)
         
-    def on_remove_location(self,widget):
+    def on_remove_location(self, widget):
         selection = self.builder.get_object('displaylist').get_selection()
         model, iter = selection.get_selected()
         if iter != None:
             model.remove(iter)
-    
+
+        if (self.builder.get_object('citieslist').get_iter_first() == None):
+            self.builder.get_object('button1').set_sensitive(False)
+
     def on_add_location(self, widget):
         self.assistant = Assistant()
         self.assistant.show()
@@ -1194,6 +1198,7 @@ class Assistant(gtk.Assistant):
         newplace.append(self.location.label)
         newplace.append(self.location.code)
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
+        wi.prefswindow.builder.get_object('button1').set_sensitive(True)
         self.hide()
 
 class singleinstance(object):
