@@ -1,14 +1,12 @@
-indicator-weather (11.01.16+bzr139-rc1~lucid1) lucid; urgency=low
+indicator-weather (11.01.16+bzr140-rc2~lucid1) lucid; urgency=low
 
-  * Release Candidate 1
-  * Fix for LP: #670796 "weather indicator does not wake up after suspend"
-  * Fix for LP: #617801 "Weather Indicator should show humidex value"
-  * Fix for LP: #703561 "Show temperature in icon"
-  * Fix for LP: #705673 "Add city dialogs should have city tree"
-  * Fix for LP: #710870 "Indicator-weather crashed with AttributeError in get_city(): indicator_weather instance has no attribute '_wind_unit'"
-  * Fix for LP: #707681 "Allow only one instance of WI"
+  * Release Candidate 2
+  * Fix for LP: #712359 "'OK' button in Preferences dialog should be disabled, if location list is empty"
+  * Fix for LP: #712347 "Synapse launcher shows Preferences window instead of Weather Indicator"
+  * Fix for LP: #711891 "cannot go back from "Confirm the place" dialog"
+  * Fix for LP: #711889 "Translation issues"
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 01 Feb 2011 17:26:25 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 03 Feb 2011 12:55:49 +0200
 
 indicator-weather (11.01.16+bzr132-rc1~lucid1) lucid; urgency=low
 

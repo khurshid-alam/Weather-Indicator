@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-03 11:56+0200\n"
+"POT-Creation-Date: 2011-02-03 12:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Use notifications to give every weather condition change"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:17 ../indicator-weather.desktop.in.h:2
+#: ../data/ui/PreferencesDialog.ui.h:17
 msgid "Weather Indicator Preferences"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Partly sunny"
 msgstr ""
 
-#: ../bin/indicator-weather.py:293 ../data/ui/ExtendedForecast.ui.h:3
+#: ../bin/indicator-weather.py:293
 msgid "Clear"
 msgstr ""
 
@@ -599,19 +599,19 @@ msgstr ""
 msgid "Severe weather alert"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1007
+#: ../bin/indicator-weather.py:1011
 msgid "Weather Forecast for "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1046
+#: ../bin/indicator-weather.py:1050
 msgid "High: "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1050
+#: ../bin/indicator-weather.py:1054
 msgid "Low: "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1264
+#: ../bin/indicator-weather.py:1269
 msgid "Another instance of this program is already running"
 msgstr ""
 
@@ -662,7 +662,7 @@ msgid "Location:"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:12
-msgid "Please enter a location manually or let us try to find your location"
+msgid "Please select a location from the location tree"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:13
@@ -681,37 +681,14 @@ msgid ""
 msgstr ""
 
 #: ../data/ui/ExtendedForecast.ui.h:1
-msgid "<big>Monday</big>"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:2
-msgid "<big>Tomorrow (sat.)</big>"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:4
 msgid "Extended Forecast"
 msgstr ""
 
-#: ../data/ui/ExtendedForecast.ui.h:5
-msgid "Fogs"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:6
-msgid "High : 26&#xB0;C"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:7
-msgid "High : 28&#xB0;C"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:8
-msgid "Low : 14&#xB0;C"
-msgstr ""
-
-#: ../data/ui/ExtendedForecast.ui.h:9
-msgid "Low : 16&#xB0;C"
-msgstr ""
-
 #: ../indicator-weather.desktop.in.h:1
-msgid "Set Up the Weather Indicator applet"
+msgid ""
+"A weather indicator that displays information for one or multiple places"
+msgstr ""
+
+#: ../indicator-weather.desktop.in.h:2
+msgid "Weather Indicator"
 msgstr ""
