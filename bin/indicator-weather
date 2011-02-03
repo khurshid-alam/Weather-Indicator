@@ -1170,13 +1170,9 @@ class Assistant(gtk.Assistant):
                 print "city was found " + self.location.get_full_city_name()
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("entrylbl").set_text(self.location.get_short_city_name())
-                self.assistant.set_current_page(2)
-                return 3
             else:
-                print "city not found"
-                self.assistant.set_current_page(1)
-                return 2
-        elif self.assistant.get_current_page() == 3:
+                print "BUG: city with code '%s' not found" % self.city_code 
+        elif self.assistant.get_current_page() == 2:
             lbl = self.builder.get_object("entrylbl").get_text()
             if lbl == '':
                 self.location.set_label(self.location.get_full_city_name())
