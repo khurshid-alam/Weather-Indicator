@@ -1261,7 +1261,7 @@ if __name__ == "__main__":
     #
     # do this at beginnig of your application
     #
-    myapp = singleinstance("weather-indicator.pid")
+    myapp = singleinstance("/tmp/weather-indicator.pid")
     #
     # check is another instance of same program running
     #
