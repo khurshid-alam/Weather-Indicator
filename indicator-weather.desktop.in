@@ -1,9 +1,10 @@
 [Desktop Entry]
-_Name=Weather Indicator Preferences
-_Comment=Set Up the Weather Indicator applet
-GenericName=Weather Indicator Preferences
-Categories=GNOME;Settings;
-Exec=indicator-weather --settings
+_Name=Weather Indicator
+_Comment=A weather indicator that displays information for one or multiple places
+ in the world
+GenericName=Weather Indicator
+Categories=GNOME;
+Exec=indicator-weather
 Icon=/usr/share/indicator-weather/media/icon.png
 Terminal=false
 Type=Application
