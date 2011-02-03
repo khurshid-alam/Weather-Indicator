@@ -127,7 +127,7 @@
                           <object class="GtkLabel" id="day2lbl">
                             <property name="visible">True</property>
                             <property name="ypad">10</property>
-                            <property name="label" translatable="yes">&lt;big&gt;Tomorrow (sat.)&lt;/big&gt;</property>
+                            <property name="label">&lt;big&gt;Tomorrow (sat.)&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -244,7 +244,7 @@
                           <object class="GtkLabel" id="day3cond">
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Fogs</property>
+                            <property name="label">Fogs</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
@@ -260,7 +260,7 @@
                             <child>
                               <object class="GtkLabel" id="day3temphigh">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">High : 28&#xB0;C</property>
+                                <property name="label">High : 28&#xB0;C</property>
                               </object>
                               <packing>
                                 <property name="position">0</property>
@@ -269,7 +269,7 @@
                             <child>
                               <object class="GtkLabel" id="day3templow">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Low : 16&#xB0;C</property>
+                                <property name="label">Low : 16&#xB0;C</property>
                               </object>
                               <packing>
                                 <property name="position">1</property>
@@ -314,7 +314,7 @@
                           <object class="GtkLabel" id="day4lbl">
                             <property name="visible">True</property>
                             <property name="ypad">10</property>
-                            <property name="label" translatable="yes">&lt;big&gt;Monday&lt;/big&gt;</property>
+                            <property name="label">&lt;big&gt;Monday&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -335,7 +335,7 @@
                           <object class="GtkLabel" id="day4cond">
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Clear</property>
+                            <property name="label">Clear</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
@@ -351,7 +351,7 @@
                             <child>
                               <object class="GtkLabel" id="day4temphigh">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">High : 26&#xB0;C</property>
+                                <property name="label">High : 26&#xB0;C</property>
                               </object>
                               <packing>
                                 <property name="position">0</property>
@@ -360,7 +360,7 @@
                             <child>
                               <object class="GtkLabel" id="day4templow">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Low : 14&#xB0;C</property>
+                                <property name="label">Low : 14&#xB0;C</property>
                               </object>
                               <packing>
                                 <property name="position">1</property>

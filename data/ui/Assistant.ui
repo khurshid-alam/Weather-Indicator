@@ -21,7 +21,7 @@
             <property name="yalign">0</property>
             <property name="xpad">6</property>
             <property name="ypad">6</property>
-            <property name="label" translatable="yes">Please enter a location manually or let us try to find your location</property>
+            <property name="label" translatable="yes">Please select a location from the location tree</property>
             <property name="wrap">True</property>
             <property name="wrap_mode">word-char</property>
           </object>
