@@ -286,7 +286,7 @@
                     <property name="update_policy">delayed</property>
                     <property name="adjustment">rate</property>
                     <property name="upper_stepper_sensitivity">on</property>
-                    <property name="fill_level">20</property>
+                    <property name="fill_level">30</property>
                     <property name="digits">0</property>
                   </object>
                   <packing>

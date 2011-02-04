@@ -613,7 +613,7 @@ class indicator_weather:
             #    self._wind_unit = WindUnits.KNOTS
             
         if self.rate in (False, None):
-            gconfClient.set_int("/apps/indicator-weather/refresh_rate", 5)
+            gconfClient.set_int("/apps/indicator-weather/refresh_rate", 15)
             self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
             
         if self.places in (False, None, '', '[]', "['']",):
@@ -744,17 +744,22 @@ class indicator_weather:
 
     def update_weather(self, notif=True,widget=None):
         self.sunset_show.set_label("")
-        self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
-			for item in self.menu.get_children()[0:len(self.menu.get_children())]:
-				item.destroy()
-			self.problem_show = gtk.MenuItem(_("Connection problem"))
-			self.problem_show.set_sensitive(False)
-			self.problem_show.show()
-			self.menu.append(self.problem_show)
-			self.winder.set_icon("ubuntuone-client-error")
-			return
+            for item in self.menu.get_children()[0:len(self.menu.get_children())]:
+                item.destroy()
+            self.problem_show = gtk.MenuItem(_("Connection problem"))
+            self.problem_show.set_sensitive(False)
+            self.problem_show.show()
+            self.menu.append(self.problem_show)
+            self.quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+            self.quit.connect("activate", self.quit)
+            self.quit.show()
+            self.menu.append(self.quit)
+            self.winder.set_icon("ubuntuone-client-error")
+            self.winder.set_label("")
+            self.rateid = gobject.timeout_add(60000, self.update_weather)
+            return
 		
         self.condition = weather.getPureCondition()
         self.icon = weather.getPixmap()
@@ -785,6 +790,7 @@ class indicator_weather:
 	        #    self.notify(self.condition, self.icon, severe=True)
 	            
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
+        self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
                 
     def responseToDialog(self, entry, dialog, response):
         dialog.response(response)
