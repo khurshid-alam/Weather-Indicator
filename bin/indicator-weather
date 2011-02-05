@@ -715,6 +715,11 @@ class indicator_weather:
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
         self.menu.append(breaker)
+
+        refresh_show = gtk.MenuItem(_("Refresh"))
+        refresh_show.connect("activate", self.update_weather)
+        refresh_show.show()
+        self.menu.append(refresh_show)
         
         ext_show = gtk.MenuItem(_("Forecast"))
         ext_show.connect("activate", self.extforecast)
@@ -732,6 +737,9 @@ class indicator_weather:
         quit.connect("activate", self.quit)
         quit.show()
         self.menu.append(quit)
+
+        self.winder.set_menu(self.menu)
+        self.winder.set_label("")
         
     def on_city_changed(self,widget):
         if widget.get_active():
@@ -743,21 +751,31 @@ class indicator_weather:
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
-        self.sunset_show.set_label("")
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
             for item in self.menu.get_children()[0:len(self.menu.get_children())]:
                 item.destroy()
+
+            self.menu = gtk.Menu()
             self.problem_show = gtk.MenuItem(_("Connection problem"))
             self.problem_show.set_sensitive(False)
             self.problem_show.show()
             self.menu.append(self.problem_show)
-            self.quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-            self.quit.connect("activate", self.quit)
-            self.quit.show()
-            self.menu.append(self.quit)
+
+            self.refresh_show = gtk.MenuItem(_("Refresh"))
+            self.refresh_show.connect("activate", self.update_weather)
+            self.refresh_show.show()
+            self.menu.append(self.refresh_show)
+
+            self.quit_menu = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+            self.quit_menu.connect("activate", self.quit)
+            self.quit_menu.show()
+            self.menu.append(self.quit_menu)
+
             self.winder.set_icon("ubuntuone-client-error")
             self.winder.set_label("")
+            self.winder.set_menu(self.menu)
+
             self.rateid = gobject.timeout_add(60000, self.update_weather)
             return
 		
@@ -771,7 +789,8 @@ class indicator_weather:
         print 'Update :',weather.getPureCondition(),'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
 
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
-        
+
+        self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(weather.getTemperature())
