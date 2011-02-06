@@ -67,6 +67,19 @@ class Location:
         self.__lat = None
         self.__lon = None
 
+    #Replace chars with HTML-safe equivalents
+    def html_decode(self, value):
+        htmlCodes = (
+            ('&', '&amp;'),
+            ('<', '&lt;'),
+            ('>', '&gt;'),
+            ('"', '&quot;'),
+            ("'", '&#39;'),
+        )
+        for code in htmlCodes:
+            value = value.replace(code[0], code[1])
+        return value
+
     # Get a full city name
     def get_full_city_name(self):
         # We're getting a parent here, as 'location' here is actually a weather station
@@ -76,11 +89,11 @@ class Location:
             self.__full_city_name += "%s, " % self.__city.get_name()
             self.__city = self.__city.get_parent()
         self.__full_city_name += "%s" % self.__city.get_name()
-        return self.__full_city_name
+        return self.html_decode(self.__full_city_name)
 
     #Get short city name
     def get_short_city_name(self):
-        return self.__location.get_parent().get_name()
+        return self.html_decode(self.__location.get_parent().get_name())
 
     #Internal proc - iterate by known locations to find a city by its name
     def __find_city_by_name (self, node, city_name):
@@ -565,6 +578,8 @@ class Weather:
 
 class indicator_weather:
     def __init__(self):
+        gtk.gdk.threads_init()
+        gtk.gdk.threads_enter()
         self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
@@ -624,6 +639,8 @@ class indicator_weather:
             self.place = self.places[self.placechosen]
             self.update_weather()
             self.winder.set_menu(self.menu)
+
+        gtk.gdk.threads_leave()
             
     def menu_noplace(self):
         menu_noplace = gtk.Menu()
@@ -756,6 +773,8 @@ class indicator_weather:
             for item in self.menu.get_children()[0:len(self.menu.get_children())]:
                 item.destroy()
 
+            gtk.gdk.threads_init()
+            gtk.gdk.threads_enter()
             self.menu = gtk.Menu()
             self.problem_show = gtk.MenuItem(_("Connection problem"))
             self.problem_show.set_sensitive(False)
@@ -775,6 +794,7 @@ class indicator_weather:
             self.winder.set_icon("ubuntuone-client-error")
             self.winder.set_label("")
             self.winder.set_menu(self.menu)
+            gtk.gdk.threads_leave()
 
             self.rateid = gobject.timeout_add(60000, self.update_weather)
             return
@@ -790,6 +810,8 @@ class indicator_weather:
 
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
 
+        gtk.gdk.threads_init()
+        gtk.gdk.threads_enter()
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
@@ -800,6 +822,7 @@ class indicator_weather:
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
         self.winder.set_label(weather.getPureTemperature())
+        gtk.gdk.threads_leave()
         
         if self.notif != 'N' and weather.isSevereCondition():
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
@@ -1048,10 +1071,10 @@ class ExtendedForecast(gtk.Window):
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         wi.get_weather(wi.places[wi.placechosen],False,True)
         
-        self.builder.get_object('day1lbl').set_label('<big>'+wi.daysofweek[0].capitalize()+'</big>')
-        self.builder.get_object('day2lbl').set_label('<big>'+wi.daysofweek[1].capitalize()+'</big>')
-        self.builder.get_object('day3lbl').set_label('<big>'+wi.daysofweek[2].capitalize()+'</big>')
-        self.builder.get_object('day4lbl').set_label('<big>'+wi.daysofweek[3].capitalize()+'</big>')
+        self.builder.get_object('day1lbl').set_label('<big>%s</big>' % wi.daysofweek[0].capitalize())
+        self.builder.get_object('day2lbl').set_label('<big>%s</big>' % wi.daysofweek[1].capitalize())
+        self.builder.get_object('day3lbl').set_label('<big>%s</big>' % wi.daysofweek[2].capitalize())
+        self.builder.get_object('day4lbl').set_label('<big>%s</big>' % wi.daysofweek[3].capitalize())
         i=0
         for icon in wi.icons[1:]:
             i=i+1
