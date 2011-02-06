@@ -33,6 +33,7 @@ from xml.dom.minidom import parseString
 import time
 import math
 import commands
+import threading
 
 import gettext
 from gettext import gettext as _
@@ -211,7 +212,7 @@ class Location:
         #Here we generate a string, compiled of latitude and longitude for location
         self.coord_string = (",,,%.6f,%.6f" % (self.__lat, self.__lon)).replace(".","")
         url = "http://www.google.com/ig/api?weather=" + self.coord_string + "&hl=" + locale[0]
-        print "url:\n%s" % url
+        print "url:%s" % url
         try:
             f = urllib2.urlopen(url)
             s = f.read()
@@ -576,10 +577,12 @@ class Weather:
     def getSunset(self):
         return "%s: %s" % (_("Sunset"), time.strftime('%X',time.strptime(self.__sunset,'%H:%M:%S')))
 
-class indicator_weather:
+class indicator_weather(threading.Thread):
+    
     def __init__(self):
-        gtk.gdk.threads_init()
-        gtk.gdk.threads_enter()
+        threading.Thread.__init__(self)
+
+    def __init__(self):
         self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
@@ -639,8 +642,6 @@ class indicator_weather:
             self.place = self.places[self.placechosen]
             self.update_weather()
             self.winder.set_menu(self.menu)
-
-        gtk.gdk.threads_leave()
             
     def menu_noplace(self):
         menu_noplace = gtk.Menu()
@@ -756,7 +757,8 @@ class indicator_weather:
         self.menu.append(quit)
 
         self.winder.set_menu(self.menu)
-        self.winder.set_label("")
+        if (self.winder.set_label != None):
+            self.winder.set_label("")
         
     def on_city_changed(self,widget):
         if widget.get_active():
@@ -773,8 +775,6 @@ class indicator_weather:
             for item in self.menu.get_children()[0:len(self.menu.get_children())]:
                 item.destroy()
 
-            gtk.gdk.threads_init()
-            gtk.gdk.threads_enter()
             self.menu = gtk.Menu()
             self.problem_show = gtk.MenuItem(_("Connection problem"))
             self.problem_show.set_sensitive(False)
@@ -792,9 +792,9 @@ class indicator_weather:
             self.menu.append(self.quit_menu)
 
             self.winder.set_icon("ubuntuone-client-error")
-            self.winder.set_label("")
+            if (self.winder.set_label != None):
+                self.winder.set_label("")
             self.winder.set_menu(self.menu)
-            gtk.gdk.threads_leave()
 
             self.rateid = gobject.timeout_add(60000, self.update_weather)
             return
@@ -810,8 +810,6 @@ class indicator_weather:
 
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
 
-        gtk.gdk.threads_init()
-        gtk.gdk.threads_enter()
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
@@ -821,8 +819,8 @@ class indicator_weather:
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
-        self.winder.set_label(weather.getPureTemperature())
-        gtk.gdk.threads_leave()
+        if (self.winder.set_label != None):
+            self.winder.set_label(weather.getPureTemperature())
         
         if self.notif != 'N' and weather.isSevereCondition():
 	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
@@ -1184,7 +1182,6 @@ class Assistant(gtk.Assistant):
 
     # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):
-        print "Finished initalizing"
         self.builder = builder
         self.builder.connect_signals(self)
         self.assistant = self.builder.get_object("assistant")
@@ -1223,7 +1220,6 @@ class Assistant(gtk.Assistant):
 
     # Create a location out of a tree
     def get_city(self,current_page):
-        print "Get city, cur page %s" % self.assistant.get_current_page()
         if self.assistant.get_current_page() == 1:
             select_iter = self.__all_locations_selection.get_selected()[1]
             city_iter = self.__all_locations_store[select_iter]
@@ -1331,5 +1327,8 @@ if __name__ == "__main__":
     #
     # not running, safe to continue...
     #
+    gtk.gdk.threads_init()
+    gtk.gdk.threads_enter()
     wi = indicator_weather()
     main()
+    gtk.gdk.threads_leave()
