@@ -1171,14 +1171,15 @@ class Assistant(gtk.Assistant):
             for i in children:
                 timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
                 is_city = i.get_level() is gweather.LOCATION_CITY
-                node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
+                if (i.get_level() is gweather.LOCATION_WEATHER_STATION) or (len(i.get_children())>0):
+                    node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
+                    # Iterate through children
+                    self.parse_gweather_locations(i, node_iter)
 
-                # Iterate through children
-                self.parse_gweather_locations(i, node_iter)
-        elif node.get_level() is gweather.LOCATION_COUNTRY:
-            for i in node.get_timezones():
-                if i.get_name() is not None:
-                    self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
+        #elif (node.get_level() is gweather.LOCATION_COUNTRY) and (len(node.get_children())>0):
+        #    for i in node.get_timezones():
+        #        if (i.get_name() is not None):
+        #            self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
 
     # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):

@@ -1,8 +1,9 @@
-indicator-weather (11.01.16+bzr151-rc4~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr152-rc4~natty1) natty; urgency=low
 
   * Release Candidate 4
   * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
   * Fix for labels crash in Lucid
+  * Removed countries without cities from the tree
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 06 Feb 2011 13:03:23 +0200
 
