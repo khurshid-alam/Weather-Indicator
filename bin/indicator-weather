@@ -1057,22 +1057,29 @@ class PreferencesDialog(gtk.Dialog):
 class ExtendedForecast(gtk.Window):
     __gtype_name__ = "ExtendedForecast"
     def __new__(cls):
+        log.debug("ExtendedForecast: creating")
         builder = get_builder('ExtendedForecast')
         new_object = builder.get_object("extended_forecast")
         new_object.finish_initializing(builder)
         return new_object
         
     def finish_initializing(self, builder):
+        log.debug("ExtendedForecast: finishing initialization")
         self.builder = builder
         self.builder.connect_signals(self)
-        
+
+        log.debug("ExtendedForecast: chosen place: %s" % wi.places[wi.placechosen][1])
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
+        log.debug("ExtendedForecast: getting forecast data")
         wi.get_weather(wi.places[wi.placechosen],False,True)
-        
+
+        log.debug("ExtendedForecast: parsing forecast data")
         self.builder.get_object('day1lbl').set_label('<big>%s</big>' % wi.daysofweek[0].capitalize())
         self.builder.get_object('day2lbl').set_label('<big>%s</big>' % wi.daysofweek[1].capitalize())
         self.builder.get_object('day3lbl').set_label('<big>%s</big>' % wi.daysofweek[2].capitalize())
         self.builder.get_object('day4lbl').set_label('<big>%s</big>' % wi.daysofweek[3].capitalize())
+
+        #FIXME: Refactor this
         i=0
         for icon in wi.icons[1:]:
             i=i+1
@@ -1099,6 +1106,7 @@ class ExtendedForecast(gtk.Window):
             i=i+1
             self.builder.get_object('day%scond' % str(i)).set_label(condition)
         i=0
+        #Refactor this
         if wi.unit == 'S':
             tempunit = '°C'
         elif wi.unit == 'I':
@@ -1113,6 +1121,7 @@ class ExtendedForecast(gtk.Window):
         
     
     def close(self, widget, data=None):
+        log.debug("ExtendedForecast: closing window")
         self.destroy()
     
     def on_destroy(self, widget, data=None):
