@@ -757,7 +757,7 @@ class indicator_weather(threading.Thread):
         self.menu.append(quit)
 
         self.winder.set_menu(self.menu)
-        if (self.winder.set_label != None):
+        if (hasattr(self.winder, 'set_label')):
             self.winder.set_label("")
         
     def on_city_changed(self,widget):
@@ -792,7 +792,7 @@ class indicator_weather(threading.Thread):
             self.menu.append(self.quit_menu)
 
             self.winder.set_icon("ubuntuone-client-error")
-            if (self.winder.set_label != None):
+            if (hasattr(self.winder, 'set_label')):
                 self.winder.set_label("")
             self.winder.set_menu(self.menu)
 
@@ -819,7 +819,7 @@ class indicator_weather(threading.Thread):
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
-        if (self.winder.set_label != None):
+        if (hasattr(self.winder, 'set_label')):
             self.winder.set_label(weather.getPureTemperature())
         
         if self.notif != 'N' and weather.isSevereCondition():
@@ -836,8 +836,6 @@ class indicator_weather(threading.Thread):
         dialog.response(response)
             
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
-        if ((len(city[0]) == 1) or (city[0] == "Enter Location")):
-            return ""
         self.current_location = Location(self.metric_system, self._wind_unit)
         if (self.current_location.find_city_by_code(city[0]) == False):
             print "location with code %s not found" % city[0]    

@@ -1,4 +1,4 @@
-indicator-weather (11.01.16+bzr152-rc4~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr153-rc4~natty1) natty; urgency=low
 
   * Release Candidate 4
   * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
