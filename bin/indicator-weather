@@ -443,9 +443,9 @@ class Weather:
         self.__get_weather_conditions = self.__report.getWeather()
         self.__get_conditions = self.__report.getConditions()
         self.__get_sky_conditions = self.__report.getSkyConditions()
-        print "getWeather: '%s'" % self.__get_weather_conditions
-        print "getConditions: "   , self.__get_conditions
-        print "getSkyConditions: ", self.__get_sky_conditions
+        log.debug("Weather: getWeather: '%s'" % str(self.__get_weather_conditions))
+        log.debug("Weather: getConditions: '%s'" % str(self.__get_conditions))
+        log.debug("Weather: getSkyConditions: '%s'" % str(self.__get_sky_conditions))
         if ((self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None)):
             self.__current_condition = self._WeatherConditions.get(self.__report.getWeather().lower())
         elif ((self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None)):
@@ -453,14 +453,14 @@ class Weather:
         elif ((self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None)):
             self.__current_condition = self._WeatherConditions.get(self.__report.getSkyConditions().lower())
 
-        print "condition:", self.__current_condition
+        log.debug("Weather: current condition: '%s'" % str(self.__current_condition))
 
         #formatting sun data
         now = datetime.datetime.now().time()
-        #FIXME: this is ugly
+        log.debug("Weather: got sunrise '%s', sunset '%s'" % (self.__sun[0], self.__sun[1]))
         self.__sunrise = self.__sun[0]
-        print "Sunrise time " + self.__sun[0]
         self.__sunset = self.__sun[1]
+        #FIXME: this is ugly
         self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
         self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
         if now<self.__sunrise_t or now>self.__sunset_t:
@@ -476,16 +476,18 @@ class Weather:
 
     def isSevereCondition(self):
         if self.__current_condition != None:
+            log.debug("Weather: got severe condition '%s'" % self.__current_condition[2])
             return self.__current_condition[2]
         else:
-            print "BUG: Severe condition is empty!"
+            log.error("Weather: got empty severe condition")
             return False;
 
     def getPureCondition(self):
         if self.__current_condition != None:
+            log.debug("Weather: got condition '%s'" % self.__current_condition[0])
             return self.__current_condition[0]
         else:
-            print "BUG: Condition name is empty!"
+            log.error("Weather: got empty condition")
             return "BUG: Condition name is empty!";
 
     def getCondition(self):
@@ -497,11 +499,13 @@ class Weather:
     def getPixmap(self):
         if self.__current_condition != None:
             if self.isNight:
+                log.error("Weather: night, show '%s' icon" % self._Night_Icons.get(self.__current_condition[1]))
                 return self._Night_Icons.get(self.__current_condition[1])
             else:
+                log.error("Weather: day, show '%s' icon" % self.__current_condition[1])
                 return self.__current_condition[1]
         else:
-            print "BUG: Cannot get icon for weather condition"
+            log.error("Weather: return 'offline' icon due to empty condition")
             return "ubuntuone-client-offline"
 
     def getHumidity(self):
@@ -582,9 +586,8 @@ class Weather:
 class indicator_weather(threading.Thread):
     
     def __init__(self):
+        log.debug("Indicator: creating")
         threading.Thread.__init__(self)
-
-    def __init__(self):
         self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("ubuntuone-client-error")
@@ -596,6 +599,9 @@ class indicator_weather(threading.Thread):
         self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
         self.places = gconfClient.get_string("/apps/indicator-weather/places")
 
+        log.debug("Preferences: got settings: rate=%s, unit=%s, notif=%s, wind=%s, placechosen=%s, places=%s" %
+                (self.rate, self.unit, self.notif, self.wind, self.placechosen, self.places))
+
         #Setting default values
         self.metric_system = MetricSystem.SI
         self._wind_unit = WindUnits.MPH
@@ -603,12 +609,15 @@ class indicator_weather(threading.Thread):
         self.menu = None
         
         if self.placechosen in (False, None):
+            log.debug("Indicator: could not parse placechosen, setting to 0")
             gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
             self.placechosen = 0
         
         if self.unit in (False, None):
+            log.debug("Indicator: could not parse unit, setting to S")
             gconfClient.set_string("/apps/indicator-weather/unit", 'S')
             self.unit = 'S'
+            self.metric_system = MetricSystem.SI
         else:
             if (self.unit == 'S'):
                 self.metric_system = MetricSystem.SI
@@ -616,10 +625,12 @@ class indicator_weather(threading.Thread):
                 self.metric_system = MetricSystem.IMPERIAL
             
         if self.notif in (False, None):
+            log.debug("Indicator: could not parse notif, setting to N")
             gconfClient.set_string("/apps/indicator-weather/notif", 'N')
             self.notif = 'N'
         
         if self.wind in (False, None):
+            log.debug("Indicator: could not parse notif, setting to mph")
             gconfClient.set_string("/apps/indicator-weather/wind", 'mph')
             self._wind_unit = WindUnits.MPH
         else:
@@ -633,10 +644,12 @@ class indicator_weather(threading.Thread):
             #    self._wind_unit = WindUnits.KNOTS
             
         if self.rate in (False, None):
+            log.debug("Indicator: could not parse rate, setting to 15")
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", 15)
             self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
             
         if self.places in (False, None, '', '[]', "['']",):
+            log.debug("Indicator: could not parse places")
             self.menu_noplace()
         else:
             self.places = eval(self.places)
@@ -646,6 +659,7 @@ class indicator_weather(threading.Thread):
             self.winder.set_menu(self.menu)
             
     def menu_noplace(self):
+        log.debug("Indicator: making a menu for no places")
         menu_noplace = gtk.Menu()
         setup = gtk.MenuItem(_("Set Up Weather..."))
         setup.connect("activate", self.prefs)
@@ -660,6 +674,7 @@ class indicator_weather(threading.Thread):
         self.winder.set_menu(menu_noplace)
     
     def menu_normal(self):
+        log.debug("Indicator: menu_normal: filling in a menu for found places")
         self.menu = gtk.Menu()
             
     ##City
@@ -716,7 +731,8 @@ class indicator_weather(threading.Thread):
             breaker = gtk.SeparatorMenuItem()
             breaker.show()
             self.menu.append(breaker)
-            
+
+            log.debug("Indicator: menu_normal: adding first location menu item '%s'" % self.places[0][1])
             loco1 = gtk.RadioMenuItem(None, self.places[0][1])
             if self.placechosen == 0:
                 loco1.set_active(True)
@@ -724,6 +740,7 @@ class indicator_weather(threading.Thread):
             loco1.show()
             self.menu.append(loco1)
             for place in self.places[1:]:
+                log.debug("Indicator: menu_normal: adding location menu item '%s'" % place[1])
                 loco = gtk.RadioMenuItem(loco1, place[1])
                 if self.places.index(place) == self.placechosen:
                     loco.set_active(True)
@@ -760,20 +777,24 @@ class indicator_weather(threading.Thread):
 
         self.winder.set_menu(self.menu)
         if (hasattr(self.winder, 'set_label')):
+            log.debug("Indicator: menu_normal: setting label to empty value")
             self.winder.set_label("")
         
     def on_city_changed(self,widget):
         if widget.get_active():
             for place in self.places:
                 if (place[1] == widget.get_label()):
+                    log.debug("Indicator: new location selected: %s" % self.places.index(place))
                     self.placechosen = self.places.index(place)
                     break
             gconfClient.set_int("/apps/indicator-weather/placechosen", self.placechosen)
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
+        log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
+            log.debug("Indicator: updateWeather: could not get weather")
             for item in self.menu.get_children()[0:len(self.menu.get_children())]:
                 item.destroy()
 
@@ -798,20 +819,21 @@ class indicator_weather(threading.Thread):
                 self.winder.set_label("")
             self.winder.set_menu(self.menu)
 
+            log.debug("Indicator: updateWeather: setting rate to one minute")
             self.rateid = gobject.timeout_add(60000, self.update_weather)
             return
 		
         self.condition = weather.getPureCondition()
         self.icon = weather.getPixmap()
+        log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         if (self.icon == False):
 			self.winder.set_icon("ubuntuone-client-error")
         else:
         	self.winder.set_icon(self.icon)
         
-        print 'Update :',weather.getPureCondition(),'(every',self.rate,'min. for',self.places[self.placechosen][1]+')'
-
         #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
 
+        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
@@ -822,29 +844,35 @@ class indicator_weather(threading.Thread):
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
         if (hasattr(self.winder, 'set_label')):
+            log.debug("Indicator: updateWeather: setting label to %s" % weather.getPureTemperature())  
             self.winder.set_label(weather.getPureTemperature())
-        
-        if self.notif != 'N' and weather.isSevereCondition():
-	        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
-	            self.notify(self.condition, self.icon)
-            #FIXME: Fix notitfications on severe events
-            #elif current in ('thunderstorm', 'chance_of_tstorm') and self.notif == 'O':
-	        #    self.notify(self.condition, self.icon, severe=True)
-	            
+
+        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
+            log.debug("Indicator: updateWeather: weather has changed, notify")
+            self.notify(self.condition, self.icon)
+        if self.notif == 'S' and weather.isSevereCondition():
+            log.debug("Indicator: updateWeather: severe condition notification")
+            self.notify(self.condition, self.icon, severe=True)
+
         gconfClient.set_string("/apps/indicator-weather/current",self.condition)
+        log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
-                
+
     def responseToDialog(self, entry, dialog, response):
+        #FIXME: Do we need this?
+        log.debug("Indicator: response to dialog")  
         dialog.response(response)
-            
+
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
+        log.debug("Indicator: getWeather: extended = %s" % extended)  
         self.current_location = Location(self.metric_system, self._wind_unit)
         if (self.current_location.find_city_by_code(city[0]) == False):
-            print "location with code %s not found" % city[0]    
+            log.error("Indicator: getWeather: location with code %s not found" % city[0])  
         if extended == False:
+            log.debug("Indicator: getWeather: updating weather report")  
             self.current_location.update_weather_data()
             if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
-                print "report is empty";
+                log.debug("Indicator: getWeather: report is empty")  
                 return None;
             else:
                 return self.current_location.weather
@@ -857,14 +885,17 @@ class indicator_weather(threading.Thread):
             self.conditions = self.current_location.get_forecast_conditions()
         
     def prefs(self, widget):
+        log.debug("Indicator: open Preferences")  
         self.prefswindow = PreferencesDialog()
         self.prefswindow.show()
         
     def extforecast(self, widget):
+        log.debug("Indicator: open Forecast")  
         forecastwd = ExtendedForecast()
         forecastwd.show()
         
     def notify(self,conditon,icon,severe=False):
+        log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, condition, icon))  
         if severe:
 			n = pynotify.Notification (_("Severe weather alert"),
                 self.condition,
@@ -874,6 +905,7 @@ class indicator_weather(threading.Thread):
         n.show ()
 
     def quit(self, widget, data=None):
+        log.debug("Indicator: Quitting")  
         gtk.main_quit()
 
 class PreferencesDialog(gtk.Dialog):
@@ -928,7 +960,7 @@ class PreferencesDialog(gtk.Dialog):
     def on_remove_location(self, widget):
         selection = self.builder.get_object('displaylist').get_selection()
         model, iter = selection.get_selected()
-        log.debug("Preferences: Removing location %s (code %s)" % (model[iter][1], model[iter][0]))
+        log.debug("Preferences: Removing location %s (code %s)" % (model[iter][0], model[iter][1]))
         if iter != None:
             model.remove(iter)
 
