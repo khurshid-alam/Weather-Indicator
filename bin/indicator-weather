@@ -895,7 +895,7 @@ class indicator_weather(threading.Thread):
         forecastwd.show()
         
     def notify(self,conditon,icon,severe=False):
-        log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, condition, icon))  
+        log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, self.condition, icon))  
         if severe:
 			n = pynotify.Notification (_("Severe weather alert"),
                 self.condition,

@@ -6,8 +6,6 @@ def add_info(report, ui=None):
         report['ThirdParty'] = 'True'
         report['CrashDB'] = 'indicator_weather'
     report['settings'] = command_output(['gconftool-2', '-R', '/apps/indicator-weather'])
-
-    #FIXME: attach log here
     log_filename = os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.log")
     if os.path.exists(log_filename):
         report['IndicatorLog'] = open(log_filename).read()
