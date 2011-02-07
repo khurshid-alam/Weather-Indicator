@@ -1,4 +1,12 @@
-indicator-weather (11.01.16+bzr153-rc4~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr158-rc4~natty1) natty; urgency=low
+
+  * Release Candidate 5
+  * Implemented logging
+  * Final fix for labels crash in Lucid
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 07 Feb 2011 12:06:03 +0200
+
+indicator-weather (11.01.16+bzr152-rc4~natty1) natty; urgency=low
 
   * Release Candidate 4
   * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
