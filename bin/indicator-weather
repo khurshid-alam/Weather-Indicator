@@ -34,6 +34,8 @@ import time
 import math
 import commands
 import threading
+import logging
+import logging.handlers
 
 import gettext
 from gettext import gettext as _
@@ -1149,6 +1151,7 @@ class Assistant(gtk.Assistant):
     __gtype_name__ = "Assistant"
     
     def __new__(cls):
+        log.debug("Assistant: creating new Assistance instance")
         builder = get_builder('Assistant')
         new_object = builder.get_object("assistant")
         new_object.finish_initializing(builder)  
@@ -1156,6 +1159,7 @@ class Assistant(gtk.Assistant):
 
     # Generate a treeview model for gweather data
     def generate_treeview(self):
+        log.debug("Assistant: generating treeview")
         #FIXME: Move this to WI object
         self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
         node = gweather.location_new_world(True)
@@ -1169,18 +1173,14 @@ class Assistant(gtk.Assistant):
             for i in children:
                 timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
                 is_city = i.get_level() is gweather.LOCATION_CITY
+                #Unless it is a weather station or a country without children, iterate through children
                 if (i.get_level() is gweather.LOCATION_WEATHER_STATION) or (len(i.get_children())>0):
                     node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
-                    # Iterate through children
                     self.parse_gweather_locations(i, node_iter)
-
-        #elif (node.get_level() is gweather.LOCATION_COUNTRY) and (len(node.get_children())>0):
-        #    for i in node.get_timezones():
-        #        if (i.get_name() is not None):
-        #            self.__all_locations_store.append(parent, (i.get_name(), i.get_tzid(), False, None))
 
     # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):
+        log.debug("Assistant: finishing initialization")
         self.builder = builder
         self.builder.connect_signals(self)
         self.assistant = self.builder.get_object("assistant")
@@ -1188,6 +1188,7 @@ class Assistant(gtk.Assistant):
         self.assistant.set_page_complete(self.builder.get_object("review"),True)
         self.assistant.set_page_complete(self.builder.get_object("confirmplace"),True)
         # Fill in tree
+        log.debug("Assistant: setting up treeview")
         self.__all_locations_view = self.builder.get_object("treeview-locations")
         column = gtk.TreeViewColumn("Location", gtk.CellRendererText(), text=0)
         column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
@@ -1208,7 +1209,10 @@ class Assistant(gtk.Assistant):
         self.assistant.set_page_complete(self.builder.get_object("placeinput"),False)
         if selection.count_selected_rows() != 0:
             select_iter = selection.get_selected()[1]
+            log.debug("Assistant: Page 0: Tree: selected '%s', code %s" %
+                    (self.__all_locations_store[select_iter][0], self.__all_locations_store[select_iter][3]))
             if self.is_location_and_leaf_node(select_iter):
+                log.debug("Assistant: Page 0: Enabling 'Next' button")
                 self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
 
     #Check, that selected row is a leaf and enable "next" button    
@@ -1219,36 +1223,41 @@ class Assistant(gtk.Assistant):
 
     # Create a location out of a tree
     def get_city(self,current_page):
+        log.debug("Assistant: moved to page %s" % current_page)
         if self.assistant.get_current_page() == 1:
             select_iter = self.__all_locations_selection.get_selected()[1]
             city_iter = self.__all_locations_store[select_iter]
             self.city_code = city_iter[3]
+            log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.city_code))
             self.location = Location(wi.metric_system, wi._wind_unit)
             self.location.find_city_by_code(self.city_code)
             if self.location.found:
-                print "city was found " + self.location.get_full_city_name()
+                log.debug("Assistant: Page %s: City %s found, full name - %s" %
+                        (current_page, self.location.get_short_city_name(), self.location.get_full_city_name()))
                 self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
                 self.builder.get_object("entrylbl").set_text(self.location.get_short_city_name())
             else:
-                print "BUG: city with code '%s' not found" % self.city_code 
+                log.error("Assistant: Page %s: City with code %s was NOT found" % (current_page, self.city_code))
         elif self.assistant.get_current_page() == 2:
             lbl = self.builder.get_object("entrylbl").get_text()
+            log.debug("Assistant: Page %s: City label is %s" % (current_page, lbl))
             if lbl == '':
-                self.location.set_label(self.location.get_full_city_name())
-                self.builder.get_object("lbl3").set_label('')
-            else:
-                self.location.set_label(self.builder.get_object("entrylbl").get_text())
-                self.builder.get_object("lbl3").set_label('Label:')
-
+                log.debug("Assistant: Page %s: Empty label found, setting lbl to short name - %s label is %s" %
+                    (current_page, self.location.get_short_city_name()))
+                lbl = self.location.get_short_city_name()
+            self.location.set_label(lbl)
+            self.builder.get_object("lbl3").set_label('Label:')
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % self.location.label)
             self.builder.get_object("placelbl").set_label('<b>'+self.location.get_full_city_name()+'</b>')
             
         return self.assistant.get_current_page() + 1
             
     def on_cancel(self,widget):
+        log.debug("Assistant: Cancelled")
         self.destroy()
         
     def on_apply(self,widget):
+        log.debug("Assistant: Apply: adding location ('%s', '%s')" % (self.location.label, self.location.code))
         newplace = list()
         newplace.append(self.location.label)
         newplace.append(self.location.code)
@@ -1261,42 +1270,33 @@ class singleinstance(object):
     singleinstance - based on Windows version by Dragan Jovelic this is a Linux
                      version that accomplishes the same task: make sure that
                      only a single instance of an application is running.
-
     '''
-                        
     def __init__(self, pidPath):
         '''
         pidPath - full path/filename where pid for running application is to be
                   stored.  Often this is ./var/<pgmname>.pid
         '''
         self.pidPath=pidPath
-        #
         # See if pidFile exists
-        #
         if os.path.exists(pidPath):
-            #
+            log.debug("SingleInstance: pid file %s exists" % pidPath)
             # Make sure it is not a "stale" pidFile
-            #
             pid=open(pidPath, 'r').read().strip()
-            #
             # Check list of running pids, if not running it is stale so
             # overwrite
-            #
             pidRunning=commands.getoutput('ls /proc | grep %s' % pid)
+            log.debug("SingleInstance: pid running %s" % piRunning)
             if pidRunning:
                 self.lasterror=True
-
             else:
                 self.lasterror=False
-
         else:
             self.lasterror=False
 
         if not self.lasterror:
-            #
+            log.debug("SingleInstance: writing new pid %s" % str(os.getpid()))
             # Write my pid into pidFile to keep multiple copies of program from
             # running.
-            #
             fp=open(pidPath, 'w')
             fp.write(str(os.getpid()))
             fp.close()
@@ -1306,6 +1306,7 @@ class singleinstance(object):
 
     def __del__(self):
         if not self.lasterror:
+            log.debug("SingleInstance: deleting %s" % self.pidPath)
             os.unlink(self.pidPath)
 
 def main():
@@ -1313,19 +1314,26 @@ def main():
     return 0
 
 if __name__ == "__main__":
-    #
-    # do this at beginnig of your application
-    #
+    #Enable and configure logs
+    log_filename = os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.log")
+    log = logging.getLogger('IndicatorWeather')
+    log.setLevel(logging.DEBUG)
+    log_handler = logging.handlers.RotatingFileHandler(log_filename, maxBytes=1024*1024, backupCount=5)
+    log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    log_handler.setFormatter(log_formatter)
+    log.addHandler(log_handler)
+
+    log.info("------------------------------")
+    log.info("Started Weather Indicator from %s" % PROJECT_ROOT_DIRECTORY)
+
+    # Single instance stuff for weather indicator
     myapp = singleinstance("/tmp/weather-indicator.pid")
-    #
     # check is another instance of same program running
-    #
     if myapp.alreadyrunning():
+        log.info("Another instance of this program is already running")
         sys.exit(_("Another instance of this program is already running"))
         
-    #
     # not running, safe to continue...
-    #
     gtk.gdk.threads_init()
     gtk.gdk.threads_enter()
     wi = indicator_weather()
