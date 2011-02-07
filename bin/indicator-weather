@@ -879,13 +879,18 @@ class indicator_weather(threading.Thread):
 class PreferencesDialog(gtk.Dialog):
     __gtype_name__ = "PreferencesDialog"
     def __new__(cls):
+        log.debug("Preferences: creating")
         builder = get_builder('PreferencesDialog')
         new_object = builder.get_object("preferences_dialog")
         new_object.finish_initializing(builder)
         return new_object
 
     def finish_initializing(self, builder):
+        log.debug("Preferences: finishing initialization")
+        log.debug("Preferences: got settings: unit=%s, notif=%s, wind=%s, rate=%s" %
+                (wi.unit, wi.notif, wi.wind, wi.rate))
         self.builder = builder
+        #Refactor this
         if wi.unit == 'S':
             self.builder.get_object('si').set_active(True)
         elif wi.unit == 'I':
@@ -896,7 +901,6 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('notifsevere').set_active(True)
         else:
             self.builder.get_object('notifall').set_active(True)            
-        
         if wi.wind == 'mps':
             self.builder.get_object('mps').set_active(True)
         elif wi.wind == 'mph':
@@ -907,8 +911,11 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('beaufort').set_active(True)
         
         self.builder.get_object('rate').set_value(wi.rate)
+
+        log.debug("Preferences: Loading places")
         if wi.places != None:
             for place in wi.places:
+                log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
                 newplace = list()
                 newplace.append(place[1])
                 newplace.append(place[0])
@@ -921,6 +928,7 @@ class PreferencesDialog(gtk.Dialog):
     def on_remove_location(self, widget):
         selection = self.builder.get_object('displaylist').get_selection()
         model, iter = selection.get_selected()
+        log.debug("Preferences: Removing location %s (code %s)" % (model[iter][1], model[iter][0]))
         if iter != None:
             model.remove(iter)
 
@@ -928,6 +936,7 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('button1').set_sensitive(False)
 
     def on_add_location(self, widget):
+        log.debug("Preferences: Add location clicked")
         self.assistant = Assistant()
         self.assistant.show()
        
@@ -944,6 +953,7 @@ class PreferencesDialog(gtk.Dialog):
 
         Called before the dialog returns gtk.RESONSE_OK from run().
         """
+        log.debug("Preferences: Saving settings")
         needupdate = False
         # Metric System
         metric_systems = [('si',       "S", MetricSystem.SI),
@@ -959,7 +969,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.metric_system = new_metric_system
             gconfClient.set_string("/apps/indicator-weather/unit", wi.unit)
             needupdate = True
-            print 'Unit changed :', wi.unit
+            log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
         # Wind Units
         wind_systems = [('mps',      "mps",      WindUnits.MPS),
@@ -977,7 +987,7 @@ class PreferencesDialog(gtk.Dialog):
             wi._wind_unit = new_wind_system
             gconfClient.set_string("/apps/indicator-weather/wind", wi.wind)
             needupdate = True
-            print 'Wind Unit changed :', wi.wind
+            log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
 
         # Notifications
         notifications = [('nonotif',     "N"),
@@ -991,7 +1001,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.notif = new_notification
             gconfClient.set_string("/apps/indicator-weather/notif", wi.notif)
             needupdate = True
-            print 'Notifications changed :', wi.notif
+            log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
 
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
@@ -999,7 +1009,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.rate = int(self.builder.get_object('rate').get_value())
             gobject.source_remove(wi.rateid)
             wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
-            print 'Rate changed :',wi.rate
+            log.debug("Preferences: Rate changed to '%s'" % wi.rate)
             
         ##places
         newplaces = list()
@@ -1012,38 +1022,21 @@ class PreferencesDialog(gtk.Dialog):
             item = self.builder.get_object('citieslist').iter_next(item)
         if newplaces != wi.places:
             wi.places = newplaces
-            if len(wi.places) >= 1:
-                gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
-                if (type(wi.place) != None) and (wi.place in wi.places):
-                    wi.placechosen = wi.places.index(wi.place)
-                else:
-                    wi.placechosen = 0
-                gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
-                wi.menu_normal()
-                wi.winder.set_menu(wi.menu)
-                needupdate = True
+            log.debug("Preferences: Places changed to '%s'" % str(wi.places))
+            gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+            if (type(wi.place) != None) and (wi.place in wi.places):
+                wi.placechosen = wi.places.index(wi.place)
             else:
                 wi.placechosen = 0
-                gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
-                gconfClient.set_string("/apps/indicator-weather/places", str([wi.places]))
-                wi.winder.set_icon("weather-clear")
-                wi.menu_noplace()
-                needupdate = False
-            
-        ##Wind
-        #for button in self.builder.get_object('m/s').get_group():
-            #if button.get_active() == True and button.get_label() != wi.windunit:
-                #gconfClient.set_string("/apps/indicator-weather/wind", button.get_label())
-                #wi.windunit = button.get_label()
-                #needupdate = True
-                #print 'Wind changed :', wi.windunit
+            log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
+            gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
+            wi.menu_normal()
+            wi.winder.set_menu(wi.menu)
+            needupdate = True
         
         if needupdate:
             wi.update_weather(False)
         
-        # Make any updates to self._preferences here. e.g.
-        #self._preferences["preference1"] = "value2"
-        #self._save_preferences()
         self.destroy()
 
     def cancel(self, widget, data=None):
@@ -1052,6 +1045,7 @@ class PreferencesDialog(gtk.Dialog):
         Called before the dialog returns gtk.RESPONSE_CANCEL for run()
         """
         # Restore any changes to self._preferences here.
+        log.debug("Preferences: Cancelling")
         self.destroy()
         
 class ExtendedForecast(gtk.Window):
@@ -1068,7 +1062,7 @@ class ExtendedForecast(gtk.Window):
         self.builder = builder
         self.builder.connect_signals(self)
 
-        log.debug("ExtendedForecast: chosen place: %s" % wi.places[wi.placechosen][1])
+        log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         log.debug("ExtendedForecast: getting forecast data")
         wi.get_weather(wi.places[wi.placechosen],False,True)
