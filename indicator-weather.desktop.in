@@ -1,7 +1,6 @@
 [Desktop Entry]
 _Name=Weather Indicator
-_Comment=A weather indicator that displays information for one or multiple places
- in the world
+_Comment=A weather indicator that displays information for one or multiple places in the world
 GenericName=Weather Indicator
 Categories=GNOME;
 Exec=indicator-weather
