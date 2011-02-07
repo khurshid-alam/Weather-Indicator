@@ -1,10 +1,11 @@
-indicator-weather (11.01.16+bzr158-rc5~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr162-rc5~natty1) natty; urgency=low
 
   * Release Candidate 5
   * Implemented logging
   * Final fix for labels crash in Lucid
+  * Fix for LP: #714625	"indicator-weather crashed with NameError in notify(): global name 'condition' is not defined"
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 07 Feb 2011 12:06:03 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 07 Feb 2011 16:58:21 +0200
 
 indicator-weather (11.01.16+bzr152-rc4~natty1) natty; urgency=low
 
