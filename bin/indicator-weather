@@ -289,7 +289,8 @@ class WindUnits:
     MPS = 1
     MPH = 2
     BEAUFORT = 3
-    #KNOTS = 4
+    KPH = 4
+    #KNOTS = 5
 
 class Weather:
     """
@@ -556,13 +557,16 @@ class Weather:
     def getWindSpeed(self):
         if (self.__wind_unit == WindUnits.MPS):
             _value = self.__report.getWindSpeed()
-            _unit  = _("mps")
+            _unit  = _("m/s")
         if (self.__wind_unit == WindUnits.MPH):
             _value = self.__report.getWindSpeedMilesPerHour()
             _unit  = _("mph")
         if (self.__wind_unit == WindUnits.BEAUFORT):
             _value = self.__report.getWindSpeedBeaufort()
             _unit  = ""
+        if (self.__wind_unit == WindUnits.KPH):
+            _value = self.__report.getWindSpeed() * 3.6
+            _unit  = _("km/h")
         #if (self.__wind_unit == WindUnits.KNOTS):
         #    _value = self.__report.getWindSpeedKnots()
         #    _unit  = _("knot(s)")
@@ -641,6 +645,8 @@ class indicator_weather(threading.Thread):
                 self._wind_unit = WindUnits.MPS
             elif (self.wind == 'beaufort'):
                 self._wind_unit = WindUnits.BEAUFORT
+            elif (self.wind == 'kph'):
+                self._wind_unit = WindUnits.KPH
             #elif (self.wind == 'knots'):
             #    self._wind_unit = WindUnits.KNOTS
             
@@ -938,6 +944,8 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('mps').set_active(True)
         elif wi.wind == 'mph':
             self.builder.get_object('mph').set_active(True)
+        elif wi.wind == 'kph':
+            self.builder.get_object('kph').set_active(True)
         #elif wi.wind == 'knots':
         #    self.builder.get_object('knots').set_active(True)
         else:
@@ -1007,6 +1015,7 @@ class PreferencesDialog(gtk.Dialog):
         # Wind Units
         wind_systems = [('mps',      "mps",      WindUnits.MPS),
                         ('mph',      "mph",      WindUnits.MPH),
+                        ('kph',      "kph",      WindUnits.KPH),
                         ('beaufort', "beaufort", WindUnits.BEAUFORT)]
                         #('knots',    "knots",    WindUnits.KNOTS)]
 
