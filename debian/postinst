@@ -3,4 +3,5 @@
 #DEBHELPER#
 
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon.png weather-indicator
-xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_inactive.png weather-indicator-error
+xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_unknown_condition.png weather-indicator-unknown
+xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_connection_error.png weather-indicator-error

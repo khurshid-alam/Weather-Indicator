@@ -1,9 +1,11 @@
-indicator-weather (11.01.16+bzr164-rc6~natty1) natty; urgency=low
+indicator-weather (11.01.16+bzr167-rc6~natty1) natty; urgency=low
 
   * Release Candidate 6
   * Fixed a typo in log messages
   * Fix for LP: #714714 "error icon is misleading" - created a new error icon
   * Fix for LP: #715660 "Some unit labels are not clear without ambiguity"
+  * Removed "BUG:" from condition names
+  * Updated indicator-specific icons from Lucas
   * Updated translations
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 09 Feb 2011 10:44:42 +0200

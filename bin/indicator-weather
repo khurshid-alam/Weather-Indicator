@@ -489,7 +489,7 @@ class Weather:
             return self.__current_condition[0]
         else:
             log.error("Weather: got empty condition")
-            return "BUG: Condition name is empty!";
+            return "Condition name is empty!";
 
     def getCondition(self):
         return "%s: %s" % (_("Condition"), self.getPureCondition())
@@ -507,7 +507,7 @@ class Weather:
                 return self.__current_condition[1]
         else:
             log.error("Weather: return 'offline' icon due to empty condition")
-            return "weather-indicator-error"
+            return "weather-indicator-unknown"
 
     def getHumidity(self):
         return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
@@ -834,7 +834,7 @@ class indicator_weather(threading.Thread):
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         if (self.icon == False):
-			self.winder.set_icon("weather-indicator-error")
+          self.winder.set_icon("weather-indicator-unknown")
         else:
         	self.winder.set_icon(self.icon)
         
