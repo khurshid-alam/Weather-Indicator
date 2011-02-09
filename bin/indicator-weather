@@ -17,7 +17,7 @@
 ### END LICENSE
 
 import sys
-import os
+import oss
 import gtk
 import pygtk
 pygtk.require('2.0')
@@ -464,7 +464,7 @@ class Weather:
         if now<self.__sunrise_t or now>self.__sunset_t:
             self.__night = True
         else:
-			self.__night = False
+            self.__night = False
     
     def isNight(self):
         return self.__night
