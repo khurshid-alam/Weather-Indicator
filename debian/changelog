@@ -1,3 +1,11 @@
+indicator-weather (11.01.16+bzr163-rc6~natty1) natty; urgency=low
+
+  * Release Candidate 6
+  * Fixed a typo in log messages
+  * Created a new error icon, using it now instead of ubuntuone-error-icon
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 09 Feb 2011 10:44:42 +0200
+
 indicator-weather (11.01.16+bzr162-rc5~natty1) natty; urgency=low
 
   * Release Candidate 5

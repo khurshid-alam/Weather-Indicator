@@ -1,0 +1,6 @@
+#!/bin/sh
+	
+#DEBHELPER#
+
+xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon.png weather-indicator
+xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_inactive.png weather-indicator-error

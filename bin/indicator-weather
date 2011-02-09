@@ -506,7 +506,7 @@ class Weather:
                 return self.__current_condition[1]
         else:
             log.error("Weather: return 'offline' icon due to empty condition")
-            return "ubuntuone-client-offline"
+            return "weather-indicator-error"
 
     def getHumidity(self):
         return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
@@ -588,9 +588,10 @@ class indicator_weather(threading.Thread):
     def __init__(self):
         log.debug("Indicator: creating")
         threading.Thread.__init__(self)
-        self.winder = appindicator.Indicator ("indicator-weather", "weather-clear", appindicator.CATEGORY_OTHER)
+        self.main_icon = os.path.join
+        self.winder = appindicator.Indicator ("indicator-weather", "weather-indicator", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
-        self.winder.set_attention_icon ("ubuntuone-client-error")
+        self.winder.set_attention_icon ("weather-indicator-error")
         
         self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
         self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
@@ -814,7 +815,7 @@ class indicator_weather(threading.Thread):
             self.quit_menu.show()
             self.menu.append(self.quit_menu)
 
-            self.winder.set_icon("ubuntuone-client-error")
+            self.winder.set_icon("weather-indicator-error")
             if (hasattr(self.winder, 'set_label')):
                 self.winder.set_label("")
             self.winder.set_menu(self.menu)
@@ -827,7 +828,7 @@ class indicator_weather(threading.Thread):
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         if (self.icon == False):
-			self.winder.set_icon("ubuntuone-client-error")
+			self.winder.set_icon("weather-indicator-error")
         else:
         	self.winder.set_icon(self.icon)
         
@@ -1320,7 +1321,7 @@ class singleinstance(object):
             # Check list of running pids, if not running it is stale so
             # overwrite
             pidRunning=commands.getoutput('ls /proc | grep %s' % pid)
-            log.debug("SingleInstance: pid running %s" % piRunning)
+            log.debug("SingleInstance: pid running %s" % pidRunning)
             if pidRunning:
                 self.lasterror=True
             else:
