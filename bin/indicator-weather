@@ -17,7 +17,7 @@
 ### END LICENSE
 
 import sys
-import oss
+import os
 import gtk
 import pygtk
 pygtk.require('2.0')
@@ -613,7 +613,7 @@ class indicator_weather(threading.Thread):
         self.place = None
         self.menu = None
         
-        if self.placechosen in (False, None):
+        if self.placechosen in (False, None) or self.placechosen >= len(eval(self.places)):
             log.debug("Indicator: could not parse placechosen, setting to 0")
             gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
             self.placechosen = 0
@@ -660,10 +660,20 @@ class indicator_weather(threading.Thread):
             self.menu_noplace()
         else:
             self.places = eval(self.places)
-            self.menu_normal()
-            self.place = self.places[self.placechosen]
-            self.update_weather()
-            self.winder.set_menu(self.menu)
+            #Check, that each place is a code - length is 4
+            places_correct = True
+            for place in self.places:
+                if len(place[0]) != 4:
+                    log.debug("Indicator: incorrect place code found: %s" % place)
+                    places_correct = False
+            if places_correct == False:
+                self.places = None
+                self.menu_noplace()
+            else:
+                self.menu_normal()
+                self.place = self.places[self.placechosen]
+                self.update_weather()
+                self.winder.set_menu(self.menu)
             
     def menu_noplace(self):
         log.debug("Indicator: making a menu for no places")
