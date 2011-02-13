@@ -1,102 +1,28 @@
-indicator-weather (11.02.13~natty1) natty; urgency=low
+indicator-weather (11.02.13~lucid1) ; urgency=low
 
-  * New Release
-  * Fix for LP: #717907 "Not having a condition name should not be a big deal" - updated error text and icon
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
-
-indicator-weather (11.01.16+bzr170-rc6~natty1) natty; urgency=low
-
-  * Release Candidate 6
-  * Fixed a typo in log messages
-  * Fix for LP: #714714 "error icon is misleading" - created a new error icon
-  * Fix for LP: #715660 "Some unit labels are not clear without ambiguity"
-  * Removed "BUG:" from condition names
-  * Updated indicator-specific icons from Lucas
-  * Updated translations
-  * Added checks for placechosen and places values
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 12 Feb 2011 22:38:13 +0200
-
-indicator-weather (11.01.16+bzr162-rc5~natty1) natty; urgency=low
-
-  * Release Candidate 5
-  * Implemented logging
-  * Final fix for labels crash in Lucid
-  * Fix for LP: #714625	"indicator-weather crashed with NameError in notify(): global name 'condition' is not defined"
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 07 Feb 2011 16:58:21 +0200
-
-indicator-weather (11.01.16+bzr152-rc4~natty1) natty; urgency=low
-
-  * Release Candidate 4
-  * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
+  * Migrate to gweather + pymetar data sources
+  * Added an option to choose wind units
   * Fix for labels crash in Lucid
   * Removed countries without cities from the tree
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 06 Feb 2011 13:03:23 +0200
-
-indicator-weather (11.01.16+bzr149-rc3~natty1) natty; urgency=low
-
-  * Release Candidate 3
   * Updated connection handling
   * Minor fixes for UI in Preferences dialog
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 05 Feb 2011 11:36:22 +0200
-
-indicator-weather (11.01.16+bzr145-rc2~natty1) natty; urgency=low
-
-  * Release Candidate 2 quick fix #2
   * Updated settings store logic
   * Removed knots - caused exceptions, see Bug #712434 in pymetar
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 03 Feb 2011 15:10:26 +0200
-
-indicator-weather (11.01.16+bzr142-rc2~natty1) natty; urgency=low
-
-  * Release Candidate 2 quick fix
-  * Updated icon
+  * Updated icons
   * Fixed error with incorrect permissions for pid file - now using /tmp
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 03 Feb 2011 12:55:49 +0200
-
-indicator-weather (11.01.16+bzr140-rc2~natty1) natty; urgency=low
-
-  * Release Candidate 2
   * Fix for LP: #712359 "'OK' button in Preferences dialog should be disabled, if location list is empty"
   * Fix for LP: #712347 "Synapse launcher shows Preferences window instead of Weather Indicator"
   * Fix for LP: #711891 "cannot go back from "Confirm the place" dialog"
   * Fix for LP: #711889 "Translation issues"
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 03 Feb 2011 12:55:49 +0200
-
-indicator-weather (11.01.16+bzr132-rc1~natty1) natty; urgency=low
-
-  * Release Candidate 1
   * Fix for LP: #670796 "weather indicator does not wake up after suspend"
   * Fix for LP: #617801 "Weather Indicator should show humidex value"
   * Fix for LP: #703561 "Show temperature in icon"
   * Fix for LP: #705673 "Add city dialogs should have city tree"
   * Fix for LP: #710870 "Indicator-weather crashed with AttributeError in get_city(): indicator_weather instance has no attribute '_wind_unit'"
   * Fix for LP: #707681 "Allow only one instance of WI"
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 01 Feb 2011 17:26:25 +0200
-
-indicator-weather (11.01.16+bzr123~natty1) natty; urgency=low
-
+  * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
   * Fix for LP: #706805 "indicator-weather crashed with AttributeError in get_city(): 'Assistant' object has no attribute 'metric_system'"
-  * Added an option to choose wind units
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 24 Jan 2011 23:59:41 +0200
-
-indicator-weather (11.01.16+bzr121~natty1) natty; urgency=low
-
-  * Urgent fix for LP: #706796 "indicator-weather crashed with ImportError in __main__: No module named gtkcrashhandler"
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 24 Jan 2011 08:45:27 +0200
-
-indicator-weather (11.01.16+bzr120~natty1) natty; urgency=low
-
+  * Fix for LP: #706796 "indicator-weather crashed with ImportError in __main__: No module named gtkcrashhandler"
   * Fix for LP: #703681 "Indicator-Weather doesn't recheck for Internet	connectivity"
   * Fix for LP: #703842 "Menus look pale in Ambiance theme"
   * Fix for LP: #703617 "Use icons of ubuntus date indicator"
@@ -105,153 +31,150 @@ indicator-weather (11.01.16+bzr120~natty1) natty; urgency=low
   * Fix for LP: #703819 "Weather indicator confuses time"
   * Fix for LP: #703838 "Weather Indicator should have a Quit menu entry"
   * Fix for LP: #606481 "indicator-weather crashes on startup"
-
- -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 23 Jan 2011 16:09:15 +0200
-
-indicator-weather (11.01.16+bzr111~natty1) natty; urgency=low
-
-  * Migrate to gweather + pymetar data sources
   * Fix for LP: #703730 "indicator-weather doesn't display an icon for some cities"
   * Fix for LP: #703838 "Weather Indicator should have a Quit menu entry"
+  * Fix for LP: #618108 "Label is not shown in the dialogs when specified"
+  * Fix for LP: #604265 "First configuration weather unit setting not saved"
+  * Fix for LP: #717907 "Not having a condition name should not be a big deal" - updated error text and icon
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Fri, 21 Jan 2011 01:25:53 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
 
-indicator-weather (11.01.16~natty1) natty; urgency=low
+indicator-weather (11.01.16~lucid1) ; urgency=low
 
   * Fix for Bug #618108 "Label is not shown in the dialogs when specified"
   * Fix for Bug #604265 "First configuration weather unit setting not saved"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 16 Jan 2011 14:17:27 +0200
 
-indicator-weather (10.07.16) natty; urgency=low
+indicator-weather (10.07.16~lucid1) ; urgency=low
 
   * Bugfix : list index out of range fixed
 
  -- ridem <mehd36@gmail.com>  Sun, 11 Jul 2010 01:11:10 +0200
 
-indicator-weather (10.07.15) natty; urgency=low
+indicator-weather (10.07.15~lucid1) ; urgency=low
 
   * Sunlight-sunset added/night-day icons/ assistant made thanks to
     cullen, but no label support for now
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 21:32:53 +0200
 
-indicator-weather (10.07.14) natty; urgency=low
+indicator-weather (10.07.14~lucid1) ; urgency=low
 
   * Autostart hidden and works, Assistant works, but needs polish now
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 04:06:24 +0200
 
-indicator-weather (10.07.13) natty; urgency=low
+indicator-weather (10.07.13~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:48:49 +0200
 
-indicator-weather (10.07.13) natty; urgency=low
+indicator-weather (10.07.13~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:44:18 +0200
 
-indicator-weather (10.07.13) natty; urgency=low
+indicator-weather (10.07.13~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:36:52 +0200
 
-indicator-weather (10.07.13) natty; urgency=low
+indicator-weather (10.07.13~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:31:03 +0200
 
-indicator-weather (10.07.13) natty; urgency=low
+indicator-weather (10.07.13~lucid1) ; urgency=low
 
   * Autostart, right category, find location in assistant, assistant not
     finished yet
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 02:01:21 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:00:37 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 01:01:59 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:54:23 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:53:35 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:49:41 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:45:09 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:44:28 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:42:08 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:38:48 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:36:36 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:27:40 +0200
 
-indicator-weather (10.07.12) natty; urgency=low
+indicator-weather (10.07.12~lucid1) ; urgency=low
 
   * Work on assistant
 
  -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:26:35 +0200
 
-indicator-weather (10.07.11) natty; urgency=low
+indicator-weather (10.07.11~lucid1) ; urgency=low
 
   * No intrusion for the first run
 
  -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:23:33 +0200
 
-indicator-weather (10.07.10) natty; urgency=low
+indicator-weather (10.07.10~lucid1) ; urgency=low
 
   * Now etended forecast uses chosen unit
   * places addded/edited/removed only after Ok. Nice editing and
