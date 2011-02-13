@@ -489,7 +489,7 @@ class Weather:
             return self.__current_condition[0]
         else:
             log.error("Weather: got empty condition")
-            return "Condition name is empty!";
+            return _("Error retreiving condition");
 
     def getCondition(self):
         return "%s: %s" % (_("Condition"), self.getPureCondition())

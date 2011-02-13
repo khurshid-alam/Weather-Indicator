@@ -1,3 +1,10 @@
+indicator-weather (11.02.13~natty1) natty; urgency=low
+
+  * New Release
+  * Fix for LP: #717907 "Not having a condition name should not be a big deal" - updated error text and icon
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
+
 indicator-weather (11.01.16+bzr170-rc6~natty1) natty; urgency=low
 
   * Release Candidate 6
