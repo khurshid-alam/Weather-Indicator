@@ -36,6 +36,7 @@ import commands
 import threading
 import logging
 import logging.handlers
+import tempfile
 
 import gettext
 from gettext import gettext as _
@@ -1351,11 +1352,18 @@ class singleinstance(object):
 
         if not self.lasterror:
             log.debug("SingleInstance: writing new pid %s" % str(os.getpid()))
-            # Write my pid into pidFile to keep multiple copies of program from
+            # Write my pid into pidPath to keep multiple copies of program from
             # running.
-            fp=open(pidPath, 'w')
-            fp.write(str(os.getpid()))
-            fp.close()
+            temp_handle, temp_path=tempfile.mkstemp()
+            try:
+              os.close(temp_handle)
+              os.rename(temp_path, pidPath)
+              os.unlink(temp_path)
+              fp=open(pidPath, 'w')
+              fp.write(str(os.getpid()))
+              fp.close()
+            except Exception as e:
+              log.error("SingleInstance: exception while renaming '%s' to '%s':\n %s" % (temp_path, pidPath, str(e)))  
 
     def alreadyrunning(self):
         return self.lasterror
