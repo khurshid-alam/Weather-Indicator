@@ -675,7 +675,14 @@ class indicator_weather(threading.Thread):
                 self.place = self.places[self.placechosen]
                 self.update_weather()
                 self.winder.set_menu(self.menu)
-            
+
+    def update_label(self, label):
+      if (hasattr(self.winder, 'set_label')):
+        log.debug("Indicator: update_label: setting label to '%s'" % label)
+        self.winder.set_label(label)
+        self.winder.set_status(appindicator.STATUS_ATTENTION)
+        self.winder.set_status(appindicator.STATUS_ACTIVE)
+
     def menu_noplace(self):
         log.debug("Indicator: making a menu for no places")
         menu_noplace = gtk.Menu()
@@ -794,9 +801,7 @@ class indicator_weather(threading.Thread):
         self.menu.append(quit)
 
         self.winder.set_menu(self.menu)
-        if (hasattr(self.winder, 'set_label')):
-            log.debug("Indicator: menu_normal: setting label to empty value")
-            self.winder.set_label("")
+        self.update_label("")
         
     def on_city_changed(self,widget):
         if widget.get_active():
@@ -833,8 +838,7 @@ class indicator_weather(threading.Thread):
             self.menu.append(self.quit_menu)
 
             self.winder.set_icon("weather-indicator-error")
-            if (hasattr(self.winder, 'set_label')):
-                self.winder.set_label("")
+            self.update_label("")
             self.winder.set_menu(self.menu)
 
             log.debug("Indicator: updateWeather: setting rate to one minute")
@@ -848,8 +852,8 @@ class indicator_weather(threading.Thread):
           self.winder.set_icon("weather-indicator-unknown")
         else:
         	self.winder.set_icon(self.icon)
-        
-        #self.city_table.attach(gtk.Label("City"), 0, 1, 0, 1)
+        self.winder.set_status(appindicator.STATUS_ATTENTION)
+        self.winder.set_status(appindicator.STATUS_ACTIVE)
 
         log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
         self.menu_normal()
@@ -861,9 +865,7 @@ class indicator_weather(threading.Thread):
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
-        if (hasattr(self.winder, 'set_label')):
-            log.debug("Indicator: updateWeather: setting label to %s" % weather.getPureTemperature())  
-            self.winder.set_label(weather.getPureTemperature())
+        self.update_label(weather.getPureTemperature())
 
         if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
             log.debug("Indicator: updateWeather: weather has changed, notify")

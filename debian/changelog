@@ -1,9 +1,11 @@
-indicator-weather (11.02.13+bzr179~natty1) natty; urgency=low
+indicator-weather (11.02.13+bzr180~natty1) natty; urgency=low
 
   * Implemented UI improvements. Thanks, Andrew
   * Fix for LP: #719693 "[regression] Menu item will not show up in GNOME-Menu", thanks Andrew Starr-Bochicchio
   * Fix for LP: #720112 "unsafe tempfile handling"
   * Fix for LP: #719884 "Metric scales labels should include temperature units"
+  * Immideate update of icons
+  * Fix for missing kph setting on UI
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 17 Feb 2011 00:13:01 +0200
 
