@@ -1,9 +1,10 @@
-indicator-weather (11.02.13+bzr176~natty1) natty; urgency=low
+indicator-weather (11.02.13+bzr178~natty1) natty; urgency=low
 
   * Implemented UI improvements. Thanks, Andrew
   * Fix for LP: #719693 "[regression] Menu item will not show up in GNOME-Menu", thanks Andrew Starr-Bochicchio
+  * Fix for LP: #720112 "unsafe tempfile handling"
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 17 Feb 2011 00:07:41 +0200
 
 indicator-weather (11.02.13~natty1) natty; urgency=low
 
