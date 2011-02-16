@@ -1,3 +1,10 @@
+indicator-weather (11.02.13+bzr175~natty1) natty; urgency=low
+
+  * Implemented UI improvements. Thanks, Andrew
+  * Fix for LP: #719693 "[regression] Menu item will not show up in GNOME-Menu", thanks Andrew Starr-Bochicchio
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
+
 indicator-weather (11.02.13~natty1) natty; urgency=low
 
   * Migrate to gweather + pymetar data sources

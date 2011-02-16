@@ -2,7 +2,7 @@
 _Name=Weather Indicator
 _Comment=A weather indicator that displays information for one or multiple places in the world
 GenericName=Weather Indicator
-Categories=GNOME;
+Categories=GNOME;Utility;
 Exec=indicator-weather
 Icon=/usr/share/indicator-weather/media/icon.png
 Terminal=false
