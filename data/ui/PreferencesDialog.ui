@@ -219,7 +219,7 @@
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="ypad">3</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Metric Scale&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Temperature Scale&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
                       <packing>
@@ -237,7 +237,7 @@
                             <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkRadioButton" id="imperial">
-                                <property name="label" translatable="yes">Imperial</property>
+                                <property name="label" translatable="yes">Imperial (°F)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
@@ -252,7 +252,7 @@
                             </child>
                             <child>
                               <object class="GtkRadioButton" id="si">
-                                <property name="label" translatable="yes">SI</property>
+                                <property name="label" translatable="yes">SI (°C)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>

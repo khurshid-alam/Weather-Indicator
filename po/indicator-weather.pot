@@ -8,613 +8,629 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-13 11:31+0200\n"
+"POT-Creation-Date: 2011-02-17 00:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<big>Locations</big>"
+msgid "<b>Notifications</b>"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<big>Metric Scale</big>"
+msgid "<b>Temperature Scale</b>"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<big>Notifications</big>"
+msgid "<b>Wind Speed Unit</b>"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<big>Update every (min.)</big>"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "<big>Wind Speed Unit</big>"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Beaufort"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:7
+#: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Enable the Weather Indicator Applet"
 msgstr ""
 
+#: ../data/ui/PreferencesDialog.ui.h:6
+msgid "General"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "Imperial (°F)"
+msgstr ""
+
 #: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Imperial"
+msgid "Locations"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Knots"
+msgid "MPH"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:10
-msgid "No notifications"
+msgid "MPS"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Only use notifications to give severe weather alerts"
+msgid "No notifications"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:12
-msgid "SI"
+msgid "Only use notifications to give severe weather alerts"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Show tips in menu"
+msgid "SI (°C)"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Use notifications to give every weather condition change"
+msgid "Show tips in menu"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:15
+msgid "Units"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Update every"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "Use notifications to give every weather condition change"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Weather Indicator Preferences"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:16 ../bin/indicator-weather.py:569
-msgid "km/h"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:17 ../bin/indicator-weather.py:560
-msgid "m/s"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:18 ../bin/indicator-weather.py:563
-msgid "mph"
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "minutes"
 msgstr ""
 
 #. FIXME: Do we really have to copypaste these key values?
 #. Clear
-#: ../bin/indicator-weather.py:307
+#: ../bin/indicator-weather.py:308
 msgid "Sunny"
 msgstr ""
 
-#: ../bin/indicator-weather.py:308
+#: ../bin/indicator-weather.py:309
 msgid "Mostly sunny"
 msgstr ""
 
-#: ../bin/indicator-weather.py:309
+#: ../bin/indicator-weather.py:310
 msgid "Partly sunny"
 msgstr ""
 
-#: ../bin/indicator-weather.py:310
+#: ../bin/indicator-weather.py:311
 msgid "Clear"
 msgstr ""
 
-#: ../bin/indicator-weather.py:311
+#: ../bin/indicator-weather.py:312
 msgid "Clear sky"
 msgstr ""
 
-#: ../bin/indicator-weather.py:312
+#: ../bin/indicator-weather.py:313
 msgid "Becoming sunny"
 msgstr ""
 
 #. Clouds
-#: ../bin/indicator-weather.py:315
+#: ../bin/indicator-weather.py:316
 msgid "Mostly cloudy"
 msgstr ""
 
-#: ../bin/indicator-weather.py:316
+#: ../bin/indicator-weather.py:317
 msgid "Increasing clouds"
 msgstr ""
 
-#: ../bin/indicator-weather.py:317
+#: ../bin/indicator-weather.py:318
 msgid "Decreasing clouds"
 msgstr ""
 
-#: ../bin/indicator-weather.py:318
+#: ../bin/indicator-weather.py:319
 msgid "Broken clouds"
 msgstr ""
 
-#: ../bin/indicator-weather.py:319
+#: ../bin/indicator-weather.py:320
 msgid "Scattered clouds"
 msgstr ""
 
-#: ../bin/indicator-weather.py:320
+#: ../bin/indicator-weather.py:321
 msgid "Overcast"
 msgstr ""
 
 #. Few clouds
-#: ../bin/indicator-weather.py:323
+#: ../bin/indicator-weather.py:324
 msgid "Few clouds"
 msgstr ""
 
-#: ../bin/indicator-weather.py:324
+#: ../bin/indicator-weather.py:325
 msgid "Partly cloudy"
 msgstr ""
 
-#: ../bin/indicator-weather.py:325
+#: ../bin/indicator-weather.py:326
 msgid "Becoming cloudy"
 msgstr ""
 
-#: ../bin/indicator-weather.py:326
+#: ../bin/indicator-weather.py:327
 msgid "Clearing"
 msgstr ""
 
-#: ../bin/indicator-weather.py:327
+#: ../bin/indicator-weather.py:328
 msgid "Gradual clearing"
 msgstr ""
 
-#: ../bin/indicator-weather.py:328
+#: ../bin/indicator-weather.py:329
 msgid "Clearing late"
 msgstr ""
 
 #. Fog
-#: ../bin/indicator-weather.py:331
+#: ../bin/indicator-weather.py:332
 msgid "Fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:332
+#: ../bin/indicator-weather.py:333
 msgid "Patchy fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:333
+#: ../bin/indicator-weather.py:334
 msgid "Dense fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:334
+#: ../bin/indicator-weather.py:335
 msgid "Areas fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:335
+#: ../bin/indicator-weather.py:336
 msgid "Blowing dust"
 msgstr ""
 
-#: ../bin/indicator-weather.py:336
+#: ../bin/indicator-weather.py:337
 msgid "Blowing sand"
 msgstr ""
 
-#: ../bin/indicator-weather.py:337
+#: ../bin/indicator-weather.py:338
 msgid "Patchy haze"
 msgstr ""
 
-#: ../bin/indicator-weather.py:338
+#: ../bin/indicator-weather.py:339
 msgid "Areas haze"
 msgstr ""
 
-#: ../bin/indicator-weather.py:339
+#: ../bin/indicator-weather.py:340
 msgid "Haze"
 msgstr ""
 
-#: ../bin/indicator-weather.py:340
+#: ../bin/indicator-weather.py:341
 msgid "Patchy ice fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:341
+#: ../bin/indicator-weather.py:342
 msgid "Areas ice fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:342
+#: ../bin/indicator-weather.py:343
 msgid "Ice fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:343
+#: ../bin/indicator-weather.py:344
 msgid "Patchy freezing fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:344
+#: ../bin/indicator-weather.py:345
 msgid "Areas freezing fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:345
+#: ../bin/indicator-weather.py:346
 msgid "Freezing fog"
 msgstr ""
 
-#: ../bin/indicator-weather.py:346
+#: ../bin/indicator-weather.py:347
 msgid "Freezing spray"
 msgstr ""
 
-#: ../bin/indicator-weather.py:347
+#: ../bin/indicator-weather.py:348
 msgid "Patchy smoke"
 msgstr ""
 
-#: ../bin/indicator-weather.py:348
+#: ../bin/indicator-weather.py:349
 msgid "Areas smoke"
 msgstr ""
 
-#: ../bin/indicator-weather.py:349
+#: ../bin/indicator-weather.py:350
 msgid "Smoke"
 msgstr ""
 
-#: ../bin/indicator-weather.py:350
+#: ../bin/indicator-weather.py:351
 msgid "Patchy ash"
 msgstr ""
 
-#: ../bin/indicator-weather.py:351
+#: ../bin/indicator-weather.py:352
 msgid "Areas ash"
 msgstr ""
 
-#: ../bin/indicator-weather.py:352
+#: ../bin/indicator-weather.py:353
 msgid "Ash"
 msgstr ""
 
-#: ../bin/indicator-weather.py:353
+#: ../bin/indicator-weather.py:354
 msgid "Volcanic ash"
 msgstr ""
 
 #. Snow
-#: ../bin/indicator-weather.py:357
+#: ../bin/indicator-weather.py:358
 msgid "Light snow"
 msgstr ""
 
-#: ../bin/indicator-weather.py:358
+#: ../bin/indicator-weather.py:359
 msgid "Blowing snow"
 msgstr ""
 
-#: ../bin/indicator-weather.py:359
+#: ../bin/indicator-weather.py:360
 msgid "Blizzard"
 msgstr ""
 
-#: ../bin/indicator-weather.py:360
+#: ../bin/indicator-weather.py:361
 msgid "Patchy ice crystals"
 msgstr ""
 
-#: ../bin/indicator-weather.py:361
+#: ../bin/indicator-weather.py:362
 msgid "Areas ice crystals"
 msgstr ""
 
-#: ../bin/indicator-weather.py:362
+#: ../bin/indicator-weather.py:363
 msgid "Ice crystals"
 msgstr ""
 
-#: ../bin/indicator-weather.py:363
+#: ../bin/indicator-weather.py:364
 msgid "Patchy frost"
 msgstr ""
 
-#: ../bin/indicator-weather.py:364
+#: ../bin/indicator-weather.py:365
 msgid "Areas frost"
 msgstr ""
 
-#: ../bin/indicator-weather.py:365
+#: ../bin/indicator-weather.py:366
 msgid "Frost"
 msgstr ""
 
-#: ../bin/indicator-weather.py:366
+#: ../bin/indicator-weather.py:367
 msgid "Slight chance snow showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:367
+#: ../bin/indicator-weather.py:368
 msgid "Chance snow showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:368
+#: ../bin/indicator-weather.py:369
 msgid "Snow showers likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:369
+#: ../bin/indicator-weather.py:370
 msgid "Snow showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:370
+#: ../bin/indicator-weather.py:371
 msgid "Slight chance snow/rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:371
+#: ../bin/indicator-weather.py:372
 msgid "Chance snow/rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:372
+#: ../bin/indicator-weather.py:373
 msgid "Snow/rain likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:373
+#: ../bin/indicator-weather.py:374
 msgid "Snow/rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:374
+#: ../bin/indicator-weather.py:375
 msgid "Slight chance wintry mix"
 msgstr ""
 
-#: ../bin/indicator-weather.py:375
+#: ../bin/indicator-weather.py:376
 msgid "Chance wintry mix"
 msgstr ""
 
-#: ../bin/indicator-weather.py:376
+#: ../bin/indicator-weather.py:377
 msgid "Wintry mix likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:377
+#: ../bin/indicator-weather.py:378
 msgid "Wintry mix"
 msgstr ""
 
-#: ../bin/indicator-weather.py:378
+#: ../bin/indicator-weather.py:379
 msgid "Slight chance snow/sleet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:379
+#: ../bin/indicator-weather.py:380
 msgid "Chance snow/sleet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:380
+#: ../bin/indicator-weather.py:381
 msgid "Snow/sleet likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:381
+#: ../bin/indicator-weather.py:382
 msgid "Snow/sleet"
 msgstr ""
 
 #. Rain
-#: ../bin/indicator-weather.py:384
+#: ../bin/indicator-weather.py:385
 msgid "Slight chance sleet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:385
+#: ../bin/indicator-weather.py:386
 msgid "Chance sleet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:386
+#: ../bin/indicator-weather.py:387
 msgid "Sleet likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:387
+#: ../bin/indicator-weather.py:388
 msgid "Sleet"
 msgstr ""
 
-#: ../bin/indicator-weather.py:388
+#: ../bin/indicator-weather.py:389
 msgid "Slight chance rain showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:389
+#: ../bin/indicator-weather.py:390
 msgid "Chance rain showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:390
+#: ../bin/indicator-weather.py:391
 msgid "Rain showers likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:391
+#: ../bin/indicator-weather.py:392
 msgid "Rain showers"
 msgstr ""
 
-#: ../bin/indicator-weather.py:392
+#: ../bin/indicator-weather.py:393
 msgid "Slight chance rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:393
+#: ../bin/indicator-weather.py:394
 msgid "Chance rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:394
+#: ../bin/indicator-weather.py:395
 msgid "Rain likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:395
+#: ../bin/indicator-weather.py:396
 msgid "Rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:396
+#: ../bin/indicator-weather.py:397
 msgid "Heavy rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:397
+#: ../bin/indicator-weather.py:398
 msgid "Slight chance drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:398
+#: ../bin/indicator-weather.py:399
 msgid "Chance drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:399
+#: ../bin/indicator-weather.py:400
 msgid "Drizzle likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:400
+#: ../bin/indicator-weather.py:401
 msgid "Drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:401
+#: ../bin/indicator-weather.py:402
 msgid "Slight chance freezing rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:402
+#: ../bin/indicator-weather.py:403
 msgid "Chance freezing rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:403
+#: ../bin/indicator-weather.py:404
 msgid "Freezing rain likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:404
+#: ../bin/indicator-weather.py:405
 msgid "Freezing rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:405
+#: ../bin/indicator-weather.py:406
 msgid "Slight chance freezing drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:406
+#: ../bin/indicator-weather.py:407
 msgid "Chance freezing drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:407
+#: ../bin/indicator-weather.py:408
 msgid "Freezing drizzle likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:408
+#: ../bin/indicator-weather.py:409
 msgid "Freezing drizzle"
 msgstr ""
 
-#: ../bin/indicator-weather.py:409
+#: ../bin/indicator-weather.py:410
 msgid "Slight chance rain/freezing rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:410
+#: ../bin/indicator-weather.py:411
 msgid "Chance rain/freezing rain"
 msgstr ""
 
-#: ../bin/indicator-weather.py:411
+#: ../bin/indicator-weather.py:412
 msgid "Rain/freezing rain likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:412
+#: ../bin/indicator-weather.py:413
 msgid "Rain/freezing rain"
 msgstr ""
 
 #. Storms
-#: ../bin/indicator-weather.py:415
+#: ../bin/indicator-weather.py:416
 msgid "Storm"
 msgstr ""
 
-#: ../bin/indicator-weather.py:416
+#: ../bin/indicator-weather.py:417
 msgid "Isolated thunderstorms"
 msgstr ""
 
-#: ../bin/indicator-weather.py:417
+#: ../bin/indicator-weather.py:418
 msgid "Slight chance thunderstorms"
 msgstr ""
 
-#: ../bin/indicator-weather.py:418
+#: ../bin/indicator-weather.py:419
 msgid "Chance thunderstorms"
 msgstr ""
 
-#: ../bin/indicator-weather.py:419
+#: ../bin/indicator-weather.py:420
 msgid "Thunderstorms likely"
 msgstr ""
 
-#: ../bin/indicator-weather.py:420
+#: ../bin/indicator-weather.py:421
 msgid "Thunderstorms"
 msgstr ""
 
-#: ../bin/indicator-weather.py:421
+#: ../bin/indicator-weather.py:422
 msgid "Severe thunderstorms"
 msgstr ""
 
-#: ../bin/indicator-weather.py:422
+#: ../bin/indicator-weather.py:423
 msgid "Water spout"
 msgstr ""
 
-#: ../bin/indicator-weather.py:492
+#: ../bin/indicator-weather.py:493
 msgid "Error retreiving condition"
 msgstr ""
 
-#: ../bin/indicator-weather.py:495
+#: ../bin/indicator-weather.py:496
 msgid "Condition"
 msgstr ""
 
-#: ../bin/indicator-weather.py:498
+#: ../bin/indicator-weather.py:499
 msgid "Sky"
 msgstr ""
 
-#: ../bin/indicator-weather.py:513
+#: ../bin/indicator-weather.py:514
 msgid "Humidity"
 msgstr ""
 
-#: ../bin/indicator-weather.py:522
+#: ../bin/indicator-weather.py:523
 msgid "Dew Point"
 msgstr ""
 
-#: ../bin/indicator-weather.py:525
+#: ../bin/indicator-weather.py:526
 msgid "Pressure"
 msgstr ""
 
-#: ../bin/indicator-weather.py:537
+#: ../bin/indicator-weather.py:538
 msgid "Temperature"
 msgstr ""
 
-#: ../bin/indicator-weather.py:542
+#: ../bin/indicator-weather.py:543
 msgid "Humidex"
 msgstr ""
 
-#: ../bin/indicator-weather.py:547
+#: ../bin/indicator-weather.py:548
 msgid "km"
 msgstr ""
 
-#: ../bin/indicator-weather.py:550
+#: ../bin/indicator-weather.py:551
 msgid "mile(s)"
 msgstr ""
 
-#: ../bin/indicator-weather.py:551
+#: ../bin/indicator-weather.py:552
 msgid "Visibility"
 msgstr ""
 
 #. FIXME: return a "SW" instead of "280" degrees values
-#: ../bin/indicator-weather.py:555
+#: ../bin/indicator-weather.py:556
 msgid "Wind Direction"
+msgstr ""
+
+#: ../bin/indicator-weather.py:561
+msgid "m/s"
+msgstr ""
+
+#: ../bin/indicator-weather.py:564
+msgid "mph"
+msgstr ""
+
+#: ../bin/indicator-weather.py:570
+msgid "km/h"
 msgstr ""
 
 #. if (self.__wind_unit == WindUnits.KNOTS):
 #. _value = self.__report.getWindSpeedKnots()
 #. _unit  = _("knot(s)")
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather.py:574
 msgid "Wind Speed"
 msgstr ""
 
-#: ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:583
 msgid "Wind Chill"
 msgstr ""
 
-#: ../bin/indicator-weather.py:585
+#: ../bin/indicator-weather.py:586
 msgid "Sunrise"
 msgstr ""
 
-#: ../bin/indicator-weather.py:588
+#: ../bin/indicator-weather.py:589
 msgid "Sunset"
 msgstr ""
 
-#: ../bin/indicator-weather.py:681
+#: ../bin/indicator-weather.py:682
 msgid "Set Up Weather..."
 msgstr ""
 
-#: ../bin/indicator-weather.py:773 ../bin/indicator-weather.py:824
+#: ../bin/indicator-weather.py:774 ../bin/indicator-weather.py:825
 msgid "Refresh"
 msgstr ""
 
-#: ../bin/indicator-weather.py:778
+#: ../bin/indicator-weather.py:779
 msgid "Forecast"
 msgstr ""
 
 #. #Preferences
-#: ../bin/indicator-weather.py:784
+#: ../bin/indicator-weather.py:785
 msgid "Preferences..."
 msgstr ""
 
-#: ../bin/indicator-weather.py:819
+#: ../bin/indicator-weather.py:820
 msgid "Connection problem"
 msgstr ""
 
-#: ../bin/indicator-weather.py:917
+#: ../bin/indicator-weather.py:918
 msgid "Severe weather alert"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1118
+#: ../bin/indicator-weather.py:1120
 msgid "Weather Forecast for "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1162
+#: ../bin/indicator-weather.py:1164
 msgid "High: "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1166
+#: ../bin/indicator-weather.py:1168
 msgid "Low: "
 msgstr ""
 
-#: ../bin/indicator-weather.py:1389
+#: ../bin/indicator-weather.py:1398
 msgid "Another instance of this program is already running"
 msgstr ""
 
@@ -631,56 +647,53 @@ msgid "<big>Rungis, France</big>"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:4
-msgid "Add a place"
+msgid "Add a location"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:5
-msgid "Assistant to set up the weather indicator"
+msgid "Confirm choice"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:6
-msgid "Confirm the place"
+msgid "If this is not correct, please go back and select a new city."
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:7
-msgid ""
-"If yes, then you can go on. Otherwise, you'll have to go back and set a new "
-"city."
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:8
-msgid "Is this the place you were looking for?"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:9
-msgid "Label This Location"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:10
 msgid "Label:"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:11
+#: ../data/ui/Assistant.ui.h:8
 msgid "Location:"
 msgstr ""
 
+#: ../data/ui/Assistant.ui.h:9
+msgid "Name the location"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:10
+msgid "Please enter a name for this location:"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:11
+msgid ""
+"Please review the choices below. If anything is not correct, please go back "
+"and select the correct options."
+msgstr ""
+
 #: ../data/ui/Assistant.ui.h:12
-msgid "Please select a location from the location tree"
+msgid "Please select a location from below:"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:13
-msgid "Review your settings"
+msgid "Review choices"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:14
-msgid "Review your settings. You may go back and make changes if needed."
+msgid "Select a location"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:15
-msgid ""
-"Would you like to label this location ?\n"
-"If yes, type it below. \n"
-"If no, leave blank and go on."
+msgid "You have selected:"
 msgstr ""
 
 #: ../data/ui/ExtendedForecast.ui.h:1
