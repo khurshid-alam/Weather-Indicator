@@ -1059,7 +1059,8 @@ class PreferencesDialog(gtk.Dialog):
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
             gconfClient.set_int("/apps/indicator-weather/refresh_rate", int(self.builder.get_object('rate').get_value()))
             wi.rate = int(self.builder.get_object('rate').get_value())
-            gobject.source_remove(wi.rateid)
+            if hasattr(wi, "rateid"):
+                gobject.source_remove(wi.rateid)
             wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
             log.debug("Preferences: Rate changed to '%s'" % wi.rate)
             
