@@ -37,6 +37,10 @@ import threading
 import logging
 import logging.handlers
 import tempfile
+import couchdb
+from desktopcouch.records.server import CouchDatabase
+from desktopcouch.records.record import Record as CouchRecord
+import time
 
 import gettext
 from gettext import gettext as _
@@ -56,7 +60,26 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 
 from indicator_weather.helpers import get_builder
 
-gconfClient = gconf.client_get_default()
+class Settings:
+  def prepare_settings_store(self):
+    log.debug("Settings: preparing settings store")
+    self.gconfClient = gconf.client_get_default()
+
+  def get_value(self, setting, value_type):
+    log.debug("Setting: getting value for %s" % setting)
+    full_setting_name = "/apps/indicator-weather/%s" % setting
+    return {
+      'int' : self.gconfClient.get_int,
+      'str' : self.gconfClient.get_string
+    }.get(value_type)(full_setting_name)
+    
+  def set_value(self, setting, value, value_type):
+    log.debug("Setting: setting '%s'='%s'" % (setting, value))
+    full_setting_name = "/apps/indicator-weather/%s" % setting
+    {
+      'int' : self.gconfClient.set_int,
+      'str' : self.gconfClient.set_string
+    }.get(value_type)(full_setting_name, value)
 
 class Location:
     """
@@ -597,13 +620,28 @@ class indicator_weather(threading.Thread):
         self.winder = appindicator.Indicator ("indicator-weather", "weather-indicator", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("weather-indicator-error")
+
+        log.debug("Indicator: reading settings")
+        self.settings = Settings()
+        self.settings.prepare_settings_store()
+        database = CouchDatabase("weather-indicator", create=True)
+        # Create a new record with some data
+        record = CouchRecord({
+          "refresh_rate": "15",
+          "unit": "si",
+          "notif": "U"
+        }, "http://launchpad.net/weather-indicator/settings")
+
+        # If the record exists
+        database.put_record(record)
+
         
-        self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
-        self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
-        self.notif = gconfClient.get_string("/apps/indicator-weather/notif")
-        self.wind = gconfClient.get_string("/apps/indicator-weather/wind")
-        self.placechosen = gconfClient.get_int("/apps/indicator-weather/placechosen")
-        self.places = gconfClient.get_string("/apps/indicator-weather/places")
+        self.rate  = self.settings.get_value("refresh_rate", 'int')
+        self.unit  = self.settings.get_value("unit", 'str')
+        self.notif = self.settings.get_value("notif", 'str')
+        self.wind  = self.settings.get_value("wind", 'str')
+        self.placechosen = self.settings.get_value("placechosen", 'int')
+        self.places = self.settings.get_value("places", 'str')
 
         log.debug("Preferences: got settings: rate=%s, unit=%s, notif=%s, wind=%s, placechosen=%s, places=%s" %
                 (self.rate, self.unit, self.notif, self.wind, self.placechosen, self.places))
@@ -616,12 +654,12 @@ class indicator_weather(threading.Thread):
         
         if self.placechosen in (False, None) or self.placechosen >= len(eval(self.places)):
             log.debug("Indicator: could not parse placechosen, setting to 0")
-            gconfClient.set_int("/apps/indicator-weather/placechosen", 0)
+            self.settings.set_value("placechosen", 0, 'int')
             self.placechosen = 0
         
         if self.unit in (False, None):
             log.debug("Indicator: could not parse unit, setting to S")
-            gconfClient.set_string("/apps/indicator-weather/unit", 'S')
+            self.settings.set_value("unit", 'S', 'str')
             self.unit = 'S'
             self.metric_system = MetricSystem.SI
         else:
@@ -632,12 +670,12 @@ class indicator_weather(threading.Thread):
             
         if self.notif in (False, None):
             log.debug("Indicator: could not parse notif, setting to N")
-            gconfClient.set_string("/apps/indicator-weather/notif", 'N')
+            self.settings.set_value("notif", 'N', 'str')
             self.notif = 'N'
         
         if self.wind in (False, None):
             log.debug("Indicator: could not parse notif, setting to mph")
-            gconfClient.set_string("/apps/indicator-weather/wind", 'mph')
+            self.settings.set_value("wind", 'mph', 'str')
             self._wind_unit = WindUnits.MPH
         else:
             if (self.wind == 'mph'):
@@ -653,8 +691,8 @@ class indicator_weather(threading.Thread):
             
         if self.rate in (False, None):
             log.debug("Indicator: could not parse rate, setting to 15")
-            gconfClient.set_int("/apps/indicator-weather/refresh_rate", 15)
-            self.rate = self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
+            self.settings.set_value("refresh_rate", 15, int)
+            self.rate = 15
             
         if self.places in (False, None, '', '[]', "['']",):
             log.debug("Indicator: could not parse places")
@@ -810,7 +848,7 @@ class indicator_weather(threading.Thread):
                     log.debug("Indicator: new location selected: %s" % self.places.index(place))
                     self.placechosen = self.places.index(place)
                     break
-            gconfClient.set_int("/apps/indicator-weather/placechosen", self.placechosen)
+            self.settings.set_value("placechosen", self.placechosen, 'int')
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
@@ -867,14 +905,14 @@ class indicator_weather(threading.Thread):
         self.sunset_show.set_label(weather.getSunset())
         self.update_label(weather.getPureTemperature())
 
-        if self.condition != gconfClient.get_string("/apps/indicator-weather/current") and self.notif == 'U':
+        if self.condition != self.settings.get_value("current", 'str') and self.notif == 'U':
             log.debug("Indicator: updateWeather: weather has changed, notify")
             self.notify(self.condition, self.icon)
         if self.notif == 'S' and weather.isSevereCondition():
             log.debug("Indicator: updateWeather: severe condition notification")
             self.notify(self.condition, self.icon, severe=True)
 
-        gconfClient.set_string("/apps/indicator-weather/current",self.condition)
+        self.settings.set_value("current", self.condition, 'str')
         log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
 
@@ -1021,7 +1059,7 @@ class PreferencesDialog(gtk.Dialog):
         if (wi.unit != new_unit):
             wi.unit = new_unit
             wi.metric_system = new_metric_system
-            gconfClient.set_string("/apps/indicator-weather/unit", wi.unit)
+            wi.settings.set_value("unit", wi.unit, 'str')
             needupdate = True
             log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
@@ -1040,7 +1078,7 @@ class PreferencesDialog(gtk.Dialog):
         if (wi.wind != new_wind_unit):
             wi.wind = new_wind_unit
             wi._wind_unit = new_wind_system
-            gconfClient.set_string("/apps/indicator-weather/wind", wi.wind)
+            wi.settings.set_value("wind", wi.wind, 'str')
             needupdate = True
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
 
@@ -1054,13 +1092,13 @@ class PreferencesDialog(gtk.Dialog):
 
         if (wi.notif != new_notification):
             wi.notif = new_notification
-            gconfClient.set_string("/apps/indicator-weather/notif", wi.notif)
+            wi.settings.set_value("notif", wi.notif, 'str')
             needupdate = True
             log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
 
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
-            gconfClient.set_int("/apps/indicator-weather/refresh_rate", int(self.builder.get_object('rate').get_value()))
+            wi.settings.set_value("refresh_rate", int(self.builder.get_object('rate').get_value()), 'int')
             wi.rate = int(self.builder.get_object('rate').get_value())
             if hasattr(wi, "rateid"):
                 gobject.source_remove(wi.rateid)
@@ -1079,13 +1117,13 @@ class PreferencesDialog(gtk.Dialog):
         if newplaces != wi.places:
             wi.places = newplaces
             log.debug("Preferences: Places changed to '%s'" % str(wi.places))
-            gconfClient.set_string("/apps/indicator-weather/places", str(wi.places))
+            wi.settings.set_value("places", str(wi.places), 'str')
             if (type(wi.place) != None) and (wi.place in wi.places):
                 wi.placechosen = wi.places.index(wi.place)
             else:
                 wi.placechosen = 0
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
-            gconfClient.set_int("/apps/indicator-weather/placechosen", wi.placechosen)
+            wi.settings.set_value("placechosen", wi.placechosen, 'int')
             wi.menu_normal()
             wi.winder.set_menu(wi.menu)
             needupdate = True
