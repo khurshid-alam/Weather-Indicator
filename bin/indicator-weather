@@ -23,7 +23,6 @@ import pygtk
 pygtk.require('2.0')
 import gobject
 import appindicator
-import gconf
 import urllib2
 import re
 import datetime
@@ -40,6 +39,7 @@ import tempfile
 import couchdb
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
+from couchdb.mapping import TextField, IntegerField, DateField
 import time
 
 import gettext
@@ -61,25 +61,30 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 from indicator_weather.helpers import get_builder
 
 class Settings:
+  db = None
+
   def prepare_settings_store(self):
     log.debug("Settings: preparing settings store")
-    self.gconfClient = gconf.client_get_default()
+    self.db = CouchDatabase("weatherindicator", create = True)
+    self.view = "function(doc) {emit(doc.name, doc);}"
+    self.design_doc = "weather-indicator-settings"
+    self.db.add_view("get_setting", self.view, None, self.design_doc)
 
-  def get_value(self, setting, value_type):
+  def get_value(self, setting):
     log.debug("Setting: getting value for %s" % setting)
-    full_setting_name = "/apps/indicator-weather/%s" % setting
-    return {
-      'int' : self.gconfClient.get_int,
-      'str' : self.gconfClient.get_string
-    }.get(value_type)(full_setting_name)
-    
-  def set_value(self, setting, value, value_type):
+    view = self.db.execute_view("get_setting", self.design_doc)[setting]
+    if len(view.rows):
+      return str(view.rows[0].value['value'])
+    else:
+      log.debug("Setting: can't find value for %s" % setting)
+
+  def set_value(self, setting, value):
     log.debug("Setting: setting '%s'='%s'" % (setting, value))
-    full_setting_name = "/apps/indicator-weather/%s" % setting
-    {
-      'int' : self.gconfClient.set_int,
-      'str' : self.gconfClient.set_string
-    }.get(value_type)(full_setting_name, value)
+    self.record = CouchRecord({
+      "name" : setting,
+      "value": value
+    }, self.design_doc)
+    rec_id = self.db.put_record(self.record)
 
 class Location:
     """
@@ -624,24 +629,13 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: reading settings")
         self.settings = Settings()
         self.settings.prepare_settings_store()
-        database = CouchDatabase("weather-indicator", create=True)
-        # Create a new record with some data
-        record = CouchRecord({
-          "refresh_rate": "15",
-          "unit": "si",
-          "notif": "U"
-        }, "http://launchpad.net/weather-indicator/settings")
-
-        # If the record exists
-        database.put_record(record)
-
         
-        self.rate  = self.settings.get_value("refresh_rate", 'int')
-        self.unit  = self.settings.get_value("unit", 'str')
-        self.notif = self.settings.get_value("notif", 'str')
-        self.wind  = self.settings.get_value("wind", 'str')
-        self.placechosen = self.settings.get_value("placechosen", 'int')
-        self.places = self.settings.get_value("places", 'str')
+        self.rate  = self.settings.get_value("refresh_rate")
+        self.unit  = self.settings.get_value("unit")
+        self.notif = self.settings.get_value("notif")
+        self.wind  = self.settings.get_value("wind")
+        self.placechosen = self.settings.get_value("placechosen")
+        self.places = self.settings.get_value("places")
 
         log.debug("Preferences: got settings: rate=%s, unit=%s, notif=%s, wind=%s, placechosen=%s, places=%s" %
                 (self.rate, self.unit, self.notif, self.wind, self.placechosen, self.places))
@@ -654,12 +648,12 @@ class indicator_weather(threading.Thread):
         
         if self.placechosen in (False, None) or self.placechosen >= len(eval(self.places)):
             log.debug("Indicator: could not parse placechosen, setting to 0")
-            self.settings.set_value("placechosen", 0, 'int')
+            self.settings.set_value("placechosen", 0)
             self.placechosen = 0
         
         if self.unit in (False, None):
             log.debug("Indicator: could not parse unit, setting to S")
-            self.settings.set_value("unit", 'S', 'str')
+            self.settings.set_value("unit", 'S')
             self.unit = 'S'
             self.metric_system = MetricSystem.SI
         else:
@@ -670,12 +664,12 @@ class indicator_weather(threading.Thread):
             
         if self.notif in (False, None):
             log.debug("Indicator: could not parse notif, setting to N")
-            self.settings.set_value("notif", 'N', 'str')
+            self.settings.set_value("notif", 'N')
             self.notif = 'N'
         
         if self.wind in (False, None):
             log.debug("Indicator: could not parse notif, setting to mph")
-            self.settings.set_value("wind", 'mph', 'str')
+            self.settings.set_value("wind", 'mph')
             self._wind_unit = WindUnits.MPH
         else:
             if (self.wind == 'mph'):
@@ -691,7 +685,7 @@ class indicator_weather(threading.Thread):
             
         if self.rate in (False, None):
             log.debug("Indicator: could not parse rate, setting to 15")
-            self.settings.set_value("refresh_rate", 15, int)
+            self.settings.set_value("refresh_rate", 15)
             self.rate = 15
             
         if self.places in (False, None, '', '[]', "['']",):
@@ -848,7 +842,7 @@ class indicator_weather(threading.Thread):
                     log.debug("Indicator: new location selected: %s" % self.places.index(place))
                     self.placechosen = self.places.index(place)
                     break
-            self.settings.set_value("placechosen", self.placechosen, 'int')
+            self.settings.set_value("placechosen", self.placechosen)
             self.update_weather(False)
 
     def update_weather(self, notif=True,widget=None):
@@ -905,14 +899,14 @@ class indicator_weather(threading.Thread):
         self.sunset_show.set_label(weather.getSunset())
         self.update_label(weather.getPureTemperature())
 
-        if self.condition != self.settings.get_value("current", 'str') and self.notif == 'U':
+        if self.condition != self.settings.get_value("current") and self.notif == 'U':
             log.debug("Indicator: updateWeather: weather has changed, notify")
             self.notify(self.condition, self.icon)
         if self.notif == 'S' and weather.isSevereCondition():
             log.debug("Indicator: updateWeather: severe condition notification")
             self.notify(self.condition, self.icon, severe=True)
 
-        self.settings.set_value("current", self.condition, 'str')
+        self.settings.set_value("current", self.condition)
         log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
 
@@ -1034,11 +1028,6 @@ class PreferencesDialog(gtk.Dialog):
        
     def on_destroy(self, widget, data=None):
         pass
-        #"""Called when the WeatherIndicatorWindow is closed."""
-        #gtk.main_quit()
-    #def on_city_edited(self,widget,path,value):
-        ###CHECK AVAILABILITY
-        #self.builder.get_object('citieslist').set_value(self.builder.get_object('citieslist').get_iter_from_string(path), 0, value)
     
     def ok(self, widget, data=None):
         """The user has selected to save the changes.
@@ -1059,7 +1048,7 @@ class PreferencesDialog(gtk.Dialog):
         if (wi.unit != new_unit):
             wi.unit = new_unit
             wi.metric_system = new_metric_system
-            wi.settings.set_value("unit", wi.unit, 'str')
+            wi.settings.set_value("unit", wi.unit)
             needupdate = True
             log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
@@ -1078,7 +1067,7 @@ class PreferencesDialog(gtk.Dialog):
         if (wi.wind != new_wind_unit):
             wi.wind = new_wind_unit
             wi._wind_unit = new_wind_system
-            wi.settings.set_value("wind", wi.wind, 'str')
+            wi.settings.set_value("wind", wi.wind)
             needupdate = True
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
 
@@ -1092,13 +1081,13 @@ class PreferencesDialog(gtk.Dialog):
 
         if (wi.notif != new_notification):
             wi.notif = new_notification
-            wi.settings.set_value("notif", wi.notif, 'str')
+            wi.settings.set_value("notif", wi.notif)
             needupdate = True
             log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
 
         ##Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
-            wi.settings.set_value("refresh_rate", int(self.builder.get_object('rate').get_value()), 'int')
+            wi.settings.set_value("refresh_rate", int(self.builder.get_object('rate').get_value()))
             wi.rate = int(self.builder.get_object('rate').get_value())
             if hasattr(wi, "rateid"):
                 gobject.source_remove(wi.rateid)
@@ -1117,13 +1106,13 @@ class PreferencesDialog(gtk.Dialog):
         if newplaces != wi.places:
             wi.places = newplaces
             log.debug("Preferences: Places changed to '%s'" % str(wi.places))
-            wi.settings.set_value("places", str(wi.places), 'str')
+            wi.settings.set_value("places", str(wi.places))
             if (type(wi.place) != None) and (wi.place in wi.places):
                 wi.placechosen = wi.places.index(wi.place)
             else:
                 wi.placechosen = 0
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
-            wi.settings.set_value("placechosen", wi.placechosen, 'int')
+            wi.settings.set_value("placechosen", wi.placechosen)
             wi.menu_normal()
             wi.winder.set_menu(wi.menu)
             needupdate = True
