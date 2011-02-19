@@ -23,7 +23,8 @@ import pygtk
 pygtk.require('2.0')
 import gobject
 import appindicator
-import gconf
+from desktopcouch.records.server import CouchDatabase
+from desktopcouch.records.record import Record as CouchRecord
 import urllib2
 import re
 import datetime
@@ -696,6 +697,8 @@ class indicator_weather(threading.Thread):
         quit.show()
         menu_noplace.append(quit)
 
+        self.winder.set_status(appindicator.STATUS_ATTENTION)
+        self.winder.set_status(appindicator.STATUS_ACTIVE)
         self.winder.set_menu(menu_noplace)
     
     def menu_normal(self):
