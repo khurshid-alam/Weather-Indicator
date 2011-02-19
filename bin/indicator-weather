@@ -66,14 +66,19 @@ class Settings:
   def prepare_settings_store(self):
     log.debug("Settings: preparing settings store")
     self.db = CouchDatabase("weatherindicator", create = True)
-    self.view = "function(doc) {emit(doc.name, doc);}"
-    self.design_doc = "weather-indicator-settings"
-    self.db.add_view("get_setting", self.view, None, self.design_doc)
+
+    self.settings_view = "function(doc) {emit(doc.name, doc);}"
+    self.settings_design_doc = "weather-indicator-settings"
+    self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
+
+    self.weather_design_doc = "weather-indicator-cached-weather"
+    self.weather_view = "function(doc) {emit(doc.name, doc);}"
+    self.db.add_view("get_weather", self.weather_view, None, self.settings_design_doc)
 
   def get_value(self, setting):
     log.debug("Setting: getting value for %s" % setting)
-    view = self.db.execute_view("get_setting", self.design_doc)[setting]
-    if len(view.rows):
+    view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
+    if hasattr(view, 'rows'):
       return str(view.rows[0].value['value'])
     else:
       log.debug("Setting: can't find value for %s" % setting)
@@ -83,8 +88,35 @@ class Settings:
     self.record = CouchRecord({
       "name" : setting,
       "value": value
-    }, self.design_doc)
-    rec_id = self.db.put_record(self.record)
+    }, self.settings_design_doc)
+    self.db.put_record(self.record)
+
+  def save_weather(self, weather, location_code):
+    log.debug("Setting: Saving cached weather data")
+    self.record = CouchRecord({
+      "location" : location_code,
+      "data"      : {
+        "label"    : weather.getPureTemperature(),
+        "condition": weather.getPureCondition(),
+        "icon"     : weather.getPixmap(),
+        "temper"   : weather.getTemperature(),
+        "humidex"  : weather.getHumidex(),
+        "humidity" : weather.getHumidity(),
+        "wind"     : weather.getWindSpeed(),
+        "sunrise"  : weather.getSunrise(),
+        "sunset"   : weather.getSunset()
+      }
+    }, self.weather_design_doc)
+    self.db.put_record(self.record)
+  
+  def get_weather(self, location_code):
+    log.debug("Setting: getting cached weather for %s" % location_code)
+    view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
+    if hasattr(view, 'rows'):
+      return str(view.rows[0])
+    else:
+      return None
+      log.debug("Setting: can't find cached weather for %s" % setting)
 
 class Location:
     """
@@ -536,7 +568,7 @@ class Weather:
                 return self.__current_condition[1]
         else:
             log.error("Weather: return 'offline' icon due to empty condition")
-            return "weather-indicator-unknown"
+            return False
 
     def getHumidity(self):
         return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
@@ -845,8 +877,35 @@ class indicator_weather(threading.Thread):
             self.settings.set_value("placechosen", self.placechosen)
             self.update_weather(False)
 
+    def show_cached_weather(self):
+        cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
+        if cached_weather:
+            log.debug("Indicator: loading weather from cache for %s" % self.places[self.placechosen])
+            self.menu_normal()
+            self.icon = cached_weather['data']['icon']
+            if (self.icon == False):
+              self.winder.set_icon("weather-indicator-unknown")
+            else:
+              self.winder.set_icon(self.icon)
+
+            self.city_show.set_label(self.places[self.placechosen][1])
+            self.cond_show.set_label(cached_weather['data']['condition'])
+            self.temp_show.set_label(cached_weather['data']['temper'])
+            self.humidex_show.set_label(cached_weather['data']['humidex'])
+            self.humid_show.set_label(cached_weather['data']['humidity'])
+            self.wind_show.set_label(cached_weather['data']['wind'])
+            self.sunrise_show.set_label(cached_weather['data']['sunrise'])
+            self.sunset_show.set_label(cached_weather['data']['sunset'])
+            self.update_label(cached_weather['data']['label'])
+            self.winder.set_status(appindicator.STATUS_ATTENTION)
+            self.winder.set_status(appindicator.STATUS_ACTIVE)
+    
     def update_weather(self, notif=True,widget=None):
         log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
+        #First, display cached data
+        self.show_cached_weather()
+
+        #Get real data
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
             log.debug("Indicator: updateWeather: could not get weather")
@@ -880,13 +939,6 @@ class indicator_weather(threading.Thread):
         self.condition = weather.getPureCondition()
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
-        if (self.icon == False):
-          self.winder.set_icon("weather-indicator-unknown")
-        else:
-        	self.winder.set_icon(self.icon)
-        self.winder.set_status(appindicator.STATUS_ATTENTION)
-        self.winder.set_status(appindicator.STATUS_ACTIVE)
-
         log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
@@ -898,6 +950,15 @@ class indicator_weather(threading.Thread):
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
         self.update_label(weather.getPureTemperature())
+
+        #Saving cached data, unless correct icon is supplied
+        if (self.icon == False):
+            self.winder.set_icon("weather-indicator-unknown")
+        else:
+            self.winder.set_icon(self.icon)
+            self.settings.save_weather(weather, self.places[self.placechosen][0])
+        self.winder.set_status(appindicator.STATUS_ATTENTION)
+        self.winder.set_status(appindicator.STATUS_ACTIVE)
 
         if self.condition != self.settings.get_value("current") and self.notif == 'U':
             log.debug("Indicator: updateWeather: weather has changed, notify")
