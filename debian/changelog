@@ -1,3 +1,9 @@
+indicator-weather (11.02.13+bzr~natty1) natty; urgency=low
+
+  * Fix for LP: #721714 "Refresh label should contain info about time from last refresh"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 17 Feb 2011 00:13:01 +0200
+
 indicator-weather (11.02.13+bzr180~natty1) natty; urgency=low
 
   * Implemented UI improvements. Thanks, Andrew
