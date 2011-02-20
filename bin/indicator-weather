@@ -459,7 +459,6 @@ class Weather:
 
         #formatting sun data
         now = datetime.datetime.now().time()
-        log.debug("Weather: got sunrise '%s', sunset '%s'" % (self.__sun[0], self.__sun[1]))
         self.__sunrise = self.__sun[0]
         self.__sunset = self.__sun[1]
         #FIXME: this is ugly
@@ -469,6 +468,8 @@ class Weather:
             self.__night = True
         else:
             self.__night = False
+        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sun[0], self.__sun[1], self.__night))
+
     
     def isNight(self):
         return self.__night
@@ -782,7 +783,7 @@ class indicator_weather(threading.Thread):
         breaker.show()
         self.menu.append(breaker)
 
-        self.refresh_show = gtk.MenuItem("%s (%s)" % (_("Refresh"), _("last refreshed just now")))
+        self.refresh_show = gtk.MenuItem("%s (%s)" % (_("Refresh"), _("refreshed just now")))
         self.refresh_show.connect("activate", self.update_weather)
         self.refresh_show.show()
         self.menu.append(self.refresh_show)
