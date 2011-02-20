@@ -23,8 +23,7 @@ import pygtk
 pygtk.require('2.0')
 import gobject
 import appindicator
-from desktopcouch.records.server import CouchDatabase
-from desktopcouch.records.record import Record as CouchRecord
+import gconf
 import urllib2
 import re
 import datetime
@@ -1359,14 +1358,10 @@ class singleinstance(object):
             log.debug("SingleInstance: writing new pid %s" % str(os.getpid()))
             # Write my pid into pidPath to keep multiple copies of program from
             # running.
-            temp_handle, temp_path=tempfile.mkstemp()
+            (fp, temp_path)=tempfile.mkstemp()
             try:
-              os.close(temp_handle)
+              os.fdopen(fp, "w+b").write(str(os.getpid()))
               os.rename(temp_path, pidPath)
-              os.unlink(temp_path)
-              fp=open(pidPath, 'w')
-              fp.write(str(os.getpid()))
-              fp.close()
             except Exception as e:
               log.error("SingleInstance: exception while renaming '%s' to '%s':\n %s" % (temp_path, pidPath, str(e)))  
 
