@@ -533,7 +533,7 @@ class Weather:
         else:
             _value = self.__report.getTemperatureFahrenheit()
             _unit  = "F"
-        return "%0.1f %s" % (_value, _unit)
+        return ("%.1f %s" % (_value, _unit)).replace(".0", "")
 
     def getTemperature(self):
         return "%s: %s" % (_("Temperature"), self.getPureTemperature())
@@ -541,7 +541,7 @@ class Weather:
     def getHumidex(self):
         self.vapour_pressure = 6.11 * math.exp(5417.7530 * ( (1/273.16) - (1/(self.__report.getDewPointCelsius()+273.16))))
         self.humidex = self.__report.getTemperatureCelsius() + (0.5555)*(self.vapour_pressure  - 10.0);
-        return "%s: %0.1f" % (_("Humidex"), self.humidex)
+        return ("%s: %.1f" % (_("Humidex"), self.humidex)).replace(".0", "")
 
     def getVisibility(self):
         if (self.__metric_system == MetricSystem.SI):
@@ -572,7 +572,7 @@ class Weather:
         #if (self.__wind_unit == WindUnits.KNOTS):
         #    _value = self.__report.getWindSpeedKnots()
         #    _unit  = _("knot(s)")
-        return "%s: %0.1f %s" % (_("Wind Speed"), _value, _unit)
+        return ("%s: %0.1f %s" % (_("Wind Speed"), _value, _unit)).replace(".0", "")
 
     def getWindChill(self):
         if (self.__metric_system == MetricSystem.SI):
