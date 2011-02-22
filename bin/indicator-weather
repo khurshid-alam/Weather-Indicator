@@ -74,25 +74,46 @@ class Settings:
     self.weather_view = "function(doc) {emit(doc.name, doc);}"
     self.db.add_view("get_weather", self.weather_view, None, self.settings_design_doc)
 
-  def get_value(self, setting):
+  def get_value(self, setting, return_id = False):
     log.debug("Setting: getting value for %s" % setting)
     view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
-    if hasattr(view, 'rows'):
-      return str(view.rows[0].value['value'])
+    if hasattr(view, 'rows') and len(view.rows) > 0:
+      if return_id:
+        return str(view.rows[0].value['_id'])
+      else:
+        return str(view.rows[0].value['value'])
     else:
       log.debug("Setting: can't find value for %s" % setting)
 
   def set_value(self, setting, value):
     log.debug("Setting: setting '%s'='%s'" % (setting, value))
-    self.record = CouchRecord({
+    self.record = {
       "name" : setting,
       "value": value
-    }, self.settings_design_doc)
-    self.db.put_record(self.record)
+    }
+    old_doc_id = self.get_value(setting, return_id=True)
+    if old_doc_id != None:
+      log.debug("Setting: setting '%s' was updated" % setting)
+      self.db.update_fields(old_doc_id, self.record)
+    else:
+      log.debug("Setting: setting '%s' was created" % setting)
+      self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
+ 
+  def get_weather(self, location_code, return_id = False):
+    log.debug("Setting: getting cached weather for %s" % location_code)
+    view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
+    if hasattr(view, 'rows') and len(view.rows) > 0:
+      if return_id:
+        return str(view.rows[0].value['_id'])
+      else:
+        return str(view.rows[0])
+    else:
+      return None
+      log.debug("Setting: can't find cached weather for %s" % setting)
 
   def save_weather(self, weather, location_code):
     log.debug("Setting: Saving cached weather data")
-    self.record = CouchRecord({
+    self.record = {
       "location" : location_code,
       "data"      : {
         "label"    : weather.getPureTemperature(),
@@ -105,17 +126,13 @@ class Settings:
         "sunrise"  : weather.getSunrise(),
         "sunset"   : weather.getSunset()
       }
-    }, self.weather_design_doc)
-    self.db.put_record(self.record)
-  
-  def get_weather(self, location_code):
-    log.debug("Setting: getting cached weather for %s" % location_code)
-    view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
-    if hasattr(view, 'rows'):
-      return str(view.rows[0])
-    else:
-      return None
-      log.debug("Setting: can't find cached weather for %s" % setting)
+    }
+    old_doc_id = self.get_weather(location_code, return_id=True)
+    if old_doc_id != None:
+      self.db.update_fields(old_doc_id, self.record)
+    else:    
+      self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
+
 
 class Location:
     """
