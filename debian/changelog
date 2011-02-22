@@ -1,3 +1,9 @@
+indicator-weather (11.02.13+bzr184~couchdb~natty1) natty; urgency=low
+
+  * Implemented Desktopcouch support
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 22 Feb 2011 08:54:48 +0200
+
 indicator-weather (11.02.13+bzr180~natty1) natty; urgency=low
 
   * Implemented UI improvements. Thanks, Andrew
