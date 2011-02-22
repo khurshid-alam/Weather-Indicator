@@ -183,8 +183,8 @@ class Location:
                 f = urllib2.urlopen(url)
                 s=f.read()
                 parsed = parseString(s)
-                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
-                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("civil")[0].firstChild.nodeValue
+                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
+                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
             #sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
             #sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
                 timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
