@@ -37,6 +37,7 @@ import threading
 import logging
 import logging.handlers
 import tempfile
+import pywapi
 
 import gettext
 from gettext import gettext as _
@@ -55,8 +56,25 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
 from indicator_weather.helpers import get_builder
+import locale
 
 gconfClient = gconf.client_get_default()
+
+class MetricSystem:
+    SI = 1
+    IMPERIAL = 2
+
+class WindUnits:
+    MPS = 1
+    MPH = 2
+    BEAUFORT = 3
+    KPH = 4
+    #KNOTS = 5
+
+class WeatherDataSource:
+    NOAA = 1
+    GOOGLE = 2
+    YAHOO = 3
 
 class Location:
     """
@@ -84,7 +102,8 @@ class Location:
             value = value.replace(code[0], code[1])
         return value
 
-    # Get a full city name
+    #FIXME- Update with PyWAPI
+    #Get a full city name
     def get_full_city_name(self):
         # We're getting a parent here, as 'location' here is actually a weather station
         self.__city = self.__location.get_parent()
@@ -95,10 +114,12 @@ class Location:
         self.__full_city_name += "%s" % self.__city.get_name()
         return self.html_decode(self.__full_city_name)
 
+    #FIXME- Update with PyWAPI
     #Get short city name
     def get_short_city_name(self):
         return self.html_decode(self.__location.get_parent().get_name())
 
+    #FIXME- Update with PyWAPI
     #Internal proc - iterate by known locations to find a city by its name
     def __find_city_by_name (self, node, city_name):
         if (node.get_name() == city_name):
@@ -110,7 +131,8 @@ class Location:
                 possible_city = self.__find_city_by_name(obj, city_name)
                 if (possible_city != None):
                     return possible_city;
-    
+
+    #FIXME- Update with PyWAPI
     #Internal proc - iterate by known locations to find city by its code
     def __find_city_by_code (self, node, city_code):
         if (node.get_code() == city_code):
@@ -121,16 +143,19 @@ class Location:
                 if (possible_city != None):
                     return possible_city;
 
+    #FIXME- Update with PyWAPI
     #Fill in location attribute, looking up by location name
     def find_city_by_name (self, city_name):
         location = self.__find_city_by_name(gweather.location_new_world(True), city_name)
         self.prepare_location(location)
 
+    #FIXME- Update with PyWAPI
     #Fill in location attribute, looking up by location code
     def find_city_by_code (self, city_code):
         location = self.__find_city_by_code(gweather.location_new_world(True), city_code)
         self.prepare_location(location)
 
+    #FIXME- Update with PyWAPI
     #Prepare metar reporter for the location
     def prepare_location(self, location):
         if (location != None):
@@ -143,6 +168,7 @@ class Location:
         else:
             self.__found = False
 
+    #FIXME- Update with PyWAPI
     #Get continent name for radar map
     def getContinent(self):
         if (self.__location != None):
@@ -153,7 +179,8 @@ class Location:
                 self.__city = self.__city.get_parent()
             self.__continent_name = self.__city.get_name()
             return self.__continent_name
-        
+
+    #FIXME: refactor this
     def set_label(self, value):
         self.__label = value
 
@@ -173,6 +200,7 @@ class Location:
     def weather(self):
         return self.__weather
 
+    #FIXME- Update with PyWAPI
     #Get sun status
     def get_sun_data(self):
         #return ("00:00:00", "00:00:00", "00:00:00")
@@ -195,6 +223,7 @@ class Location:
         else:
             print "Can't gather sun data on empty location"
 
+    #FIXME- Update with PyWAP
     #Update weather data and store weather object
     def update_weather_data(self):
         if (self.__report_fetcher != None):
@@ -203,95 +232,73 @@ class Location:
                 self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
                 self.__sun_report = self.get_sun_data();
                 self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
+                #FIXME: Update wether source here
+                self.forecast = Forecast(self.metric_system, WeatherDataSource.GOOGLE, self.location_id)
             except urllib2.URLError:
                 self.__found = False
                 print "error fetching report"
 
+class Forecast:
+
+    def __init__ (self, units, source, location, locale):
+        self.metric_system = units
+        self.source = source
+        self.location = location
+        self.locale = locale
+
     #Get and store forecast data - use Google
     def prepare_forecast_data(self):
-        import locale
-        localebad = locale.getlocale()[0]
-        locale = localebad.split ('_')
-        #Here we generate a string, compiled of latitude and longitude for location
-        self.coord_string = (",,,%.6f,%.6f" % (self.__lat, self.__lon)).replace(".","")
-        url = "http://www.google.com/ig/api?weather=" + self.coord_string + "&hl=" + locale[0]
-        print "url:%s" % url
+        self.daysofweek = []
+        self.icons = []
+        self.conditions = []
         try:
-            f = urllib2.urlopen(url)
-            s = f.read()
-            encoding = f.headers['content-type'].split('charset=')[-1]
-            s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-            self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-            self.__parsedforecast = parseString(s)
+            #FIXME: Use other sources
+            self.forecast = pywapi.get_weather_from_google (self.location , hl = self.locale)
+            self.unitsystem = self.forecast['forecast_information']['unit_system']
+
+            for forecast in self.forecast['forecasts']:
+                self.daysofweek.append(forecast["day_of_week"])
+                self.icons.append(forecast["icon"].split("/ig/images/weather/")[-1].split(".gif")[0])
+                self.conditions.append(forecast["condition"])
         except urllib2.URLError:
             print "error reaching url %s" % url
-        #FIXME: check for errors here
+
+    #Parse high values for forecast data
+    def get_forecast_data(self):
+        self.highdata = []
+        self.lowdata = []
+
+        if ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.IMPERIAL)):
+            #correct scale selected
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(forecast["high"])
+                self.lowdata.append(forecast["low"])
+
+        elif ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.IMPERIAL)):
+            #convert from SI to imperial
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(int(((int(forecast["high"])*9)/5)+32))
+                self.lowdata.append(int(((int(forecast["low"])*9)/5)+32))
+
+        elif ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.SI)):
+            #convert from imperial to SI
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(int((((int(forecast["high"]))-32)*5)/9))
+                self.lowdata.append(int((((int(forecast["low"]))-32)*5)/9))
+
+        return (self.highdata, self.lowdata)
 
     #Parse a list of days of week with forecast data
     def get_forecast_daysofweek(self):
-        self.daysofweek = []
-        for day_of_week in self.__parsedforecast.getElementsByTagName("day_of_week"):
-                self.daysofweek.append([day_of_week.attributes["data"].value][0])
         return self.daysofweek
-
-    #Parse high values for forecast data
-    def get_forecast_highdata(self):
-        self.highdata = []
-        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #correct scale selected
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append([high.attributes["data"].value][0])
-        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #convert from SI to imperial
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append(int(((int([high.attributes["data"].value][0])*9)/5)+32))
-        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
-            #convert from imperial to SI
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append(int((((int([high.attributes["data"].value][0]))-32)*5)/9))
-        return self.highdata
-
-    #Parse low values for forecast data
-    def get_forecast_lowdata(self):
-        self.lowdata = []
-        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #correct scale selected
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append([low.attributes["data"].value][0])
-        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #convert from SI to imperial
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append(int(((int([low.attributes["data"].value][0])*9)/5)+32))
-        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
-            #convert from imperial to SI
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append(int((((int([low.attributes["data"].value][0]))-32)*5)/9))
-        return self.lowdata
 
     #Parse icons for forecast data
     def get_forecast_icons(self):
-        self.icons = []
-        for icon in self.__parsedforecast.getElementsByTagName("icon"):
-                self.icons.append([icon.attributes["data"].value][0].split("/ig/images/weather/")[-1].split(".gif")[0])
         return self.icons
 
     #Parse conditions for forecast data
     def get_forecast_conditions(self):
-        self.conditions = []
-        for condition in self.__parsedforecast.getElementsByTagName("condition"):
-            self.conditions.append([condition.attributes["data"].value][0])
         return self.conditions
-        
-class MetricSystem:
-    SI = 1
-    IMPERIAL = 2
-
-class WindUnits:
-    MPS = 1
-    MPH = 2
-    BEAUFORT = 3
-    KPH = 4
-    #KNOTS = 5
 
 class Weather:
     """
@@ -897,32 +904,19 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
 
-    def responseToDialog(self, entry, dialog, response):
-        #FIXME: Do we need this?
-        log.debug("Indicator: response to dialog")  
-        dialog.response(response)
-
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         log.debug("Indicator: getWeather: extended = %s" % extended)  
         self.current_location = Location(self.metric_system, self._wind_unit)
         if (self.current_location.find_city_by_code(city[0]) == False):
             log.error("Indicator: getWeather: location with code %s not found" % city[0])  
-        if extended == False:
-            log.debug("Indicator: getWeather: updating weather report")  
-            self.current_location.update_weather_data()
-            if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
-                log.debug("Indicator: getWeather: report is empty")  
-                return None;
-            else:
-                return self.current_location.weather
+        log.debug("Indicator: getWeather: updating weather report")  
+        self.current_location.update_weather_data()
+        if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
+            log.debug("Indicator: getWeather: report is empty")  
+            return None;
         else:
-            self.current_location.prepare_forecast_data()
-            self.daysofweek = self.current_location.get_forecast_daysofweek()
-            self.lowdata    = self.current_location.get_forecast_lowdata()
-            self.highdata   = self.current_location.get_forecast_highdata()
-            self.icons      = self.current_location.get_forecast_icons()
-            self.conditions = self.current_location.get_forecast_conditions()
-        
+            return self.current_location.weather
+
     def prefs(self, widget):
         log.debug("Indicator: open Preferences")  
         self.prefswindow = PreferencesDialog()
@@ -1140,17 +1134,22 @@ class ExtendedForecast(gtk.Window):
         log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         log.debug("ExtendedForecast: getting forecast data")
-        wi.get_weather(wi.places[wi.placechosen],False,True)
+        locale_name = locale.getlocale()[0].split('_')[0]
+        forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.places[wi.placechosen][0], units = wi.metric_system, locale = locale_name)
+        daysofweek = forecast.get_forecast_daysofweek()
+        (highdata, lowdata) = forecast.get_forecast_data()
+        icons      = forecast.get_forecast_icons()
+        conditions = forecast.get_forecast_conditions()
 
         log.debug("ExtendedForecast: parsing forecast data")
-        self.builder.get_object('day1lbl').set_label('<big>%s</big>' % wi.daysofweek[0].capitalize())
-        self.builder.get_object('day2lbl').set_label('<big>%s</big>' % wi.daysofweek[1].capitalize())
-        self.builder.get_object('day3lbl').set_label('<big>%s</big>' % wi.daysofweek[2].capitalize())
-        self.builder.get_object('day4lbl').set_label('<big>%s</big>' % wi.daysofweek[3].capitalize())
+        self.builder.get_object('day1lbl').set_label('<big>%s</big>' % daysofweek[0].capitalize())
+        self.builder.get_object('day2lbl').set_label('<big>%s</big>' % daysofweek[1].capitalize())
+        self.builder.get_object('day3lbl').set_label('<big>%s</big>' % daysofweek[2].capitalize())
+        self.builder.get_object('day4lbl').set_label('<big>%s</big>' % daysofweek[3].capitalize())
 
         #FIXME: Refactor this
         i=0
-        for icon in wi.icons[1:]:
+        for icon in icons[1:]:
             i=i+1
             if icon in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
                 self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-storm',gtk.ICON_SIZE_BUTTON)
@@ -1171,24 +1170,23 @@ class ExtendedForecast(gtk.Window):
             else:
                 self.builder.get_object('day%simage' % str(i)).set_from_icon_name('window-close',gtk.ICON_SIZE_BUTTON)
         i=0
-        for condition in wi.conditions[1:]:
+        for condition in conditions[1:]:
             i=i+1
             self.builder.get_object('day%scond' % str(i)).set_label(condition)
         i=0
         #Refactor this
-        if wi.unit == 'S':
+        if unit == 'S':
             tempunit = '°C'
-        elif wi.unit == 'I':
+        elif unit == 'I':
             tempunit = '°F'
-        for high in wi.highdata:
+        for high in highdata:
             i=i+1
             self.builder.get_object('day%stemphigh' % str(i)).set_label((_('High: ')+'%s%s') % (high,tempunit))
         i=0
-        for low in wi.lowdata:
+        for low in lowdata:
             i=i+1
             self.builder.get_object('day%stemplow' % str(i)).set_label((_('Low: ')+'%s%s') % (low,tempunit))
         
-    
     def close(self, widget, data=None):
         log.debug("ExtendedForecast: closing window")
         self.destroy()
