@@ -26,7 +26,6 @@ import appindicator
 import gconf
 import urllib2
 import re
-import datetime
 import locale
 import pynotify
 from xml.dom.minidom import parseString
@@ -53,7 +52,6 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
 from indicator_weather.helpers import get_builder
-import locale
 
 gconfClient = gconf.client_get_default()
 
@@ -128,32 +126,9 @@ class Location:
         self.__found = True
         return True
 
-    #Get sun status
-    def get_sun_data(self):
-        #return ("00:00:00", "00:00:00", "00:00:00")
-        if (self.found):
-            now = datetime.datetime.now()
-            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
-            try:
-                f = urllib2.urlopen(url)
-                s=f.read()
-                parsed = parseString(s)
-                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
-                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
-            #sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-            #sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
-                timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-                return (sunrise, sunset, timezone)
-            except urllib2.URLError:
-                print "error reaching url %s" % url
-                return ("00:00:00", "00:00:00", "00:00:00")
-        else:
-            print "Can't gather sun data on empty location"
-
     #Update weather data and store weather object
     def update_weather_data(self):
-        self.__sun_report = self.get_sun_data();
-        self.__weather = Weather(self.__location_id, WeatherDataSource.GOOGLE, self.__metric_system, self.__wind_units, self.__sun_report)
+        self.__weather = Weather(self.__location_id, WeatherDataSource.YAHOO, self.__metric_system, self.__wind_units, self.__lat, self.__lon)
 
 class Forecast:
 
@@ -170,7 +145,7 @@ class Forecast:
         self.conditions = []
         try:
             #FIXME: Use other sources
-            self.forecast = pywapi.get_weather_from_google (self.location , hl = self.locale)
+            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % self.location, hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
             for forecast in self.forecast['forecasts']:
@@ -248,32 +223,61 @@ class Weather:
         "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True)
     }
 
-    def __init__(self, location_id, weather_datasource, metric_system, wind_unit, sun_report):
-        self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
-        locale_name = locale.getlocale()[0].split('_')[0]
-        self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
+    def __init__(self, location_id, weather_datasource, metric_system, wind_unit, lat, lon):
         self.__weather_datasource = weather_datasource
-        self.__sun = sun_report
         self.__metric_system = metric_system
         self.__wind_unit = wind_unit
         self.__current_condition = None
-        
-        icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
-        self.__current_condition = self._WeatherConditions.get(icon_name)
-        log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
+        self.__lat = lat
+        self.__lon = lon
 
-        #formatting sun data
-        now = datetime.datetime.now().time()
-        self.__sunrise = self.__sun[0]
-        self.__sunset = self.__sun[1]
-        #FIXME: this is ugly
-        self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
-        self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
+            locale_name = locale.getlocale()[0].split('_')[0]
+            self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
+            self.__localized_report = self.__report
+
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
+            self.__current_condition = self._WeatherConditions.get(icon_name)
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            icon_name = self.__report['condition']['code']
+            self.__current_condition = self._WeatherConditions.get(icon_name)
+        log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
+        self.get_sun_data()
+
+    #Get sun status
+    def get_sun_data(self):
+        now = time.gmtime() 
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
+            try:
+                f = urllib2.urlopen(url)
+                s=f.read()
+                parsed = parseString(s)
+                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
+                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
+                timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+                self.__sunrise_t = strptime(sunrise, '%H:%M:%S')
+                self.__sunset_t = strptime(sunset, '%H:%M:%S')
+            except urllib2.URLError:
+                print "error reaching url %s" % url
+
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            sunrise = self.__report['astronomy']['sunrise']
+            sunset = self.__report['astronomy']['sunset']
+            locale.setlocale(locale.LC_ALL, 'C')
+            self.__sunrise_t = time.strptime(sunrise, "%I:%M %p")
+            self.__sunset_t = time.strptime(sunset, "%I:%M %p")
+            locale.resetlocale()
+
         if now<self.__sunrise_t or now>self.__sunset_t:
             self.__night = True
         else:
             self.__night = False
-        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sun[0], self.__sun[1], self.__night))
+        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sunrise_t, self.__sunset_t, self.__night))
 
     def isNight(self):
         return self.__night
@@ -305,17 +309,24 @@ class Weather:
     def getCondition(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             pureCondition = self.__localized_report['current_conditions']['condition']
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            pureCondition = self.__localized_report['condition']['text']
         return pureCondition
 
     def getHumidity(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             humidity = self.__localized_report['current_conditions']['humidity']
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            humidity = "%s: %s%%" % (_("Humidity"), self.__localized_report['atmosphere']['humidity'])
         return humidity
 
     #FIXME: Update with PyWAPI
     def getDewPoint(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             #Can't be calculated in Google
+            return None
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            #Can't be calculated in Yahoo 
             return None
         #if (self.__metric_system == MetricSystem.SI):
         #    _value = "---"
@@ -328,17 +339,27 @@ class Weather:
     #FIXME: Update with PyWAPI
     def getPressure(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            pressure = "---"
-        return "%s: %s %s" % (_("Pressure"), pressure, "hPa")
+            value = "---"
+            unit = ""
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            value = self.__localized_report['atmosphere']['pressure']
+            unit = self.__localized_report['units']['pressure']
+        return "%s: %s %s" % (_("Pressure"), value, units)
 
-    #FIXME: Update with PyWAPI
     def getPureTemperature(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             if (self.__metric_system == MetricSystem.SI):
                 _value = self.__report['current_conditions']['temp_c']
                 _unit  = "C"
             else:
-                _value = self.__report['current_conditions']['t']
+                _value = self.__report['current_conditions']['temp_f']
+                _unit  = "F"
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            if (self.__metric_system == MetricSystem.SI):
+                _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * (5/9))
+                _unit  = "C"
+            else:
+                _value = self.__report['condition']['temp']
                 _unit  = "F"
         return ("%s %s" % (_value, _unit)).replace(".0", "")
 
@@ -347,7 +368,10 @@ class Weather:
 
     def getHumidex(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            #Can't be calculated in Google
+            #Empty for Google
+            return None
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            #Empty for Yahoo
             return None
         #dewPoint=2
         #temp_c = 1
@@ -361,38 +385,66 @@ class Weather:
             wind_direction = localized_wind_info[1]
             wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
             wind_speed = wind_info[3]
-        
+
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            wind_speed = self.__localized_report['wind']['speed']
+            wind_units = self.__localized_report['units']['speed']
+            localized_wind_info = [_("Wind") + ":", wind_speed, wind_units] 
+
         #Parse Wind_direction - convert to selected scale
         if (self.__wind_unit == WindUnits.MPH):
-            _value = wind_speed
+            _value = float(wind_speed)
             _unit  = _("mph")
         if (self.__wind_unit == WindUnits.MPS):
             _value = float(wind_speed) * 0.44704
             _unit  = _("m/s")
         if (self.__wind_unit == WindUnits.BEAUFORT):
-            _value = self.getBeufortFromMPH(wind_speed)
+            _value = self.getBeufortFromMPH(float(wind_speed))
             _unit  = ""
         if (self.__wind_unit == WindUnits.KPH):
-            _value = wind_speed * 1.609344
+            _value = float(wind_speed) * 1.609344
             _unit  = _("km/h")
         if (self.__wind_unit == WindUnits.KNOTS):
-            _value = wind_speed * 0.868976241900648
+            _value = float(wind_speed) * 0.868976241900648
             _unit  = _("knot(s)")
         localized_wind_info[len(localized_wind_info)-1] = _unit
-        localized_wind_info[len(localized_wind_info)-2] = str(_value)
+        localized_wind_info[len(localized_wind_info)-2] = ("%0.1f" % _value).replace(".0", "")
         return ' '.join(localized_wind_info)
 
     #FIXME: fiill in with data
     def getBeufortFromMPH(self, value):
-        if value == 0:
+        if value < 1:
             return 0
-        return 10
+        if (value >= 1) and (value < 4):
+            return 1
+        if (value >= 4) and (value < 8):
+            return 2
+        if (value >= 8) and (value < 13):
+            return 3
+        if (value >= 13) and (value < 18):
+            return 4
+        if (value >= 18) and (value < 25):
+            return 5
+        if (value >= 21) and (value < 27):
+            return 6
+        if (value >= 31) and (value < 39):
+            return 7
+        if (value >= 39) and (value < 47):
+            return 8
+        if (value >= 75) and (value < 89):
+            return 9
+        if (value >= 55) and (value < 64):
+            return 10
+        if (value >= 64) and (value < 73):
+            return 11
+        if value >= 73:
+            return 12
 
     def getSunrise(self):
-        return "%s: %s" % (_("Sunrise"), time.strftime('%X',time.strptime(self.__sunrise,'%H:%M:%S')))
+        return "%s: %s" % (_("Sunrise"), time.strftime('%X', self.__sunrise_t))
 
     def getSunset(self):
-        return "%s: %s" % (_("Sunset"), time.strftime('%X',time.strptime(self.__sunset,'%H:%M:%S')))
+        return "%s: %s" % (_("Sunset"), time.strftime('%X', self.__sunset_t))
 
 class indicator_weather(threading.Thread):
     last_update_time = None
@@ -404,7 +456,6 @@ class indicator_weather(threading.Thread):
         self.winder = appindicator.Indicator ("indicator-weather", "weather-indicator", appindicator.CATEGORY_OTHER)
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("weather-indicator-error")
-        #self.winder.connect('popup-menu',self.menu_popup)
         
         self.rate = gconfClient.get_int("/apps/indicator-weather/refresh_rate")
         self.unit = gconfClient.get_string("/apps/indicator-weather/unit")
