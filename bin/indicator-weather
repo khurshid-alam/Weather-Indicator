@@ -118,11 +118,19 @@ class Location:
     def weather(self):
         return self.__weather
 
+    @property
+    def lat(self):
+        return self.__lat
+
+    @property
+    def lon(self):
+        return self.__lon
+
     #FIXME: Update with PyWAPI
     def find_city_by_code(self, location_id):
         self.__location_id = location_id
-        self.__lat = 10
-        self.__lon = 10
+        self.__lat = 4550000
+        self.__lon = -7358300
         self.__found = True
         return True
 
@@ -144,8 +152,7 @@ class Forecast:
         self.icons = []
         self.conditions = []
         try:
-            #FIXME: Use other sources
-            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % self.location, hl = self.locale)
+            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (self.location.lat, self.location.lon), hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
             for forecast in self.forecast['forecasts']:
@@ -977,7 +984,7 @@ class ExtendedForecast(gtk.Window):
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         log.debug("ExtendedForecast: getting forecast data")
         locale_name = locale.getlocale()[0].split('_')[0]
-        forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.places[wi.placechosen][0], units = wi.metric_system, locale = locale_name)
+        forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.current_location, units = wi.metric_system, locale = locale_name)
         forecast.prepare_forecast_data()
         daysofweek = forecast.get_forecast_daysofweek()
         (highdata, lowdata) = forecast.get_forecast_data()
