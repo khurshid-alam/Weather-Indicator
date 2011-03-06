@@ -348,7 +348,7 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             value = "---"
             unit = ""
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
             value = self.__localized_report['atmosphere']['pressure']
             unit = self.__localized_report['units']['pressure']
         return "%s: %s %s" % (_("Pressure"), value, units)
