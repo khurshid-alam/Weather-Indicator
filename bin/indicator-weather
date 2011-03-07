@@ -848,6 +848,13 @@ class indicator_weather(threading.Thread):
                     log.debug("Indicator: new location selected: %s" % self.places.index(place))
                     self.placechosen = self.places.index(place)
                     break
+
+            self.location_details = self.settings.get_location_details(self.place[0])
+            if self.location_details in (False, None, '', '[]', "['']"):
+                log.debug("Indicator: could not parse location details for placechosen='%s'" % self.placechosen)
+                self.menu_noplace()
+            else:
+                self.location_details = eval(self.location_details)
             self.settings.set_value("placechosen", self.placechosen)
             self.update_weather(False)
 
