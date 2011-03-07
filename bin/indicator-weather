@@ -25,11 +25,10 @@ import gobject
 import appindicator
 import urllib2
 import re
-import datetime
 import locale
 import pynotify
 from xml.dom.minidom import parseString
-import time
+import datetime
 import math
 import commands
 import threading
@@ -40,13 +39,11 @@ import couchdb
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
 import time
+import pywapi
 
 import gettext
 from gettext import gettext as _
 gettext.textdomain('indicator-weather')
-
-from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
-import pymetar as metar
 
 # Add project root directory (enable symlink, and trunk execution).
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
@@ -117,7 +114,7 @@ class Settings:
       "location" : location_code,
       "data"      : {
         "label"    : weather.getPureTemperature(),
-        "condition": weather.getPureCondition(),
+        "condition": weather.getCondition(),
         "icon"     : weather.getPixmap(),
         "temper"   : weather.getTemperature(),
         "humidex"  : weather.getHumidex(),
@@ -133,6 +130,20 @@ class Settings:
     else:    
       self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
 
+class MetricSystem:
+    SI = 1
+    IMPERIAL = 2
+
+class WindUnits:
+    MPS = 1
+    MPH = 2
+    BEAUFORT = 3
+    KPH = 4
+    KNOTS = 5
+
+class WeatherDataSource:
+    GOOGLE = 1
+    YAHOO = 2
 
 class Location:
     """
@@ -147,89 +158,7 @@ class Location:
         self.__lat = None
         self.__lon = None
 
-    #Replace chars with HTML-safe equivalents
-    def html_decode(self, value):
-        htmlCodes = (
-            ('&', '&amp;'),
-            ('<', '&lt;'),
-            ('>', '&gt;'),
-            ('"', '&quot;'),
-            ("'", '&#39;'),
-        )
-        for code in htmlCodes:
-            value = value.replace(code[0], code[1])
-        return value
-
-    # Get a full city name
-    def get_full_city_name(self):
-        # We're getting a parent here, as 'location' here is actually a weather station
-        self.__city = self.__location.get_parent()
-        self.__full_city_name = ""
-        while (self.__city.get_parent().get_parent() != None):
-            self.__full_city_name += "%s, " % self.__city.get_name()
-            self.__city = self.__city.get_parent()
-        self.__full_city_name += "%s" % self.__city.get_name()
-        return self.html_decode(self.__full_city_name)
-
-    #Get short city name
-    def get_short_city_name(self):
-        return self.html_decode(self.__location.get_parent().get_name())
-
-    #Internal proc - iterate by known locations to find a city by its name
-    def __find_city_by_name (self, node, city_name):
-        if (node.get_name() == city_name):
-            #FIXME: City may have several weather stations - we're selecting the first one only
-            if (node.get_children() != None):
-                return node.get_children()[0];
-        else:
-            for obj in node.get_children():
-                possible_city = self.__find_city_by_name(obj, city_name)
-                if (possible_city != None):
-                    return possible_city;
-    
-    #Internal proc - iterate by known locations to find city by its code
-    def __find_city_by_code (self, node, city_code):
-        if (node.get_code() == city_code):
-            return node;
-        else:
-            for obj in node.get_children():
-                possible_city = self.__find_city_by_code(obj, city_code)
-                if (possible_city != None):
-                    return possible_city;
-
-    #Fill in location attribute, looking up by location name
-    def find_city_by_name (self, city_name):
-        location = self.__find_city_by_name(gweather.location_new_world(True), city_name)
-        self.prepare_location(location)
-
-    #Fill in location attribute, looking up by location code
-    def find_city_by_code (self, city_code):
-        location = self.__find_city_by_code(gweather.location_new_world(True), city_code)
-        self.prepare_location(location)
-
-    #Prepare metar reporter for the location
-    def prepare_location(self, location):
-        if (location != None):
-            self.__location = location
-            self.__code = location.get_code()
-            self.__lat = location.get_coords()[0]
-            self.__lon = location.get_coords()[1]
-            self.__report_fetcher = metar.ReportFetcher(self.__code)
-            self.__found = True
-        else:
-            self.__found = False
-
-    #Get continent name for radar map
-    def getContinent(self):
-        if (self.__location != None):
-            self.__city = self.__location
-            self.__continent_name = ""
-            self.__city = self.__city.get_parent()
-            while (self.__city.get_parent().get_parent() != None):
-                self.__city = self.__city.get_parent()
-            self.__continent_name = self.__city.get_name()
-            return self.__continent_name
-        
+    #FIXME: refactor this
     def set_label(self, value):
         self.__label = value
 
@@ -249,309 +178,248 @@ class Location:
     def weather(self):
         return self.__weather
 
+    @property
+    def lat(self):
+        return self.__lat
+
+    @property
+    def lon(self):
+        return self.__lon
+
+    #FIXME: Update with PyWAPI
+    def find_city_by_code(self, location_id):
+        #Find location details from GeoNames
+        url = "http://api.geonames.org/get?geonameId=625144&username=indicatorweather&style=full"
+        try:
+            f = urllib2.urlopen(url)
+            s=f.read()
+            parsed = parseString(s)
+            self.__location_id = location_id
+            self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
+            self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
+            city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
+            country_name = parsed.getElementsByTagName("countryName")[0].firstChild.nodeValue
+            self.__full_name = "%s, %s" % (city_name, country_name)
+            self.__found = True
+            return True
+        except urllib2.URLError:
+            print "error reaching url %s" % url
+            self.__found = False
+            return False
+
+    #Update weather data and store weather object
+    def update_weather_data(self):
+        self.__weather = Weather(self.__full_name, WeatherDataSource.GOOGLE, self.__metric_system, self.__wind_units, self.__lat, self.__lon)
+
+class Forecast:
+
+    def __init__ (self, units, source, location, locale):
+        self.metric_system = units
+        self.source = source
+        self.location = location
+        self.locale = locale
+
+    #Get and store forecast data - use Google
+    def prepare_forecast_data(self):
+        self.daysofweek = []
+        self.icons = []
+        self.conditions = []
+        try:
+            #Correcting lat and lon for google
+            lat = self.location.lat
+            lon = self.location.lon
+            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (lat, lon), hl = self.locale)
+            self.unitsystem = self.forecast['forecast_information']['unit_system']
+
+            for forecast in self.forecast['forecasts']:
+                self.daysofweek.append(forecast["day_of_week"])
+                self.icons.append(forecast["icon"].split("/ig/images/weather/")[-1].split(".gif")[0])
+                self.conditions.append(forecast["condition"])
+        except urllib2.URLError:
+            print "error reaching url %s" % url
+
+    #Parse high values for forecast data
+    def get_forecast_data(self):
+        self.highdata = []
+        self.lowdata = []
+
+        if ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.IMPERIAL)):
+            #correct scale selected
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(forecast["high"])
+                self.lowdata.append(forecast["low"])
+
+        elif ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.IMPERIAL)):
+            #convert from SI to imperial
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(int(((int(forecast["high"])*9)/5)+32))
+                self.lowdata.append(int(((int(forecast["low"])*9)/5)+32))
+
+        elif ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.SI)):
+            #convert from imperial to SI
+            for forecast in self.forecast['forecasts']:
+                self.highdata.append(int((((int(forecast["high"]))-32)*5)/9))
+                self.lowdata.append(int((((int(forecast["low"]))-32)*5)/9))
+
+        return (self.highdata, self.lowdata)
+
+    #Parse a list of days of week with forecast data
+    def get_forecast_daysofweek(self):
+        return self.daysofweek
+
+    #Parse icons for forecast data
+    def get_forecast_icons(self):
+        return self.icons
+
+    #Parse conditions for forecast data
+    def get_forecast_conditions(self):
+        return self.conditions
+
+class Weather:
+    """
+    Data object to parse metar weather object and convert units
+    """
+
+    #Available conditions and their icons (basing on Google or Yahoo icons
+    #Formats: Google/Yahoo name: (gweather icon for day, icon for night, severe weather condition
+    _WeatherConditions = {
+        #Google conditions
+        "sunny"            : ( "weather-clear",      "weather-clear-night",      False),
+        "mostly_sunny"     : ( "weather-clear",      "weather-clear-night",      False),
+        "partly_cloudy"    : ( "weather-few-clouds", "weather-few-clouds-night", False),
+        "mostly_cloudy"    : ( "weather-overcast",   "weather-overcast",         False),
+        "cloudy"           : ( "weather-clouds",     "weather-clouds-night",     False),
+        "rain"             : ( "weather-showers",    "weather-showers",          False),
+        "chance_of_rain"   : ( "weather-showers",    "weather-showers",          False),
+        "sleet"            : ( "weather-snow",       "weather-snow",             False),
+        "snow"             : ( "weather-snow",       "weather-snow",             False),
+        "chance_of_snow"   : ( "weather-snow",       "weather-snow",             False),
+        "icy"              : ( "weather-snow",       "weather-snow",             False),
+        "dust"             : ( "weather-fog",        "weather-fog",              False),
+        "fog"              : ( "weather-fog",        "weather-fog",              False),
+        "mist"             : ( "weather-fog",        "weather-fog",              False),
+        "smoke"            : ( "weather-fog",        "weather-fog",              False),
+        "haze"             : ( "weather-fog",        "weather-fog",              False),
+        "flurries"         : ( "weather-storm",      "weather-storm",            False),
+        "chance_of_storm"  : ( "weather-storm",      "weather-storm",            True),
+        "storm"            : ( "weather-storm",      "weather-storm",            True),
+        "thunderstorm"     : ( "weather-stoom",      "weather-storm",            True),
+        "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True),
+    }
+
+    _WeatherCodes = {
+        #Yahoo conditions by code
+        '0' : ("weather-storm",             "weather-storm",            True,  _("Tornado")),
+        '1' :	("weather-storm",             "weather-storm",            True,  _("Tropical storm")),
+        '2' :	("weather-storm",             "weather-storm",            True,  _("Hurricane")),
+        '3' :	("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
+        '4' :	("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
+        '5' :	("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
+        '6' :	("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
+        '7' :	("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
+        '8' :	("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
+        '9' :	("weather-showers",           "weather-showers",          False, _("Drizzle")),
+        '10':	("weather-snow",              "weather-snow",             False, _("Freezing rain")),
+        '11':	("weather-showers",           "weather-showers",          False, _("Showers")),
+        '12':	("weather-showers",           "weather-showers",          False, _("Showers")),
+        '13':	("weather-snow",              "weather-snow",             False, _("Snow flurries")),
+        '14':	("weather-snow",              "weather-snow",             False, _("Light snow showers")),
+        '15':	("weather-snow",              "weather-snow",             False, _("Blowing snow")),
+        '16':	("weather-snow",              "weather-snow",             False, _("Snow")),
+        '17':	("weather-showers",           "weather-showers",          False, _("Hail")),
+        '18':	("weather-snow",              "weather-snow",             False, _("Sleet")),
+        '19':	("weather-fog",               "weather-fog",              False, _("Dust")),
+        '20':	("weather-fog",               "weather-fog",              False, _("Foggy")),
+        '21':	("weather-fog",               "weather-fog",              False,  _("Haze")),
+        '22':	("weather-fog",               "weather-fog",              False, _("Smoky")),
+        '23':	("weather-clear",             "weather-clear-night",      False, _("Blustery")),
+        '24':	("weather-clear",             "weather-clear-night",      False, _("Windy")),
+        '25':	("weather-clear",             "weather-clear-night",      False, _("Cold")),
+        '26':	("weather-clouds",            "weather-clouds-night",     False, _("Cloudy")),
+        '27':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '28':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '29':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '30':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '31':	("weather-clear",             "weather-clear-night",      False, _("Clear")),
+        '32':	("weather-clear",             "weather-clear-night",      False, _("Sunny")),
+        '33':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '34':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '35':	("weather-showers-scattered", "weather-showers-scattered",False, _("Mixed rain and hail")),
+        '36':	("weather-clear",             "weather-clear-night",      False, _("Hot")),
+        '37':	("weather-storm",             "weather-storm",            True,  _("Isolated thunderstorms")),
+        '38':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '39':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '40':	("weather-showers-scattered", "weather-showers-scattered",False, _("Scattered showers")),
+        '41':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '42':	("weather-snow",              "weather-snow",             False, _("Scattered snow showers")),
+        '43':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '44':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '45':	("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
+        '46':	("weather-snow",              "weather-snow",             False, _("Snow showers")),
+        '47':	("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers"))
+    }
+
+    def __init__(self, location_id, weather_datasource, metric_system, wind_unit, lat, lon):
+        self.__weather_datasource = weather_datasource
+        self.__metric_system = metric_system
+        self.__wind_unit = wind_unit
+        self.__current_condition = None
+        self.__lat = lat
+        self.__lon = lon
+
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
+            locale_name = locale.getlocale()[0].split('_')[0]
+            self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
+            icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
+            self.__current_condition = self._WeatherConditions.get(icon_name)
+
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
+            self.__localized_report = self.__report
+            icon_name = self.__report['condition']['code']
+            self.__current_condition = self._WeatherCodes.get(icon_name)
+        log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
+        self.get_sun_data()
+
     #Get sun status
     def get_sun_data(self):
-        #return ("00:00:00", "00:00:00", "00:00:00")
-        if (self.found):
-            now = datetime.datetime.now()
-            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat,self.__lon,now.day,now.month)
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            now = datetime.datetime.now() 
+            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
             try:
                 f = urllib2.urlopen(url)
                 s=f.read()
                 parsed = parseString(s)
                 sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
                 sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
-            #sunrise = parsed.getElementsByTagName("sunrise")[0].firstChild.nodeValue
-            #sunset = parsed.getElementsByTagName("sunset")[0].firstChild.nodeValue
                 timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-                return (sunrise, sunset, timezone)
+                self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S').time()
+                self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S').time()
             except urllib2.URLError:
                 print "error reaching url %s" % url
-                return ("00:00:00", "00:00:00", "00:00:00")
-        else:
-            print "Can't gather sun data on empty location"
 
-    #Update weather data and store weather object
-    def update_weather_data(self):
-        if (self.__report_fetcher != None):
-            try:
-                self.__fetched_report = self.__report_fetcher.FetchReport()
-                self.__weather_report = metar.ReportParser(self.__fetched_report).ParseReport()
-                self.__sun_report = self.get_sun_data();
-                self.__weather = Weather(self.__weather_report, self.__sun_report, self.__metric_system, self.__wind_units)
-            except urllib2.URLError:
-                self.__found = False
-                print "error fetching report"
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            sunrise = self.__report['astronomy']['sunrise']
+            sunset = self.__report['astronomy']['sunset']
+            locale.setlocale(locale.LC_ALL, 'C')
+            self.__sunrise_t = datetime.datetime.strptime(sunrise, "%I:%M %p").time()
+            self.__sunset_t = datetime.datetime.strptime(sunset, "%I:%M %p").time()
+            locale.resetlocale()
 
-    #Get and store forecast data - use Google
-    def prepare_forecast_data(self):
-        import locale
-        localebad = locale.getlocale()[0]
-        locale = localebad.split ('_')
-        #Here we generate a string, compiled of latitude and longitude for location
-        self.coord_string = (",,,%.6f,%.6f" % (self.__lat, self.__lon)).replace(".","")
-        url = "http://www.google.com/ig/api?weather=" + self.coord_string + "&hl=" + locale[0]
-        print "url:%s" % url
-        try:
-            f = urllib2.urlopen(url)
-            s = f.read()
-            encoding = f.headers['content-type'].split('charset=')[-1]
-            s = unicode(s, encoding).encode('utf-8').replace("&#39;", "'")
-            self.unitsystem = s.split("<unit_system data=\"")[-1].split("\"")[0]
-            self.__parsedforecast = parseString(s)
-        except urllib2.URLError:
-            print "error reaching url %s" % url
-        #FIXME: check for errors here
-
-    #Parse a list of days of week with forecast data
-    def get_forecast_daysofweek(self):
-        self.daysofweek = []
-        for day_of_week in self.__parsedforecast.getElementsByTagName("day_of_week"):
-                self.daysofweek.append([day_of_week.attributes["data"].value][0])
-        return self.daysofweek
-
-    #Parse high values for forecast data
-    def get_forecast_highdata(self):
-        self.highdata = []
-        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #correct scale selected
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append([high.attributes["data"].value][0])
-        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #convert from SI to imperial
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append(int(((int([high.attributes["data"].value][0])*9)/5)+32))
-        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
-            #convert from imperial to SI
-            for high in self.__parsedforecast.getElementsByTagName("high"):
-                self.highdata.append(int((((int([high.attributes["data"].value][0]))-32)*5)/9))
-        return self.highdata
-
-    #Parse low values for forecast data
-    def get_forecast_lowdata(self):
-        self.lowdata = []
-        if ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #correct scale selected
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append([low.attributes["data"].value][0])
-        elif ((self.unitsystem == 'SI') and (self.__metric_system == MetricSystem.IMPERIAL)):
-            #convert from SI to imperial
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append(int(((int([low.attributes["data"].value][0])*9)/5)+32))
-        elif ((self.unitsystem == 'US') and (self.__metric_system == MetricSystem.SI)):
-            #convert from imperial to SI
-            for low in self.__parsedforecast.getElementsByTagName("low"):
-                self.lowdata.append(int((((int([low.attributes["data"].value][0]))-32)*5)/9))
-        return self.lowdata
-
-    #Parse icons for forecast data
-    def get_forecast_icons(self):
-        self.icons = []
-        for icon in self.__parsedforecast.getElementsByTagName("icon"):
-                self.icons.append([icon.attributes["data"].value][0].split("/ig/images/weather/")[-1].split(".gif")[0])
-        return self.icons
-
-    #Parse conditions for forecast data
-    def get_forecast_conditions(self):
-        self.conditions = []
-        for condition in self.__parsedforecast.getElementsByTagName("condition"):
-            self.conditions.append([condition.attributes["data"].value][0])
-        return self.conditions
-        
-class MetricSystem:
-    SI = 1
-    IMPERIAL = 2
-
-class WindUnits:
-    MPS = 1
-    MPH = 2
-    BEAUFORT = 3
-    KPH = 4
-    #KNOTS = 5
-
-class Weather:
-    """
-    Data object to parse metar weather object and convert units
-    """
-    
-    #Available conditions and their icons
-    # The following format is used:
-    # pymetar name: (translated name, day icon name, night icon name, is severe) 
-    _WeatherConditions = {
-        #FIXME: Do we really have to copypaste these key values?
-
-        #Clear
-        "sunny"                   : ( _("Sunny"),          "weather-clear", False),
-        "mostly sunny"            : ( _("Mostly sunny"),   "weather-clear", False),
-        "partly sunny"            : ( _("Partly sunny"),   "weather-clear", False),
-        "clear"                   : ( _("Clear"),          "weather-clear", False),
-        "clear sky"               : ( _("Clear sky"),      "weather-clear", False),
-        "becoming sunny"          : ( _("Becoming sunny"), "weather-clear", False),
-
-        #Clouds
-        "mostly cloudy"           : ( _("Mostly cloudy"),     "weather-clouds",   False),
-        "increasing clouds"       : ( _("Increasing clouds"), "weather-clouds",   False),
-        "decreasing clouds"       : ( _("Decreasing clouds"), "weather-clouds",   False),
-        "broken clouds"           : ( _("Broken clouds"),     "weather-clouds",   False),
-        "scattered clouds"        : ( _("Scattered clouds"),  "weather-overcast", False),
-        "overcast"                : ( _("Overcast"),          "weather-overcast", False),
-
-        #Few clouds
-        "few clouds"              : ( _("Few clouds"),       "weather-few-clouds", False),
-        "partly cloudy"           : ( _("Partly cloudy"),    "weather-few-clouds", False),
-        "becoming cloudy"         : ( _("Becoming cloudy"),  "weather-few-clouds", False),
-        "clearing"                : ( _("Clearing"),         "weather-few-clouds", False),
-        "gradual clearing"        : ( _("Gradual clearing"), "weather-few-clouds", False),
-        "clearing late"           : ( _("Clearing late"),    "weather-few-clouds", False),
-
-        #Fog
-        "fog"                     : ( _("Fog"),                  "weather-fog", False),
-        "patchy fog"              : ( _("Patchy fog"),           "weather-fog", False),
-        "dense fog"               : ( _("Dense fog"),            "weather-fog", False),
-        "areas fog"               : ( _("Areas fog"),            "weather-fog", False),
-        "blowing dust"            : ( _("Blowing dust"),         "weather-fog", False),
-        "blowing sand"            : ( _("Blowing sand"),         "weather-fog", False),
-        "patchy haze"             : ( _("Patchy haze"),          "weather-fog", False),
-        "areas haze"              : ( _("Areas haze"),           "weather-fog", False),
-        "haze"                    : ( _("Haze"),                 "weather-fog", False),
-        "patchy ice fog"          : ( _("Patchy ice fog"),       "weather-fog", False),
-        "areas ice fog"           : ( _("Areas ice fog"),        "weather-fog", False),
-        "ice fog"                 : ( _("Ice fog"),              "weather-fog", False),
-        "patchy freezing fog"     : ( _("Patchy freezing fog"),  "weather-fog", False),
-        "areas freezing fog"      : ( _("Areas freezing fog"),   "weather-fog", False),
-        "freezing fog"            : ( _("Freezing fog"),         "weather-fog", False),
-        "freezing spray"          : ( _("Freezing spray"),       "weather-fog", False),
-        "patchy smoke"            : ( _("Patchy smoke"),         "weather-fog", False),
-        "areas smoke"             : ( _("Areas smoke"),          "weather-fog", False),
-        "smoke"                   : ( _("Smoke"),                "weather-fog", False),
-        "patchy ash"              : ( _("Patchy ash"),           "weather-fog", False),
-        "areas ash"               : ( _("Areas ash"),            "weather-fog", False),
-        "ash"                     : ( _("Ash"),                  "weather-fog", False),
-        "volcanic ash"            : ( _("Volcanic ash"),         "weather-fog", False),
-        
-
-        #Snow
-        "light snow"                 : ( _("Light snow"),                 "weather-snow", False),
-        "blowing snow"               : ( _("Blowing snow"),               "weather-snow", False),
-        "blizzard"                   : ( _("Blizzard"),                   "weather-snow", False),
-        "patchy ice crystals"        : ( _("Patchy ice crystals"),        "weather-snow", False),
-        "areas ice crystals"         : ( _("Areas ice crystals"),         "weather-snow", False),
-        "ice crystals"               : ( _("Ice crystals"),               "weather-snow", False),
-        "patchy frost"               : ( _("Patchy frost"),               "weather-snow", False),
-        "areas frost"                : ( _("Areas frost"),                "weather-snow", False),
-        "frost"                      : ( _("Frost"),                      "weather-snow", False),
-        "slight chance snow showers" : ( _("Slight chance snow showers"), "weather-snow", False),
-        "chance snow showers"        : ( _("Chance snow showers"),        "weather-snow", False),
-        "snow showers likely"        : ( _("Snow showers likely"),        "weather-snow", False),
-        "snow showers"               : ( _("Snow showers"),               "weather-snow", False),
-        "slight chance snow/rain"    : ( _("Slight chance snow/rain"),    "weather-snow", False),
-        "chance snow/rain"           : ( _("Chance snow/rain"),           "weather-snow", False),
-        "snow/rain likely"           : ( _("Snow/rain likely"),           "weather-snow", False),
-        "snow/rain"                  : ( _("Snow/rain"),                  "weather-snow", False),
-        "slight chance wintry mix"   : ( _("Slight chance wintry mix"),   "weather-snow", False),
-        "chance wintry mix"          : ( _("Chance wintry mix"),          "weather-snow", False),
-        "wintry mix likely"          : ( _("Wintry mix likely"),          "weather-snow", False),
-        "wintry mix"                 : ( _("Wintry mix"),                 "weather-snow", False),
-        "slight chance snow/sleet"   : ( _("Slight chance snow/sleet"),   "weather-snow", False),
-        "chance snow/sleet"          : ( _("Chance snow/sleet"),          "weather-snow", False),
-        "snow/sleet likely"          : ( _("Snow/sleet likely"),          "weather-snow", False),
-        "snow/sleet"                 : ( _("Snow/sleet"),                 "weather-snow", False),
-
-        #Rain
-        "slight chance sleet"              : ( _("Slight chance sleet"),              "weather-showers", False),
-        "chance sleet"                     : ( _("Chance sleet"),                     "weather-showers", False),
-        "sleet likely"                     : ( _("Sleet likely"),                     "weather-showers", False),
-        "sleet"                            : ( _("Sleet"),                            "weather-showers", False),
-        "slight chance rain showers"       : ( _("Slight chance rain showers"),       "weather-showers", False),
-        "chance rain showers"              : ( _("Chance rain showers"),              "weather-showers", False),
-        "rain showers likely"              : ( _("Rain showers likely"),              "weather-showers", False),
-        "rain showers"                     : ( _("Rain showers"),                     "weather-showers", False),
-        "slight chance rain"               : ( _("Slight chance rain"),               "weather-showers", False),
-        "chance rain"                      : ( _("Chance rain"),                      "weather-showers", False),
-        "rain likely"                      : ( _("Rain likely"),                      "weather-showers", False),
-        "rain"                             : ( _("Rain"),                             "weather-showers", False),
-        "heavy rain"                       : ( _("Heavy rain"),                       "weather-showers", False),
-        "slight chance drizzle"            : ( _("Slight chance drizzle"),            "weather-showers", False),
-        "chance drizzle"                   : ( _("Chance drizzle"),                   "weather-showers", False),
-        "drizzle likely"                   : ( _("Drizzle likely"),                   "weather-showers", False),
-        "drizzle"                          : ( _("Drizzle"),                          "weather-showers", False),
-        "slight chance freezing rain"      : ( _("Slight chance freezing rain"),      "weather-showers", False),
-        "chance freezing rain"             : ( _("Chance freezing rain"),             "weather-showers", False),
-        "freezing rain likely"             : ( _("Freezing rain likely"),             "weather-showers", False),
-        "freezing rain"                    : ( _("Freezing rain"),                    "weather-showers", False),
-        "slight chance freezing drizzle"   : ( _("Slight chance freezing drizzle"),   "weather-showers", False),
-        "chance freezing drizzle"          : ( _("Chance freezing drizzle"),          "weather-showers", False),
-        "freezing drizzle likely"          : ( _("Freezing drizzle likely"),          "weather-showers", False),
-        "freezing drizzle"                 : ( _("Freezing drizzle"),                 "weather-showers", False),
-        "slight chance rain/freezing rain" : ( _("Slight chance rain/freezing rain"), "weather-showers", False), 
-        "chance rain/freezing rain"        : ( _("Chance rain/freezing rain"),        "weather-showers", False),
-        "rain/freezing rain likely"        : ( _("Rain/freezing rain likely"),        "weather-showers", False),
-        "rain/freezing rain"               : ( _("Rain/freezing rain"),               "weather-showers", False),
-
-        #Storms
-        "storm"                           : ( _("Storm"),                       "weather-storm", True),
-        "isolated thunderstorms"          : ( _("Isolated thunderstorms"),      "weather-storm", True),
-        "slight chance thunderstorms"     : ( _("Slight chance thunderstorms"), "weather-storm", True),
-        "chance thunderstorms"            : ( _("Chance thunderstorms"),        "weather-storm", True),
-        "thunderstorms likely"            : ( _("Thunderstorms likely"),        "weather-storm", True),
-        "thunderstorm"                    : ( _("Thunderstorms"),               "weather-storm", True),
-        "severe thunderstorms"            : ( _("Severe thunderstorms"),        "weather-storm", True),
-        "water spout"                     : ( _("Water spout"),                 "weather-storm", True)
-    }
-
-    # Night icons for weather conditions
-    _Night_Icons = {
-        "weather-storm"      : "weather-storm",
-        "weather-showers"    : "weather-showers",
-        "weather-snow"       : "weather-snow",
-        "weather-fog"        : "weather-fog",
-        "weather-few-clouds" : "weather-few-clouds-night",
-        "weather-overcast"   : "weather-overcast",
-        "weather-clouds"     : "weather-clouds-night",
-        "weather-clear"      : "weather-clear-night"
-    }
-
-    def __init__(self, weather_report, sun_report, metric_system, wind_unit):
-        self.__report = weather_report
-        self.__sun = sun_report
-        self.__metric_system = metric_system
-        self.__wind_unit = wind_unit
-        self.__current_condition = None
-
-        self.__get_weather_conditions = self.__report.getWeather()
-        self.__get_conditions = self.__report.getConditions()
-        self.__get_sky_conditions = self.__report.getSkyConditions()
-        log.debug("Weather: getWeather: '%s'" % str(self.__get_weather_conditions))
-        log.debug("Weather: getConditions: '%s'" % str(self.__get_conditions))
-        log.debug("Weather: getSkyConditions: '%s'" % str(self.__get_sky_conditions))
-        if ((self.__report.getWeather() != None) and (self._WeatherConditions.get(self.__report.getWeather().lower()) != None)):
-            self.__current_condition = self._WeatherConditions.get(self.__report.getWeather().lower())
-        elif ((self.__report.getConditions()[0] != None) and (self._WeatherConditions.get(self.__report.getConditions()[0].lower()) != None)):
-            self.__current_condition = self._WeatherConditions.get(self.__report.getConditions()[0].lower())
-        elif ((self.__report.getSkyConditions() != None) and (self._WeatherConditions.get(self.__report.getSkyConditions().lower()) != None)):
-            self.__current_condition = self._WeatherConditions.get(self.__report.getSkyConditions().lower())
-
-        log.debug("Weather: current condition: '%s'" % str(self.__current_condition))
-
-        #formatting sun data
         now = datetime.datetime.now().time()
-        self.__sunrise = self.__sun[0]
-        self.__sunset = self.__sun[1]
-        #FIXME: this is ugly
-        self.__sunrise_t = datetime.time(int(self.__sunrise.split(':')[0]), int(self.__sunrise.split(':')[1]), int(self.__sunrise.split(':')[2]))
-        self.__sunset_t = datetime.time(int(self.__sunset.split(':')[0]), int(self.__sunset.split(':')[1]), int(self.__sunset.split(':')[2]))
         if now<self.__sunrise_t or now>self.__sunset_t:
             self.__night = True
         else:
             self.__night = False
-        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sun[0], self.__sun[1], self.__night))
+        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sunrise_t, self.__sunset_t, self.__night))
 
-    
     def isNight(self):
         return self.__night
 
+    #FIXME: Update with PyWAPI
     def isReportCorrect(self):
-        return True if self.__report != None else False
+        return True 
 
     def isSevereCondition(self):
         if self.__current_condition != None:
@@ -561,109 +429,182 @@ class Weather:
             log.error("Weather: got empty severe condition")
             return False;
 
-    def getPureCondition(self):
-        if self.__current_condition != None:
-            log.debug("Weather: got condition '%s'" % self.__current_condition[0])
-            return self.__current_condition[0]
-        else:
-            log.error("Weather: got empty condition")
-            return _("Error retreiving condition");
-
-    def getCondition(self):
-        return "%s: %s" % (_("Condition"), self.getPureCondition())
-
-    def getSkyCondition(self):
-        return "%s: %s" % (_("Sky"), self.__report.getSkyConditions())
-
     def getPixmap(self):
         if self.__current_condition != None:
-            if self.isNight:
-                log.error("Weather: night, show '%s' icon" % self._Night_Icons.get(self.__current_condition[1]))
-                return self._Night_Icons.get(self.__current_condition[1])
-            else:
-                log.error("Weather: day, show '%s' icon" % self.__current_condition[1])
+            if self.__night:
+                log.error("Weather: night, show '%s' icon" % self.__current_condition[1])
                 return self.__current_condition[1]
+            else:
+                log.error("Weather: day, show '%s' icon" % self.__current_condition[0])
+                return self.__current_condition[0]
         else:
             log.error("Weather: return 'offline' icon due to empty condition")
             return False
 
+    def getCondition(self):
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            pureCondition = self.__localized_report['current_conditions']['condition']
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            pureCondition = self.__current_condition[3]
+        return pureCondition
+
     def getHumidity(self):
-        return "%s: %s %s" % (_("Humidity"), self.__report.getHumidity(), "%")
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            humidity = self.__localized_report['current_conditions']['humidity']
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            humidity = "%s: %s%%" % (_("Humidity"), self.__localized_report['atmosphere']['humidity'])
+        return humidity
 
+    #FIXME: Update with PyWAPI
     def getDewPoint(self):
-        if (self.__metric_system == MetricSystem.SI):
-            _value = self.__report.getDewPointCelsius()
-            _unit  = "C"
-        else:
-            _value = self.__report.getDewPointFahrenheit()
-            _unit  = "F"
-        return "%s: %s %s" % (_("Dew Point"), _value, _unit)
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            #Can't be calculated in Google
+            return None
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            #Can't be calculated in Yahoo 
+            return None
+        #if (self.__metric_system == MetricSystem.SI):
+        #    _value = "---"
+        #    _unit  = "C"
+        #else:
+        #    _value = "--"
+        #    _unit  = "F"
+        #return "%s: %s %s" % (_("Dew Point"), _value, _unit)
 
+    #FIXME: Update with PyWAPI
     def getPressure(self):
-        return "%s: %s %s" % (_("Pressure"), self.__report.getPressure(), "hPa")
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            value = "---"
+            unit = ""
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            value = self.__localized_report['atmosphere']['pressure']
+            unit = self.__localized_report['units']['pressure']
+        return "%s: %s %s" % (_("Pressure"), value, units)
 
     def getPureTemperature(self):
-        if (self.__metric_system == MetricSystem.SI):
-            _value = self.__report.getTemperatureCelsius()
-            _unit  = "C"
-        else:
-            _value = self.__report.getTemperatureFahrenheit()
-            _unit  = "F"
-        return "%0.1f %s" % (_value, _unit)
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            if (self.__metric_system == MetricSystem.SI):
+                _value = self.__report['current_conditions']['temp_c']
+                _unit  = "C"
+            else:
+                _value = self.__report['current_conditions']['temp_f']
+                _unit  = "F"
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            if (self.__metric_system == MetricSystem.SI):
+                _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * 5/9)
+                _unit  = "C"
+            else:
+                _value = self.__report['condition']['temp']
+                _unit  = "F"
+        return ("%s %s" % (_value, _unit)).replace(".0", "")
 
     def getTemperature(self):
         return "%s: %s" % (_("Temperature"), self.getPureTemperature())
 
     def getHumidex(self):
-        self.vapour_pressure = 6.11 * math.exp(5417.7530 * ( (1/273.16) - (1/(self.__report.getDewPointCelsius()+273.16))))
-        self.humidex = self.__report.getTemperatureCelsius() + (0.5555)*(self.vapour_pressure  - 10.0);
-        return "%s: %0.1f" % (_("Humidex"), self.humidex)
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            #Empty for Google
+            return None
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            #Empty for Yahoo
+            return None
+        #dewPoint=2
+        #temp_c = 1
+        #self.vapour_pressure = 6.11 * math.exp(5417.7530 * ( (1/273.16) - (1/(dewPoint+273.16))))
+        #self.humidex = temp_c + (0.5555)*(self.vapour_pressure  - 10.0);
+        #return ("%s: %.1f" % (_("Humidex"), self.humidex)).replace(".0", "")
 
-    def getVisibility(self):
-        if (self.__metric_system == MetricSystem.SI):
-            _value = self.__report.getVisibilityKilometers()
-            _unit  = _("km")
-        else:
-            _value = self.__report.getVisibilityMiles()
-            _unit  = _("mile(s)")
-        return "%s: %s %s" % (_("Visibility"), _value, _unit)
-
-    def getWindDirection(self):
-        #FIXME: return a "SW" instead of "280" degrees values
-        return "%s: %s" % (_("Wind Direction"), self.__report.getWindDirection())
+    def convertWindDirection(self, degrees):
+        try:
+            degrees = int(degrees)
+        except ValueError:
+            return ''
+    
+        if degrees < 23 or degrees >= 338:
+            #Short wind direction - north
+            return _('N')
+        elif degrees < 68:
+            return _('NE')
+        elif degrees < 113:
+            return _('E')
+        elif degrees < 158:
+            return _('SE')
+        elif degrees < 203:
+            return _('S')
+        elif degrees < 248:
+            return _('SW')
+        elif degrees < 293:
+            return _('W')
+        elif degrees < 338:
+            return _('NW')
 
     def getWindSpeed(self):
-        if (self.__wind_unit == WindUnits.MPS):
-            _value = self.__report.getWindSpeed()
-            _unit  = _("m/s")
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
+            wind_direction = localized_wind_info[1]
+            wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
+            wind_speed = wind_info[3]
+
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            wind_direction = self.__localized_report['units']['direction']
+            wind_speed = self.__localized_report['wind']['speed']
+            wind_units = self.__localized_report['units']['speed']
+            localized_wind_info = [_("Wind") + ":", self.convertWindDirection(wind_direction), ',', wind_speed, wind_units] 
+
+        #Parse Wind_direction - convert to selected scale
         if (self.__wind_unit == WindUnits.MPH):
-            _value = self.__report.getWindSpeedMilesPerHour()
+            _value = float(wind_speed)
             _unit  = _("mph")
+        if (self.__wind_unit == WindUnits.MPS):
+            _value = float(wind_speed) * 0.44704
+            _unit  = _("m/s")
         if (self.__wind_unit == WindUnits.BEAUFORT):
-            _value = self.__report.getWindSpeedBeaufort()
+            _value = self.getBeufortFromMPH(float(wind_speed))
             _unit  = ""
         if (self.__wind_unit == WindUnits.KPH):
-            _value = self.__report.getWindSpeed() * 3.6
+            _value = float(wind_speed) * 1.609344
             _unit  = _("km/h")
-        #if (self.__wind_unit == WindUnits.KNOTS):
-        #    _value = self.__report.getWindSpeedKnots()
-        #    _unit  = _("knot(s)")
-        return "%s: %0.1f %s" % (_("Wind Speed"), _value, _unit)
+        if (self.__wind_unit == WindUnits.KNOTS):
+            _value = float(wind_speed) * 0.868976241900648
+            _unit  = _("knot(s)")
+        localized_wind_info[len(localized_wind_info)-1] = _unit
+        localized_wind_info[len(localized_wind_info)-2] = ("%0.1f" % _value).replace(".0", "")
+        return ' '.join(localized_wind_info)
 
-    def getWindChill(self):
-        if (self.__metric_system == MetricSystem.SI):
-            _value = self.__report.getWindchill()
-            _unit  = "C"
-        else:
-            _value = self.__report.getWindchillF()
-            _unit  = "F"
-        return "%s: %s %s" % (_("Wind Chill"), _value, _unit)
+    #FIXME: fiill in with data
+    def getBeufortFromMPH(self, value):
+        if value < 1:
+            return 0
+        elif value < 4:
+            return 1
+        elif value < 8:
+            return 2
+        elif value < 13:
+            return 3
+        elif value < 18:
+            return 4
+        elif value < 25:
+            return 5
+        elif value < 27:
+            return 6
+        elif value < 39:
+            return 7
+        elif value < 47:
+            return 8
+        elif value < 89:
+            return 9
+        elif value < 64:
+            return 10
+        elif value < 73:
+            return 11
+        elif value >= 73:
+            return 12
 
     def getSunrise(self):
-        return "%s: %s" % (_("Sunrise"), time.strftime('%X',time.strptime(self.__sunrise,'%H:%M:%S')))
+        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X'))
 
     def getSunset(self):
-        return "%s: %s" % (_("Sunset"), time.strftime('%X',time.strptime(self.__sunset,'%H:%M:%S')))
+        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X'))
 
 class indicator_weather(threading.Thread):
     last_update_time = None
@@ -678,8 +619,7 @@ class indicator_weather(threading.Thread):
 
         log.debug("Indicator: reading settings")
         self.settings = Settings()
-        self.settings.prepare_settings_store()
-        
+        self.settings.prepare_settings_store()      
         self.rate  = self.settings.get_value("refresh_rate")
         self.unit  = self.settings.get_value("unit")
         self.notif = self.settings.get_value("notif")
@@ -730,8 +670,8 @@ class indicator_weather(threading.Thread):
                 self._wind_unit = WindUnits.BEAUFORT
             elif (self.wind == 'kph'):
                 self._wind_unit = WindUnits.KPH
-            #elif (self.wind == 'knots'):
-            #    self._wind_unit = WindUnits.KNOTS
+            elif (self.wind == 'knots'):
+                self._wind_unit = WindUnits.KNOTS
             
         if self.rate in (False, None):
             log.debug("Indicator: could not parse rate, setting to 15")
@@ -743,20 +683,10 @@ class indicator_weather(threading.Thread):
             self.menu_noplace()
         else:
             self.places = eval(self.places)
-            #Check, that each place is a code - length is 4
-            places_correct = True
-            for place in self.places:
-                if len(place[0]) != 4:
-                    log.debug("Indicator: incorrect place code found: %s" % place)
-                    places_correct = False
-            if places_correct == False:
-                self.places = None
-                self.menu_noplace()
-            else:
-                self.menu_normal()
-                self.place = self.places[self.placechosen]
-                self.update_weather()
-                self.winder.set_menu(self.menu)
+            self.menu_normal()
+            self.place = self.places[self.placechosen]
+            self.update_weather()
+            self.winder.set_menu(self.menu)
 
     def update_label(self, label):
       if (hasattr(self.winder, 'set_label')):
@@ -970,7 +900,7 @@ class indicator_weather(threading.Thread):
         self.refreshed_minutes_ago = 0
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
-        self.condition = weather.getPureCondition()
+        self.condition = weather.getCondition()
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
@@ -978,7 +908,10 @@ class indicator_weather(threading.Thread):
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(weather.getTemperature())
-        self.humidex_show.set_label(weather.getHumidex())
+        if (weather.getHumidex() != None):
+            self.humidex_show.set_label(weather.getHumidex())
+        else:
+            self.humidex_show.destroy()
         self.humid_show.set_label(weather.getHumidity())
         self.wind_show.set_label(weather.getWindSpeed())
         self.sunrise_show.set_label(weather.getSunrise())
@@ -1005,32 +938,19 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
 
-    def responseToDialog(self, entry, dialog, response):
-        #FIXME: Do we need this?
-        log.debug("Indicator: response to dialog")  
-        dialog.response(response)
-
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         log.debug("Indicator: getWeather: extended = %s" % extended)  
         self.current_location = Location(self.metric_system, self._wind_unit)
         if (self.current_location.find_city_by_code(city[0]) == False):
             log.error("Indicator: getWeather: location with code %s not found" % city[0])  
-        if extended == False:
-            log.debug("Indicator: getWeather: updating weather report")  
-            self.current_location.update_weather_data()
-            if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
-                log.debug("Indicator: getWeather: report is empty")  
-                return None;
-            else:
-                return self.current_location.weather
+        log.debug("Indicator: getWeather: updating weather report")  
+        self.current_location.update_weather_data()
+        if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
+            log.debug("Indicator: getWeather: report is empty")  
+            return None;
         else:
-            self.current_location.prepare_forecast_data()
-            self.daysofweek = self.current_location.get_forecast_daysofweek()
-            self.lowdata    = self.current_location.get_forecast_lowdata()
-            self.highdata   = self.current_location.get_forecast_highdata()
-            self.icons      = self.current_location.get_forecast_icons()
-            self.conditions = self.current_location.get_forecast_conditions()
-        
+            return self.current_location.weather
+
     def prefs(self, widget):
         log.debug("Indicator: open Preferences")  
         self.prefswindow = PreferencesDialog()
@@ -1086,8 +1006,8 @@ class PreferencesDialog(gtk.Dialog):
             self.builder.get_object('mph').set_active(True)
         elif wi.wind == 'kph':
             self.builder.get_object('kph').set_active(True)
-        #elif wi.wind == 'knots':
-        #    self.builder.get_object('knots').set_active(True)
+        elif wi.wind == 'knots':
+            self.builder.get_object('knots').set_active(True)
         else:
             self.builder.get_object('beaufort').set_active(True)
         
@@ -1151,8 +1071,8 @@ class PreferencesDialog(gtk.Dialog):
         wind_systems = [('mps',      "mps",      WindUnits.MPS),
                         ('mph',      "mph",      WindUnits.MPH),
                         ('kph',      "kph",      WindUnits.KPH),
-                        ('beaufort', "beaufort", WindUnits.BEAUFORT)]
-                        #('knots',    "knots",    WindUnits.KNOTS)]
+                        ('beaufort', "beaufort", WindUnits.BEAUFORT),
+                        ('knots',    "knots",    WindUnits.KNOTS)]
 
         for wind_system in wind_systems:
             if self.builder.get_object(wind_system[0]).get_active():
@@ -1243,17 +1163,23 @@ class ExtendedForecast(gtk.Window):
         log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
         self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
         log.debug("ExtendedForecast: getting forecast data")
-        wi.get_weather(wi.places[wi.placechosen],False,True)
+        locale_name = locale.getlocale()[0].split('_')[0]
+        forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.current_location, units = wi.metric_system, locale = locale_name)
+        forecast.prepare_forecast_data()
+        daysofweek = forecast.get_forecast_daysofweek()
+        (highdata, lowdata) = forecast.get_forecast_data()
+        icons      = forecast.get_forecast_icons()
+        conditions = forecast.get_forecast_conditions()
 
         log.debug("ExtendedForecast: parsing forecast data")
-        self.builder.get_object('day1lbl').set_label('<big>%s</big>' % wi.daysofweek[0].capitalize())
-        self.builder.get_object('day2lbl').set_label('<big>%s</big>' % wi.daysofweek[1].capitalize())
-        self.builder.get_object('day3lbl').set_label('<big>%s</big>' % wi.daysofweek[2].capitalize())
-        self.builder.get_object('day4lbl').set_label('<big>%s</big>' % wi.daysofweek[3].capitalize())
+        self.builder.get_object('day1lbl').set_label('<big>%s</big>' % daysofweek[0].capitalize())
+        self.builder.get_object('day2lbl').set_label('<big>%s</big>' % daysofweek[1].capitalize())
+        self.builder.get_object('day3lbl').set_label('<big>%s</big>' % daysofweek[2].capitalize())
+        self.builder.get_object('day4lbl').set_label('<big>%s</big>' % daysofweek[3].capitalize())
 
         #FIXME: Refactor this
         i=0
-        for icon in wi.icons[1:]:
+        for icon in icons[1:]:
             i=i+1
             if icon in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
                 self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-storm',gtk.ICON_SIZE_BUTTON)
@@ -1274,24 +1200,23 @@ class ExtendedForecast(gtk.Window):
             else:
                 self.builder.get_object('day%simage' % str(i)).set_from_icon_name('window-close',gtk.ICON_SIZE_BUTTON)
         i=0
-        for condition in wi.conditions[1:]:
+        for condition in conditions[1:]:
             i=i+1
             self.builder.get_object('day%scond' % str(i)).set_label(condition)
         i=0
         #Refactor this
-        if wi.unit == 'S':
+        if wi.metric_system == MetricSystem.SI:
             tempunit = '°C'
-        elif wi.unit == 'I':
+        elif unit == 'I':
             tempunit = '°F'
-        for high in wi.highdata:
+        for high in highdata:
             i=i+1
             self.builder.get_object('day%stemphigh' % str(i)).set_label((_('High: ')+'%s%s') % (high,tempunit))
         i=0
-        for low in wi.lowdata:
+        for low in lowdata:
             i=i+1
             self.builder.get_object('day%stemplow' % str(i)).set_label((_('Low: ')+'%s%s') % (low,tempunit))
         
-    
     def close(self, widget, data=None):
         log.debug("ExtendedForecast: closing window")
         self.destroy()
