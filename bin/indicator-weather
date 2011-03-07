@@ -59,78 +59,114 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 from indicator_weather.helpers import get_builder
 
 class Settings:
-  db = None
+    db = None
 
-  def prepare_settings_store(self):
-    log.debug("Settings: preparing settings store")
-    self.db = CouchDatabase("weatherindicator", create = True)
+    def prepare_settings_store(self):
+        log.debug("Settings: preparing settings store")
+        self.db = CouchDatabase("weatherindicator", create = True)
 
-    self.settings_design_doc = "settings"
-    self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
-    self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
+        self.settings_design_doc = "settings"
+        self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
+        self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
 
-    self.weather_design_doc = "weather"
-    self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
-    self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
+        self.weather_design_doc = "weather"
+        self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
+        self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
 
-  def get_value(self, setting, return_id = False):
-    log.debug("Setting: getting value for %s" % setting)
-    view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
-    if hasattr(view, 'rows') and len(view.rows) > 0:
-      if return_id:
-        return str(view.rows[0].value['_id'])
-      else:
-        return str(view.rows[0].value['value'])
-    else:
-      log.debug("Setting: can't find value for %s" % setting)
+        self.location_design_doc = "location"
+        self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
+        self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
 
-  def set_value(self, setting, value):
-    log.debug("Setting: setting '%s'='%s'" % (setting, value))
-    self.record = {
-      "name" : setting,
-      "value": value
-    }
-    old_doc_id = self.get_value(setting, return_id=True)
-    if old_doc_id != None:
-      log.debug("Setting: setting '%s' was updated" % setting)
-      self.db.update_fields(old_doc_id, self.record)
-    else:
-      log.debug("Setting: setting '%s' was created" % setting)
-      self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
+    def get_value(self, setting, return_id = False):
+        log.debug("Setting: getting value for %s" % setting)
+        view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
+        if hasattr(view, 'rows') and len(view.rows) > 0:
+            if return_id:
+                return str(view.rows[0].value['_id'])
+            else:
+                return str(view.rows[0].value['value'])
+        else:
+            log.debug("Setting: can't find value for %s" % setting)
+
+    def set_value(self, setting, value):
+        log.debug("Setting: setting '%s'='%s'" % (setting, value))
+        self.record = {
+            "name" : setting,
+            "value": value
+        }
+        old_doc_id = self.get_value(setting, return_id=True)
+        if old_doc_id != None:
+            log.debug("Setting: setting '%s' was updated" % setting)
+            self.db.update_fields(old_doc_id, self.record)
+        else:
+            log.debug("Setting: setting '%s' was created" % setting)
+            self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
  
-  def get_weather(self, location_code, return_id = False):
-    log.debug("Setting: getting cached weather for %s" % location_code)
-    view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
-    if hasattr(view, 'rows') and len(view.rows) > 0:
-      if return_id:
-        return str(view.rows[0].value['_id'])
-      else:
-          return str(view.rows[0].value['data'])
-    else:
-      return None
-      log.debug("Setting: can't find cached weather for %s" % setting)
+    def get_weather(self, location_code, return_id = False):
+        log.debug("Setting: getting cached weather for %s" % location_code)
+        view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
+        if hasattr(view, 'rows') and len(view.rows) > 0:
+            if return_id:
+                return str(view.rows[0].value['_id'])
+            else:
+                return str(view.rows[0].value['data'])
+        else:
+            return None
+            log.debug("Setting: can't find cached weather for %s" % setting)
 
-  def save_weather(self, weather, location_code):
-    log.debug("Setting: Saving cached weather data")
-    self.record = {
-      "location" : location_code,
-      "data"      : {
-        "label"    : weather.getPureTemperature(),
-        "condition": weather.getCondition(),
-        "icon"     : weather.getPixmap(),
-        "temper"   : weather.getTemperature(),
-        "humidex"  : weather.getHumidex(),
-        "humidity" : weather.getHumidity(),
-        "wind"     : weather.getWindSpeed(),
-        "sunrise"  : weather.getSunrise(),
-        "sunset"   : weather.getSunset()
-      }
-    }
-    old_doc_id = self.get_weather(location_code, return_id=True)
-    if old_doc_id != None:
-      self.db.update_fields(old_doc_id, self.record)
-    else:    
-      self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
+    def save_weather(self, weather, location_code):
+        log.debug("Setting: Saving cached weather data")
+        self.record = {
+          "location" : location_code,
+          "data"      : {
+            "label"    : weather.getPureTemperature(),
+            "condition": weather.getCondition(),
+            "icon"     : weather.getPixmap(),
+            "temper"   : weather.getTemperature(),
+            "humidex"  : weather.getHumidex(),
+            "humidity" : weather.getHumidity(),
+            "wind"     : weather.getWindSpeed(),
+            "sunrise"  : weather.getSunrise(),
+            "sunset"   : weather.getSunset()
+          }
+        }
+        old_doc_id = self.get_weather(location_code, return_id=True)
+        if old_doc_id != None:
+            self.db.update_fields(old_doc_id, self.record)
+        else:    
+            self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
+
+    def get_location_details(self, location_code, return_id = False):
+        log.debug("Setting: getting location details for %s" % location_code)
+        view = self.db.execute_view("get_location", self.location_design_doc)[location_code]
+        if hasattr(view, 'rows') and len(view.rows) > 0:
+            if return_id:
+                return str(view.rows[0].value['_id'])
+            else:
+                return str(view.rows[0].value['data'])
+        else:
+            return None
+            log.debug("Setting: can't find location details for %s" % setting)
+
+    def save_location_details(self, location_details, location_code):
+        log.debug("Setting: Saving location details data")
+        self.record = {
+          "location" : location_code,
+          "data"      : {
+            "label"    : location_details['label'],
+            "full name": location_details['full_name'],
+            "latitude" : location_details['latitude'],
+            "longitude": location_details['longitude'],
+            "google id": location_details['google id'],
+            "yahoo id" : location_details['yahoo id'],
+            "noaa id"  : location_details['noaa id'],
+          }
+        }
+        old_doc_id = self.get_location_details(location_code, return_id=True)
+        if old_doc_id != None:
+            self.db.update_fields(old_doc_id, self.record)
+        else:    
+            self.db.put_record(CouchRecord(self.record, self.location_design_doc))
 
 class MetricSystem:
     SI = 1
@@ -153,71 +189,43 @@ class Location:
     """
 
     #Initialize an object with a label
-    def __init__(self, metric_system, wind_units):
-        self.__metric_system = metric_system
-        self.__wind_units = wind_units
-        self.__found = False
-        self.__lat = None
-        self.__lon = None
-
-    #FIXME: refactor this
-    def set_label(self, value):
-        self.__label = value
-
-    @property
-    def code(self):
-        return self.__code
-
-    @property
-    def found(self):
-        return self.__found
-
-    @property
-    def label(self):
-        return self.__label
-
-    @property
-    def weather(self):
-        return self.__weather
-
-    @property
-    def lat(self):
-        return self.__lat
-
-    @property
-    def lon(self):
-        return self.__lon
+    def __init__(self, metric_system, wind_units, location_details):
+        self.metric_system = metric_system
+        self.wind_units = wind_units
+        self.full_name = location_details['full name']
+        self.lat = location_details['latitude']
+        self.lon = location_details['longitude']
+        self.google_id = location_details['google id']
+        self.yahoo_id = location_details['yahoo id']
+        self.noaa_id = location_details['noaa id']
+        self.label = location_details['label']
+        self.location_details = location_details
 
     #FIXME: Update with PyWAPI
-    def find_city_by_code(self, location_id):
-        #Find location details from GeoNames
-        url = "http://api.geonames.org/get?geonameId=625144&username=indicatorweather&style=full"
-        try:
-            f = urllib2.urlopen(url)
-            s=f.read()
-            parsed = parseString(s)
-            self.__code = location_id
-            self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
-            self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
-            city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
-            country_name = parsed.getElementsByTagName("countryName")[0].firstChild.nodeValue
-            self.__full_name = "%s, %s" % (city_name, country_name)
-            self.__found = True
-            return True
-        except urllib2.URLError:
-            print "error reaching url %s" % url
-            self.__found = False
-            return False
-
-    def get_short_city_name(self):
-        return 'Minsk'
-
-    def get_full_city_name(self):
-        return 'Minsk, Belarus'
+    #def find_city_by_code(self, location_id):
+    #    #Find location details from GeoNames
+    #    url = "http://api.geonames.org/get?geonameId=625144&username=indicatorweather&style=full"
+    #    try:
+    #        f = urllib2.urlopen(url)
+    #        s=f.read()
+    #        parsed = parseString(s)
+    #        self.__code = location_id
+    #        self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
+    #        self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
+    #        city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
+    #        country_name = parsed.getElementsByTagName("countryName")[0].firstChild.nodeValue
+    #        self.__full_name = "%s, %s" % (city_name, country_name)
+    #        self.__found = True
+    #        return True
+    #    except urllib2.URLError:
+    #        print "error reaching url %s" % url
+    #        self.__found = False
+    #        return False
 
     #Update weather data and store weather object
     def update_weather_data(self):
-        self.__weather = Weather(self.__full_name, WeatherDataSource.GOOGLE, self.__metric_system, self.__wind_units, self.__lat, self.__lon)
+        #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_units, self.lat, self.lon)
+        self.weather = Weather(self.yahoo_id, WeatherDataSource.YAHOO, self.metric_system, self.wind_units, self.lat, self.lon)
 
 class Forecast:
 
@@ -554,7 +562,7 @@ class Weather:
             wind_speed = wind_info[3]
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            wind_direction = self.__localized_report['units']['direction']
+            wind_direction = self.__localized_report['wind']['direction']
             wind_speed = self.__localized_report['wind']['speed']
             wind_units = self.__localized_report['units']['speed']
             localized_wind_info = [_("Wind") + ":", self.convertWindDirection(wind_direction), ',', wind_speed, wind_units] 
@@ -688,15 +696,21 @@ class indicator_weather(threading.Thread):
         else:
             self.placechosen = int(self.placechosen)
             
-        if self.places in (False, None, '', '[]', "['']",):
+        if self.places in (False, None, '', '[]', "['']"):
             log.debug("Indicator: could not parse places")
             self.menu_noplace()
         else:
             self.places = eval(self.places)
-            self.menu_normal()
             self.place = self.places[self.placechosen]
-            self.update_weather()
-            self.winder.set_menu(self.menu)
+            self.location_details = self.settings.get_location_details(self.place[0])
+            if self.location_details in (False, None, '', '[]', "['']"):
+                log.debug("Indicator: could not parse location details")
+                self.menu_noplace()
+            else:
+                self.location_details = eval(self.location_details)
+                self.menu_normal()
+                self.update_weather()
+                self.winder.set_menu(self.menu)
 
     def update_label(self, label):
       if (hasattr(self.winder, 'set_label')):
@@ -838,12 +852,13 @@ class indicator_weather(threading.Thread):
             self.update_weather(False)
 
     def update_refresh_label(self):
-      """ Calculate number minutes since last update and show this value in Refresh label"""
-      self.refreshed_minutes_ago += 1
-      log.debug("Indicator: updating refresh label, %s min. ago" % self.refreshed_minutes_ago)
-      refresh_label = "%s (%s)" % (_("Refresh"), _("last refreshed %s min. ago") % self.refreshed_minutes_ago)
-      self.refresh_show.set_label(refresh_label)
-      self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
+        """ Calculate number minutes since last update and show this value in Refresh label"""
+        self.refreshed_minutes_ago += 1
+        log.debug("Indicator: updating refresh label, %s min. ago" % self.refreshed_minutes_ago)
+        refresh_label = "%s (%s)" % (_("Refresh"), _("last refreshed %s min. ago") % self.refreshed_minutes_ago)
+        self.refresh_show.set_label(refresh_label)
+        self.winder.set_menu(self.menu)
+        self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
     def show_cached_weather(self):
         cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
@@ -874,9 +889,8 @@ class indicator_weather(threading.Thread):
             self.winder.set_status(appindicator.STATUS_ATTENTION)
             self.winder.set_status(appindicator.STATUS_ACTIVE)           
 
-    def get_real_weather_data(self, notif = True):
-        #Get real data
-        weather = self.get_weather(self.places[self.placechosen])
+    def get_new_weather_data(self, notif = True):
+        weather = self.get_weather()
         if weather == None:
             log.debug("Indicator: updateWeather: could not get weather")
             for item in self.menu.get_children()[0:len(self.menu.get_children())]:
@@ -957,20 +971,16 @@ class indicator_weather(threading.Thread):
         #First, display cached data
         threading.Thread(target=self.show_cached_weather).start()
         #Then, start a new thread with real data pickup
-        threading.Thread(target=self.get_real_weather_data).start()
+        threading.Thread(target=self.get_new_weather_data).start()
 
-    def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
-        log.debug("Indicator: getWeather: extended = %s" % extended)  
-        self.current_location = Location(self.metric_system, self._wind_unit)
-        if (self.current_location.find_city_by_code(city[0]) == False):
-            log.error("Indicator: getWeather: location with code %s not found" % city[0])  
+    def get_weather(self):
+        log.debug("Indicator: getWeather for location '%s'" % self.location_details['full name'])  
+        self.current_location = Location(self.metric_system, self._wind_unit, self.location_details)
+        #if (self.current_location.find_city_by_code(city_code, self.placechosen) == False):
+        #    log.error("Indicator: getWeather: location with code %s not found" % city_code)
         log.debug("Indicator: getWeather: updating weather report")  
         self.current_location.update_weather_data()
-        if (self.current_location.found == False) or (self.current_location.weather.isReportCorrect() == False):
-            log.debug("Indicator: getWeather: report is empty")  
-            return None;
-        else:
-            return self.current_location.weather
+        return self.current_location.weather
 
     def prefs(self, widget):
         log.debug("Indicator: open Preferences")  
