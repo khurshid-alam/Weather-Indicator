@@ -67,9 +67,8 @@ class WindUnits:
     KNOTS = 5
 
 class WeatherDataSource:
-    NOAA = 1
-    GOOGLE = 2
-    YAHOO = 3
+    GOOGLE = 1
+    YAHOO = 2
 
 class Location:
     """
@@ -128,15 +127,28 @@ class Location:
 
     #FIXME: Update with PyWAPI
     def find_city_by_code(self, location_id):
-        self.__location_id = location_id
-        self.__lat = 4550000
-        self.__lon = -7358300
-        self.__found = True
-        return True
+        #Find location details from GeoNames
+        url = "http://api.geonames.org/get?geonameId=625144&username=indicatorweather&style=full"
+        try:
+            f = urllib2.urlopen(url)
+            s=f.read()
+            parsed = parseString(s)
+            self.__location_id = location_id
+            self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
+            self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
+            city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
+            country_name = parsed.getElementsByTagName("countryName")[0].firstChild.nodeValue
+            self.__full_name = "%s, %s" % (city_name, country_name)
+            self.__found = True
+            return True
+        except urllib2.URLError:
+            print "error reaching url %s" % url
+            self.__found = False
+            return False
 
     #Update weather data and store weather object
     def update_weather_data(self):
-        self.__weather = Weather(self.__location_id, WeatherDataSource.YAHOO, self.__metric_system, self.__wind_units, self.__lat, self.__lon)
+        self.__weather = Weather(self.__full_name, WeatherDataSource.GOOGLE, self.__metric_system, self.__wind_units, self.__lat, self.__lon)
 
 class Forecast:
 
@@ -152,7 +164,10 @@ class Forecast:
         self.icons = []
         self.conditions = []
         try:
-            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (self.location.lat, self.location.lon), hl = self.locale)
+            #Correcting lat and lon for google
+            lat = self.location.lat
+            lon = self.location.lon
+            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (lat, lon), hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
             for forecast in self.forecast['forecasts']:
@@ -295,14 +310,12 @@ class Weather:
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
             locale_name = locale.getlocale()[0].split('_')[0]
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
+            icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
+            self.__current_condition = self._WeatherConditions.get(icon_name)
+
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
             self.__localized_report = self.__report
-
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
-            self.__current_condition = self._WeatherConditions.get(icon_name)
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
             icon_name = self.__report['condition']['code']
             self.__current_condition = self._WeatherCodes.get(icon_name)
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
@@ -440,6 +453,30 @@ class Weather:
         #self.humidex = temp_c + (0.5555)*(self.vapour_pressure  - 10.0);
         #return ("%s: %.1f" % (_("Humidex"), self.humidex)).replace(".0", "")
 
+    def convertWindDirection(self, degrees):
+        try:
+            degrees = int(degrees)
+        except ValueError:
+            return ''
+    
+        if degrees < 23 or degrees >= 338:
+            #Short wind direction - north
+            return _('N')
+        elif degrees < 68:
+            return _('NE')
+        elif degrees < 113:
+            return _('E')
+        elif degrees < 158:
+            return _('SE')
+        elif degrees < 203:
+            return _('S')
+        elif degrees < 248:
+            return _('SW')
+        elif degrees < 293:
+            return _('W')
+        elif degrees < 338:
+            return _('NW')
+
     def getWindSpeed(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
@@ -448,9 +485,10 @@ class Weather:
             wind_speed = wind_info[3]
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
+            wind_direction = self.__localized_report['units']['direction']
             wind_speed = self.__localized_report['wind']['speed']
             wind_units = self.__localized_report['units']['speed']
-            localized_wind_info = [_("Wind") + ":", wind_speed, wind_units] 
+            localized_wind_info = [_("Wind") + ":", self.convertWindDirection(wind_direction), ',', wind_speed, wind_units] 
 
         #Parse Wind_direction - convert to selected scale
         if (self.__wind_unit == WindUnits.MPH):
@@ -476,29 +514,29 @@ class Weather:
     def getBeufortFromMPH(self, value):
         if value < 1:
             return 0
-        if (value >= 1) and (value < 4):
+        elif value < 4:
             return 1
-        if (value >= 4) and (value < 8):
+        elif value < 8:
             return 2
-        if (value >= 8) and (value < 13):
+        elif value < 13:
             return 3
-        if (value >= 13) and (value < 18):
+        elif value < 18:
             return 4
-        if (value >= 18) and (value < 25):
+        elif value < 25:
             return 5
-        if (value >= 21) and (value < 27):
+        elif value < 27:
             return 6
-        if (value >= 31) and (value < 39):
+        elif value < 39:
             return 7
-        if (value >= 39) and (value < 47):
+        elif value < 47:
             return 8
-        if (value >= 75) and (value < 89):
+        elif value < 89:
             return 9
-        if (value >= 55) and (value < 64):
+        elif value < 64:
             return 10
-        if (value >= 64) and (value < 73):
+        elif value < 73:
             return 11
-        if value >= 73:
+        elif value >= 73:
             return 12
 
     def getSunrise(self):
