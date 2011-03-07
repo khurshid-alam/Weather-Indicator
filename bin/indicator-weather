@@ -29,7 +29,7 @@ import re
 import locale
 import pynotify
 from xml.dom.minidom import parseString
-import time
+import datetime
 import math
 import commands
 import threading
@@ -207,6 +207,7 @@ class Weather:
     #Available conditions and their icons (basing on Google or Yahoo icons
     #Formats: Google/Yahoo name: (gweather icon for day, icon for night, severe weather condition
     _WeatherConditions = {
+        #Google conditions
         "sunny"            : ( "weather-clear",      "weather-clear-night",      False),
         "mostly_sunny"     : ( "weather-clear",      "weather-clear-night",      False),
         "partly_cloudy"    : ( "weather-few-clouds", "weather-few-clouds-night", False),
@@ -227,7 +228,59 @@ class Weather:
         "chance_of_storm"  : ( "weather-storm",      "weather-storm",            True),
         "storm"            : ( "weather-storm",      "weather-storm",            True),
         "thunderstorm"     : ( "weather-stoom",      "weather-storm",            True),
-        "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True)
+        "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True),
+    }
+
+    _WeatherCodes = {
+        #Yahoo conditions by code
+        '0' : ("weather-storm",             "weather-storm",            True,  _("Tornado")),
+        '1' :	("weather-storm",             "weather-storm",            True,  _("Tropical storm")),
+        '2' :	("weather-storm",             "weather-storm",            True,  _("Hurricane")),
+        '3' :	("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
+        '4' :	("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
+        '5' :	("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
+        '6' :	("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
+        '7' :	("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
+        '8' :	("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
+        '9' :	("weather-showers",           "weather-showers",          False, _("Drizzle")),
+        '10':	("weather-snow",              "weather-snow",             False, _("Freezing rain")),
+        '11':	("weather-showers",           "weather-showers",          False, _("Showers")),
+        '12':	("weather-showers",           "weather-showers",          False, _("Showers")),
+        '13':	("weather-snow",              "weather-snow",             False, _("Snow flurries")),
+        '14':	("weather-snow",              "weather-snow",             False, _("Light snow showers")),
+        '15':	("weather-snow",              "weather-snow",             False, _("Blowing snow")),
+        '16':	("weather-snow",              "weather-snow",             False, _("Snow")),
+        '17':	("weather-showers",           "weather-showers",          False, _("Hail")),
+        '18':	("weather-snow",              "weather-snow",             False, _("Sleet")),
+        '19':	("weather-fog",               "weather-fog",              False, _("Dust")),
+        '20':	("weather-fog",               "weather-fog",              False, _("Foggy")),
+        '21':	("weather-fog",               "weather-fog",              False,  _("Haze")),
+        '22':	("weather-fog",               "weather-fog",              False, _("Smoky")),
+        '23':	("weather-clear",             "weather-clear-night",      False, _("Blustery")),
+        '24':	("weather-clear",             "weather-clear-night",      False, _("Windy")),
+        '25':	("weather-clear",             "weather-clear-night",      False, _("Cold")),
+        '26':	("weather-clouds",            "weather-clouds-night",     False, _("Cloudy")),
+        '27':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '28':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '29':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '30':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '31':	("weather-clear",             "weather-clear-night",      False, _("Clear")),
+        '32':	("weather-clear",             "weather-clear-night",      False, _("Sunny")),
+        '33':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '34':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '35':	("weather-showers-scattered", "weather-showers-scattered",False, _("Mixed rain and hail")),
+        '36':	("weather-clear",             "weather-clear-night",      False, _("Hot")),
+        '37':	("weather-storm",             "weather-storm",            True,  _("Isolated thunderstorms")),
+        '38':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '39':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '40':	("weather-showers-scattered", "weather-showers-scattered",False, _("Scattered showers")),
+        '41':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '42':	("weather-snow",              "weather-snow",             False, _("Scattered snow showers")),
+        '43':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '44':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '45':	("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
+        '46':	("weather-snow",              "weather-snow",             False, _("Snow showers")),
+        '47':	("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers"))
     }
 
     def __init__(self, location_id, weather_datasource, metric_system, wind_unit, lat, lon):
@@ -251,14 +304,14 @@ class Weather:
             self.__current_condition = self._WeatherConditions.get(icon_name)
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             icon_name = self.__report['condition']['code']
-            self.__current_condition = self._WeatherConditions.get(icon_name)
+            self.__current_condition = self._WeatherCodes.get(icon_name)
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
         self.get_sun_data()
 
     #Get sun status
     def get_sun_data(self):
-        now = time.gmtime() 
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            now = datetime.datetime.now() 
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
             try:
                 f = urllib2.urlopen(url)
@@ -267,8 +320,8 @@ class Weather:
                 sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
                 sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
                 timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-                self.__sunrise_t = strptime(sunrise, '%H:%M:%S')
-                self.__sunset_t = strptime(sunset, '%H:%M:%S')
+                self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S').time()
+                self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S').time()
             except urllib2.URLError:
                 print "error reaching url %s" % url
 
@@ -276,10 +329,11 @@ class Weather:
             sunrise = self.__report['astronomy']['sunrise']
             sunset = self.__report['astronomy']['sunset']
             locale.setlocale(locale.LC_ALL, 'C')
-            self.__sunrise_t = time.strptime(sunrise, "%I:%M %p")
-            self.__sunset_t = time.strptime(sunset, "%I:%M %p")
+            self.__sunrise_t = datetime.datetime.strptime(sunrise, "%I:%M %p").time()
+            self.__sunset_t = datetime.datetime.strptime(sunset, "%I:%M %p").time()
             locale.resetlocale()
 
+        now = datetime.datetime.now().time()
         if now<self.__sunrise_t or now>self.__sunset_t:
             self.__night = True
         else:
@@ -303,7 +357,7 @@ class Weather:
 
     def getPixmap(self):
         if self.__current_condition != None:
-            if self.isNight:
+            if self.__night:
                 log.error("Weather: night, show '%s' icon" % self.__current_condition[1])
                 return self.__current_condition[1]
             else:
@@ -317,7 +371,7 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             pureCondition = self.__localized_report['current_conditions']['condition']
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            pureCondition = self.__localized_report['condition']['text']
+            pureCondition = self.__current_condition[3]
         return pureCondition
 
     def getHumidity(self):
@@ -363,7 +417,7 @@ class Weather:
                 _unit  = "F"
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             if (self.__metric_system == MetricSystem.SI):
-                _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * (5/9))
+                _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * 5/9)
                 _unit  = "C"
             else:
                 _value = self.__report['condition']['temp']
@@ -448,10 +502,10 @@ class Weather:
             return 12
 
     def getSunrise(self):
-        return "%s: %s" % (_("Sunrise"), time.strftime('%X', self.__sunrise_t))
+        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X'))
 
     def getSunset(self):
-        return "%s: %s" % (_("Sunset"), time.strftime('%X', self.__sunset_t))
+        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X'))
 
 class indicator_weather(threading.Thread):
     last_update_time = None
