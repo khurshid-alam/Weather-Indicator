@@ -36,6 +36,8 @@ import logging
 import logging.handlers
 import tempfile
 import couchdb
+from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
+import pymetar as metar
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
 import time
@@ -63,13 +65,13 @@ class Settings:
     log.debug("Settings: preparing settings store")
     self.db = CouchDatabase("weatherindicator", create = True)
 
-    self.settings_view = "function(doc) {emit(doc.name, doc);}"
-    self.settings_design_doc = "weather-indicator-settings"
+    self.settings_design_doc = "settings"
+    self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
     self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
 
-    self.weather_design_doc = "weather-indicator-cached-weather"
-    self.weather_view = "function(doc) {emit(doc.name, doc);}"
-    self.db.add_view("get_weather", self.weather_view, None, self.settings_design_doc)
+    self.weather_design_doc = "weather"
+    self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
+    self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
 
   def get_value(self, setting, return_id = False):
     log.debug("Setting: getting value for %s" % setting)
@@ -103,7 +105,7 @@ class Settings:
       if return_id:
         return str(view.rows[0].value['_id'])
       else:
-        return str(view.rows[0])
+          return str(view.rows[0].value['data'])
     else:
       return None
       log.debug("Setting: can't find cached weather for %s" % setting)
@@ -194,7 +196,7 @@ class Location:
             f = urllib2.urlopen(url)
             s=f.read()
             parsed = parseString(s)
-            self.__location_id = location_id
+            self.__code = location_id
             self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
             self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
             city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
@@ -206,6 +208,12 @@ class Location:
             print "error reaching url %s" % url
             self.__found = False
             return False
+
+    def get_short_city_name(self):
+        return 'Minsk'
+
+    def get_full_city_name(self):
+        return 'Minsk, Belarus'
 
     #Update weather data and store weather object
     def update_weather_data(self):
@@ -635,12 +643,7 @@ class indicator_weather(threading.Thread):
         self._wind_unit = WindUnits.MPH
         self.place = None
         self.menu = None
-        
-        if self.placechosen in (False, None) or self.placechosen >= len(eval(self.places)):
-            log.debug("Indicator: could not parse placechosen, setting to 0")
-            self.settings.set_value("placechosen", 0)
-            self.placechosen = 0
-        
+               
         if self.unit in (False, None):
             log.debug("Indicator: could not parse unit, setting to S")
             self.settings.set_value("unit", 'S')
@@ -677,6 +680,13 @@ class indicator_weather(threading.Thread):
             log.debug("Indicator: could not parse rate, setting to 15")
             self.settings.set_value("refresh_rate", 15)
             self.rate = 15
+
+        if self.placechosen == None:
+            log.debug("Indicator: could not parse placechosen, setting to 0")
+            self.settings.set_value("placechosen", 0)
+            self.placechosen = 0
+        else:
+            self.placechosen = int(self.placechosen)
             
         if self.places in (False, None, '', '[]', "['']",):
             log.debug("Indicator: could not parse places")
@@ -837,32 +847,34 @@ class indicator_weather(threading.Thread):
 
     def show_cached_weather(self):
         cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
-        if cached_weather:
+        if cached_weather != None:
+            cached_weather = eval(cached_weather)
             log.debug("Indicator: loading weather from cache for %s" % self.places[self.placechosen])
             self.menu_normal()
-            self.icon = cached_weather['data']['icon']
+            self.icon = cached_weather['icon']
             if (self.icon == False):
               self.winder.set_icon("weather-indicator-unknown")
             else:
               self.winder.set_icon(self.icon)
 
             self.city_show.set_label(self.places[self.placechosen][1])
-            self.cond_show.set_label(cached_weather['data']['condition'])
-            self.temp_show.set_label(cached_weather['data']['temper'])
-            self.humidex_show.set_label(cached_weather['data']['humidex'])
-            self.humid_show.set_label(cached_weather['data']['humidity'])
-            self.wind_show.set_label(cached_weather['data']['wind'])
-            self.sunrise_show.set_label(cached_weather['data']['sunrise'])
-            self.sunset_show.set_label(cached_weather['data']['sunset'])
-            self.update_label(cached_weather['data']['label'])
+            self.cond_show.set_label(cached_weather['condition'])
+            self.temp_show.set_label(cached_weather['temper'])
+            if cached_weather['humidex'] != None:
+                self.humidex_show.set_label(cached_weather['humidex'])
+            else:
+                self.humidex_show.destroy()
+            self.humid_show.set_label(cached_weather['humidity'])
+            self.wind_show.set_label(cached_weather['wind'])
+            self.sunrise_show.set_label(cached_weather['sunrise'])
+            self.sunset_show.set_label(cached_weather['sunset'])
+            self.update_label(cached_weather['label'])
+            self.refresh_show.set_label("%s" % (_("Refreshing, please wait")))
+            self.winder.set_menu(self.menu)
             self.winder.set_status(appindicator.STATUS_ATTENTION)
-            self.winder.set_status(appindicator.STATUS_ACTIVE)
-    
-    def update_weather(self, notif=True,widget=None):
-        log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
-        #First, display cached data
-        self.show_cached_weather()
+            self.winder.set_status(appindicator.STATUS_ACTIVE)           
 
+    def get_real_weather_data(self, notif = True):
         #Get real data
         weather = self.get_weather(self.places[self.placechosen])
         if weather == None:
@@ -904,7 +916,7 @@ class indicator_weather(threading.Thread):
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
-        self.menu_normal()
+        #self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(weather.getTemperature())
@@ -917,6 +929,8 @@ class indicator_weather(threading.Thread):
         self.sunrise_show.set_label(weather.getSunrise())
         self.sunset_show.set_label(weather.getSunset())
         self.update_label(weather.getPureTemperature())
+        self.refresh_show.set_label("%s (%s)" % (_("Refresh"), _("last refreshed just now")))
+        self.winder.set_menu(self.menu)
 
         #Saving cached data, unless correct icon is supplied
         if (self.icon == False):
@@ -935,8 +949,15 @@ class indicator_weather(threading.Thread):
             self.notify(self.condition, self.icon, severe=True)
 
         self.settings.set_value("current", self.condition)
-        log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)    
+        log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
+
+    def update_weather(self, notif=True, widget=None):
+        log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
+        #First, display cached data
+        threading.Thread(target=self.show_cached_weather).start()
+        #Then, start a new thread with real data pickup
+        threading.Thread(target=self.get_real_weather_data).start()
 
     def get_weather(self, city, firstrun=False, extended=False, onlycity=False):
         log.debug("Indicator: getWeather: extended = %s" % extended)  
@@ -1011,7 +1032,7 @@ class PreferencesDialog(gtk.Dialog):
         else:
             self.builder.get_object('beaufort').set_active(True)
         
-        self.builder.get_object('rate').set_value(wi.rate)
+        self.builder.get_object('rate').set_value(float(wi.rate))
 
         log.debug("Preferences: Loading places")
         if wi.places != None:
