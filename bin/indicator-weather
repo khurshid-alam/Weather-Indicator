@@ -24,6 +24,7 @@ pygtk.require('2.0')
 import gobject
 import appindicator
 import urllib2
+from urllib import urlencode
 import re
 import locale
 import pynotify
@@ -37,7 +38,6 @@ import logging.handlers
 import tempfile
 import couchdb
 from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
-import pymetar as metar
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
 import time
@@ -154,7 +154,7 @@ class Settings:
           "location" : location_code,
           "data"      : {
             "label"    : location_details['label'],
-            "full name": location_details['full_name'],
+            "full name": location_details['full name'],
             "latitude" : location_details['latitude'],
             "longitude": location_details['longitude'],
             "google id": location_details['google id'],
@@ -189,43 +189,80 @@ class Location:
     """
 
     #Initialize an object with a label
-    def __init__(self, metric_system, wind_units, location_details):
+    def __init__(self, metric_system, wind_units, location_details = None):
         self.metric_system = metric_system
         self.wind_units = wind_units
-        self.full_name = location_details['full name']
-        self.lat = location_details['latitude']
-        self.lon = location_details['longitude']
-        self.google_id = location_details['google id']
-        self.yahoo_id = location_details['yahoo id']
-        self.noaa_id = location_details['noaa id']
-        self.label = location_details['label']
-        self.location_details = location_details
+        if location_details != None:
+            self.full_name = location_details['full name']
+            self.lat = location_details['latitude']
+            self.lon = location_details['longitude']
+            self.google_id = location_details['google id']
+            self.yahoo_id = location_details['yahoo id']
+            self.noaa_id = location_details['noaa id']
+            self.label = location_details['label']
+            self.location_details = location_details
 
     #FIXME: Update with PyWAPI
-    #def find_city_by_code(self, location_id):
-    #    #Find location details from GeoNames
-    #    url = "http://api.geonames.org/get?geonameId=625144&username=indicatorweather&style=full"
-    #    try:
-    #        f = urllib2.urlopen(url)
-    #        s=f.read()
-    #        parsed = parseString(s)
-    #        self.__code = location_id
-    #        self.__lat = parsed.getElementsByTagName("lat")[0].firstChild.nodeValue
-    #        self.__lon = parsed.getElementsByTagName("lng")[0].firstChild.nodeValue
-    #        city_name = parsed.getElementsByTagName("name")[0].firstChild.nodeValue
-    #        country_name = parsed.getElementsByTagName("countryName")[0].firstChild.nodeValue
-    #        self.__full_name = "%s, %s" % (city_name, country_name)
-    #        self.__found = True
-    #        return True
-    #    except urllib2.URLError:
-    #        print "error reaching url %s" % url
-    #        self.__found = False
-    #        return False
+    def prepare_location(self, geonames_details):
+        self.location_details = {}
+        self.location_details['full name'] = geonames_details[0]
+
+        # Get YAHOO WOEID by full name
+        baseurl = 'http://where.yahooapis.com/geocode'
+        params = {'location': geonames_details[0], 'appid': 'mOawLd4s', 'flags': 'J'}
+        url = '?'.join((baseurl, urlencode(params)))
+        log.debug("Location: Get Yahoo WOEID, url %s" % url)
+        try:
+            f = urllib2.urlopen(url)
+            s=f.read()
+            yahoo_woeid_result = eval(s)
+            if yahoo_woeid_result['ResultSet']['Error'] != 0:
+                log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
+                self.__found = False
+                return False
+            else:
+                woeid = yahoo_woeid_result['ResultSet']['Results'][0]['woeid']
+                self.location_code = woeid
+                log.debug("Location: woeid is %s" % woeid)
+
+                # Get old Yahoo id by woeid
+                url = 'http://weather.yahooapis.com/forecastrss?w=%s' % woeid
+                f = urllib2.urlopen(url)
+                s=f.read()
+                parsed = parseString(s)
+                guid_value = parsed.getElementsByTagName("guid")[0].firstChild.nodeValue
+                p = re.compile('([^_]*)_')
+                m = p.match(guid_value)
+                if m:
+                    self.location_details['yahoo id'] = m.group(1)
+                    log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
+                else:
+                    log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
+                    self.__found = False
+                    return False
+
+        except urllib2.URLError:
+            log.error("Location: error reaching url '%s'" % url)
+            self.__found = False
+            return False
+
+        # Setting other parameters
+        self.location_details['latitude'] = geonames_details[2]
+        self.location_details['longitude'] = geonames_details[3]
+
+        #FIXME: Get noaa id from geonames service
+        self.location_details['noaa id'] = "woot"
+        self.location_details['google id'] = geonames_details[0]
+        self.__found = True
+        return True
+
+    def export_location_details(self):
+        return (self.location_code, self.location_details)
 
     #Update weather data and store weather object
     def update_weather_data(self):
         #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_units, self.lat, self.lon)
-        self.weather = Weather(self.yahoo_id, WeatherDataSource.YAHOO, self.metric_system, self.wind_units, self.lat, self.lon)
+        self.weather = Weather(self.location_details['yahoo id'], WeatherDataSource.YAHOO, self.metric_system, self.wind_units, self.location_details['latitude'], self.location_details['longitude'])
 
 class Forecast:
 
@@ -244,6 +281,7 @@ class Forecast:
             #Correcting lat and lon for google
             lat = self.location.lat
             lon = self.location.lon
+            print "lat = %s, lon = %s" % (lat, lon)
             self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (lat, lon), hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
@@ -413,7 +451,7 @@ class Weather:
                 self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S').time()
                 self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S').time()
             except urllib2.URLError:
-                print "error reaching url %s" % url
+                log.error("Weather: error reaching url '%s'" % url)
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             sunrise = self.__report['astronomy']['sunrise']
@@ -937,7 +975,7 @@ class indicator_weather(threading.Thread):
         self.icon = weather.getPixmap()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
-        #self.menu_normal()
+        self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
         self.temp_show.set_label(weather.getTemperature())
@@ -1015,6 +1053,7 @@ class indicator_weather(threading.Thread):
 
 class PreferencesDialog(gtk.Dialog):
     __gtype_name__ = "PreferencesDialog"
+
     def __new__(cls):
         log.debug("Preferences: creating")
         builder = get_builder('PreferencesDialog')
@@ -1058,6 +1097,7 @@ class PreferencesDialog(gtk.Dialog):
                 newplace = list()
                 newplace.append(place[1])
                 newplace.append(place[0])
+                newplace.append(wi.settings.get_location_details(place[0]))
             
                 self.builder.get_object('citieslist').append(newplace)
             self.builder.get_object('button1').set_sensitive(True)
@@ -1156,6 +1196,7 @@ class PreferencesDialog(gtk.Dialog):
             newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
             newplaces.append(newplace)
             item = self.builder.get_object('citieslist').iter_next(item)
+
         if newplaces != wi.places:
             wi.places = newplaces
             log.debug("Preferences: Places changed to '%s'" % str(wi.places))
@@ -1166,6 +1207,7 @@ class PreferencesDialog(gtk.Dialog):
                 wi.placechosen = 0
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
+            wi.location_details = wi.settings.get_location_details(wi.place[0])
             wi.menu_normal()
             wi.winder.set_menu(wi.menu)
             needupdate = True
@@ -1261,35 +1303,6 @@ class ExtendedForecast(gtk.Window):
     
     def on_destroy(self, widget, data=None):
         pass
-        
-#class EditPlace(gtk.MessageDialog):
-    #__gtype_name__ = "EditPlace"
-    #def __new__(cls):
-        #builder = get_builder('EditPlace')
-        #new_object = builder.get_object("edit_place")
-        #new_object.finish_initializing(builder)
-        #return new_object
-        
-    #def finish_initializing(self, builder):
-        #self.builder = builder
-        #self.builder.connect_signals(self)
-    
-    #def ok(self, widget, data=None):
-        #self.destroy()
-        #if self.builder.get_object("entry").get_text() != '':
-            #return self.builder.get_object("entry").get_text()
-        #else:
-            #return False
-        ###APPLY CHANGES
-        
-    #def cancel(self, widget, data=None):
-        #"""The user has elected cancel changes.
-
-        #Called before the dialog returns gtk.RESPONSE_CANCEL for run()
-        #"""
-        ## Restore any changes to self._preferences here.
-        #self.destroy()
-        #return False
 
 class Assistant(gtk.Assistant):
     __gtype_name__ = "Assistant"
@@ -1301,27 +1314,6 @@ class Assistant(gtk.Assistant):
         new_object.finish_initializing(builder)  
         return new_object
 
-    # Generate a treeview model for gweather data
-    def generate_treeview(self):
-        log.debug("Assistant: generating treeview")
-        #FIXME: Move this to WI object
-        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
-        node = gweather.location_new_world(True)
-        self.parse_gweather_locations(node, None)
-        return self.__all_locations_store
-
-    # Recursevly parse locations
-    def parse_gweather_locations(self, node, parent):
-        children = node.get_children()
-        if len(children) > 0:
-            for i in children:
-                timezone = i.get_timezone().get_tzid() if i.get_timezone() is not None else None
-                is_city = i.get_level() is gweather.LOCATION_CITY
-                #Unless it is a weather station or a country without children, iterate through children
-                if (i.get_level() is gweather.LOCATION_WEATHER_STATION) or (len(i.get_children())>0):
-                    node_iter = self.__all_locations_store.append(parent, (i.get_name(), timezone, is_city, i.get_code()))
-                    self.parse_gweather_locations(i, node_iter)
-
     # Finish UI initialization - fill in tree
     def finish_initializing(self, builder):
         log.debug("Assistant: finishing initialization")
@@ -1330,69 +1322,64 @@ class Assistant(gtk.Assistant):
         self.assistant = self.builder.get_object("assistant")
         self.assistant.set_page_complete(self.builder.get_object("label"),True)
         self.assistant.set_page_complete(self.builder.get_object("review"),True)
-        self.assistant.set_page_complete(self.builder.get_object("confirmplace"),True)
         # Fill in tree
-        log.debug("Assistant: setting up treeview")
-        self.__all_locations_view = self.builder.get_object("treeview-locations")
-        column = gtk.TreeViewColumn("Location", gtk.CellRendererText(), text=0)
-        column.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
-        self.__all_locations_view.append_column(column)
-        self.__all_locations_view.set_fixed_height_mode(True)
+        log.debug("Assistant: setting up location combobox")
+        store = gtk.ListStore(gobject.TYPE_STRING)
+        self.location_input_combo = self.builder.get_object("combolocations")
+        self.location_input_combo.set_model(store)
+        self.location_input_combo.set_text_column(0)
+        self.location_entry = self.builder.get_object("entrylocation")
 
-        self.__all_locations_store = gtk.TreeStore(str, str, bool, str)
-        self.__all_locations_store.set_sort_column_id(0, gtk.SORT_ASCENDING)
-        self.generate_treeview()
-        self.__all_locations_view.set_model(self.__all_locations_store)
-        self.__all_locations_selection = self.__all_locations_view.get_selection()
-        self.__all_locations_selection.connect("changed", self.on_selection_changed)
+        self.assistant.set_forward_page_func(self.next_page)
 
-        self.assistant.set_forward_page_func(self.get_city)
-
-    #Callback for row selection
-    def on_selection_changed(self,selection):
-        self.assistant.set_page_complete(self.builder.get_object("placeinput"),False)
-        if selection.count_selected_rows() != 0:
-            select_iter = selection.get_selected()[1]
-            log.debug("Assistant: Page 0: Tree: selected '%s', code %s" %
-                    (self.__all_locations_store[select_iter][0], self.__all_locations_store[select_iter][3]))
-            if self.is_location_and_leaf_node(select_iter):
-                log.debug("Assistant: Page 0: Enabling 'Next' button")
-                self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
-
-    #Check, that selected row is a leaf and enable "next" button    
-    def is_location_and_leaf_node(self, iter):
-        row = self.__all_locations_store[iter]
-        is_leaf_node = not self.__all_locations_store.iter_has_child(iter)
-        return row[0] is not None and row[1] is not None and is_leaf_node
-
-    # Create a location out of a tree
-    def get_city(self,current_page):
-        log.debug("Assistant: moved to page %s" % current_page)
-        if self.assistant.get_current_page() == 1:
-            select_iter = self.__all_locations_selection.get_selected()[1]
-            city_iter = self.__all_locations_store[select_iter]
-            self.city_code = city_iter[3]
-            log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.city_code))
-            self.location = Location(wi.metric_system, wi._wind_unit)
-            self.location.find_city_by_code(self.city_code)
-            if self.location.found:
-                log.debug("Assistant: Page %s: City %s found, full name - %s" %
-                        (current_page, self.location.get_short_city_name(), self.location.get_full_city_name()))
-                self.builder.get_object("lblplace").set_label('<big>%s</big>' % self.location.get_full_city_name())
-                self.builder.get_object("entrylbl").set_text(self.location.get_short_city_name())
+    def on_get_city_names(self, widget):
+        new_text = self.location_entry.get_text()
+        log.debug("Assistant: looking for location '%s'" % new_text)
+        url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=en&username=indicatorweather' % (new_text)
+        f = urllib2.urlopen(url)
+        s=f.read()
+        cities = eval(s)
+        self.store = gtk.ListStore(str, str, str, str, str)
+        for city in cities['geonames']:
+            if hasattr(city, 'adminName2'):
+                displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
+            elif hasattr(city, 'adminName1'):
+                displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
             else:
-                log.error("Assistant: Page %s: City with code %s was NOT found" % (current_page, self.city_code))
-        elif self.assistant.get_current_page() == 2:
+                displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
+            self.store.append([displayed_city_name, str(city['geonameId']), str(city['lat']), str(city['lng']), str(city['name'])])
+        self.location_input_combo.set_model(self.store)
+        self.location_input_combo.set_text_column(0)
+        log.error("Assistant: error reaching url '%s'" % url)
+
+    def on_select_city(self, entry):
+        if self.location_input_combo.get_active() != -1:
+            self.place_selected = self.store[self.location_input_combo.get_active()]
+            self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
+
+    # Create a location object out of a selected location
+    def next_page(self, current_page):
+        log.debug("Assistant: moved to page %s" % current_page)
+        if (self.assistant.get_current_page() == 0) and (not hasattr(self, 'location')) and (hasattr(self, 'place_selected')):
+            log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.place_selected[1]))
+            self.location = Location(wi.metric_system, wi._wind_unit)
+            if self.location.prepare_location(self.place_selected):
+                log.debug("Assistant: Page %s: City %s found" % (current_page, self.place_selected[0]))
+                self.builder.get_object("entrylbl").set_text(self.place_selected[4])
+            else:
+                log.error("Assistant: Page %s: City with code %s was NOT found" % (current_page, self.place_selected[0]))
+                return 3
+        elif self.assistant.get_current_page() == 1:
             lbl = self.builder.get_object("entrylbl").get_text()
             log.debug("Assistant: Page %s: City label is %s" % (current_page, lbl))
             if lbl == '':
                 log.debug("Assistant: Page %s: Empty label found, setting lbl to short name - %s label is %s" %
-                    (current_page, self.location.get_short_city_name()))
-                lbl = self.location.get_short_city_name()
-            self.location.set_label(lbl)
+                    (current_page, self.place_selected[4]))
+                lbl = self.place_selected[4]
+            self.location.location_details['label'] = lbl
             self.builder.get_object("lbl3").set_label('Label:')
-            self.builder.get_object("labellbl").set_label('<b>%s</b>' % self.location.label)
-            self.builder.get_object("placelbl").set_label('<b>'+self.location.get_full_city_name()+'</b>')
+            self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)
+            self.builder.get_object("placelbl").set_label('<b>%s</b>' % self.place_selected[0])
             
         return self.assistant.get_current_page() + 1
             
@@ -1401,10 +1388,13 @@ class Assistant(gtk.Assistant):
         self.destroy()
         
     def on_apply(self,widget):
-        log.debug("Assistant: Apply: adding location ('%s', '%s')" % (self.location.label, self.location.code))
+        (location_code, location_details) = self.location.export_location_details()
+        log.debug("Assistant: Apply: adding location ('%s', '%s')" % (self.location.location_details['label'], location_code))
         newplace = list()
-        newplace.append(self.location.label)
-        newplace.append(self.location.code)
+        newplace.append(self.location.location_details['label'])
+        newplace.append(str(location_code))
+        newplace.append(str(location_details))
+        wi.settings.save_location_details(eval(str(location_details)), str(location_code))
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         wi.prefswindow.builder.get_object('button1').set_sensitive(True)
         self.hide()

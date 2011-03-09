@@ -9,6 +9,8 @@
       <column type="gchararray"/>
       <!-- column-name City -->
       <column type="gchararray"/>
+      <!-- column-name Location Details -->
+      <column type="gchararray"/>
     </columns>
   </object>
   <object class="PreferencesDialog" id="preferences_dialog">

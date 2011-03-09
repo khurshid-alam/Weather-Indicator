@@ -16,7 +16,6 @@ XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends},
  ${python:Depends},
  python-appindicator,
- python-simplejson,
  python-desktopcouch-records,
  python-notify,
  python-gobject,

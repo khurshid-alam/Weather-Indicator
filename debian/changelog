@@ -1,4 +1,4 @@
-indicator-weather (11.02.13+bzr186~couchdb~natty1) natty; urgency=low
+indicator-weather (11.02.13+bzr186~natty1) natty; urgency=low
 
   * Implemented Desktopcouch support
 
