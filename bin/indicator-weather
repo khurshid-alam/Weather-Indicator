@@ -387,6 +387,7 @@ class Weather:
         "rain"             : ( "weather-showers",    "weather-showers",          False),
         "chance_of_rain"   : ( "weather-showers",    "weather-showers",          False),
         "sleet"            : ( "weather-snow",       "weather-snow",             False),
+        "rain_snow"        : ( "weather-snow",       "weather-snow",             False),
         "snow"             : ( "weather-snow",       "weather-snow",             False),
         "chance_of_snow"   : ( "weather-snow",       "weather-snow",             False),
         "icy"              : ( "weather-snow",       "weather-snow",             False),
