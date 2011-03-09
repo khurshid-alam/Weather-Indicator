@@ -732,32 +732,33 @@ class indicator_weather(threading.Thread):
         #Parsing settings
         # Metric system
         if self.unit in (False, None):
-            log.debug("Indicator: could not parse unit, setting to S")
-            self.settings.set_value("unit", 'S')
-            self.unit = 'S'
-            self.metric_system = MetricSystem.SI
-        else:
-            self.metric_system = self.metric_systems[self.unit][1]
+            default_value = 'S'
+            log.debug("Indicator: could not parse unit, setting to %s" % default_value)
+            self.settings.set_value("unit", default_value)
+            self.unit = default_value
+        self.metric_system = self.metric_systems[self.unit][1]
 
         # Notification
         if self.notif in (False, None):
-            log.debug("Indicator: could not parse notif, setting to N")
-            self.settings.set_value("notif", 'N')
-            self.notif = 'N'
+            default_value = 'N'
+            log.debug("Indicator: could not parse notif, setting to %s" % default_value)
+            self.settings.set_value("notif", default_value)
+            self.notif = default_value
 
         # Wind units
         if self.wind in (False, None):
-            log.debug("Indicator: could not parse notif, setting to mph")
-            self.settings.set_value("wind", 'mph')
-            self.wind_unit = WindUnits.MPH
-        else:
-            self.wind_unit = self.wind_systems[self.wind][1]
+            default_value = 'mph'
+            log.debug("Indicator: could not parse notif, setting to %s" % default_value)
+            self.settings.set_value("wind", default_value)
+            self.wind = default_value
+        self.wind_unit = self.wind_systems[self.wind][1]
 
         # Rate
         if self.rate in (False, None):
-            log.debug("Indicator: could not parse rate, setting to 15")
-            self.settings.set_value("refresh_rate", 15)
-            self.rate = 15
+            default_value = 15
+            log.debug("Indicator: could not parse rate, setting to %s" % str(default_value))
+            self.settings.set_value("refresh_rate", default_value)
+            self.rate = default_value
 
         # Place chosen
         if self.placechosen == None:
