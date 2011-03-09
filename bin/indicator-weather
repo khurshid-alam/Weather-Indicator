@@ -16,31 +16,23 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
-import sys
-import os
-import shutil
-import gtk
-import pygtk
+import sys, os, shutil, tempfile
+import gtk, pygtk, gobject, pynotify
 pygtk.require('2.0')
-import gobject
 import appindicator
 import urllib2
 from urllib import urlencode
 import re
 import locale
-import pynotify
 from xml.dom.minidom import parseString
 import datetime
-import math
-import commands
-import threading
-import logging
-import logging.handlers
-import tempfile
+# Will be used for humidex
+#import math
+import commands, threading
+import logging, logging.handlers
 import couchdb
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
-import time
 import pywapi
 
 import gettext
@@ -212,9 +204,9 @@ class Location:
     """ Data object to store location details """
 
     # Initialize an object with a label
-    def __init__(self, metric_system, wind_units, location_details = None):
+    def __init__(self, metric_system, wind_unit, location_details = None):
         self.metric_system = metric_system
-        self.wind_units = wind_units
+        self.wind_unit = wind_unit
         self.location_details = location_details
 
     # Get necessary location details by its GeoNames details
@@ -278,8 +270,8 @@ class Location:
 
     # Get fresh weather data and store it to weather object
     def update_weather_data(self):
-        #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_units, self.lat, self.lon)
-        self.weather = Weather(self.location_details['yahoo id'], WeatherDataSource.YAHOO, self.metric_system, self.wind_units, self.location_details['latitude'], self.location_details['longitude'])
+        #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_unit, self.lat, self.lon)
+        self.weather = Weather(self.location_details['yahoo id'], WeatherDataSource.YAHOO, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
 
 class Forecast:
     """ Class to get forecast information """
@@ -435,7 +427,7 @@ class Weather:
     def __init__(self, location_id, weather_datasource, metric_system, wind_unit, lat, lon):
         self.__weather_datasource = weather_datasource
         self.__metric_system = metric_system
-        self.__wind_unit = wind_unit
+        self._wind_unit = wind_unit
         self.__current_condition = None
         self.__lat = lat
         self.__lon = lon
@@ -605,19 +597,19 @@ class Weather:
             localized_wind_info = [_("Wind") + ":", self.get_wind_direction(wind_direction), ',', wind_speed, wind_units] 
 
         # Parse Wind_direction - convert to selected scale
-        if (self.__wind_unit == WindUnits.MPH):
+        if (self._wind_unit == WindUnits.MPH):
             _value = float(wind_speed)
             _unit  = _("mph")
-        if (self.__wind_unit == WindUnits.MPS):
+        if (self._wind_unit == WindUnits.MPS):
             _value = float(wind_speed) * 0.44704
             _unit  = _("m/s")
-        if (self.__wind_unit == WindUnits.BEAUFORT):
+        if (self._wind_unit == WindUnits.BEAUFORT):
             _value = self.get_beaufort_from_mph(float(wind_speed))
             _unit  = ""
-        if (self.__wind_unit == WindUnits.KPH):
+        if (self._wind_unit == WindUnits.KPH):
             _value = float(wind_speed) * 1.609344
             _unit  = _("km/h")
-        if (self.__wind_unit == WindUnits.KNOTS):
+        if (self._wind_unit == WindUnits.KNOTS):
             _value = float(wind_speed) * 0.868976241900648
             _unit  = _("knot(s)")
 
@@ -690,8 +682,26 @@ class Weather:
             return 12
 
 class indicator_weather(threading.Thread):
+    """ Indicator class """
     last_update_time = None
 
+    # Settings values
+    # Formats: setting value, object name (for preferences dialog), value assigned (optional)
+    metric_systems = { 'S': ('si',       MetricSystem.SI),
+                       'I': ('imperial', MetricSystem.IMPERIAL)}
+
+    notifications = {'N': 'nonotif',
+                     'O': 'notifsevere',
+                     'A': 'notifall'}
+
+    wind_systems = {'mps':      ("mps",      WindUnits.MPS),
+                    'mph':      ("mph",      WindUnits.MPH),
+                    'kph':      ("kph",      WindUnits.KPH),
+                    'beaufort': ("beaufort", WindUnits.BEAUFORT),
+                    'knots':    ("knots",    WindUnits.KNOTS)}
+
+
+    # Initializing and reading settings
     def __init__(self):
         log.debug("Indicator: creating")
         threading.Thread.__init__(self)
@@ -715,54 +725,49 @@ class indicator_weather(threading.Thread):
 
         #Setting default values
         self.metric_system = MetricSystem.SI
-        self._wind_unit = WindUnits.MPH
+        self.wind_unit = WindUnits.MPH
         self.place = None
         self.menu = None
-               
+
+        #Parsing settings
+        # Metric system
         if self.unit in (False, None):
             log.debug("Indicator: could not parse unit, setting to S")
             self.settings.set_value("unit", 'S')
             self.unit = 'S'
             self.metric_system = MetricSystem.SI
         else:
-            if (self.unit == 'S'):
-                self.metric_system = MetricSystem.SI
-            else:
-                self.metric_system = MetricSystem.IMPERIAL
-            
+            self.metric_system = self.metric_systems[self.unit][1]
+
+        # Notification
         if self.notif in (False, None):
             log.debug("Indicator: could not parse notif, setting to N")
             self.settings.set_value("notif", 'N')
             self.notif = 'N'
-        
+
+        # Wind units
         if self.wind in (False, None):
             log.debug("Indicator: could not parse notif, setting to mph")
             self.settings.set_value("wind", 'mph')
-            self._wind_unit = WindUnits.MPH
+            self.wind_unit = WindUnits.MPH
         else:
-            if (self.wind == 'mph'):
-                self._wind_unit = WindUnits.MPH
-            elif (self.wind == 'mps'):
-                self._wind_unit = WindUnits.MPS
-            elif (self.wind == 'beaufort'):
-                self._wind_unit = WindUnits.BEAUFORT
-            elif (self.wind == 'kph'):
-                self._wind_unit = WindUnits.KPH
-            elif (self.wind == 'knots'):
-                self._wind_unit = WindUnits.KNOTS
-            
+            self.wind_unit = self.wind_systems[self.wind][1]
+
+        # Rate
         if self.rate in (False, None):
             log.debug("Indicator: could not parse rate, setting to 15")
             self.settings.set_value("refresh_rate", 15)
             self.rate = 15
 
+        # Place chosen
         if self.placechosen == None:
             log.debug("Indicator: could not parse placechosen, setting to 0")
             self.settings.set_value("placechosen", 0)
             self.placechosen = 0
         else:
             self.placechosen = int(self.placechosen)
-            
+
+        # Places list
         if self.places in (False, None, '', '[]', "['']"):
             log.debug("Indicator: could not parse places")
             self.menu_noplace()
@@ -771,24 +776,26 @@ class indicator_weather(threading.Thread):
             self.place = self.places[self.placechosen]
             self.location_details = self.settings.get_location_details(self.place[0])
             if self.location_details in (False, None, '', '[]', "['']"):
-                log.debug("Indicator: could not parse location details")
+                log.debug("Indicator: could not parse current location details")
                 self.menu_noplace()
             else:
                 self.location_details = eval(self.location_details)
                 self.menu_normal()
                 self.update_weather()
-                self.winder.set_menu(self.menu)
 
+    # Set a label of indicator
     def update_label(self, label):
-      if (hasattr(self.winder, 'set_label')):
-        log.debug("Indicator: update_label: setting label to '%s'" % label)
-        self.winder.set_label(label)
-        self.winder.set_status(appindicator.STATUS_ATTENTION)
-        self.winder.set_status(appindicator.STATUS_ACTIVE)
+        if (hasattr(self.winder, 'set_label')):
+            log.debug("Indicator: update_label: setting label to '%s'" % label)
+            self.winder.set_label(label)
+            self.winder.set_status(appindicator.STATUS_ATTENTION)
+            self.winder.set_status(appindicator.STATUS_ACTIVE)
 
+    # Show a menu if no places specified
     def menu_noplace(self):
         log.debug("Indicator: making a menu for no places")
         menu_noplace = gtk.Menu()
+
         setup = gtk.MenuItem(_("Set Up Weather..."))
         setup.connect("activate", self.prefs)
         setup.show()
@@ -799,10 +806,11 @@ class indicator_weather(threading.Thread):
         quit.show()
         menu_noplace.append(quit)
 
+        self.winder.set_menu(menu_noplace)
         self.winder.set_status(appindicator.STATUS_ATTENTION)
         self.winder.set_status(appindicator.STATUS_ACTIVE)
-        self.winder.set_menu(menu_noplace)
-    
+
+    # Show menu with data
     def menu_normal(self):
         log.debug("Indicator: menu_normal: filling in a menu for found places")
         self.menu = gtk.Menu()
@@ -907,7 +915,8 @@ class indicator_weather(threading.Thread):
 
         self.winder.set_menu(self.menu)
         self.update_label("")
-    
+
+    # Another city has been selected from radiobutton
     def on_city_changed(self,widget):
         if widget.get_active():
             for place in self.places:
@@ -925,8 +934,8 @@ class indicator_weather(threading.Thread):
             self.settings.set_value("placechosen", self.placechosen)
             self.update_weather(False)
 
+    # Update 'Refresh' label with time since last successful data refresh
     def update_refresh_label(self):
-        """ Calculate number minutes since last update and show this value in Refresh label"""
         self.refreshed_minutes_ago += 1
         log.debug("Indicator: updating refresh label, %s min. ago" % self.refreshed_minutes_ago)
         refresh_label = "%s (%s)" % (_("Refresh"), _("last refreshed %s min. ago") % self.refreshed_minutes_ago)
@@ -934,6 +943,7 @@ class indicator_weather(threading.Thread):
         self.winder.set_menu(self.menu)
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
+    # Load weather data from cache and display its values
     def show_cached_weather(self):
         cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
         if cached_weather != None:
@@ -963,47 +973,29 @@ class indicator_weather(threading.Thread):
             self.winder.set_status(appindicator.STATUS_ATTENTION)
             self.winder.set_status(appindicator.STATUS_ACTIVE)           
 
+    # Get fresh weather data
     def get_new_weather_data(self, notif = True):
         weather = self.get_weather()
         if weather == None:
-            log.debug("Indicator: updateWeather: could not get weather")
-            for item in self.menu.get_children()[0:len(self.menu.get_children())]:
-                item.destroy()
-
-            self.menu = gtk.Menu()
-            self.problem_show = gtk.MenuItem(_("Connection problem"))
-            self.problem_show.set_sensitive(False)
-            self.problem_show.show()
-            self.menu.append(self.problem_show)
-
-            self.refresh_show = gtk.MenuItem(_("Refresh"))
-            self.refresh_show.connect("activate", self.update_weather)
-            self.refresh_show.show()
-            self.menu.append(self.refresh_show)
-
-            self.quit_menu = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-            self.quit_menu.connect("activate", self.quit)
-            self.quit_menu.show()
-            self.menu.append(self.quit_menu)
-
-            self.winder.set_icon("weather-indicator-error")
-            self.update_label("")
-            self.winder.set_menu(self.menu)
-
+            # No data returned - leave cached data to be displayed
+            log.error("Indicator: updateWeather: could not get weather, leaving cached data")
+            # Repeat an attempt in one minute
             log.debug("Indicator: updateWeather: setting rate to one minute")
             self.rateid = gobject.timeout_add(60000, self.update_weather)
             return
 
-        #Refresh label update interval is 1 min
+        # Set a 'Refresh' label update interval to 1 min
         if hasattr(self, 'refresh_id'):
           gobject.source_remove(self.refresh_id)
         self.refreshed_minutes_ago = 0
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
+        # Fill in menu with data
+        log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
         self.condition = weather.get_condition_label()
         self.icon = weather.get_icon_name()
-        log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
-        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.get_temperature_label(), weather.get_humidex_label(), weather.get_humidity_label(), weather.get_wind_label(), weather.get_sunrise_label(), weather.get_sunset_label(), weather.get_temperature()))
+        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.get_temperature_label(), weather.get_humidity_label(), weather.get_wind_label(), weather.get_sunrise_label(), weather.get_sunset_label(), weather.get_temperature()))
+
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
@@ -1016,23 +1008,24 @@ class indicator_weather(threading.Thread):
         self.wind_show.set_label(weather.get_wind_label())
         self.sunrise_show.set_label(weather.get_sunrise_label())
         self.sunset_show.set_label(weather.get_sunset_label())
-        self.update_label(weather.get_temperature())
         self.refresh_show.set_label("%s (%s)" % (_("Refresh"), _("last refreshed just now")))
         self.winder.set_menu(self.menu)
 
-        #Saving cached data, unless correct icon is supplied
+        # Saving cached data, unless correct icon is supplied
         if (self.icon == False):
             self.winder.set_icon("weather-indicator-unknown")
         else:
             self.winder.set_icon(self.icon)
             self.settings.save_weather(weather, self.places[self.placechosen][0])
-        self.winder.set_status(appindicator.STATUS_ATTENTION)
-        self.winder.set_status(appindicator.STATUS_ACTIVE)
+        self.update_label(weather.get_temperature())
 
+        # Notify user, if notifications are enabled
         if self.condition != self.settings.get_value("current") and self.notif == 'U':
+            # Weather condition has changed
             log.debug("Indicator: updateWeather: weather has changed, notify")
             self.notify(self.condition, self.icon)
         if self.notif == 'S' and weather.condition_is_severe():
+            # Severe weather condition notification
             log.debug("Indicator: updateWeather: severe condition notification")
             self.notify(self.condition, self.icon, severe=True)
 
@@ -1040,32 +1033,25 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: updateWeather: setting rate to %s" % self.rate)
         self.rateid = gobject.timeout_add(int(self.rate) * 60000, self.update_weather)
 
+    # Update weather
     def update_weather(self, notif=True, widget=None):
         log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
-        #First, display cached data
+        # First, display cached data
         threading.Thread(target=self.show_cached_weather).start()
-        #Then, start a new thread with real data pickup
+        # Then, start a new thread with real data pickup
         threading.Thread(target=self.get_new_weather_data).start()
 
+    # Get current weather for selected location
     def get_weather(self):
         log.debug("Indicator: getWeather for location '%s'" % self.location_details['full name'])  
-        self.current_location = Location(self.metric_system, self._wind_unit, self.location_details)
+        self.current_location = Location(self.metric_system, self.wind_unit, self.location_details)
         #if (self.current_location.find_city_by_code(city_code, self.placechosen) == False):
         #    log.error("Indicator: getWeather: location with code %s not found" % city_code)
         log.debug("Indicator: getWeather: updating weather report")  
         self.current_location.update_weather_data()
         return self.current_location.weather
 
-    def prefs(self, widget):
-        log.debug("Indicator: open Preferences")  
-        self.prefswindow = PreferencesDialog()
-        self.prefswindow.show()
-        
-    def extforecast(self, widget):
-        log.debug("Indicator: open Forecast")  
-        forecastwd = ExtendedForecast()
-        forecastwd.show()
-        
+    # Show notification to user
     def notify(self,conditon,icon,severe=False):
         log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, self.condition, icon))  
         if severe:
@@ -1073,9 +1059,23 @@ class indicator_weather(threading.Thread):
                 self.condition,
                 icon)
         else:
-		    n = pynotify.Notification (self.condition,"",icon)
+		    n = pynotify.Notification (self.condition, "", icon)
         n.show ()
 
+    # Menu callbacks
+    # Open Preferences dialog
+    def prefs(self, widget):
+        log.debug("Indicator: open Preferences")  
+        self.prefswindow = PreferencesDialog()
+        self.prefswindow.show()
+
+    # Open Extended forecast window
+    def extforecast(self, widget):
+        log.debug("Indicator: open Forecast")  
+        forecastwd = ExtendedForecast()
+        forecastwd.show()
+
+    # Quit the applet
     def quit(self, widget, data=None):
         log.debug("Indicator: Quitting")  
         gtk.main_quit()
@@ -1083,21 +1083,6 @@ class indicator_weather(threading.Thread):
 class PreferencesDialog(gtk.Dialog):
     """ Class for preferences dialog """
     __gtype_name__ = "PreferencesDialog"
-
-    # Settings values
-    # Formats: setting value, object name, value assigned (optional)
-    metric_systems = { 'S': ('si',       MetricSystem.SI),
-                       'I': ('imperial', MetricSystem.IMPERIAL)}
-
-    notifications = {'N': 'nonotif',
-                     'O': 'notifsevere',
-                     'A': 'notifall'}
-
-    wind_systems = {'mps':      ("mps",      WindUnits.MPS),
-                    'mph':      ("mph",      WindUnits.MPH),
-                    'kph':      ("kph",      WindUnits.KPH),
-                    'beaufort': ("beaufort", WindUnits.BEAUFORT),
-                    'knots':    ("knots",    WindUnits.KNOTS)}
 
     # Creating a new preferences dialog
     def __new__(cls):
@@ -1115,9 +1100,9 @@ class PreferencesDialog(gtk.Dialog):
         self.builder = builder
 
         # Set correct wind_unit using dictionary of wind value and object name
-        self.builder.get_object(self.metric_systems[wi.unit][0]).set_active(True)
-        self.builder.get_object(self.notifications[wi.notif]).set_active(True)
-        self.builder.get_object(self.wind_systems[wi.wind][0]).set_active(True)
+        self.builder.get_object(wi.metric_systems[wi.unit][0]).set_active(True)
+        self.builder.get_object(wi.notifications[wi.notif]).set_active(True)
+        self.builder.get_object(wi.wind_systems[wi.wind][0]).set_active(True)
         
         self.builder.get_object('rate').set_value(float(wi.rate))
 
@@ -1140,8 +1125,8 @@ class PreferencesDialog(gtk.Dialog):
     def on_remove_location(self, widget):
         selection = self.builder.get_object('location_list').get_selection()
         model, iter = selection.get_selected()
-        log.debug("Preferences: Removing location %s (code %s)" % (model[iter][0], model[iter][1]))
         if iter != None:
+            log.debug("Preferences: Removing location %s (code %s)" % (model[iter][0], model[iter][1]))
             model.remove(iter)
 
         if (self.builder.get_object('citieslist').get_iter_first() == None):
@@ -1185,12 +1170,12 @@ class PreferencesDialog(gtk.Dialog):
         # Wind Units
         for k in self.wind_systems.keys():
             if self.builder.get_object(self.wind_systems[k][0]).get_active():
-                new_wind_unit   = k
+                newwind_unit   = k
                 new_wind_system = wind_system[1]
 
-        if (wi.wind != new_wind_unit):
-            wi.wind = new_wind_unit
-            wi._wind_unit = new_wind_system
+        if (wi.wind != newwind_unit):
+            wi.wind = newwind_unit
+            wi.wind_unit = new_wind_system
             wi.settings.set_value("wind", wi.wind)
             need_to_update_weather = True
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
@@ -1369,7 +1354,7 @@ class Assistant(gtk.Assistant):
         if (self.assistant.get_current_page() == 0) and (not hasattr(self, 'location')) and (hasattr(self, 'place_selected')):
             # Label input page
             log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.place_selected[1]))
-            self.location = Location(wi.metric_system, wi._wind_unit)
+            self.location = Location(wi.metric_system, wi.wind_unit)
             if self.location.prepare_location(self.place_selected):
                 log.debug("Assistant: Page %s: City %s found" % (current_page, self.place_selected[0]))
                 # Set a short city name as default label
