@@ -37,7 +37,6 @@ import logging
 import logging.handlers
 import tempfile
 import couchdb
-from gweather.I_KNOW_THIS_IS_UNSTABLE import gweather
 from desktopcouch.records.server import CouchDatabase
 from desktopcouch.records.record import Record as CouchRecord
 import time
@@ -59,24 +58,35 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 from indicator_weather.helpers import get_builder
 
 class Settings:
+    """ Class to read/write settings """
     db = None
 
+    # Open the DB and prepare views
+    #TODO: Create view when package is installed?
     def prepare_settings_store(self):
         log.debug("Settings: preparing settings store")
         self.db = CouchDatabase("weatherindicator", create = True)
 
+        # Settings view
         self.settings_design_doc = "settings"
         self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
         self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
 
+        # Cached weather view
         self.weather_design_doc = "weather"
         self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
         self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
 
+        # Location info view
         self.location_design_doc = "location"
         self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
         self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
 
+        #Compacting a database
+        #TODO: Move somewhere else? On indicator exit?
+        self.db.db.compact()
+
+    # Get a value of the setting
     def get_value(self, setting, return_id = False):
         log.debug("Setting: getting value for %s" % setting)
         view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
@@ -87,13 +97,16 @@ class Settings:
                 return str(view.rows[0].value['value'])
         else:
             log.debug("Setting: can't find value for %s" % setting)
+            return None
 
+    # Set a setting value
     def set_value(self, setting, value):
         log.debug("Setting: setting '%s'='%s'" % (setting, value))
         self.record = {
             "name" : setting,
             "value": value
         }
+        #Update previously created document, if exists
         old_doc_id = self.get_value(setting, return_id=True)
         if old_doc_id != None:
             log.debug("Setting: setting '%s' was updated" % setting)
@@ -101,7 +114,9 @@ class Settings:
         else:
             log.debug("Setting: setting '%s' was created" % setting)
             self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
- 
+
+    # Get cached weather by location code.
+    # If return_id is True, only document id is returned, otherwise - full weather data
     def get_weather(self, location_code, return_id = False):
         log.debug("Setting: getting cached weather for %s" % location_code)
         view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
@@ -111,31 +126,35 @@ class Settings:
             else:
                 return str(view.rows[0].value['data'])
         else:
-            return None
             log.debug("Setting: can't find cached weather for %s" % setting)
+            return None
 
+    # Save weather info in cache for specific location
     def save_weather(self, weather, location_code):
         log.debug("Setting: Saving cached weather data")
         self.record = {
           "location" : location_code,
           "data"      : {
-            "label"    : weather.getPureTemperature(),
-            "condition": weather.getCondition(),
-            "icon"     : weather.getPixmap(),
-            "temper"   : weather.getTemperature(),
-            "humidex"  : weather.getHumidex(),
-            "humidity" : weather.getHumidity(),
-            "wind"     : weather.getWindSpeed(),
-            "sunrise"  : weather.getSunrise(),
-            "sunset"   : weather.getSunset()
+            "label"    : weather.get_temperature(),
+            "condition": weather.get_condition_label(),
+            "icon"     : weather.get_icon_name(),
+            "temper"   : weather.get_temperature_label(),
+            "humidex"  : weather.get_humidex_label(),
+            "humidity" : weather.get_humidity_label(),
+            "wind"     : weather.get_wind_label(),
+            "sunrise"  : weather.get_sunrise_label(),
+            "sunset"   : weather.get_sunset_label()
           }
         }
+        #Update previously created document, if exists
         old_doc_id = self.get_weather(location_code, return_id=True)
         if old_doc_id != None:
             self.db.update_fields(old_doc_id, self.record)
         else:    
             self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
 
+    # Get location details by location code
+    # If return_id is True, only document id is returned, otherwise - full location data
     def get_location_details(self, location_code, return_id = False):
         log.debug("Setting: getting location details for %s" % location_code)
         view = self.db.execute_view("get_location", self.location_design_doc)[location_code]
@@ -145,9 +164,10 @@ class Settings:
             else:
                 return str(view.rows[0].value['data'])
         else:
-            return None
             log.debug("Setting: can't find location details for %s" % setting)
+            return None
 
+    # Save location details
     def save_location_details(self, location_details, location_code):
         log.debug("Setting: Saving location details data")
         self.record = {
@@ -162,6 +182,7 @@ class Settings:
             "noaa id"  : location_details['noaa id'],
           }
         }
+        # Update previously created element, if exists
         old_doc_id = self.get_location_details(location_code, return_id=True)
         if old_doc_id != None:
             self.db.update_fields(old_doc_id, self.record)
@@ -169,10 +190,12 @@ class Settings:
             self.db.put_record(CouchRecord(self.record, self.location_design_doc))
 
 class MetricSystem:
+    """ Class with available metric systems units """
     SI = 1
     IMPERIAL = 2
 
 class WindUnits:
+    """ Class for available wind unit systems """
     MPS = 1
     MPH = 2
     BEAUFORT = 3
@@ -180,29 +203,20 @@ class WindUnits:
     KNOTS = 5
 
 class WeatherDataSource:
+    """ Class for available weather data sources """
     GOOGLE = 1
     YAHOO = 2
 
 class Location:
-    """
-    Data object which contains the name of a city (label), its GWeather object "location"
-    """
+    """ Data object to store location details """
 
-    #Initialize an object with a label
+    # Initialize an object with a label
     def __init__(self, metric_system, wind_units, location_details = None):
         self.metric_system = metric_system
         self.wind_units = wind_units
-        if location_details != None:
-            self.full_name = location_details['full name']
-            self.lat = location_details['latitude']
-            self.lon = location_details['longitude']
-            self.google_id = location_details['google id']
-            self.yahoo_id = location_details['yahoo id']
-            self.noaa_id = location_details['noaa id']
-            self.label = location_details['label']
-            self.location_details = location_details
+        self.location_details = location_details
 
-    #FIXME: Update with PyWAPI
+    # Get necessary location details by its GeoNames details
     def prepare_location(self, geonames_details):
         self.location_details = {}
         self.location_details['full name'] = geonames_details[0]
@@ -230,6 +244,7 @@ class Location:
                 f = urllib2.urlopen(url)
                 s=f.read()
                 parsed = parseString(s)
+                #TODO: Add a try-catch for empty guid_value
                 guid_value = parsed.getElementsByTagName("guid")[0].firstChild.nodeValue
                 p = re.compile('([^_]*)_')
                 m = p.match(guid_value)
@@ -250,39 +265,41 @@ class Location:
         self.location_details['latitude'] = geonames_details[2]
         self.location_details['longitude'] = geonames_details[3]
 
-        #FIXME: Get noaa id from geonames service
+        #TODO: Get noaa id from geonames service
         self.location_details['noaa id'] = "woot"
         self.location_details['google id'] = geonames_details[0]
         self.__found = True
         return True
 
+    # Return lcoation code and location details
     def export_location_details(self):
         return (self.location_code, self.location_details)
 
-    #Update weather data and store weather object
+    # Get fresh weather data and store it to weather object
     def update_weather_data(self):
         #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_units, self.lat, self.lon)
         self.weather = Weather(self.location_details['yahoo id'], WeatherDataSource.YAHOO, self.metric_system, self.wind_units, self.location_details['latitude'], self.location_details['longitude'])
 
 class Forecast:
+    """ Class to get forecast information """
 
+    # Initialize a class with metric system, wind units, location and current user locale
     def __init__ (self, units, source, location, locale):
         self.metric_system = units
         self.source = source
         self.location = location
         self.locale = locale
 
-    #Get and store forecast data - use Google
+    # Get and store forecast data. For now using Google only
     def prepare_forecast_data(self):
         self.daysofweek = []
         self.icons = []
         self.conditions = []
         try:
-            #Correcting lat and lon for google
-            lat = self.location.lat
-            lon = self.location.lon
-            print "lat = %s, lon = %s" % (lat, lon)
-            self.forecast = pywapi.get_weather_from_google (",,,%s,%s" % (lat, lon), hl = self.locale)
+            # Generate a fake location by current coordinates
+            #TODO: Correct lat and lng for Google
+            location_name = ",,,%s,%s" % (self.location.lat, lon)
+            self.forecast = pywapi.get_weather_from_google (location_name, hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
             for forecast in self.forecast['forecasts']:
@@ -290,9 +307,9 @@ class Forecast:
                 self.icons.append(forecast["icon"].split("/ig/images/weather/")[-1].split(".gif")[0])
                 self.conditions.append(forecast["condition"])
         except urllib2.URLError:
-            print "error reaching url %s" % url
+            log.error("Forecast: error reaching url %s" % url)
 
-    #Parse high values for forecast data
+    # Parse high values for forecast data
     def get_forecast_data(self):
         self.highdata = []
         self.lowdata = []
@@ -317,27 +334,26 @@ class Forecast:
 
         return (self.highdata, self.lowdata)
 
-    #Parse a list of days of week with forecast data
+    # Parse a list of days of week with forecast data
     def get_forecast_daysofweek(self):
         return self.daysofweek
 
-    #Parse icons for forecast data
+    # Parse icons for forecast data
     def get_forecast_icons(self):
         return self.icons
 
-    #Parse conditions for forecast data
+    # Parse conditions for forecast data
     def get_forecast_conditions(self):
         return self.conditions
 
 class Weather:
     """
-    Data object to parse metar weather object and convert units
+    Data object to parse weather data with unit convertion
     """
 
-    #Available conditions and their icons (basing on Google or Yahoo icons
-    #Formats: Google/Yahoo name: (gweather icon for day, icon for night, severe weather condition
-    _WeatherConditions = {
-        #Google conditions
+    #Available conditions by google icon
+    #Format: Google icon name: (day icon, night icon, is a severe weather condition)
+    _GoogleConditions = {
         "sunny"            : ( "weather-clear",      "weather-clear-night",      False),
         "mostly_sunny"     : ( "weather-clear",      "weather-clear-night",      False),
         "partly_cloudy"    : ( "weather-few-clouds", "weather-few-clouds-night", False),
@@ -361,58 +377,60 @@ class Weather:
         "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True),
     }
 
-    _WeatherCodes = {
-        #Yahoo conditions by code
+    #Available conditions by yahoo condition code
+    #Format: condition code: (day icon, night icon, is a severe weather condition, localized condition name)
+    _YahooConditions = {
         '0' : ("weather-storm",             "weather-storm",            True,  _("Tornado")),
-        '1' :	("weather-storm",             "weather-storm",            True,  _("Tropical storm")),
-        '2' :	("weather-storm",             "weather-storm",            True,  _("Hurricane")),
-        '3' :	("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
-        '4' :	("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
-        '5' :	("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
-        '6' :	("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
-        '7' :	("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
-        '8' :	("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
-        '9' :	("weather-showers",           "weather-showers",          False, _("Drizzle")),
-        '10':	("weather-snow",              "weather-snow",             False, _("Freezing rain")),
-        '11':	("weather-showers",           "weather-showers",          False, _("Showers")),
-        '12':	("weather-showers",           "weather-showers",          False, _("Showers")),
-        '13':	("weather-snow",              "weather-snow",             False, _("Snow flurries")),
-        '14':	("weather-snow",              "weather-snow",             False, _("Light snow showers")),
-        '15':	("weather-snow",              "weather-snow",             False, _("Blowing snow")),
-        '16':	("weather-snow",              "weather-snow",             False, _("Snow")),
-        '17':	("weather-showers",           "weather-showers",          False, _("Hail")),
-        '18':	("weather-snow",              "weather-snow",             False, _("Sleet")),
-        '19':	("weather-fog",               "weather-fog",              False, _("Dust")),
-        '20':	("weather-fog",               "weather-fog",              False, _("Foggy")),
-        '21':	("weather-fog",               "weather-fog",              False,  _("Haze")),
-        '22':	("weather-fog",               "weather-fog",              False, _("Smoky")),
-        '23':	("weather-clear",             "weather-clear-night",      False, _("Blustery")),
-        '24':	("weather-clear",             "weather-clear-night",      False, _("Windy")),
-        '25':	("weather-clear",             "weather-clear-night",      False, _("Cold")),
-        '26':	("weather-clouds",            "weather-clouds-night",     False, _("Cloudy")),
-        '27':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
-        '28':	("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
-        '29':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
-        '30':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
-        '31':	("weather-clear",             "weather-clear-night",      False, _("Clear")),
-        '32':	("weather-clear",             "weather-clear-night",      False, _("Sunny")),
-        '33':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
-        '34':	("weather-clear",             "weather-clear-night",      False, _("Fair")),
-        '35':	("weather-showers-scattered", "weather-showers-scattered",False, _("Mixed rain and hail")),
-        '36':	("weather-clear",             "weather-clear-night",      False, _("Hot")),
-        '37':	("weather-storm",             "weather-storm",            True,  _("Isolated thunderstorms")),
-        '38':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
-        '39':	("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
-        '40':	("weather-showers-scattered", "weather-showers-scattered",False, _("Scattered showers")),
-        '41':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
-        '42':	("weather-snow",              "weather-snow",             False, _("Scattered snow showers")),
-        '43':	("weather-snow",              "weather-snow",             False, _("Heavy snow")),
-        '44':	("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
-        '45':	("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
-        '46':	("weather-snow",              "weather-snow",             False, _("Snow showers")),
-        '47':	("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers"))
+        '1' : ("weather-storm",             "weather-storm",            True,  _("Tropical storm")),
+        '2' : ("weather-storm",             "weather-storm",            True,  _("Hurricane")),
+        '3' : ("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
+        '4' : ("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
+        '5' : ("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
+        '6' : ("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
+        '7' : ("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
+        '8' : ("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
+        '9' : ("weather-showers",           "weather-showers",          False, _("Drizzle")),
+        '10': ("weather-snow",              "weather-snow",             False, _("Freezing rain")),
+        '11': ("weather-showers",           "weather-showers",          False, _("Showers")),
+        '12': ("weather-showers",           "weather-showers",          False, _("Showers")),
+        '13': ("weather-snow",              "weather-snow",             False, _("Snow flurries")),
+        '14': ("weather-snow",              "weather-snow",             False, _("Light snow showers")),
+        '15': ("weather-snow",              "weather-snow",             False, _("Blowing snow")),
+        '16': ("weather-snow",              "weather-snow",             False, _("Snow")),
+        '17': ("weather-showers",           "weather-showers",          False, _("Hail")),
+        '18': ("weather-snow",              "weather-snow",             False, _("Sleet")),
+        '19': ("weather-fog",               "weather-fog",              False, _("Dust")),
+        '20': ("weather-fog",               "weather-fog",              False, _("Foggy")),
+        '21': ("weather-fog",               "weather-fog",              False, _("Haze")),
+        '22': ("weather-fog",               "weather-fog",              False, _("Smoky")),
+        '23': ("weather-clear",             "weather-clear-night",      False, _("Blustery")),
+        '24': ("weather-clear",             "weather-clear-night",      False, _("Windy")),
+        '25': ("weather-clear",             "weather-clear-night",      False, _("Cold")),
+        '26': ("weather-clouds",            "weather-clouds-night",     False, _("Cloudy")),
+        '27': ("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '28': ("weather-clouds",            "weather-clouds-night",     False, _("Mostly cloudy")),
+        '29': ("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '30': ("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '31': ("weather-clear",             "weather-clear-night",      False, _("Clear")),
+        '32': ("weather-clear",             "weather-clear-night",      False, _("Sunny")),
+        '33': ("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '34': ("weather-clear",             "weather-clear-night",      False, _("Fair")),
+        '35': ("weather-showers-scattered", "weather-showers-scattered",False, _("Mixed rain and hail")),
+        '36': ("weather-clear",             "weather-clear-night",      False, _("Hot")),
+        '37': ("weather-storm",             "weather-storm",            True,  _("Isolated thunderstorms")),
+        '38': ("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '39': ("weather-storm",             "weather-storm",            True,  _("Scattered thunderstorms")),
+        '40': ("weather-showers-scattered", "weather-showers-scattered",False, _("Scattered showers")),
+        '41': ("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '42': ("weather-snow",              "weather-snow",             False, _("Scattered snow showers")),
+        '43': ("weather-snow",              "weather-snow",             False, _("Heavy snow")),
+        '44': ("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
+        '45': ("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
+        '46': ("weather-snow",              "weather-snow",             False, _("Snow showers")),
+        '47': ("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers"))
     }
 
+    # Initialize and get fresh data
     def __init__(self, location_id, weather_datasource, metric_system, wind_unit, lat, lon):
         self.__weather_datasource = weather_datasource
         self.__metric_system = metric_system
@@ -421,24 +439,32 @@ class Weather:
         self.__lat = lat
         self.__lon = lon
 
+        # Get data from Google
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            # Get data in english locale, then - switch back
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
             locale_name = locale.getlocale()[0].split('_')[0]
+            # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
             icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
-            self.__current_condition = self._WeatherConditions.get(icon_name)
+            self.__current_condition = self._GoogleConditions.get(icon_name)
 
+        # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
             self.__localized_report = self.__report
             icon_name = self.__report['condition']['code']
-            self.__current_condition = self._WeatherCodes.get(icon_name)
+            self.__current_condition = self._YahooConditions.get(icon_name)
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
+        #Prepare sunrise/sunset data
         self.get_sun_data()
 
-    #Get sun status
+    #Get sunrise/sunset times, calculate whether it is night already
     def get_sun_data(self):
+        # Weather source is Google
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            # Grab data from earthtools.org
+            #TODO: Check for DST
             now = datetime.datetime.now() 
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
             try:
@@ -453,6 +479,7 @@ class Weather:
             except urllib2.URLError:
                 log.error("Weather: error reaching url '%s'" % url)
 
+        # Weather source is Yahoo - grab sunset/sunrise from report
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             sunrise = self.__report['astronomy']['sunrise']
             sunset = self.__report['astronomy']['sunset']
@@ -461,6 +488,7 @@ class Weather:
             self.__sunset_t = datetime.datetime.strptime(sunset, "%I:%M %p").time()
             locale.resetlocale()
 
+        # Calculate, whether it is night or day
         now = datetime.datetime.now().time()
         if now<self.__sunrise_t or now>self.__sunset_t:
             self.__night = True
@@ -468,22 +496,17 @@ class Weather:
             self.__night = False
         log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sunrise_t, self.__sunset_t, self.__night))
 
-    def isNight(self):
-        return self.__night
-
-    #FIXME: Update with PyWAPI
-    def isReportCorrect(self):
-        return True 
-
-    def isSevereCondition(self):
+    # Return True, if weather condition is severe
+    def condition_is_severe(self):
         if self.__current_condition != None:
             log.debug("Weather: got severe condition '%s'" % self.__current_condition[2])
             return self.__current_condition[2]
         else:
-            log.error("Weather: got empty severe condition")
+            log.error("Weather: condition is not set while condition severity check")
             return False;
 
-    def getPixmap(self):
+    # Get associated icon name
+    def get_icon_name(self):
         if self.__current_condition != None:
             if self.__night:
                 log.error("Weather: night, show '%s' icon" % self.__current_condition[1])
@@ -495,39 +518,33 @@ class Weather:
             log.error("Weather: return 'offline' icon due to empty condition")
             return False
 
-    def getCondition(self):
+    # Get condition text
+    def get_condition_label(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            pureCondition = self.__localized_report['current_conditions']['condition']
+            condition = self.__localized_report['current_conditions']['condition']
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            pureCondition = self.__current_condition[3]
-        return pureCondition
+            condition = self.__current_condition[3]
+        return condition
 
-    def getHumidity(self):
+    # Get humidity label
+    def get_humidity_label(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             humidity = self.__localized_report['current_conditions']['humidity']
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             humidity = "%s: %s%%" % (_("Humidity"), self.__localized_report['atmosphere']['humidity'])
         return humidity
 
-    #FIXME: Update with PyWAPI
-    def getDewPoint(self):
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            #Can't be calculated in Google
+    # Get dew point - using in humidex calculation
+    #TODO: Update with NOAA
+    def get_dew_point_label(self):
+        if self.__weather_datasource == WeatherDataSource.GOOGLE or self.__weather_datasource == WeatherDataSource.YAHOO:
+            # Not returned by Google and Yahoo
             return None
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            #Can't be calculated in Yahoo 
-            return None
-        #if (self.__metric_system == MetricSystem.SI):
-        #    _value = "---"
-        #    _unit  = "C"
-        #else:
-        #    _value = "--"
-        #    _unit  = "F"
-        #return "%s: %s %s" % (_("Dew Point"), _value, _unit)
 
-    #FIXME: Update with PyWAPI
-    def getPressure(self):
+    # Get pressure label
+    def get_pressure_label(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            # TODO: Empty for Google, use NOAA data?
             value = "---"
             unit = ""
         if self.__weather_datasource == WeatherDataSource.YAHOO:
@@ -535,7 +552,8 @@ class Weather:
             unit = self.__localized_report['units']['pressure']
         return "%s: %s %s" % (_("Pressure"), value, units)
 
-    def getPureTemperature(self):
+    # Get temperature with units value - doesn't include 'Temperature' label
+    def get_temperature(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             if (self.__metric_system == MetricSystem.SI):
                 _value = self.__report['current_conditions']['temp_c']
@@ -550,25 +568,74 @@ class Weather:
             else:
                 _value = self.__report['condition']['temp']
                 _unit  = "F"
+        # Removing unnecessary '.0' in the end, if exists
         return ("%s %s" % (_value, _unit)).replace(".0", "")
 
-    def getTemperature(self):
-        return "%s: %s" % (_("Temperature"), self.getPureTemperature())
+    # Get temperature label
+    def get_temperature_label(self):
+        return "%s: %s" % (_("Temperature"), self.get_temperature())
 
-    def getHumidex(self):
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            #Empty for Google
+    # Get humidex parameter
+    def get_humidex_label(self):
+        if self.__weather_datasource == WeatherDataSource.GOOGLE or self.__weather_datasource == WeatherDataSource.YAHOO:
+            #Empty for Yahoo and Google
             return None
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            #Empty for Yahoo
-            return None
+        #TODO: Update with NOAA data
         #dewPoint=2
         #temp_c = 1
         #self.vapour_pressure = 6.11 * math.exp(5417.7530 * ( (1/273.16) - (1/(dewPoint+273.16))))
         #self.humidex = temp_c + (0.5555)*(self.vapour_pressure  - 10.0);
         #return ("%s: %.1f" % (_("Humidex"), self.humidex)).replace(".0", "")
 
-    def convertWindDirection(self, degrees):
+    # Get wind label
+    def get_wind_label(self):
+        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+            # Convert units picked up from Google and replace units with currently configured
+            localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
+            wind_direction = localized_wind_info[1]
+            wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
+            wind_speed = wind_info[3]
+
+        if self.__weather_datasource == WeatherDataSource.YAHOO:
+            # Create a similar to Google wind_info structure from Yahoo data
+            wind_direction = self.__localized_report['wind']['direction']
+            wind_speed = self.__localized_report['wind']['speed']
+            wind_units = self.__localized_report['units']['speed']
+            localized_wind_info = [_("Wind") + ":", self.get_wind_direction(wind_direction), ',', wind_speed, wind_units] 
+
+        # Parse Wind_direction - convert to selected scale
+        if (self.__wind_unit == WindUnits.MPH):
+            _value = float(wind_speed)
+            _unit  = _("mph")
+        if (self.__wind_unit == WindUnits.MPS):
+            _value = float(wind_speed) * 0.44704
+            _unit  = _("m/s")
+        if (self.__wind_unit == WindUnits.BEAUFORT):
+            _value = self.get_beaufort_from_mph(float(wind_speed))
+            _unit  = ""
+        if (self.__wind_unit == WindUnits.KPH):
+            _value = float(wind_speed) * 1.609344
+            _unit  = _("km/h")
+        if (self.__wind_unit == WindUnits.KNOTS):
+            _value = float(wind_speed) * 0.868976241900648
+            _unit  = _("knot(s)")
+
+        # Join wind_info data in a label
+        localized_wind_info[len(localized_wind_info)-1] = _unit
+        localized_wind_info[len(localized_wind_info)-2] = ("%0.1f" % _value).replace(".0", "")
+        return ' '.join(localized_wind_info)
+
+    # Get sunrise label
+    def get_sunrise_label(self):
+        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X'))
+
+    # Get sunset label
+    def get_sunset_label(self):
+        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X'))
+
+    # Additional functions
+    # Convert wind direction from degrees to localized direction
+    def get_wind_direction(self, degrees):
         try:
             degrees = int(degrees)
         except ValueError:
@@ -592,41 +659,8 @@ class Weather:
         elif degrees < 338:
             return _('NW')
 
-    def getWindSpeed(self):
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
-            wind_direction = localized_wind_info[1]
-            wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
-            wind_speed = wind_info[3]
-
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            wind_direction = self.__localized_report['wind']['direction']
-            wind_speed = self.__localized_report['wind']['speed']
-            wind_units = self.__localized_report['units']['speed']
-            localized_wind_info = [_("Wind") + ":", self.convertWindDirection(wind_direction), ',', wind_speed, wind_units] 
-
-        #Parse Wind_direction - convert to selected scale
-        if (self.__wind_unit == WindUnits.MPH):
-            _value = float(wind_speed)
-            _unit  = _("mph")
-        if (self.__wind_unit == WindUnits.MPS):
-            _value = float(wind_speed) * 0.44704
-            _unit  = _("m/s")
-        if (self.__wind_unit == WindUnits.BEAUFORT):
-            _value = self.getBeufortFromMPH(float(wind_speed))
-            _unit  = ""
-        if (self.__wind_unit == WindUnits.KPH):
-            _value = float(wind_speed) * 1.609344
-            _unit  = _("km/h")
-        if (self.__wind_unit == WindUnits.KNOTS):
-            _value = float(wind_speed) * 0.868976241900648
-            _unit  = _("knot(s)")
-        localized_wind_info[len(localized_wind_info)-1] = _unit
-        localized_wind_info[len(localized_wind_info)-2] = ("%0.1f" % _value).replace(".0", "")
-        return ' '.join(localized_wind_info)
-
-    #FIXME: fiill in with data
-    def getBeufortFromMPH(self, value):
+    # Convert mph to Beufort scale
+    def get_beaufort_from_mph(self, value):
         if value < 1:
             return 0
         elif value < 4:
@@ -653,12 +687,6 @@ class Weather:
             return 11
         elif value >= 73:
             return 12
-
-    def getSunrise(self):
-        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X'))
-
-    def getSunset(self):
-        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X'))
 
 class indicator_weather(threading.Thread):
     last_update_time = None
@@ -971,23 +999,23 @@ class indicator_weather(threading.Thread):
         self.refreshed_minutes_ago = 0
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
-        self.condition = weather.getCondition()
-        self.icon = weather.getPixmap()
+        self.condition = weather.get_condition_label()
+        self.icon = weather.get_icon_name()
         log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
-        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.getTemperature(), weather.getHumidex(), weather.getHumidity(), weather.getWindSpeed(), weather.getSunrise(), weather.getSunset(), weather.getPureTemperature()))
+        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humidex='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.get_temperature_label(), weather.get_humidex_label(), weather.get_humidity_label(), weather.get_wind_label(), weather.get_sunrise_label(), weather.get_sunset_label(), weather.get_temperature()))
         self.menu_normal()
         self.city_show.set_label(self.places[self.placechosen][1])
         self.cond_show.set_label(self.condition)
-        self.temp_show.set_label(weather.getTemperature())
-        if (weather.getHumidex() != None):
-            self.humidex_show.set_label(weather.getHumidex())
+        self.temp_show.set_label(weather.get_temperature_label())
+        if (weather.get_humidex_label() != None):
+            self.humidex_show.set_label(weather.get_humidex_label())
         else:
             self.humidex_show.destroy()
-        self.humid_show.set_label(weather.getHumidity())
-        self.wind_show.set_label(weather.getWindSpeed())
-        self.sunrise_show.set_label(weather.getSunrise())
-        self.sunset_show.set_label(weather.getSunset())
-        self.update_label(weather.getPureTemperature())
+        self.humid_show.set_label(weather.get_humidity_label())
+        self.wind_show.set_label(weather.get_wind_label())
+        self.sunrise_show.set_label(weather.get_sunrise_label())
+        self.sunset_show.set_label(weather.get_sunset_label())
+        self.update_label(weather.get_temperature())
         self.refresh_show.set_label("%s (%s)" % (_("Refresh"), _("last refreshed just now")))
         self.winder.set_menu(self.menu)
 
@@ -1003,7 +1031,7 @@ class indicator_weather(threading.Thread):
         if self.condition != self.settings.get_value("current") and self.notif == 'U':
             log.debug("Indicator: updateWeather: weather has changed, notify")
             self.notify(self.condition, self.icon)
-        if self.notif == 'S' and weather.isSevereCondition():
+        if self.notif == 'S' and weather.condition_is_severe():
             log.debug("Indicator: updateWeather: severe condition notification")
             self.notify(self.condition, self.icon, severe=True)
 
@@ -1052,8 +1080,25 @@ class indicator_weather(threading.Thread):
         gtk.main_quit()
 
 class PreferencesDialog(gtk.Dialog):
+    """ Class for preferences dialog """
     __gtype_name__ = "PreferencesDialog"
 
+    # Settings values
+    # Formats: setting value, object name, value assigned (optional)
+    metric_systems = { 'S': ('si',       MetricSystem.SI),
+                       'I': ('imperial', MetricSystem.IMPERIAL)}
+
+    notifications = {'N': 'nonotif',
+                     'O': 'notifsevere',
+                     'A': 'notifall'}
+
+    wind_systems = {'mps':      ("mps",      WindUnits.MPS),
+                    'mph':      ("mph",      WindUnits.MPH),
+                    'kph':      ("kph",      WindUnits.KPH),
+                    'beaufort': ("beaufort", WindUnits.BEAUFORT),
+                    'knots':    ("knots",    WindUnits.KNOTS)}
+
+    # Creating a new preferences dialog
     def __new__(cls):
         log.debug("Preferences: creating")
         builder = get_builder('PreferencesDialog')
@@ -1061,32 +1106,17 @@ class PreferencesDialog(gtk.Dialog):
         new_object.finish_initializing(builder)
         return new_object
 
+    # Fill in preferences dialog with currect data
     def finish_initializing(self, builder):
         log.debug("Preferences: finishing initialization")
         log.debug("Preferences: got settings: unit=%s, notif=%s, wind=%s, rate=%s" %
                 (wi.unit, wi.notif, wi.wind, wi.rate))
         self.builder = builder
-        #Refactor this
-        if wi.unit == 'S':
-            self.builder.get_object('si').set_active(True)
-        elif wi.unit == 'I':
-            self.builder.get_object('imperial').set_active(True)
-        if wi.notif == 'N':
-            self.builder.get_object('nonotif').set_active(True)
-        elif wi.notif == 'O':
-            self.builder.get_object('notifsevere').set_active(True)
-        else:
-            self.builder.get_object('notifall').set_active(True)            
-        if wi.wind == 'mps':
-            self.builder.get_object('mps').set_active(True)
-        elif wi.wind == 'mph':
-            self.builder.get_object('mph').set_active(True)
-        elif wi.wind == 'kph':
-            self.builder.get_object('kph').set_active(True)
-        elif wi.wind == 'knots':
-            self.builder.get_object('knots').set_active(True)
-        else:
-            self.builder.get_object('beaufort').set_active(True)
+
+        # Set correct wind_unit using dictionary of wind value and object name
+        self.builder.get_object(self.metric_systems[wi.unit][0]).set_active(True)
+        self.builder.get_object(self.notifications[wi.notif]).set_active(True)
+        self.builder.get_object(self.wind_systems[wi.wind][0]).set_active(True)
         
         self.builder.get_object('rate').set_value(float(wi.rate))
 
@@ -1100,85 +1130,71 @@ class PreferencesDialog(gtk.Dialog):
                 newplace.append(wi.settings.get_location_details(place[0]))
             
                 self.builder.get_object('citieslist').append(newplace)
-            self.builder.get_object('button1').set_sensitive(True)
+            self.builder.get_object('ok_button').set_sensitive(True)
             
         self.builder.connect_signals(self)
-        
+
+    # 'Remove' clicked - remove location from list
+    #TODO: Update settings object
     def on_remove_location(self, widget):
-        selection = self.builder.get_object('displaylist').get_selection()
+        selection = self.builder.get_object('location_list').get_selection()
         model, iter = selection.get_selected()
         log.debug("Preferences: Removing location %s (code %s)" % (model[iter][0], model[iter][1]))
         if iter != None:
             model.remove(iter)
 
         if (self.builder.get_object('citieslist').get_iter_first() == None):
-            self.builder.get_object('button1').set_sensitive(False)
+            self.builder.get_object('ok_button').set_sensitive(False)
 
+    # 'Add' clicked - create a new Assistant
     def on_add_location(self, widget):
         log.debug("Preferences: Add location clicked")
-        self.assistant = Assistant()
-        self.assistant.show()
-       
-    def on_destroy(self, widget, data=None):
-        pass
-    
+        assistant = Assistant()
+        assistant.show()
+
+    # 'OK' clicked - save settings
     def ok(self, widget, data=None):
-        """The user has selected to save the changes.
-
-        Called before the dialog returns gtk.RESONSE_OK from run().
-        """
         log.debug("Preferences: Saving settings")
-        needupdate = False
-        # Metric System
-        metric_systems = [('si',       "S", MetricSystem.SI),
-                          ('imperial', "I", MetricSystem.IMPERIAL)]
+        need_to_update_weather = False
 
-        for metric_system in metric_systems:
-            if self.builder.get_object(metric_system[0]).get_active():
-                new_unit = metric_system[1]
-                new_metric_system = metric_system[2]
+        # Metric systems
+        for k in self.metric_systems.keys():
+            if self.builder.get_object(self.metric_systems[k][0]).get_active():
+                new_unit = k
+                new_metric_system = self.metric_systems[k][1]
 
         if (wi.unit != new_unit):
             wi.unit = new_unit
             wi.metric_system = new_metric_system
             wi.settings.set_value("unit", wi.unit)
-            needupdate = True
+            need_to_update_weather = True
             log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
-        # Wind Units
-        wind_systems = [('mps',      "mps",      WindUnits.MPS),
-                        ('mph',      "mph",      WindUnits.MPH),
-                        ('kph',      "kph",      WindUnits.KPH),
-                        ('beaufort', "beaufort", WindUnits.BEAUFORT),
-                        ('knots',    "knots",    WindUnits.KNOTS)]
+        # Notifications
+        for k in self.notifications.keys():
+            if self.builder.get_object(self.notifications[k]).get_active():
+                new_notification  = k
 
-        for wind_system in wind_systems:
-            if self.builder.get_object(wind_system[0]).get_active():
-                new_wind_unit   = wind_system[1]
-                new_wind_system = wind_system[2]
+        if (wi.notif != new_notification):
+            wi.notif = new_notification
+            wi.settings.set_value("notif", wi.notif)
+            need_to_update_weather = True
+            log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
+
+        # Wind Units
+        for k in self.wind_systems.keys():
+            if self.builder.get_object(self.wind_systems[k][0]).get_active():
+                new_wind_unit   = k
+                new_wind_system = wind_system[1]
 
         if (wi.wind != new_wind_unit):
             wi.wind = new_wind_unit
             wi._wind_unit = new_wind_system
             wi.settings.set_value("wind", wi.wind)
-            needupdate = True
+            need_to_update_weather = True
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
 
-        # Notifications
-        notifications = [('nonotif',     "N"),
-                         ('notifsevere', "O"),
-                         ('notifall',    "U")]
-        for notification in notifications:
-            if self.builder.get_object(notification[0]).get_active():
-                new_notification  = notification[1]
-
-        if (wi.notif != new_notification):
-            wi.notif = new_notification
-            wi.settings.set_value("notif", wi.notif)
-            needupdate = True
-            log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
-
-        ##Rate
+        # Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
             wi.settings.set_value("refresh_rate", int(self.builder.get_object('rate').get_value()))
             wi.rate = int(self.builder.get_object('rate').get_value())
@@ -1187,16 +1203,17 @@ class PreferencesDialog(gtk.Dialog):
             wi.rateid = gobject.timeout_add(int(wi.rate) * 60000, wi.update_weather)
             log.debug("Preferences: Rate changed to '%s'" % wi.rate)
             
-        ##places
+        # Get places from location list
         newplaces = list()
         item = self.builder.get_object('citieslist').get_iter_first()
-        while ( item != None ):
+        while (item != None):
             newplace = list()
             newplace.append(self.builder.get_object('citieslist').get_value (item, 1))
             newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
             newplaces.append(newplace)
             item = self.builder.get_object('citieslist').iter_next(item)
 
+        # If places have changed - update weather data
         if newplaces != wi.places:
             wi.places = newplaces
             log.debug("Preferences: Places changed to '%s'" % str(wi.places))
@@ -1210,40 +1227,40 @@ class PreferencesDialog(gtk.Dialog):
             wi.location_details = wi.settings.get_location_details(wi.place[0])
             wi.menu_normal()
             wi.winder.set_menu(wi.menu)
-            needupdate = True
+            need_to_update_weather = True
         
-        if needupdate:
+        if need_to_update_weather:
             wi.update_weather(False)
         
         self.destroy()
 
+    # 'Cancel' click - forget all changes
     def cancel(self, widget, data=None):
-        """The user has elected cancel changes.
-
-        Called before the dialog returns gtk.RESPONSE_CANCEL for run()
-        """
-        # Restore any changes to self._preferences here.
         log.debug("Preferences: Cancelling")
         self.destroy()
         
 class ExtendedForecast(gtk.Window):
+    """ Class for forecast window """
     __gtype_name__ = "ExtendedForecast"
+
+    # Create forecast
     def __new__(cls):
         log.debug("ExtendedForecast: creating")
         builder = get_builder('ExtendedForecast')
         new_object = builder.get_object("extended_forecast")
         new_object.finish_initializing(builder)
         return new_object
-        
+
+    # Fill in forecast parameters
     def finish_initializing(self, builder):
         log.debug("ExtendedForecast: finishing initialization")
         self.builder = builder
         self.builder.connect_signals(self)
 
+        # Get forecast data using Forecast object
         log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
-        self.builder.get_object('extended_forecast').set_title(_('Weather Forecast for ')+wi.places[wi.placechosen][1])
+        self.builder.get_object('extended_forecast').set_title("%s %s" % (_('Weather Forecast for '), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
-        locale_name = locale.getlocale()[0].split('_')[0]
         forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.current_location, units = wi.metric_system, locale = locale_name)
         forecast.prepare_forecast_data()
         daysofweek = forecast.get_forecast_daysofweek()
@@ -1252,61 +1269,43 @@ class ExtendedForecast(gtk.Window):
         conditions = forecast.get_forecast_conditions()
 
         log.debug("ExtendedForecast: parsing forecast data")
+        # Create labels for each weekday
         self.builder.get_object('day1lbl').set_label('<big>%s</big>' % daysofweek[0].capitalize())
         self.builder.get_object('day2lbl').set_label('<big>%s</big>' % daysofweek[1].capitalize())
         self.builder.get_object('day3lbl').set_label('<big>%s</big>' % daysofweek[2].capitalize())
         self.builder.get_object('day4lbl').set_label('<big>%s</big>' % daysofweek[3].capitalize())
 
-        #FIXME: Refactor this
-        i=0
-        for icon in icons[1:]:
-            i=i+1
-            if icon in ('chance_of_storm', 'storm', 'thunderstorm', 'chance_of_tstorm'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-storm',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('sleet',  'snow',  'icy',  'flurries',  'chance_of_snow'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-snow',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('dust',  'fog',  'smoke',  'haze',  'mist'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-fog',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('rain'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-showers',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('chance_of_rain'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-showers-scattered',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('sunny', 'clear'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-clear',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('mostly_cloudy', 'cloudy'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-overcast',gtk.ICON_SIZE_BUTTON)
-            elif icon in ('mostly_sunny',  'partly_cloudy'):
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('weather-few-clouds',gtk.ICON_SIZE_BUTTON)
-            else:
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name('window-close',gtk.ICON_SIZE_BUTTON)
-        i=0
-        for condition in conditions[1:]:
-            i=i+1
-            self.builder.get_object('day%scond' % str(i)).set_label(condition)
-        i=0
-        #Refactor this
+        # Fill in icons
+        for i in range(1,4):
+            # Get icon name from dictionary in Weather object for Google icons
+            google_icon = Weather._GoogleConditions[icons[i]][0]
+            self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
+
+        # Fill in condition labels
+        for i in range(1,4):
+            self.builder.get_object('day%scond' % str(i)).set_label(conditions[i])
+            
+        # Fill in High and Low temperatures
         if wi.metric_system == MetricSystem.SI:
             tempunit = '°C'
-        elif unit == 'I':
+        else:
             tempunit = '°F'
-        for high in highdata:
-            i=i+1
-            self.builder.get_object('day%stemphigh' % str(i)).set_label((_('High: ')+'%s%s') % (high,tempunit))
-        i=0
-        for low in lowdata:
-            i=i+1
-            self.builder.get_object('day%stemplow' % str(i)).set_label((_('Low: ')+'%s%s') % (low,tempunit))
-        
+        for i in range(1,4):
+            label = "%s: %s%s" % (_('High'), highdata[i],tempunit)
+            self.builder.get_object('day%stemphigh' % str(i)).set_label(label)
+            label = "%s: %s%s" % (_('Low'), lowdata[i],tempunit)
+            self.builder.get_object('day%stemplow' % str(i)).set_label(label)
+
+    # Closing forecast window
     def close(self, widget, data=None):
         log.debug("ExtendedForecast: closing window")
         self.destroy()
-    
-    def on_destroy(self, widget, data=None):
-        pass
 
 class Assistant(gtk.Assistant):
+    """ Class for a wizard, which helps to add a new location in location list """
     __gtype_name__ = "Assistant"
-    
+
+    # Create new object
     def __new__(cls):
         log.debug("Assistant: creating new Assistance instance")
         builder = get_builder('Assistant')
@@ -1314,7 +1313,7 @@ class Assistant(gtk.Assistant):
         new_object.finish_initializing(builder)  
         return new_object
 
-    # Finish UI initialization - fill in tree
+    # Finish UI initialization - prepare combobox
     def finish_initializing(self, builder):
         log.debug("Assistant: finishing initialization")
         self.builder = builder
@@ -1322,36 +1321,42 @@ class Assistant(gtk.Assistant):
         self.assistant = self.builder.get_object("assistant")
         self.assistant.set_page_complete(self.builder.get_object("label"),True)
         self.assistant.set_page_complete(self.builder.get_object("review"),True)
-        # Fill in tree
+
+        # Set up combobox
         log.debug("Assistant: setting up location combobox")
-        store = gtk.ListStore(gobject.TYPE_STRING)
+        self.store = gtk.ListStore(str, str, str, str, str)
         self.location_input_combo = self.builder.get_object("combolocations")
-        self.location_input_combo.set_model(store)
+        self.location_input_combo.set_model(self.store)
         self.location_input_combo.set_text_column(0)
         self.location_entry = self.builder.get_object("entrylocation")
 
         self.assistant.set_forward_page_func(self.next_page)
 
+    # 'Get cities' button clicked - get suggested cities list
     def on_get_city_names(self, widget):
         new_text = self.location_entry.get_text()
         log.debug("Assistant: looking for location '%s'" % new_text)
-        url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=en&username=indicatorweather' % (new_text)
-        f = urllib2.urlopen(url)
-        s=f.read()
-        cities = eval(s)
-        self.store = gtk.ListStore(str, str, str, str, str)
-        for city in cities['geonames']:
-            if hasattr(city, 'adminName2'):
-                displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
-            elif hasattr(city, 'adminName1'):
-                displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
-            else:
-                displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
-            self.store.append([displayed_city_name, str(city['geonameId']), str(city['lat']), str(city['lng']), str(city['name'])])
-        self.location_input_combo.set_model(self.store)
-        self.location_input_combo.set_text_column(0)
-        log.error("Assistant: error reaching url '%s'" % url)
+        try:
+            # Clear up exising suggestions
+            self.store.clear()
+            # Get suggested city names from GeoNames DB in native locale
+            url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=%s&username=indicatorweather' % (new_text, locale_name)
+            cities = eval(urllib2.urlopen(url).read())
+            for city in cities['geonames']:
+                # Create a full city name, consisting of city name, administrative areas names and country name
+                if hasattr(city, 'adminName2'):
+                    displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
+                if hasattr(city, 'adminName1'):
+                    displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
+                else:
+                    displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
+                self.store.append([displayed_city_name, str(city['geonameId']), str(city['lat']), str(city['lng']), str(city['name'])])
+            #self.location_input_combo.set_model(self.store)
+            #self.location_input_combo.set_text_column(0)
+        except urllib2.URLError:
+            log.error("Assistant: error reaching url '%s'" % url)
 
+    # A city is selected from suggested list
     def on_select_city(self, entry):
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
@@ -1361,32 +1366,37 @@ class Assistant(gtk.Assistant):
     def next_page(self, current_page):
         log.debug("Assistant: moved to page %s" % current_page)
         if (self.assistant.get_current_page() == 0) and (not hasattr(self, 'location')) and (hasattr(self, 'place_selected')):
+            # Label input page
             log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.place_selected[1]))
             self.location = Location(wi.metric_system, wi._wind_unit)
             if self.location.prepare_location(self.place_selected):
                 log.debug("Assistant: Page %s: City %s found" % (current_page, self.place_selected[0]))
+                # Set a short city name as default label
                 self.builder.get_object("entrylbl").set_text(self.place_selected[4])
             else:
                 log.error("Assistant: Page %s: City with code %s was NOT found" % (current_page, self.place_selected[0]))
                 return 3
         elif self.assistant.get_current_page() == 1:
+            # Confirmation page
             lbl = self.builder.get_object("entrylbl").get_text()
             log.debug("Assistant: Page %s: City label is %s" % (current_page, lbl))
+            # If empty label was input, set label to short city name
             if lbl == '':
-                log.debug("Assistant: Page %s: Empty label found, setting lbl to short name - %s label is %s" %
-                    (current_page, self.place_selected[4]))
+                log.debug("Assistant: Page %s: Empty label found, setting lbl to short name - %s" % (current_page, self.place_selected[4]))
                 lbl = self.place_selected[4]
             self.location.location_details['label'] = lbl
-            self.builder.get_object("lbl3").set_label('Label:')
+            self.builder.get_object("lbl3").set_label(_('Label:'))
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)
             self.builder.get_object("placelbl").set_label('<b>%s</b>' % self.place_selected[0])
             
         return self.assistant.get_current_page() + 1
-            
+
+    # 'Cancel' clicked
     def on_cancel(self,widget):
         log.debug("Assistant: Cancelled")
         self.destroy()
-        
+
+    # 'Apply' clicked - save location details, add an entry in a location list
     def on_apply(self,widget):
         (location_code, location_details) = self.location.export_location_details()
         log.debug("Assistant: Apply: adding location ('%s', '%s')" % (self.location.location_details['label'], location_code))
@@ -1396,7 +1406,8 @@ class Assistant(gtk.Assistant):
         newplace.append(str(location_details))
         wi.settings.save_location_details(eval(str(location_details)), str(location_code))
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
-        wi.prefswindow.builder.get_object('button1').set_sensitive(True)
+        # Enable 'OK' button in Preferences
+        wi.prefswindow.builder.get_object('ok_button').set_sensitive(True)
         self.hide()
 
 class singleinstance(object):
@@ -1473,6 +1484,8 @@ if __name__ == "__main__":
     # not running, safe to continue...
     gtk.gdk.threads_init()
     gtk.gdk.threads_enter()
+    # Remember locale name
+    locale_name = locale.getlocale()[0].split('_')[0]
     wi = indicator_weather()
     main()
     gtk.gdk.threads_leave()

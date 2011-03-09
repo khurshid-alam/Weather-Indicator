@@ -10,16 +10,17 @@
     <property name="window_position">mouse</property>
     <property name="default_width">400</property>
     <property name="default_height">200</property>
-    <property name="deletable">False</property>
+    <property name="resizable">False</property>
     <signal name="apply" handler="on_apply"/>
     <signal name="cancel" handler="on_cancel"/>
-    <child>
+    <!--<child>
       <placeholder/>
-    </child>
+    </child> -->
     <child>
       <object class="GtkVBox" id="placeinput">
         <property name="visible">True</property>
         <property name="border_width">12</property>
+        <property name="spacing">6</property>
         <child>
           <object class="GtkLabel" id="lblplaceinput">
             <property name="visible">True</property>
@@ -38,6 +39,7 @@
             <object class="GtkHBox" id="city_input_vbox">
                 <property name="visible">True</property>
                 <property name="border_width">12</property>
+                <property name="spacing">6</property>
                 <child>
                     <object class="GtkComboBoxEntry" id="combolocations">
                         <property name="visible">True</property>
@@ -65,7 +67,7 @@
                 </child>
             </object>
             <packing>
-                <property name="position">2</property>
+                <property name="position">1</property>
             </packing>
         </child>
       </object>

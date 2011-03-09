@@ -43,7 +43,7 @@
                         <property name="label" translatable="yes">Enable the Weather Indicator Applet</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="xalign">0.019999999552965164</property>
+                        <property name="xalign">0.02</property>
                         <property name="active">True</property>
                         <property name="draw_indicator">True</property>
                       </object>
@@ -423,7 +423,7 @@
                     <property name="window_placement_set">True</property>
                     <property name="shadow_type">in</property>
                     <child>
-                      <object class="GtkTreeView" id="displaylist">
+                      <object class="GtkTreeView" id="location_list">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="model">citieslist</property>
@@ -516,7 +516,7 @@
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="cancel_button">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -531,7 +531,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button1">
+              <object class="GtkButton" id="ok_button">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
@@ -557,8 +557,8 @@
       </object>
     </child>
     <action-widgets>
-      <action-widget response="-6">button2</action-widget>
-      <action-widget response="-5">button1</action-widget>
+      <action-widget response="-6">cancel_button</action-widget>
+      <action-widget response="-5">ok_button</action-widget>
     </action-widgets>
   </object>
   <object class="GtkAdjustment" id="rate">
