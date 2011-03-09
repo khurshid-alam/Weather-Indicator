@@ -1,8 +1,9 @@
-indicator-weather (11.02.13~unstable+bzr202~natty1) natty; urgency=low
+indicator-weather (11.02.13+unstable+bzr203~natty1) natty; urgency=low
 
   * Fixes for incorrect and missing icons
+  * Fix for LP: #732275 "CouchDB exception on db.compact()"
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 00:00:43 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 00:23:14 +0200
 
 indicator-weather (11.02.13~unstable+bzr200~natty1) natty; urgency=low
 

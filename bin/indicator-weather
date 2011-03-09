@@ -75,10 +75,6 @@ class Settings:
         self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
         self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
 
-        #Compacting a database
-        #TODO: Move somewhere else? On indicator exit?
-        self.db.db.compact()
-
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
         log.debug("Setting: getting value for %s" % setting)
@@ -1126,6 +1122,8 @@ class indicator_weather(threading.Thread):
 
     # Quit the applet
     def quit(self, widget, data=None):
+        # Compact the settings DB
+        self.settings.db.db.compact()
         log.debug("Indicator: Quitting")  
         gtk.main_quit()
 
