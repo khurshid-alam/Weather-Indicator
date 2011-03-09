@@ -225,6 +225,7 @@ class Location:
         # Format latitude and longitude for Google needs
         self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
         self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
+        self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
 
         # Get location details in english for Yahoo
         baseurl = 'http://api.geonames.org/getJSON'
@@ -289,10 +290,8 @@ class Location:
             self.__found = False
             return False
 
-        # Setting other parameters
         #TODO: Get noaa id from geonames service
         self.location_details['noaa id'] = "woot"
-        self.location_details['google id'] = geonames_details[0]
         self.__found = True
         return True
 
@@ -301,9 +300,11 @@ class Location:
         return (self.location_code, self.location_details)
 
     # Get fresh weather data and store it to weather object
-    def update_weather_data(self):
-        #self.weather = Weather(self.google_id, WeatherDataSource.GOOGLE, self.metric_system, self.wind_unit, self.lat, self.lon)
-        self.weather = Weather(self.location_details['yahoo id'], WeatherDataSource.YAHOO, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+    def update_weather_data(self, source):
+        if source == WeatherDataSource.GOOGLE:
+            self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+        if source == WeatherDataSource.YAHOO:
+            self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
 
 class Forecast:
     """ Class to get forecast information """
@@ -721,6 +722,9 @@ class indicator_weather(threading.Thread):
     metric_systems = { 'S': ('si',       MetricSystem.SI),
                        'I': ('imperial', MetricSystem.IMPERIAL)}
 
+    weather_sources = { 'G': ('google', WeatherDataSource.GOOGLE),
+                        'Y': ('yahoo',  WeatherDataSource.YAHOO)}
+
     notifications = {'N': 'nonotif',
                      'O': 'notifsevere',
                      'A': 'notifall'}
@@ -748,6 +752,7 @@ class indicator_weather(threading.Thread):
         self.unit  = self.settings.get_value("unit")
         self.notif = self.settings.get_value("notif")
         self.wind  = self.settings.get_value("wind")
+        self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
         self.places = self.settings.get_value("places")
 
@@ -785,6 +790,14 @@ class indicator_weather(threading.Thread):
             self.settings.set_value("wind", default_value)
             self.wind = default_value
         self.wind_unit = self.wind_systems[self.wind][1]
+
+        # Weather source
+        if self.source in (False, None):
+            default_value = 'Y'
+            log.debug("Indicator: could not parse data source, setting to %s" % default_value)
+            self.settings.set_value("data_source", default_value)
+            self.source = default_value
+        self.weather_source = self.weather_sources[self.source][1]
 
         # Rate
         if self.rate in (False, None):
@@ -1083,7 +1096,7 @@ class indicator_weather(threading.Thread):
         #if (self.current_location.find_city_by_code(city_code, self.placechosen) == False):
         #    log.error("Indicator: getWeather: location with code %s not found" % city_code)
         log.debug("Indicator: getWeather: updating weather report")  
-        self.current_location.update_weather_data()
+        self.current_location.update_weather_data(self.weather_source)
         return self.current_location.weather
 
     # Show notification to user
@@ -1130,14 +1143,15 @@ class PreferencesDialog(gtk.Dialog):
     # Fill in preferences dialog with currect data
     def finish_initializing(self, builder):
         log.debug("Preferences: finishing initialization")
-        log.debug("Preferences: got settings: unit=%s, notif=%s, wind=%s, rate=%s" %
-                (wi.unit, wi.notif, wi.wind, wi.rate))
+        log.debug("Preferences: got settings: unit=%s, notif=%s, wind=%s, rate=%s, source=%s" %
+                (wi.unit, wi.notif, wi.wind, wi.rate, wi.source))
         self.builder = builder
 
         # Set correct wind_unit using dictionary of wind value and object name
         self.builder.get_object(wi.metric_systems[wi.unit][0]).set_active(True)
         self.builder.get_object(wi.notifications[wi.notif]).set_active(True)
         self.builder.get_object(wi.wind_systems[wi.wind][0]).set_active(True)
+        self.builder.get_object(wi.weather_sources[wi.source][0]).set_active(True)
         
         self.builder.get_object('rate').set_value(float(wi.rate))
 
@@ -1205,15 +1219,28 @@ class PreferencesDialog(gtk.Dialog):
         # Wind Units
         for k in wi.wind_systems.keys():
             if self.builder.get_object(wi.wind_systems[k][0]).get_active():
-                newwind_unit   = k
+                new_wind_unit   = k
                 new_wind_system = wi.wind_systems[k][1]
 
-        if (wi.wind != newwind_unit):
-            wi.wind = newwind_unit
+        if (wi.wind != new_wind_unit):
+            wi.wind = new_wind_unit
             wi.wind_unit = new_wind_system
             wi.settings.set_value("wind", wi.wind)
             need_to_update_weather = True
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
+
+        # Weather source
+        for k in wi.weather_sources.keys():
+            if self.builder.get_object(wi.weather_sources[k][0]).get_active():
+                new_source   = k
+                new_weather_source = wi.weather_sources[k][1]
+
+        if (wi.source != new_source):
+            wi.source = new_source
+            wi.weather_source = new_weather_source
+            wi.settings.set_value("data_source", wi.source)
+            need_to_update_weather = True
+            log.debug("Preferences: Weather Source changed to '%s'" % wi.source)
 
         # Rate
         if int(self.builder.get_object('rate').get_value()) != wi.rate:
