@@ -1,8 +1,9 @@
-indicator-weather (11.02.13+bzr186~natty1) natty; urgency=low
+indicator-weather (11.02.13+bzr196~natty1) natty; urgency=low
 
   * Implemented Desktopcouch support
+  * Using PyWAPI to get data
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 22 Feb 2011 23:34:34 +0200
+ -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 09 Mar 2011 20:06:26 +0200
 
 indicator-weather (11.02.13+bzr180~natty1) natty; urgency=low
 

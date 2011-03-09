@@ -119,7 +119,7 @@ class Settings:
             else:
                 return str(view.rows[0].value['data'])
         else:
-            log.debug("Setting: can't find cached weather for %s" % setting)
+            log.debug("Setting: can't find cached weather for %s" % location_code)
             return None
 
     # Save weather info in cache for specific location
@@ -157,7 +157,7 @@ class Settings:
             else:
                 return str(view.rows[0].value['data'])
         else:
-            log.debug("Setting: can't find location details for %s" % setting)
+            log.debug("Setting: can't find location details for %s" % location_code)
             return None
 
     # Save location details
@@ -213,17 +213,36 @@ class Location:
     def prepare_location(self, geonames_details):
         self.location_details = {}
         self.location_details['full name'] = geonames_details[0]
+        self.location_details['latitude'] = geonames_details[2]
+        self.location_details['longitude'] = geonames_details[3]
 
-        # Get YAHOO WOEID by full name
-        baseurl = 'http://where.yahooapis.com/geocode'
-        params = {'location': geonames_details[0], 'appid': 'mOawLd4s', 'flags': 'J'}
+        # Get location details in english for Yahoo
+        baseurl = 'http://api.geonames.org/getJSON'
+        params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
         url = '?'.join((baseurl, urlencode(params)))
-        log.debug("Location: Get Yahoo WOEID, url %s" % url)
+        log.debug("Location: Get GeoNames location details, url %s" % url)
         try:
+            city = eval(urllib2.urlopen(url).read())
+            if 'adminName2' in city:
+                displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
+            elif 'adminName1' in city:
+                displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
+            elif 'name' in city:
+                displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
+            else:
+                log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
+                self.__found = False
+                return False
+
+            # Get YAHOO WOEID by english name of location
+            baseurl = 'http://where.yahooapis.com/geocode'
+            params = {'location': displayed_city_name, 'appid': 'mOawLd4s', 'flags': 'J'}
+            url = '?'.join((baseurl, urlencode(params)))
+            log.debug("Location: Get Yahoo WOEID, url %s" % url)
             f = urllib2.urlopen(url)
             s=f.read()
             yahoo_woeid_result = eval(s)
-            if yahoo_woeid_result['ResultSet']['Error'] != 0:
+            if (yahoo_woeid_result['ResultSet']['Error'] != 0) and  (yahoo_woeid_result['ResultSet']['Results'] != None):
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
                 self.__found = False
                 return False
@@ -238,14 +257,20 @@ class Location:
                 s=f.read()
                 parsed = parseString(s)
                 #TODO: Add a try-catch for empty guid_value
-                guid_value = parsed.getElementsByTagName("guid")[0].firstChild.nodeValue
-                p = re.compile('([^_]*)_')
-                m = p.match(guid_value)
-                if m:
-                    self.location_details['yahoo id'] = m.group(1)
-                    log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
+                guid = parsed.getElementsByTagName("guid")
+                if len(guid) > 0:
+                    guid_value = guid[0].firstChild.nodeValue
+                    p = re.compile('([^_]*)_')
+                    m = p.match(guid_value)
+                    if m:
+                        self.location_details['yahoo id'] = m.group(1)
+                        log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
+                    else:
+                        log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
+                        self.__found = False
+                        return False
                 else:
-                    log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
+                    log.error("Location: Can't guid in yahoo RSS response. Full response:\n %s" % s)
                     self.__found = False
                     return False
 
@@ -255,9 +280,6 @@ class Location:
             return False
 
         # Setting other parameters
-        self.location_details['latitude'] = geonames_details[2]
-        self.location_details['longitude'] = geonames_details[3]
-
         #TODO: Get noaa id from geonames service
         self.location_details['noaa id'] = "woot"
         self.location_details['google id'] = geonames_details[0]
@@ -728,6 +750,8 @@ class indicator_weather(threading.Thread):
         self.wind_unit = WindUnits.MPH
         self.place = None
         self.menu = None
+        self.condition = None
+        self.icon = None
 
         #Parsing settings
         # Metric system
@@ -926,6 +950,7 @@ class indicator_weather(threading.Thread):
                     self.placechosen = self.places.index(place)
                     break
 
+            self.place = self.places[self.placechosen]
             self.location_details = self.settings.get_location_details(self.place[0])
             if self.location_details in (False, None, '', '[]', "['']"):
                 log.debug("Indicator: could not parse location details for placechosen='%s'" % self.placechosen)
@@ -1145,10 +1170,10 @@ class PreferencesDialog(gtk.Dialog):
         need_to_update_weather = False
 
         # Metric systems
-        for k in self.metric_systems.keys():
-            if self.builder.get_object(self.metric_systems[k][0]).get_active():
+        for k in wi.metric_systems.keys():
+            if self.builder.get_object(wi.metric_systems[k][0]).get_active():
                 new_unit = k
-                new_metric_system = self.metric_systems[k][1]
+                new_metric_system = wi.metric_systems[k][1]
 
         if (wi.unit != new_unit):
             wi.unit = new_unit
@@ -1158,8 +1183,8 @@ class PreferencesDialog(gtk.Dialog):
             log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
         # Notifications
-        for k in self.notifications.keys():
-            if self.builder.get_object(self.notifications[k]).get_active():
+        for k in wi.notifications.keys():
+            if self.builder.get_object(wi.notifications[k]).get_active():
                 new_notification  = k
 
         if (wi.notif != new_notification):
@@ -1169,10 +1194,10 @@ class PreferencesDialog(gtk.Dialog):
             log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
 
         # Wind Units
-        for k in self.wind_systems.keys():
-            if self.builder.get_object(self.wind_systems[k][0]).get_active():
+        for k in wi.wind_systems.keys():
+            if self.builder.get_object(wi.wind_systems[k][0]).get_active():
                 newwind_unit   = k
-                new_wind_system = wind_system[1]
+                new_wind_system = wi.wind_systems[k][1]
 
         if (wi.wind != newwind_unit):
             wi.wind = newwind_unit
@@ -1209,9 +1234,10 @@ class PreferencesDialog(gtk.Dialog):
                 wi.placechosen = wi.places.index(wi.place)
             else:
                 wi.placechosen = 0
+                wi.place = wi.places[0]
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
-            wi.location_details = wi.settings.get_location_details(wi.place[0])
+            wi.location_details = eval(wi.settings.get_location_details(wi.place[0]))
             wi.menu_normal()
             wi.winder.set_menu(wi.menu)
             need_to_update_weather = True
@@ -1331,15 +1357,13 @@ class Assistant(gtk.Assistant):
             cities = eval(urllib2.urlopen(url).read())
             for city in cities['geonames']:
                 # Create a full city name, consisting of city name, administrative areas names and country name
-                if hasattr(city, 'adminName2'):
+                if 'adminName2' in city:
                     displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
-                if hasattr(city, 'adminName1'):
+                elif 'adminName1' in city:
                     displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
                 else:
                     displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
                 self.store.append([displayed_city_name, str(city['geonameId']), str(city['lat']), str(city['lng']), str(city['name'])])
-            #self.location_input_combo.set_model(self.store)
-            #self.location_input_combo.set_text_column(0)
         except urllib2.URLError:
             log.error("Assistant: error reaching url '%s'" % url)
 
