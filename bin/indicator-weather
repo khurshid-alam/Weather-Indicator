@@ -209,12 +209,22 @@ class Location:
         self.wind_unit = wind_unit
         self.location_details = location_details
 
+    # Convert coordinate for google
+    def convert_coordinate_for_google(self, value):
+        value = value.replace(".","")
+        while len(value) < 9:
+            value = "".join((value, "0"))
+        value = value[0:9] if "-" in value else value[0:8]
+        return value
+
     # Get necessary location details by its GeoNames details
     def prepare_location(self, geonames_details):
         self.location_details = {}
         self.location_details['full name'] = geonames_details[0]
-        self.location_details['latitude'] = geonames_details[2]
-        self.location_details['longitude'] = geonames_details[3]
+
+        # Format latitude and longitude for Google needs
+        self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
+        self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
 
         # Get location details in english for Yahoo
         baseurl = 'http://api.geonames.org/getJSON'
@@ -299,10 +309,10 @@ class Forecast:
     """ Class to get forecast information """
 
     # Initialize a class with metric system, wind units, location and current user locale
-    def __init__ (self, units, source, location, locale):
+    def __init__ (self, units, lat, lon, locale):
         self.metric_system = units
-        self.source = source
-        self.location = location
+        self.lat = lat
+        self.lon = lon
         self.locale = locale
 
     # Get and store forecast data. For now using Google only
@@ -312,8 +322,7 @@ class Forecast:
         self.conditions = []
         try:
             # Generate a fake location by current coordinates
-            #TODO: Correct lat and lng for Google
-            location_name = ",,,%s,%s" % (self.location.lat, lon)
+            location_name = ",,,%s,%s" % (self.lat, self.lon)
             self.forecast = pywapi.get_weather_from_google (location_name, hl = self.locale)
             self.unitsystem = self.forecast['forecast_information']['unit_system']
 
@@ -1274,7 +1283,7 @@ class ExtendedForecast(gtk.Window):
         log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
         self.builder.get_object('extended_forecast').set_title("%s %s" % (_('Weather Forecast for '), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
-        forecast = Forecast(source = WeatherDataSource.GOOGLE, location = wi.current_location, units = wi.metric_system, locale = locale_name)
+        forecast = Forecast(wi.metric_system, wi.current_location.location_details['latitude'], wi.current_location.location_details['longitude'], locale_name)
         forecast.prepare_forecast_data()
         daysofweek = forecast.get_forecast_daysofweek()
         (highdata, lowdata) = forecast.get_forecast_data()
@@ -1289,30 +1298,33 @@ class ExtendedForecast(gtk.Window):
         self.builder.get_object('day4lbl').set_label('<big>%s</big>' % daysofweek[3].capitalize())
 
         # Fill in icons
-        for i in range(1,4):
+        for i in xrange(1,5):
             # Get icon name from dictionary in Weather object for Google icons
-            google_icon = Weather._GoogleConditions[icons[i]][0]
+            google_icon = Weather._GoogleConditions[icons[i-1]][0]
             self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
 
         # Fill in condition labels
-        for i in range(1,4):
-            self.builder.get_object('day%scond' % str(i)).set_label(conditions[i])
+        for i in xrange(1,5):
+            self.builder.get_object('day%scond' % str(i)).set_label(conditions[i-1])
             
         # Fill in High and Low temperatures
         if wi.metric_system == MetricSystem.SI:
             tempunit = '°C'
         else:
             tempunit = '°F'
-        for i in range(1,4):
-            label = "%s: %s%s" % (_('High'), highdata[i],tempunit)
+        for i in xrange(1,5):
+            label = "%s: %s%s" % (_('High'), highdata[i-1],tempunit)
             self.builder.get_object('day%stemphigh' % str(i)).set_label(label)
-            label = "%s: %s%s" % (_('Low'), lowdata[i],tempunit)
+            label = "%s: %s%s" % (_('Low'), lowdata[i-1],tempunit)
             self.builder.get_object('day%stemplow' % str(i)).set_label(label)
 
     # Closing forecast window
     def close(self, widget, data=None):
         log.debug("ExtendedForecast: closing window")
         self.destroy()
+
+    def on_destroy(self, widget):
+        pass
 
 class Assistant(gtk.Assistant):
     """ Class for a wizard, which helps to add a new location in location list """
