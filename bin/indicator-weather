@@ -57,23 +57,29 @@ class Settings:
     # Open the DB and prepare views
     #TODO: Create view when package is installed?
     def prepare_settings_store(self):
-        log.debug("Settings: preparing settings store")
-        self.db = CouchDatabase("weatherindicator", create = True)
+        try:
+            log.debug("Settings: preparing settings store")
+            self.db = CouchDatabase("weatherindicator", create = True)
 
-        # Settings view
-        self.settings_design_doc = "settings"
-        self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
-        self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
+            # Settings view
+            self.settings_design_doc = "settings"
+            self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
+            self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
 
-        # Cached weather view
-        self.weather_design_doc = "weather"
-        self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
-        self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
+            # Cached weather view
+            self.weather_design_doc = "weather"
+            self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
+            self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
 
-        # Location info view
-        self.location_design_doc = "location"
-        self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
-        self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
+            # Location info view
+            self.location_design_doc = "location"
+            self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
+            self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
+        except DBusException as e:
+            log.debug("Settings: DBus exception occurred, retrying in 30 secs")
+            if hasattr(self, 'refresh_id'):
+                gobject.source_remove(self.refresh_id)
+            self.refresh_id = gobject.timeout_add(30000, self.prepare_settings_store)
 
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
