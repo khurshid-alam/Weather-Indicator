@@ -1,0 +1,467 @@
+# Chinese (Simplified) translation for weather-indicator
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the weather-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: weather-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-03-09 22:55+0200\n"
+"PO-Revision-Date: 2011-03-11 14:49+0000\n"
+"Last-Translator: Jonathan Ye <hyqianli@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-03-12 06:12+0000\n"
+"X-Generator: Launchpad (build 12559)\n"
+
+#: ../data/ui/PreferencesDialog.ui.h:1
+msgid "<b>Notifications</b>"
+msgstr "<b>提示信息</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>温标</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>天气数据来源</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>风速单位</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:5
+msgid "Beaufort"
+msgstr "蒲福风级"
+
+#: ../data/ui/PreferencesDialog.ui.h:6
+msgid "Enable the Weather Indicator Applet"
+msgstr "启用天气小程序"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "General"
+msgstr "常规"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Imperial (°F)"
+msgstr "英制 (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:10
+msgid "Kilometers per hour (kph)"
+msgstr "千米/小时 (kph)"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Knots"
+msgstr "节"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Locations"
+msgstr "地点"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "Meter per second (m/s)"
+msgstr "米/秒 (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "Miles per hour (mph)"
+msgstr "英里/小时 (mph)"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "No notifications"
+msgstr "无提示"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Only use notifications to give severe weather alerts"
+msgstr "仅提示恶劣天气警报"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "SI (°C)"
+msgstr "公制 (°C)"
+
+#: ../data/ui/PreferencesDialog.ui.h:18
+msgid "Show tips in menu"
+msgstr "在菜单中显示提示"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Units"
+msgstr "单位"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Update every"
+msgstr "更新间隔"
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Use notifications to give every weather condition change"
+msgstr "提示每次天气变化"
+
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Weather Indicator Preferences"
+msgstr "天气首选项"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "minutes"
+msgstr "分钟"
+
+#: ../bin/indicator-weather.py:408
+msgid "Tornado"
+msgstr "龙卷风"
+
+#: ../bin/indicator-weather.py:409
+msgid "Tropical storm"
+msgstr "热带风暴"
+
+#: ../bin/indicator-weather.py:410
+msgid "Hurricane"
+msgstr "飓风"
+
+#: ../bin/indicator-weather.py:411
+msgid "Severe thunderstorms"
+msgstr "强雷暴"
+
+#: ../bin/indicator-weather.py:412
+msgid "Thunderstorms"
+msgstr "雷暴"
+
+#: ../bin/indicator-weather.py:413
+msgid "Mixed rain and snow"
+msgstr "雨加雪"
+
+#: ../bin/indicator-weather.py:414
+msgid "Mixed rain and sleet"
+msgstr "混合的雨和雨夹雪"
+
+#: ../bin/indicator-weather.py:415
+msgid "Mixed snow and sleet"
+msgstr "混合的雪和雨夹雪"
+
+#: ../bin/indicator-weather.py:416
+msgid "Freezing drizzle"
+msgstr "冻细雨"
+
+#: ../bin/indicator-weather.py:417
+msgid "Drizzle"
+msgstr "小雨"
+
+#: ../bin/indicator-weather.py:418
+msgid "Freezing rain"
+msgstr "冻雨"
+
+#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
+msgid "Showers"
+msgstr "阵雨"
+
+#: ../bin/indicator-weather.py:421
+msgid "Snow flurries"
+msgstr "小雪"
+
+#: ../bin/indicator-weather.py:422
+msgid "Light snow showers"
+msgstr "小雪"
+
+#: ../bin/indicator-weather.py:423
+msgid "Blowing snow"
+msgstr "暴雪"
+
+#: ../bin/indicator-weather.py:424
+msgid "Snow"
+msgstr "降雪"
+
+#: ../bin/indicator-weather.py:425
+msgid "Hail"
+msgstr "冰雹"
+
+#: ../bin/indicator-weather.py:426
+msgid "Sleet"
+msgstr "雨夹雪"
+
+#: ../bin/indicator-weather.py:427
+msgid "Dust"
+msgstr "沙尘"
+
+#: ../bin/indicator-weather.py:428
+msgid "Foggy"
+msgstr "雾"
+
+#: ../bin/indicator-weather.py:429
+msgid "Haze"
+msgstr "霾"
+
+#: ../bin/indicator-weather.py:430
+msgid "Smoky"
+msgstr "烟"
+
+#: ../bin/indicator-weather.py:431
+msgid "Blustery"
+msgstr "大风"
+
+#: ../bin/indicator-weather.py:432
+msgid "Windy"
+msgstr "有风"
+
+#: ../bin/indicator-weather.py:433
+msgid "Cold"
+msgstr "寒冷"
+
+#: ../bin/indicator-weather.py:434
+msgid "Cloudy"
+msgstr "多云"
+
+#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
+msgid "Mostly cloudy"
+msgstr "多云"
+
+#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
+#: ../bin/indicator-weather.py:452
+msgid "Partly cloudy"
+msgstr "晴间多云"
+
+#: ../bin/indicator-weather.py:439
+msgid "Clear"
+msgstr "晴"
+
+#: ../bin/indicator-weather.py:440
+msgid "Sunny"
+msgstr "晴"
+
+#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
+msgid "Fair"
+msgstr "晴"
+
+#: ../bin/indicator-weather.py:443
+msgid "Mixed rain and hail"
+msgstr "混合的雨和冰雹"
+
+#: ../bin/indicator-weather.py:444
+msgid "Hot"
+msgstr "炎热"
+
+#: ../bin/indicator-weather.py:445
+msgid "Isolated thunderstorms"
+msgstr "局部雷暴"
+
+#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
+msgid "Scattered thunderstorms"
+msgstr "零星雷暴"
+
+#: ../bin/indicator-weather.py:448
+msgid "Scattered showers"
+msgstr "零星阵雨"
+
+#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
+msgid "Heavy snow"
+msgstr "大雪"
+
+#: ../bin/indicator-weather.py:450
+msgid "Scattered snow showers"
+msgstr "零星阵雪"
+
+#: ../bin/indicator-weather.py:453
+msgid "Thundershowers"
+msgstr "雷阵雨"
+
+#: ../bin/indicator-weather.py:454
+msgid "Snow showers"
+msgstr "阵雪"
+
+#: ../bin/indicator-weather.py:455
+msgid "Isolated thundershowers"
+msgstr "局部雷阵雨"
+
+#: ../bin/indicator-weather.py:559
+msgid "Humidity"
+msgstr "湿度"
+
+#: ../bin/indicator-weather.py:578
+msgid "Pressure"
+msgstr "气压"
+
+#: ../bin/indicator-weather.py:601
+msgid "Temperature"
+msgstr "温度"
+
+#: ../bin/indicator-weather.py:629
+msgid "Wind"
+msgstr "风力"
+
+#: ../bin/indicator-weather.py:634
+msgid "mph"
+msgstr "英里/小时"
+
+#: ../bin/indicator-weather.py:637
+msgid "m/s"
+msgstr "米/秒"
+
+#: ../bin/indicator-weather.py:643
+msgid "km/h"
+msgstr "千米/小时"
+
+#: ../bin/indicator-weather.py:646
+msgid "knot(s)"
+msgstr "节"
+
+#: ../bin/indicator-weather.py:655
+msgid "Sunrise"
+msgstr "日出"
+
+#: ../bin/indicator-weather.py:659
+msgid "Sunset"
+msgstr "日落"
+
+#. Short wind direction - north
+#: ../bin/indicator-weather.py:671
+msgid "N"
+msgstr "北"
+
+#: ../bin/indicator-weather.py:673
+msgid "NE"
+msgstr "东北"
+
+#: ../bin/indicator-weather.py:675
+msgid "E"
+msgstr "东"
+
+#: ../bin/indicator-weather.py:677
+msgid "SE"
+msgstr "东南"
+
+#: ../bin/indicator-weather.py:679
+msgid "S"
+msgstr "南"
+
+#: ../bin/indicator-weather.py:681
+msgid "SW"
+msgstr "西南"
+
+#: ../bin/indicator-weather.py:683
+msgid "W"
+msgstr "西"
+
+#: ../bin/indicator-weather.py:685
+msgid "NW"
+msgstr "西北"
+
+#: ../bin/indicator-weather.py:846
+msgid "Set Up Weather..."
+msgstr "设置天气..."
+
+#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
+#: ../bin/indicator-weather.py:1059
+msgid "Refresh"
+msgstr "更新"
+
+#: ../bin/indicator-weather.py:941
+msgid "refreshed just now"
+msgstr "刚刚已更新"
+
+#: ../bin/indicator-weather.py:946
+msgid "Forecast"
+msgstr "预报"
+
+#. #Preferences
+#: ../bin/indicator-weather.py:952
+msgid "Preferences..."
+msgstr "首选项..."
+
+#: ../bin/indicator-weather.py:989
+#, python-format
+msgid "last refreshed %s min. ago"
+msgstr "更新于%s分钟以前"
+
+#: ../bin/indicator-weather.py:1019
+msgid "Refreshing, please wait"
+msgstr "更新中，请稍等"
+
+#: ../bin/indicator-weather.py:1059
+msgid "last refreshed just now"
+msgstr "上一次刚刚更新"
+
+#: ../bin/indicator-weather.py:1106
+msgid "Severe weather alert"
+msgstr "恶劣天气警报"
+
+#: ../bin/indicator-weather.py:1311
+msgid "Weather Forecast for "
+msgstr "天气预报： "
+
+#: ../bin/indicator-weather.py:1343
+msgid "High"
+msgstr "最高"
+
+#: ../bin/indicator-weather.py:1345
+msgid "Low"
+msgstr "最低"
+
+#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+msgid "Label:"
+msgstr "标签："
+
+#: ../bin/indicator-weather.py:1522
+msgid "Another instance of this program is already running"
+msgstr "本程序的一个实例已经运行"
+
+#: ../data/ui/Assistant.ui.h:1
+msgid "<b>Home</b>"
+msgstr "<b>家</b>"
+
+#: ../data/ui/Assistant.ui.h:2
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
+#: ../data/ui/Assistant.ui.h:3
+msgid "Add a location"
+msgstr "添加一个地点"
+
+#: ../data/ui/Assistant.ui.h:5
+msgid "Location:"
+msgstr "地点："
+
+#: ../data/ui/Assistant.ui.h:6
+msgid "Name the location"
+msgstr "命名"
+
+#: ../data/ui/Assistant.ui.h:7
+msgid "Please enter a name for this location:"
+msgstr "请输入该地点的名称："
+
+#: ../data/ui/Assistant.ui.h:8
+msgid "Please input a location in the combobox below:"
+msgstr "请输入下面组合框中的一个地点："
+
+#: ../data/ui/Assistant.ui.h:9
+msgid ""
+"Please review the choices below. If anything is not correct, please go back "
+"and select the correct options."
+msgstr "请仔细阅读下面的选择。如果有不正确的地方，请返回并选择正确的选项。"
+
+#: ../data/ui/Assistant.ui.h:10
+msgid "Review choices"
+msgstr "回顾选择"
+
+#: ../data/ui/Assistant.ui.h:11
+msgid "Select a location"
+msgstr "选择一个地点"
+
+#: ../data/ui/ExtendedForecast.ui.h:1
+msgid "Extended Forecast"
+msgstr "延伸预报"
+
+#: ../indicator-weather.desktop.in.h:1
+msgid ""
+"A weather indicator that displays information for one or multiple places in "
+"the world"
+msgstr "显示世界上一个或多个地点的天气信息"
+
+#: ../indicator-weather.desktop.in.h:2
+msgid "Weather Indicator"
+msgstr "天气"
