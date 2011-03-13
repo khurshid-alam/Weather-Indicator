@@ -15,6 +15,18 @@
       <object class="GtkVBox" id="mainvbox">
         <property name="visible">True</property>
         <child>
+            <object class="GtkLabel" id="connection_error">
+                <property name="visible">False</property>
+                <property name="ypad">10</property>
+                <property name="label">&lt;big&gt;Forecast information cannot be fetched. Connection cannot be established.&lt;/big&gt;</property>
+                <property name="use_markup">True</property>
+                <property name="wrap">False</property>
+            </object>
+            <packing>
+                <property name="position">0</property>
+            </packing>
+        </child>
+        <child>
           <object class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
             <property name="spacing">5</property>
@@ -386,7 +398,7 @@
           </object>
           <packing>
             <property name="fill">False</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -395,7 +407,7 @@
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -403,7 +415,7 @@
             <property name="visible">True</property>
             <property name="xalign">1</property>
             <child>
-              <object class="GtkHButtonBox" id="hbuttonbox1">
+              <object class="GtkVButtonBox" id="hbuttonbox1">
                 <property name="visible">True</property>
                 <child>
                   <object class="GtkButton" id="closebtn">
@@ -424,7 +436,7 @@
             </child>
           </object>
           <packing>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>

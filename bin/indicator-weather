@@ -333,12 +333,15 @@ class Forecast:
                 self.icons.append(forecast["icon"].split("/ig/images/weather/")[-1].split(".gif")[0])
                 self.conditions.append(forecast["condition"])
         except urllib2.URLError:
-            log.error("Forecast: error reaching url %s" % url)
+            log.error("Forecast: error reading forecast for %s" % location_name)
 
     # Parse high values for forecast data
     def get_forecast_data(self):
         self.highdata = []
         self.lowdata = []
+
+        if not hasattr(self, 'unitsystem'):
+            return None
 
         if ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.IMPERIAL)):
             #correct scale selected
@@ -1317,7 +1320,14 @@ class ExtendedForecast(gtk.Window):
         forecast = Forecast(wi.metric_system, wi.current_location.location_details['latitude'], wi.current_location.location_details['longitude'], locale_name)
         forecast.prepare_forecast_data()
         daysofweek = forecast.get_forecast_daysofweek()
-        (highdata, lowdata) = forecast.get_forecast_data()
+        forecast_data = forecast.get_forecast_data()
+        if forecast_data == None:
+            # Forecast data unavailable - hide elements and show 'connection_error' label
+            self.builder.get_object('connection_error').set_visible(True);
+            self.builder.get_object('hbox1').set_visible(False);
+            self.builder.get_object('hseparator1').set_visible(False);
+            return
+        (highdata, lowdata) = forecast_data
         icons      = forecast.get_forecast_icons()
         conditions = forecast.get_forecast_conditions()
 
