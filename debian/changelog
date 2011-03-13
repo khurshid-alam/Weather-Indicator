@@ -1,4 +1,4 @@
-indicator-weather (11.02.13+unstable+bzr209+rc1~natty1) natty; urgency=low
+indicator-weather (11.02.13+unstable+bzr210+rc1~natty1) natty; urgency=low
 
   * Release Candidate 1
   * Fix for LP: #733760 "indicator-weather crashed with KeyError in save_location_details(): 'yahoo id'"
