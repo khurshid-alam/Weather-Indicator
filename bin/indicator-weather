@@ -497,6 +497,7 @@ class Weather:
             #TODO: Check for DST
             now = datetime.datetime.now() 
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
+            print url
             try:
                 f = urllib2.urlopen(url)
                 s=f.read()
@@ -657,11 +658,11 @@ class Weather:
 
     # Get sunrise label
     def get_sunrise_label(self):
-        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X'))
+        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X').replace(":00", ""))
 
     # Get sunset label
     def get_sunset_label(self):
-        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X'))
+        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X').replace(":00", ""))
 
     # Additional functions
     # Convert wind direction from degrees to localized direction
@@ -1090,9 +1091,9 @@ class indicator_weather(threading.Thread):
     def update_weather(self, notif=True, widget=None):
         log.debug("Indicator: updateWeather: updating weather for %s" % self.places[self.placechosen])
         # First, display cached data
-        threading.Thread(target=self.show_cached_weather).start()
+        threading.Thread(target=self.show_cached_weather, name='Cache thread').start()
         # Then, start a new thread with real data pickup
-        threading.Thread(target=self.get_new_weather_data).start()
+        threading.Thread(target=self.get_new_weather_data, name='Fetcher thread').start()
 
     # Get current weather for selected location
     def get_weather(self):
