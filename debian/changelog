@@ -1,3 +1,9 @@
+indicator-weather (11.02.13+unstable+bzr205~natty1) natty; urgency=low
+
+  * Fix for LP: #733760 "indicator-weather crashed with KeyError in save_location_details(): 'yahoo id'"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 09:21:57 +0200
+
 indicator-weather (11.02.13+unstable+bzr204~natty1) natty; urgency=low
 
   * Fix for LP: #732434 "indicator-weather crashed with DBusException in call_blocking(): org.freedesktop.DBus.Error.NoReply"

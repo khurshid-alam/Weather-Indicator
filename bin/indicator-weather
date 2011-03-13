@@ -236,9 +236,7 @@ class Location:
         log.debug("Location: Get GeoNames location details, url %s" % url)
         try:
             city = eval(urllib2.urlopen(url).read())
-            if 'adminName2' in city:
-                displayed_city_name = "%s, %s, %s, %s" % (city['name'], city['adminName1'], city['adminName1'], city['countryName'])
-            elif 'adminName1' in city:
+            if 'adminName1' in city:
                 displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
             elif 'name' in city:
                 displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
@@ -266,6 +264,7 @@ class Location:
 
                 # Get old Yahoo id by woeid
                 url = 'http://weather.yahooapis.com/forecastrss?w=%s' % woeid
+                log.debug("Location: Get Yahoo RSS ID, url %s" % url)
                 f = urllib2.urlopen(url)
                 s=f.read()
                 parsed = parseString(s)
