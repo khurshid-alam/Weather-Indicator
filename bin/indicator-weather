@@ -75,11 +75,12 @@ class Settings:
             self.location_design_doc = "location"
             self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
             self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
+
         except DBusException as e:
             log.debug("Settings: DBus exception occurred, retrying in 30 secs")
             if hasattr(self, 'refresh_id'):
                 gobject.source_remove(self.refresh_id)
-            self.refresh_id = gobject.timeout_add(30000, self.prepare_settings_store)
+            self.refresh_id = gobject.timeout_add(10000, self.prepare_settings_store)
 
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
@@ -746,7 +747,6 @@ class indicator_weather(threading.Thread):
                     'beaufort': ("beaufort", WindUnits.BEAUFORT),
                     'knots':    ("knots",    WindUnits.KNOTS)}
 
-
     # Initializing and reading settings
     def __init__(self):
         log.debug("Indicator: creating")
@@ -766,6 +766,7 @@ class indicator_weather(threading.Thread):
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
         self.places = self.settings.get_value("places")
+        self.show_label = self.settings.get_value("show_label")
 
         log.debug("Preferences: got settings: rate=%s, unit=%s, notif=%s, wind=%s, placechosen=%s, places=%s" %
                 (self.rate, self.unit, self.notif, self.wind, self.placechosen, self.places))
@@ -801,6 +802,9 @@ class indicator_weather(threading.Thread):
             self.settings.set_value("wind", default_value)
             self.wind = default_value
         self.wind_unit = self.wind_systems[self.wind][1]
+
+        # Show label in indicator?
+        self.show_label = True if self.show_label == 'True' else False
 
         # Weather source
         if self.source in (False, None):
@@ -845,7 +849,8 @@ class indicator_weather(threading.Thread):
     def update_label(self, label):
         if (hasattr(self.winder, 'set_label')):
             log.debug("Indicator: update_label: setting label to '%s'" % label)
-            self.winder.set_label(label)
+            self.previous_label_value = label
+            self.winder.set_label(label) if self.show_label else self.winder.set_label("")
             self.winder.set_status(appindicator.STATUS_ATTENTION)
             self.winder.set_status(appindicator.STATUS_ACTIVE)
 
@@ -1165,7 +1170,8 @@ class PreferencesDialog(gtk.Dialog):
         self.builder.get_object(wi.notifications[wi.notif]).set_active(True)
         self.builder.get_object(wi.wind_systems[wi.wind][0]).set_active(True)
         self.builder.get_object(wi.weather_sources[wi.source][0]).set_active(True)
-        
+        self.builder.get_object('show_label').set_active(wi.show_label)
+        self.builder.get_object('show_label').set_visible(hasattr(wi.winder, 'set_label'))
         self.builder.get_object('rate').set_value(float(wi.rate))
 
         log.debug("Preferences: Loading places")
@@ -1204,6 +1210,16 @@ class PreferencesDialog(gtk.Dialog):
     def ok(self, widget, data=None):
         log.debug("Preferences: Saving settings")
         need_to_update_weather = False
+        need_to_update_indicator = False
+
+        #Show label near icon
+        new_show_label = self.builder.get_object('show_label').get_active()
+        if (wi.show_label != new_show_label):
+            wi.show_label = new_show_label
+            wi.settings.set_value("show_label", new_show_label)
+            need_to_update_weather = False
+            need_to_update_indicator = True
+            log.debug("Preferences: Show Label changed to '%s'" % wi.show_label)
 
         # Metric systems
         for k in wi.metric_systems.keys():
@@ -1293,6 +1309,9 @@ class PreferencesDialog(gtk.Dialog):
         
         if need_to_update_weather:
             wi.update_weather(False)
+
+        if need_to_update_indicator:
+            wi.update_label(wi.previous_label_value)
         
         self.destroy()
 

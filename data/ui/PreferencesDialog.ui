@@ -53,8 +53,9 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkCheckButton" id="check_tips">
-                        <property name="label" translatable="yes">Show tips in menu</property>
+                      <object class="GtkCheckButton" id="show_label">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Show temperature near indicator</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="draw_indicator">True</property>
