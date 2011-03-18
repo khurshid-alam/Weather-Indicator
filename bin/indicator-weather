@@ -1004,7 +1004,7 @@ class indicator_weather(threading.Thread):
     def update_refresh_label(self):
         self.refreshed_minutes_ago += 1
         log.debug("Indicator: updating refresh label, %s min. ago" % self.refreshed_minutes_ago)
-        refresh_label = "%s (%s)" % (_("Refresh"), _("last refreshed %s min. ago") % self.refreshed_minutes_ago)
+        refresh_label = "%s (%s)" % (_("Refresh"), _("%s min. ago") % self.refreshed_minutes_ago)
         self.refresh_show.set_label(refresh_label)
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
@@ -1072,7 +1072,7 @@ class indicator_weather(threading.Thread):
         self.wind_show.set_label(weather.get_wind_label())
         self.sunrise_show.set_label(weather.get_sunrise_label())
         self.sunset_show.set_label(weather.get_sunset_label())
-        self.refresh_show.set_label("%s (%s)" % (_("Refresh"), _("last refreshed just now")))
+        self.refresh_show.set_label("%s (%s)" % (_("Refresh"), _("just now")))
 
         # Saving cached data, unless correct icon is supplied
         if (self.icon == False):
