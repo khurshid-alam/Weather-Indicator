@@ -1,29 +1,29 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Polish translation for weather-indicator
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the weather-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: weather-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2011-02-23 15:08+0000\n"
+"Last-Translator: Tomasz Maciejewski <ponton@jabster.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-03-11 05:56+0000\n"
+"X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
-msgstr ""
+msgstr "<b>Powiadomienia</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr ""
+msgstr "<b>Jednostka temperatury</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
@@ -31,15 +31,15 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr ""
+msgstr "<b>Jednostka prędkości wiatru</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
-msgstr ""
+msgstr "Stopnia Beauforta"
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr ""
+msgstr "Uruchom aplet powiadamiania o pogodzie"
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr ""
+msgstr "Imperialne (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
@@ -63,7 +63,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr ""
+msgstr "Miejsca"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
@@ -75,35 +75,35 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr ""
+msgstr "Brak powiadomień"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr ""
+msgstr "Powiadamiaj tylko o poważnych ostrzeżeń pogodowych"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
-msgstr ""
+msgstr "SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
-msgstr ""
+msgstr "Wyświetlaj podpowiedzi w menu"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr ""
+msgstr "Jednostki"
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr ""
+msgstr "Aktualizuj co"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr ""
+msgstr "Powiadamiaj o każdej zmianie warunków pogodowych"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr ""
+msgstr "Ustawienia powiadamiania o pogodzie"
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
@@ -111,7 +111,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr ""
+msgstr "minuty"
 
 #: ../bin/indicator-weather.py:408
 msgid "Tornado"
@@ -219,20 +219,20 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
-msgstr ""
+msgstr "Spore zachmurzenie"
 
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Częściowe zachmurzenie"
 
 #: ../bin/indicator-weather.py:439
 msgid "Clear"
-msgstr ""
+msgstr "Bezchmurnie"
 
 #: ../bin/indicator-weather.py:440
 msgid "Sunny"
-msgstr ""
+msgstr "Słonecznie"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
@@ -465,3 +465,57 @@ msgstr ""
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
 msgstr ""
+
+#~ msgid "MPS"
+#~ msgstr "mps"
+
+#~ msgid "MPH"
+#~ msgstr "mph"
+
+#~ msgid "Mostly sunny"
+#~ msgstr "Przeważnie słonecznie"
+
+#~ msgid "Clear sky"
+#~ msgstr "Czyste niebo"
+
+#~ msgid "Partly sunny"
+#~ msgstr "Częściowo słonecznie"
+
+#~ msgid "Increasing clouds"
+#~ msgstr "Rosnące chmury"
+
+#~ msgid "Decreasing clouds"
+#~ msgstr "Zanikające zachmurzenie"
+
+#~ msgid "Broken clouds"
+#~ msgstr "Zachmurzenie umiarkowane"
+
+#~ msgid "Scattered clouds"
+#~ msgstr "Kłębiaste chmury"
+
+#~ msgid "Becoming sunny"
+#~ msgstr "Wychodzące słońce"
+
+#~ msgid "Fog"
+#~ msgstr "Mgła"
+
+#~ msgid "Few clouds"
+#~ msgstr "Niewielkie zachmurzenie"
+
+#~ msgid "Becoming cloudy"
+#~ msgstr "Zachmurzenia"
+
+#~ msgid "Clearing"
+#~ msgstr "Przejaśnienia"
+
+#~ msgid "Overcast"
+#~ msgstr "Pochmurno"
+
+#~ msgid "Dense fog"
+#~ msgstr "Gęsta mgła"
+
+#~ msgid "Blowing sand"
+#~ msgstr "Szalejący piasek"
+
+#~ msgid "Blowing dust"
+#~ msgstr "Szalejące tumany kurzu"

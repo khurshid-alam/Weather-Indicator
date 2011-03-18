@@ -1,4 +1,4 @@
-# Slovak translation for weather-indicator
+# German translation for weather-indicator
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the weather-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,30 +8,30 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-17 06:38+0000\n"
-"Last-Translator: Pavol Klačanský <pavol@klacansky.com>\n"
-"Language-Team: Slovak <sk@li.org>\n"
+"PO-Revision-Date: 2011-03-13 21:29+0000\n"
+"Last-Translator: gagsibubu <Unknown>\n"
+"Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-18 06:15+0000\n"
+"X-Launchpad-Export-Date: 2011-03-14 05:38+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
-msgstr "<b>Upozornenia</b>"
+msgstr "<b>Benachrichtigungen</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr "<b>Teplotná stupnica</b>"
+msgstr "Temperatur-Skala"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr "<b>Zdroj údajov o počasí</b>"
+msgstr "<b>Quelle für Wetterdaten</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Jednotka rýchlosti vetra</b>"
+msgstr "<b>Einheit für Windgeschwindigkeiten</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
@@ -39,11 +39,11 @@ msgstr "Beaufort"
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr "Povoliť indikačný aplet počasia"
+msgstr "Das Wetterindikator-Applet aktivieren"
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
-msgstr "Všeobecné"
+msgstr "Allgemein"
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
@@ -51,35 +51,35 @@ msgstr "Google"
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr "Imperiálna (°F)"
+msgstr "Fahrenheit (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
-msgstr "Kilometre za hodinu (km/h)"
+msgstr "Stundenkilometer (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
-msgstr "Uzly"
+msgstr "Knoten"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Miesta"
+msgstr "Orte"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
-msgstr "Meter za sekundu (m/s)"
+msgstr "Meter pro Sekunde (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Míla za hodinu (mph)"
+msgstr "Meilen pro Stunde (mph)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr "Žiadne upozornenia"
+msgstr "Keine Benachrichtigungen"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr "Použiť upozornenia len pri výstrahách o nepriaznivom počasí"
+msgstr "Benachrichtigungen nur verwenden, um Unwetterwarnungen anzuzeigen"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
@@ -87,23 +87,23 @@ msgstr "SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
-msgstr "Zobraziť rady v ponuke"
+msgstr "Tipps im Menü anzeigen"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr "Jednotky"
+msgstr "Maßeinheiten"
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr "Aktualizovať každých"
+msgstr "Aktualisieren alle"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr "Použiť upozornenia pri každej zmene počasia"
+msgstr "Benachrichtigungen verwenden, um jede Wetteränderung anzuzeigen"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr "Predvoľby indikátoru počasia"
+msgstr "Wetterindikator-Einstellungen"
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
@@ -111,192 +111,192 @@ msgstr "Yahoo!"
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr "minút"
+msgstr "Minuten"
 
 #: ../bin/indicator-weather.py:408
 msgid "Tornado"
-msgstr "Tornádo"
+msgstr "Tornado"
 
 #: ../bin/indicator-weather.py:409
 msgid "Tropical storm"
-msgstr "Tropická búrka"
+msgstr "Tropischer Sturm"
 
 #: ../bin/indicator-weather.py:410
 msgid "Hurricane"
-msgstr "Hurikán"
+msgstr "Wirbelsturm"
 
 #: ../bin/indicator-weather.py:411
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "starke Gewitter"
 
 #: ../bin/indicator-weather.py:412
 msgid "Thunderstorms"
-msgstr "Búrky"
+msgstr "Gewitter"
 
 #: ../bin/indicator-weather.py:413
 msgid "Mixed rain and snow"
-msgstr ""
+msgstr "Regen und Schnee"
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "Regen und Graupel"
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Schnee und Graupel"
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
-msgstr "Mrznúce mrholenie"
+msgstr "Gefrierender Nieselregen"
 
 #: ../bin/indicator-weather.py:417
 msgid "Drizzle"
-msgstr "Mrholenie"
+msgstr "Nieselregen"
 
 #: ../bin/indicator-weather.py:418
 msgid "Freezing rain"
-msgstr "Mrznúci dážď"
+msgstr "Gefrierender Regen"
 
 #: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
 msgid "Showers"
-msgstr "Prehánky"
+msgstr "Schauer"
 
 #: ../bin/indicator-weather.py:421
 msgid "Snow flurries"
-msgstr ""
+msgstr "Schneegestöber"
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
-msgstr ""
+msgstr "Leichte Schneeschauer"
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr "Naviaty sneh"
+msgstr "Schneetreiben"
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
-msgstr "Sneženie"
+msgstr "Schnee"
 
 #: ../bin/indicator-weather.py:425
 msgid "Hail"
-msgstr "Krúpy"
+msgstr "Hagel"
 
 #: ../bin/indicator-weather.py:426
 msgid "Sleet"
-msgstr "Dážď so snehom"
+msgstr "Graupel"
 
 #: ../bin/indicator-weather.py:427
 msgid "Dust"
-msgstr "Prašno"
+msgstr "Staub"
 
 #: ../bin/indicator-weather.py:428
 msgid "Foggy"
-msgstr "Hmlisto"
+msgstr "Nebelig"
 
 #: ../bin/indicator-weather.py:429
 msgid "Haze"
-msgstr "Opar"
+msgstr "Diesig"
 
 #: ../bin/indicator-weather.py:430
 msgid "Smoky"
-msgstr ""
+msgstr "Dunstig"
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
-msgstr "Búrlivo"
+msgstr "Stürmisch"
 
 #: ../bin/indicator-weather.py:432
 msgid "Windy"
-msgstr "Veterno"
+msgstr "Windig"
 
 #: ../bin/indicator-weather.py:433
 msgid "Cold"
-msgstr "Mrazivo"
+msgstr "Kalt"
 
 #: ../bin/indicator-weather.py:434
 msgid "Cloudy"
-msgstr "Zamračené"
+msgstr "Bewölkt"
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
-msgstr "Miestami zamračené"
+msgstr "Meist Bewölkt"
 
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
 msgid "Partly cloudy"
-msgstr "Polojasno"
+msgstr "Teilweise Bewölkt"
 
 #: ../bin/indicator-weather.py:439
 msgid "Clear"
-msgstr "Jasno"
+msgstr "Klar"
 
 #: ../bin/indicator-weather.py:440
 msgid "Sunny"
-msgstr "Slnečno"
+msgstr "Sonnig"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
-msgstr "Jasno"
+msgstr "Heiter"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Regen und Hagel"
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
-msgstr "Horúco"
+msgstr "Heiß"
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
-msgstr ""
+msgstr "Vereinzelt Gewitter"
 
 #: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "Vereinzelt Gewitter"
 
 #: ../bin/indicator-weather.py:448
 msgid "Scattered showers"
-msgstr ""
+msgstr "Vereinzelt Regenschauer"
 
 #: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
 msgid "Heavy snow"
-msgstr "Husté sneženie"
+msgstr "Schwerer Schneefall"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Vereinzelt Schneefall"
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
-msgstr ""
+msgstr "Gewitterschauer"
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
-msgstr "Snehové spŕšky"
+msgstr "Schneeschauer"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Vereinzelte Gewitterschauer"
 
 #: ../bin/indicator-weather.py:559
 msgid "Humidity"
-msgstr "Vlhkosť"
+msgstr "Luftfeuchtigkeit"
 
 #: ../bin/indicator-weather.py:578
 msgid "Pressure"
-msgstr "Tlak"
+msgstr "Luftdruck"
 
 #: ../bin/indicator-weather.py:601
 msgid "Temperature"
-msgstr "Teplota"
+msgstr "Temperatur"
 
 #: ../bin/indicator-weather.py:629
 msgid "Wind"
-msgstr "Vietor"
+msgstr "Wind"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
-msgstr "míla/s"
+msgstr "mph"
 
 #: ../bin/indicator-weather.py:637
 msgid "m/s"
@@ -308,251 +308,188 @@ msgstr "km/h"
 
 #: ../bin/indicator-weather.py:646
 msgid "knot(s)"
-msgstr "uzlov"
+msgstr "Knoten"
 
 #: ../bin/indicator-weather.py:655
 msgid "Sunrise"
-msgstr "Východ slnka"
+msgstr "Sonnenaufgang"
 
 #: ../bin/indicator-weather.py:659
 msgid "Sunset"
-msgstr "Západ slnka"
+msgstr "Sonnenuntergang"
 
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:671
 msgid "N"
-msgstr "S"
+msgstr "N"
 
 #: ../bin/indicator-weather.py:673
 msgid "NE"
-msgstr "SV"
+msgstr "NO"
 
 #: ../bin/indicator-weather.py:675
 msgid "E"
-msgstr "V"
+msgstr "O"
 
 #: ../bin/indicator-weather.py:677
 msgid "SE"
-msgstr "JV"
+msgstr "SO"
 
 #: ../bin/indicator-weather.py:679
 msgid "S"
-msgstr "J"
+msgstr "S"
 
 #: ../bin/indicator-weather.py:681
 msgid "SW"
-msgstr "JZ"
+msgstr "SW"
 
 #: ../bin/indicator-weather.py:683
 msgid "W"
-msgstr "Z"
+msgstr "W"
 
 #: ../bin/indicator-weather.py:685
 msgid "NW"
-msgstr "SZ"
+msgstr "NW"
 
 #: ../bin/indicator-weather.py:846
 msgid "Set Up Weather..."
-msgstr "Nastaviť počasie..."
+msgstr "Wetter einrichten..."
 
 #: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
 #: ../bin/indicator-weather.py:1059
 msgid "Refresh"
-msgstr "Obnoviť"
+msgstr "Aktualisieren"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr "obnovené práve teraz"
+msgstr ""
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
-msgstr "Predpoveď"
+msgstr "Prognose"
 
 #. #Preferences
 #: ../bin/indicator-weather.py:952
 msgid "Preferences..."
-msgstr "Predvoľby..."
+msgstr "Einstellungen..."
 
 #: ../bin/indicator-weather.py:989
 #, python-format
 msgid "last refreshed %s min. ago"
-msgstr "naposledy obnovené pred %s min."
+msgstr "zuletzt vor %s Minuten aktualisiert"
 
 #: ../bin/indicator-weather.py:1019
 msgid "Refreshing, please wait"
-msgstr "Obnovuje sa, prosím, počkajte"
+msgstr "Aktualisierung läuft, bitte warten"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr "naposledy obnovené práve teraz"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
-msgstr "Výstraha nepriaznivého počasia"
+msgstr "Unwetterwarnung"
 
 #: ../bin/indicator-weather.py:1311
 msgid "Weather Forecast for "
-msgstr "Predpoveď počasia pre "
+msgstr "Wettervorhersage für "
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr "Vysoká"
+msgstr "Hoch"
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr "Nízka"
+msgstr "Niedrig"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr "Označenie:"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr "Táto aplikácia je už spustená"
+msgstr "Eine andere Instanz des Programms läuft bereits"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Domov</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Pridanie miesta"
+msgstr "Ort hinzufügen"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Miesto:"
+msgstr "Ort:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr "Pomenujte miesto"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr "Zadajte, prosím, názov vášho miesta:"
+msgstr "Bitte geben Sie einen Namen für den Ort ein:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr "Prosím, vložte misto do pola nižšie:"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Prosím, skontrolujte vaše voľby nižšie. Ak nie je niečo v poriadku, prosím, "
-"vráťte sa späť a vyberte správne nastavenia."
+"Bitte überprüfen Sie die folgenden Angaben. Sollten Sie einen Fehler "
+"entdecken können Sie zurück gehen, um die Auswahl zu korrigieren."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr "Skontrolujte voľby"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
-msgstr "Vyberte miesto"
+msgstr "Einen Ort wählen"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
-msgstr "Rozšírená predpoveď"
+msgstr "Erweiterte Wettervorhersage"
 
 #: ../indicator-weather.desktop.in.h:1
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
-"Indikátor počasia, ktorý zobrazuje infromácie pre jedno alebo viac miest na "
-"svete"
+"Eine Wetteranzeige, die Informationen für einen oder mehrere Orte auf der "
+"Welt anzeigt"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr "Indikátor počasia"
+msgstr ""
 
-#~ msgid "<big>Update every (min.)</big>"
-#~ msgstr "<big>Aktualizovať každých (min.)</big>"
-
-#~ msgid "MPH"
-#~ msgstr "Míla za hodinu"
-
-#~ msgid "<big>Locations</big>"
-#~ msgstr "<big>Miesta</big>"
-
-#~ msgid "<big>Notifications</big>"
-#~ msgstr "<big>Upozornenia</big>"
-
-#~ msgid "<big>Wind Speed Unit</big>"
-#~ msgstr "<big>Jednotka rýchlosti vetra</big>"
-
-#~ msgid "MPS"
-#~ msgstr "míla za sekundu"
-
-#~ msgid "SI"
-#~ msgstr "SI"
-
-#~ msgid "Few clouds"
-#~ msgstr "Malá oblačnosť"
-
-#~ msgid "Broken clouds"
-#~ msgstr "Polooblačno"
-
-#~ msgid "Scattered clouds"
-#~ msgstr "Rozptýlená oblačnosť"
-
-#~ msgid "Overcast"
-#~ msgstr "Zamračené"
+#~ msgid "Partly sunny"
+#~ msgstr "Teilweise sonnig"
 
 #~ msgid "Fog"
-#~ msgstr "Hmla"
+#~ msgstr "Nebel"
 
-#~ msgid "Blowing dust"
-#~ msgstr "Viaty prach"
-
-#~ msgid "Blowing sand"
-#~ msgstr "Viaty piesok"
-
-#~ msgid "Freezing fog"
-#~ msgstr "Mrznúca hmla"
-
-#~ msgid "Light snow"
-#~ msgstr "Ľahké sneženie"
+#~ msgid "Ice fog"
+#~ msgstr "Eisnebel"
 
 #~ msgid "Volcanic ash"
-#~ msgstr "Sopečný popol"
+#~ msgstr "Vulkanasche"
+
+#~ msgid "Ash"
+#~ msgstr "Asche"
 
 #~ msgid "Smoke"
-#~ msgstr "Dym"
+#~ msgstr "Dunstig"
+
+#~ msgid "Freezing fog"
+#~ msgstr "Gefrierender Nebel"
 
 #~ msgid "Ice crystals"
-#~ msgstr "Ľadové kryštály"
-
-#~ msgid "Rain showers"
-#~ msgstr "Dážďové spŕšky"
-
-#~ msgid "Heavy rain"
-#~ msgstr "Hustý dážď"
-
-#~ msgid "Sky"
-#~ msgstr "Obloha"
-
-#~ msgid "km"
-#~ msgstr "km"
-
-#~ msgid "Visibility"
-#~ msgstr "Viditeľnosť"
-
-#~ msgid "Wind Speed"
-#~ msgstr "Rýchlosť vetra"
-
-#~ msgid "Wind Direction"
-#~ msgstr "Smer vetra"
-
-#~ msgid "mps"
-#~ msgstr "m/s"
-
-#~ msgid "Connection problem"
-#~ msgstr "Problém s pripojením"
-
-#~ msgid "<big>Rungis, France</big>"
-#~ msgstr "<big>Rungis, Francúzsko</big>"
+#~ msgstr "Eiskristalle"
