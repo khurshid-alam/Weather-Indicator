@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-16 18:55+0000\n"
+"PO-Revision-Date: 2011-03-17 06:38+0000\n"
 "Last-Translator: Pavol Klačanský <pavol@klacansky.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-17 06:10+0000\n"
+"X-Launchpad-Export-Date: 2011-03-18 06:15+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -23,7 +23,7 @@ msgstr "<b>Upozornenia</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr ""
+msgstr "<b>Teplotná stupnica</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
@@ -51,7 +51,7 @@ msgstr "Google"
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr ""
+msgstr "Imperiálna (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
@@ -203,7 +203,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
-msgstr ""
+msgstr "Búrlivo"
 
 #: ../bin/indicator-weather.py:432
 msgid "Windy"
@@ -211,7 +211,7 @@ msgstr "Veterno"
 
 #: ../bin/indicator-weather.py:433
 msgid "Cold"
-msgstr ""
+msgstr "Mrazivo"
 
 #: ../bin/indicator-weather.py:434
 msgid "Cloudy"
@@ -236,7 +236,7 @@ msgstr "Slnečno"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
-msgstr ""
+msgstr "Jasno"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
-msgstr ""
+msgstr "Horúco"
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
@@ -260,7 +260,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
 msgid "Heavy snow"
-msgstr ""
+msgstr "Husté sneženie"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
@@ -463,10 +463,12 @@ msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
+"Indikátor počasia, ktorý zobrazuje infromácie pre jedno alebo viac miest na "
+"svete"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr ""
+msgstr "Indikátor počasia"
 
 #~ msgid "<big>Update every (min.)</big>"
 #~ msgstr "<big>Aktualizovať každých (min.)</big>"
