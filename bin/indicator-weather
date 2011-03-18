@@ -38,6 +38,7 @@ import pywapi
 
 import gettext
 from gettext import gettext as _
+from gettext import ngettext as __
 gettext.textdomain('indicator-weather')
 
 # Add project root directory (enable symlink, and trunk execution).
@@ -644,19 +645,19 @@ class Weather:
         # Parse Wind_direction - convert to selected scale
         if (self._wind_unit == WindUnits.MPH):
             _value = float(wind_speed)
-            _unit  = _("mph")
+            _unit  = __("mph", "mph", _value)
         if (self._wind_unit == WindUnits.MPS):
             _value = float(wind_speed) * 0.44704
-            _unit  = _("m/s")
+            _unit  = __("m/s", "m/s", _value)
         if (self._wind_unit == WindUnits.BEAUFORT):
             _value = self.get_beaufort_from_mph(float(wind_speed))
             _unit  = ""
         if (self._wind_unit == WindUnits.KPH):
             _value = float(wind_speed) * 1.609344
-            _unit  = _("km/h")
+            _unit  = __("km/h", "km/h", _value)
         if (self._wind_unit == WindUnits.KNOTS):
             _value = float(wind_speed) * 0.868976241900648
-            _unit  = _("knot(s)")
+            _unit  = __("knot", "knots", _value)
 
         # Join wind_info data in a label
         localized_wind_info[len(localized_wind_info)-1] = _unit
