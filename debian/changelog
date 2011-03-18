@@ -1,3 +1,10 @@
+indicator-weather (11.02.13+unstable+bzr211+rc1~natty1) natty; urgency=low
+
+  * Release Candidate 2
+  * Fix for LP: #735928 "indicator-weather crashed with NameError in prepare_settings_store(): global name 'DBusException' is not defined"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 09:21:57 +0200
+
 indicator-weather (11.02.13+unstable+bzr210+rc1~natty1) natty; urgency=low
 
   * Release Candidate 1
