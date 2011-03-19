@@ -3,6 +3,7 @@
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
+# Copyright (C) 2011 Vadim Rutkovsky roignac@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -20,7 +21,7 @@ import sys, os, shutil, tempfile
 import gtk, pygtk, gobject, pynotify
 pygtk.require('2.0')
 import appindicator
-import urllib2
+import urllib2, urllib
 from urllib import urlencode
 import re
 import locale
@@ -230,8 +231,8 @@ class Location:
         # Format latitude and longitude for Google needs
         self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
         self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
-        self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
-
+        self.location_details['google id'] = self.location_details['full name']
+        print self.location_details['google id']
         # Get location details in english for Yahoo
         baseurl = 'http://api.geonames.org/getJSON'
         params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
@@ -497,7 +498,6 @@ class Weather:
         # Weather source is Google
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             # Grab data from earthtools.org
-            #TODO: Check for DST
             now = datetime.datetime.now() 
             url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
             try:
@@ -972,6 +972,12 @@ class indicator_weather(threading.Thread):
         prefs_show.show()
         self.menu.append(prefs_show)
 
+    ##About      
+        about_show = gtk.MenuItem(_("About..."))
+        about_show.connect("activate", self.about)
+        about_show.show()
+        self.menu.append(about_show)
+
     ##Quit
         quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         quit.connect("activate", self.quit)
@@ -1132,6 +1138,33 @@ class indicator_weather(threading.Thread):
         self.prefswindow = PreferencesDialog()
         self.prefswindow.show()
 
+    def about(self, widget):
+        log.debug("Indicator: open About dialog")  
+        self.aboutdialog = gtk.AboutDialog()
+        self.aboutdialog.set_name(_("Weather Indicator"))
+        self.aboutdialog.set_version("11.03.20 'Cloudy' RC3")
+
+        ifile = open(os.path.join(os.path.expanduser("../"), "AUTHORS"), "r")
+        self.aboutdialog.set_copyright(ifile.read().replace('\x0c', ''))
+        ifile.close()
+
+        ifile = open(os.path.join(os.path.expanduser("../"), "COPYING"), "r")
+        self.aboutdialog.set_license(ifile.read().replace('\x0c', ''))
+        ifile.close()
+
+        self.aboutdialog.set_website("https://launchpad.net/weather-indicator")
+        self.aboutdialog.set_translator_credits(_("translator-credits"))
+        logo_path = os.path.join(os.path.expanduser("../"), "data/media/icon.png")
+        self.aboutdialog.set_logo(gtk.gdk.pixbuf_new_from_file(logo_path))
+
+
+        self.aboutdialog.connect("response", self.about_close)
+        self.aboutdialog.show()
+
+    def about_close(self, widget, event=None):
+        log.debug("Indicator: closing About dialog")  
+        self.aboutdialog.destroy()
+    
     # Open Extended forecast window
     def extforecast(self, widget):
         log.debug("Indicator: open Forecast")  

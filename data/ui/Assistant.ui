@@ -58,7 +58,7 @@
                 <child>
                     <object class="GtkButton" id="getcities">
                         <property name="visible">True</property>
-                        <property name="label">Get cities</property>
+                        <property name="label" translatable="yes">Get cities</property>
                         <signal name="clicked" handler="on_get_city_names"/>
                     </object>
                     <packing>
