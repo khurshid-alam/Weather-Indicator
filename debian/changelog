@@ -1,4 +1,4 @@
-indicator-weather (11.02.13+unstable+bzr215+rc3~natty1) natty; urgency=low
+indicator-weather (11.02.13+unstable+bzr216+rc3~natty1) natty; urgency=low
 
   * Release Candidate 3
   * Fix for LP: #713846 "Weather Indicator should have About page"
