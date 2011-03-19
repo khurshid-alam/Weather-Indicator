@@ -231,8 +231,8 @@ class Location:
         # Format latitude and longitude for Google needs
         self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
         self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
-        self.location_details['google id'] = self.location_details['full name']
-        print self.location_details['google id']
+        self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
+        
         # Get location details in english for Yahoo
         baseurl = 'http://api.geonames.org/getJSON'
         params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
@@ -256,6 +256,7 @@ class Location:
             log.debug("Location: Get Yahoo WOEID, url %s" % url)
             f = urllib2.urlopen(url)
             s=f.read()
+            null = None
             yahoo_woeid_result = eval(s)
             if (yahoo_woeid_result['ResultSet']['Error'] != 0) and  (yahoo_woeid_result['ResultSet']['Results'] != None):
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
