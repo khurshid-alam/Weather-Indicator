@@ -1463,8 +1463,10 @@ class Assistant(gtk.Assistant):
             # Clear up exising suggestions
             self.store.clear()
             # Get suggested city names from GeoNames DB in native locale
+            new_text = urllib.quote(new_text)
             url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=%s&username=indicatorweather' % (new_text, locale_name)
             cities = eval(urllib2.urlopen(url).read())
+            print 
             for city in cities['geonames']:
                 # Create a full city name, consisting of city name, administrative areas names and country name
                 if 'adminName2' in city:
