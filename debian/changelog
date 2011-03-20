@@ -1,3 +1,10 @@
+indicator-weather (11.03.20~natty1) natty; urgency=low
+
+  * Releasing 11.03.20 "Cloudy" version
+  * Fix for LP: #738503 "indicator-weather crashed with IOError in about(): [Errno 2] No such file or directory: '../AUTHORS' after clicking About..."
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 20 Mar 2011 07:54:50 +0200
+
 indicator-weather (11.02.13+unstable+bzr217+rc3~natty1) natty; urgency=low
 
   * Release Candidate 3
