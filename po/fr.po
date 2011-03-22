@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-20 07:28+0000\n"
+"PO-Revision-Date: 2011-03-21 17:52+0000\n"
 "Last-Translator: cob <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-21 06:20+0000\n"
+"X-Launchpad-Export-Date: 2011-03-22 06:21+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -145,7 +145,7 @@ msgstr "Pluie et neige fondue"
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Neige partiellement fondue"
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
@@ -169,7 +169,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
-msgstr ""
+msgstr "Légères averses de neige"
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
@@ -238,15 +238,15 @@ msgstr "Ensoleillé"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
-msgstr ""
+msgstr "Beau temps"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Pluie et grêle"
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
-msgstr ""
+msgstr "Chaud"
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
@@ -266,19 +266,19 @@ msgstr "Neige lourde"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Averses de neige éparses"
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
-msgstr ""
+msgstr "Averses orageuses"
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
-msgstr ""
+msgstr "Averses de neige"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Averses orageuses isolées"
 
 #: ../bin/indicator-weather.py:559
 msgid "Humidity"
@@ -298,15 +298,15 @@ msgstr "Vent"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
-msgstr ""
+msgstr "mi/h"
 
 #: ../bin/indicator-weather.py:637
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: ../bin/indicator-weather.py:643
 msgid "km/h"
-msgstr ""
+msgstr "km/h"
 
 #: ../bin/indicator-weather.py:646
 msgid "knot(s)"
@@ -323,23 +323,23 @@ msgstr "Coucher du soleil"
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:671
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #: ../bin/indicator-weather.py:673
 msgid "NE"
-msgstr ""
+msgstr "NE"
 
 #: ../bin/indicator-weather.py:675
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #: ../bin/indicator-weather.py:677
 msgid "SE"
-msgstr ""
+msgstr "SE"
 
 #: ../bin/indicator-weather.py:679
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: ../bin/indicator-weather.py:681
 msgid "SW"
@@ -364,7 +364,7 @@ msgstr "Actualiser"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr ""
+msgstr "Actualisé à l'instant"
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
@@ -378,19 +378,19 @@ msgstr "Préférences..."
 #: ../bin/indicator-weather.py:989
 #, python-format
 msgid "last refreshed %s min. ago"
-msgstr ""
+msgstr "Dernière actualisation il y a %s min."
 
 #: ../bin/indicator-weather.py:1019
 msgid "Refreshing, please wait"
-msgstr ""
+msgstr "Actualisation, patientez s'il vous plaît"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr ""
+msgstr "dernière acrualisation à l'instant"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
-msgstr ""
+msgstr "Alerte méteo importante"
 
 #: ../bin/indicator-weather.py:1311
 msgid "Weather Forecast for "
@@ -398,19 +398,19 @@ msgstr "Prévisions météo pour "
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr ""
+msgstr "Haute"
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr ""
+msgstr "Basse"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr ""
+msgstr "Label :"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr ""
+msgstr "Un autre instance de ce programme est déjà lancée"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
@@ -422,7 +422,7 @@ msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr ""
+msgstr "Ajouter une localité"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
