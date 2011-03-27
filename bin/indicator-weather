@@ -1472,7 +1472,6 @@ class Assistant(gtk.Assistant):
             new_text = urllib.quote(new_text)
             url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=%s&username=indicatorweather' % (new_text, locale_name)
             cities = eval(urllib2.urlopen(url).read())
-            print 
             for city in cities['geonames']:
                 # Create a full city name, consisting of city name, administrative areas names and country name
                 if 'adminName2' in city:
