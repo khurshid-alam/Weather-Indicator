@@ -1588,7 +1588,7 @@ if __name__ == "__main__":
     log.info("Started Weather Indicator from %s" % PROJECT_ROOT_DIRECTORY)
 
     # Single instance stuff for weather indicator
-    myapp = SingleInstance(os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.pid"))
+    myapp = SingleInstance("/tmp/indicator-weather-%d.pid" % os.getuid())
     # check is another instance of same program running
     if myapp.is_already_running():
         log.info("Another instance of this program is already running")

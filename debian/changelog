@@ -1,3 +1,10 @@
+indicator-weather (11.03.27~natty1) natty; urgency=low
+
+  * New release in Cloudy series
+  * Fix for LP: #739907 "indicator-weather failed to start falsely reporting duplicate instance", thanks Felix!
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 10:02:46 +0300
+
 indicator-weather (11.03.20~natty2) natty; urgency=low
 
   * Quick fix release for Cloudy
