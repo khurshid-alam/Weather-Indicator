@@ -6,6 +6,7 @@ indicator-weather (11.03.27~natty1) natty; urgency=low
   * Fix for LP: #743347 "what's the meaning of Mixed rain and snow/Sleet/Mixed rain and sleet/Mixed snow and sleet"
   * Fix for LP: #738671 "Allow only one instance of any dialog"
   * Fix for LP: #735667 "indicator-weather crashed with NetworkException in FetchReport(): HTTP Error 408: Request Time-out"
+  * Fix for LP: #739209 "indicator-weather crashed with AttributeError in get_value(): 'NoneType' object has no attribute 'execute_view'"
   * Updated Refresh label for plural forms
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 10:02:46 +0300
