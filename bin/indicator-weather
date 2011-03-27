@@ -305,13 +305,10 @@ class Location:
 
     # Get fresh weather data and store it to weather object
     def update_weather_data(self, source):
-        try:
-            if source == WeatherDataSource.GOOGLE:
-                self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
-            if source == WeatherDataSource.YAHOO:
-                self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
-        except e as NetworkException:
-            log.error("Weather: Network Exception occurred, %s" % str(e))
+        if source == WeatherDataSource.GOOGLE:
+            self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+        if source == WeatherDataSource.YAHOO:
+            self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
 
 class Forecast:
     """ Class to get forecast information """
@@ -464,7 +461,8 @@ class Weather:
         '44': ("weather-few-clouds",        "weather-few-clouds-night", False, _("Partly cloudy")),
         '45': ("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
         '46': ("weather-snow",              "weather-snow",             False, _("Snow showers")),
-        '47': ("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers"))
+        '47': ("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers")),
+        '3200': (False,                    False,                      False, _("Unknown condition"))
     }
 
     # Initialize and get fresh data
@@ -1027,9 +1025,9 @@ class indicator_weather(threading.Thread):
             self.menu_normal()
             self.icon = cached_weather['icon']
             if (self.icon == False):
-              self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/indicator_unknown_condition.png"))
+                self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon_unknown_condition.png"))
             else:
-              self.winder.set_icon(self.icon)
+                self.winder.set_icon(self.icon)
 
             self.city_show.set_label(self.places[self.placechosen][1])
             self.cond_show.set_label(cached_weather['condition'])
@@ -1086,7 +1084,7 @@ class indicator_weather(threading.Thread):
 
         # Saving cached data, unless correct icon is supplied
         if (self.icon == False):
-            self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/indicator_unknown_condition.png"))
+            self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon_unknown_condition.png"))
         else:
             self.winder.set_icon(self.icon)
             self.settings.save_weather(weather, self.places[self.placechosen][0])
@@ -1118,8 +1116,6 @@ class indicator_weather(threading.Thread):
     def get_weather(self):
         log.debug("Indicator: getWeather for location '%s'" % self.location_details['full name'])  
         self.current_location = Location(self.metric_system, self.wind_unit, self.location_details)
-        #if (self.current_location.find_city_by_code(city_code, self.placechosen) == False):
-        #    log.error("Indicator: getWeather: location with code %s not found" % city_code)
         log.debug("Indicator: getWeather: updating weather report")  
         self.current_location.update_weather_data(self.weather_source)
         return self.current_location.weather
@@ -1344,7 +1340,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.location_details = eval(wi.settings.get_location_details(wi.place[0]))
             wi.menu_normal()
             need_to_update_weather = True
-        
+
         if need_to_update_weather:
             wi.update_weather(False)
 
@@ -1536,7 +1532,7 @@ class Assistant(gtk.Assistant):
         wi.prefswindow.builder.get_object('citieslist').append(newplace)
         # Enable 'OK' button in Preferences
         wi.prefswindow.builder.get_object('ok_button').set_sensitive(True)
-        self.destroy()
+        self.hide()
 
 class SingleInstance(object):
     """ Class to ensure, that single instance of the applet is run for each user """

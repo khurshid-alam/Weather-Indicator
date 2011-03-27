@@ -8,9 +8,10 @@ indicator-weather (11.03.27~natty1) natty; urgency=low
   * Fix for LP: #735667 "indicator-weather crashed with NetworkException in FetchReport(): HTTP Error 408: Request Time-out"
   * Fix for LP: #739209 "indicator-weather crashed with AttributeError in get_value(): 'NoneType' object has no attribute 'execute_view'"
   * Fix for LP: #738845 "indicator-weather crashed with IOError in about(): [Errno 2] No such file or directory: '/usr/share/doc/indicator-weather/COPYING'"
+  * Fix for LP: #743366 "Location selected but no weather"
   * Updated Refresh label for plural forms
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 10:02:46 +0300
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 13:27:42 +0300
 
 indicator-weather (11.03.20~natty2) natty; urgency=low
 
