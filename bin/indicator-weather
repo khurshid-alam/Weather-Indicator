@@ -1153,7 +1153,7 @@ class indicator_weather(threading.Thread):
         self.aboutdialog.set_copyright(ifile.read().replace('\x0c', ''))
         ifile.close()
 
-        ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY, "share/doc/indicator-weather/COPYING"), "r")
+        ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY, "share/common-licenses/GPL-3"), "r")
         self.aboutdialog.set_license(ifile.read().replace('\x0c', ''))
         ifile.close()
 
