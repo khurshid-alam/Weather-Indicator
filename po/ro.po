@@ -1,4 +1,4 @@
-# Lithuanian translation for weather-indicator
+# Romanian translation for weather-indicator
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the weather-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-26 13:01+0000\n"
-"Last-Translator: Aurimas Fišeras <Unknown>\n"
-"Language-Team: Lithuanian <lt@li.org>\n"
+"PO-Revision-Date: 2011-03-26 21:55+0000\n"
+"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,31 +19,31 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
-msgstr "<b>Pranešimai</b>"
+msgstr "<b>Notificări</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr "<b>Temperatūros skalė</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr "<b>Orų duomenų šaltinis</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Vėjo greičio vienetai</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
-msgstr "Boforto"
+msgstr "Beaufort"
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr "Įjungti orų indikatoriaus programėlę"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
@@ -51,31 +51,31 @@ msgstr "Google"
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr ""
+msgstr "Imperial (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
-msgstr "Kilometrai per valandą (km/h)"
+msgstr "Kilometri pe oră (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
-msgstr "Mazgai"
+msgstr "Noduri"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Vietos"
+msgstr "Locații"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
-msgstr "Metrai per sekundę (m/s)"
+msgstr "Metri pe secundă (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Mylios per valandą (mph)"
+msgstr "Mile pe oră (mi/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr "Nėra pranešimų"
+msgstr "Fără notificări"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
@@ -87,23 +87,23 @@ msgstr "SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
-msgstr "Rodyti patarimus meniu"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr "Vienetai"
+msgstr "Unități"
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr "Atnaujinti kas"
+msgstr "Actualizează la fiecare"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr "Naudoti pranešimus kiekvienam oro sąlygų pasikeitimui"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr "Orų indikatoriaus nuostatos"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
@@ -111,27 +111,27 @@ msgstr "Yahoo!"
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr "minutės"
+msgstr "minute"
 
 #: ../bin/indicator-weather.py:408
 msgid "Tornado"
-msgstr "Tornadas"
+msgstr "Tornadă"
 
 #: ../bin/indicator-weather.py:409
 msgid "Tropical storm"
-msgstr "Tropinė audra"
+msgstr "Furtună tropicală"
 
 #: ../bin/indicator-weather.py:410
 msgid "Hurricane"
-msgstr "Uraganas"
+msgstr "Uragan"
 
 #: ../bin/indicator-weather.py:411
 msgid "Severe thunderstorms"
-msgstr "Smarki audra"
+msgstr ""
 
 #: ../bin/indicator-weather.py:412
 msgid "Thunderstorms"
-msgstr "Perkūnija"
+msgstr ""
 
 #: ../bin/indicator-weather.py:413
 msgid "Mixed rain and snow"
@@ -147,19 +147,19 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
-msgstr "Šąlanti dulksna"
+msgstr "Burniță care îngheață"
 
 #: ../bin/indicator-weather.py:417
 msgid "Drizzle"
-msgstr "Dulksna"
+msgstr "Burniță"
 
 #: ../bin/indicator-weather.py:418
 msgid "Freezing rain"
-msgstr "Šąlantis lietus"
+msgstr "Ploaie cu depunere de polei"
 
 #: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
 msgid "Showers"
-msgstr "Liūtys"
+msgstr "Averse"
 
 #: ../bin/indicator-weather.py:421
 msgid "Snow flurries"
@@ -171,51 +171,51 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr "Pustomas sniegas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
-msgstr "Sniegas"
+msgstr "Zăpadă"
 
 #: ../bin/indicator-weather.py:425
 msgid "Hail"
-msgstr "Kruša"
+msgstr "Grindină"
 
 #: ../bin/indicator-weather.py:426
 msgid "Sleet"
-msgstr "Šlapdriba"
+msgstr "Lapoviţă"
 
 #: ../bin/indicator-weather.py:427
 msgid "Dust"
-msgstr "Dulkės"
+msgstr "Praf"
 
 #: ../bin/indicator-weather.py:428
 msgid "Foggy"
-msgstr "Rūkas"
+msgstr "Ceţos"
 
 #: ../bin/indicator-weather.py:429
 msgid "Haze"
-msgstr "Migla"
+msgstr "Pâclă"
 
 #: ../bin/indicator-weather.py:430
 msgid "Smoky"
-msgstr "Dūmai"
+msgstr ""
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
-msgstr "Audringa"
+msgstr ""
 
 #: ../bin/indicator-weather.py:432
 msgid "Windy"
-msgstr "Vėjuota"
+msgstr ""
 
 #: ../bin/indicator-weather.py:433
 msgid "Cold"
-msgstr "Šaltis"
+msgstr ""
 
 #: ../bin/indicator-weather.py:434
 msgid "Cloudy"
-msgstr "Debesuota"
+msgstr "Înnourat"
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
@@ -224,19 +224,19 @@ msgstr ""
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
 msgid "Partly cloudy"
-msgstr "Vietomis debesuota"
+msgstr ""
 
 #: ../bin/indicator-weather.py:439
 msgid "Clear"
-msgstr "Giedra"
+msgstr "Clar"
 
 #: ../bin/indicator-weather.py:440
 msgid "Sunny"
-msgstr "Saulėta"
+msgstr "Însorit"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
-msgstr "Giedra"
+msgstr ""
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
@@ -244,7 +244,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
-msgstr "Karšta"
+msgstr ""
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
@@ -260,7 +260,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
 msgid "Heavy snow"
-msgstr "Stipriai sninga"
+msgstr "Ninsoare puternică"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
@@ -272,7 +272,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
-msgstr "Itin stipriai sninga"
+msgstr "Averse de ninsoare"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
@@ -280,23 +280,23 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:559
 msgid "Humidity"
-msgstr "Drėgmė"
+msgstr "Umiditate"
 
 #: ../bin/indicator-weather.py:578
 msgid "Pressure"
-msgstr "Slėgis"
+msgstr "Presiune"
 
 #: ../bin/indicator-weather.py:601
 msgid "Temperature"
-msgstr "Temperatūra"
+msgstr "Temperatură"
 
 #: ../bin/indicator-weather.py:629
 msgid "Wind"
-msgstr "Vėjas"
+msgstr "Vânt"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
-msgstr "mph"
+msgstr "mi/h"
 
 #: ../bin/indicator-weather.py:637
 msgid "m/s"
@@ -308,40 +308,40 @@ msgstr "km/h"
 
 #: ../bin/indicator-weather.py:646
 msgid "knot(s)"
-msgstr "mazgai"
+msgstr "noduri"
 
 #: ../bin/indicator-weather.py:655
 msgid "Sunrise"
-msgstr "Saulėtekis"
+msgstr "Răsărit"
 
 #: ../bin/indicator-weather.py:659
 msgid "Sunset"
-msgstr "Saulėlydis"
+msgstr "Asfinţit"
 
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:671
 msgid "N"
-msgstr "Š"
+msgstr "N"
 
 #: ../bin/indicator-weather.py:673
 msgid "NE"
-msgstr "ŠR"
+msgstr "NE"
 
 #: ../bin/indicator-weather.py:675
 msgid "E"
-msgstr "R"
+msgstr "E"
 
 #: ../bin/indicator-weather.py:677
 msgid "SE"
-msgstr "PR"
+msgstr "SE"
 
 #: ../bin/indicator-weather.py:679
 msgid "S"
-msgstr "P"
+msgstr "S"
 
 #: ../bin/indicator-weather.py:681
 msgid "SW"
-msgstr "PV"
+msgstr "SV"
 
 #: ../bin/indicator-weather.py:683
 msgid "W"
@@ -349,7 +349,7 @@ msgstr "V"
 
 #: ../bin/indicator-weather.py:685
 msgid "NW"
-msgstr "ŠV"
+msgstr "NV"
 
 #: ../bin/indicator-weather.py:846
 msgid "Set Up Weather..."
@@ -358,33 +358,33 @@ msgstr ""
 #: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
 #: ../bin/indicator-weather.py:1059
 msgid "Refresh"
-msgstr "Atnaujinti"
+msgstr "Actualizează"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr "ką tik atnaujinta"
+msgstr ""
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
-msgstr "Orų prognozė"
+msgstr ""
 
 #. #Preferences
 #: ../bin/indicator-weather.py:952
 msgid "Preferences..."
-msgstr "Nuostatos..."
+msgstr "Preferințe..."
 
 #: ../bin/indicator-weather.py:989
 #, python-format
 msgid "last refreshed %s min. ago"
-msgstr "paskutinis atnaujinimas prieš %s min."
+msgstr "actualizat ultima dată acum %s minute"
 
 #: ../bin/indicator-weather.py:1019
 msgid "Refreshing, please wait"
-msgstr "Atnaujinama, prašome palaukti"
+msgstr "Se actualizează, așteptați"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr "paskutinis atnaujinimas ką tik"
+msgstr "actualizat acum câteva momente"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
@@ -392,27 +392,27 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:1311
 msgid "Weather Forecast for "
-msgstr "Orų prognozė - "
+msgstr ""
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr "Aukštas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr "Žemas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr "Etiketė:"
+msgstr "Etichetă:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr "Programa jau yra paleista"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Namai</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
@@ -420,19 +420,19 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Pridėti vietą"
+msgstr "Adaugă o locație"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Vieta:"
+msgstr "Locație:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr "Vietos pavadinimas"
+msgstr "Numele locației"
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr "Įveskite šios vietos pavadinimą:"
+msgstr "Introduceți un nume pentru această locație:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
@@ -450,79 +450,20 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
-msgstr "Pasirinkite vietą"
+msgstr "Selectați o locație"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
-msgstr "Išplėsta orų prognozė"
+msgstr ""
 
 #: ../indicator-weather.desktop.in.h:1
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
-"Orų indikatorius, kuris rodo informaciją vienai ar kelioms vietoms pasaulyje"
+"Un indicator pentru vreme care afișează informații pentru una sau mai multe "
+"locații de pe glob"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr "Orų indikatorius"
-
-#~ msgid "Clear sky"
-#~ msgstr "Giedras dangus"
-
-#~ msgid "Increasing clouds"
-#~ msgstr "Debesuotumas didėja"
-
-#~ msgid "Scattered clouds"
-#~ msgstr "Išsisklaidę debesys"
-
-#~ msgid "Decreasing clouds"
-#~ msgstr "Debesuotumas mažėja"
-
-#~ msgid "Broken clouds"
-#~ msgstr "Su pragiedruliais"
-
-#~ msgid "Fog"
-#~ msgstr "Rūkas"
-
-#~ msgid "Dense fog"
-#~ msgstr "Tirštas rūkas"
-
-#~ msgid "Few clouds"
-#~ msgstr "Mažai debesuota"
-
-#~ msgid "Clearing"
-#~ msgstr "Debesys nyksta"
-
-#~ msgid "Overcast"
-#~ msgstr "Debesuota"
-
-#~ msgid "Blowing sand"
-#~ msgstr "Pučiamas smėlis"
-
-#~ msgid "Blowing dust"
-#~ msgstr "Pučiamos dulkės"
-
-#~ msgid "Volcanic ash"
-#~ msgstr "Vulkaniniai pelenai"
-
-#~ msgid "Smoke"
-#~ msgstr "Dūmai"
-
-#~ msgid "Ash"
-#~ msgstr "Pelenai"
-
-#~ msgid "Freezing fog"
-#~ msgstr "Šalantis rūkas"
-
-#~ msgid "Ice crystals"
-#~ msgstr "Ledo kristalai"
-
-#~ msgid "Blizzard"
-#~ msgstr "Pūga"
-
-#~ msgid "Light snow"
-#~ msgstr "Silpnai sninga"
-
-#~ msgid "Snow/rain"
-#~ msgstr "Sniegas, lietus"
+msgstr "Indicator vreme"
