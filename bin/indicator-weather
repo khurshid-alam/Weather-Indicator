@@ -307,10 +307,13 @@ class Location:
 
     # Get fresh weather data and store it to weather object
     def update_weather_data(self, source):
-        if source == WeatherDataSource.GOOGLE:
-            self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
-        if source == WeatherDataSource.YAHOO:
-            self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+        try:
+            if source == WeatherDataSource.GOOGLE:
+                self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+            if source == WeatherDataSource.YAHOO:
+                self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+        except e as NetworkException:
+            log.error("Weather: Network Exception occurred, %s" % str(e))
 
 class Forecast:
     """ Class to get forecast information """
