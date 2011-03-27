@@ -1012,7 +1012,7 @@ class indicator_weather(threading.Thread):
     def update_refresh_label(self):
         self.refreshed_minutes_ago += 1
         log.debug("Indicator: updating refresh label, %s min. ago" % self.refreshed_minutes_ago)
-        refresh_label = "%s (%s)" % (_("Refresh"), _("%s min. ago") % self.refreshed_minutes_ago)
+        refresh_label = "%s (%s)" % (_("Refresh"), _("%d min. ago") % self.refreshed_minutes_ago)
         self.refresh_show.set_label(refresh_label)
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 

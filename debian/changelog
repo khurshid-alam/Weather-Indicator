@@ -11,6 +11,7 @@ indicator-weather (11.03.20~natty2) natty; urgency=low
   * Quick fix release for Cloudy
   * Fix for LP: #738804 "indicator-weather crashed with KeyError in on_get_city_names(): 'geonames'"
   * Fix for LP: #738762 "indicator-weather crashed with ImportError in /usr/lib/pymodules/python2.7/desktopcouch/records/server.py: No module named application.server"
+  * Updated Refresh label for plural forms
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 20 Mar 2011 20:05:29 +0200
 
