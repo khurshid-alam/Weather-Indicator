@@ -3,8 +3,9 @@ indicator-weather (11.03.27~natty1) natty; urgency=low
   * New release in Cloudy series
   * Fix for LP: #739907 "indicator-weather failed to start falsely reporting duplicate instance", thanks Felix!
   * Fix for LP: #720030 "indicator invisible on first run", thanks Felix!
-  * Updated Refresh label for plural forms
   * Fix for LP: #743347 "what's the meaning of Mixed rain and snow/Sleet/Mixed rain and sleet/Mixed snow and sleet"
+  * Fix for LP: #738671 "Allow only one instance of any dialog"
+  * Updated Refresh label for plural forms
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 10:02:46 +0300
 
