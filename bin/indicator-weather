@@ -873,6 +873,7 @@ class indicator_weather(threading.Thread):
         menu_noplace.append(quit)
 
         self.winder.set_menu(menu_noplace)
+        self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon.png"))
         self.winder.set_status(appindicator.STATUS_ATTENTION)
         self.winder.set_status(appindicator.STATUS_ACTIVE)
 
@@ -1024,7 +1025,7 @@ class indicator_weather(threading.Thread):
             self.menu_normal()
             self.icon = cached_weather['icon']
             if (self.icon == False):
-              self.winder.set_icon("weather-indicator-unknown")
+              self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/indicator_unknown_condition.png"))
             else:
               self.winder.set_icon(self.icon)
 
@@ -1083,7 +1084,7 @@ class indicator_weather(threading.Thread):
 
         # Saving cached data, unless correct icon is supplied
         if (self.icon == False):
-            self.winder.set_icon("weather-indicator-unknown")
+            self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/indicator_unknown_condition.png"))
         else:
             self.winder.set_icon(self.icon)
             self.settings.save_weather(weather, self.places[self.placechosen][0])
