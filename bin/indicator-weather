@@ -421,6 +421,7 @@ class Weather:
         '3' : ("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
         '4' : ("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
         '5' : ("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
+        # Use Americal meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
         '6' : ("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
         '7' : ("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
         '8' : ("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
