@@ -597,17 +597,17 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             if (self.__metric_system == MetricSystem.SI):
                 _value = self.__report['current_conditions']['temp_c']
-                _unit  = "C"
+                _unit  = "˚C"
             else:
                 _value = self.__report['current_conditions']['temp_f']
-                _unit  = "F"
+                _unit  = "˚F"
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             if (self.__metric_system == MetricSystem.SI):
                 _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * 5/9)
-                _unit  = "C"
+                _unit  = "˚C"
             else:
                 _value = self.__report['condition']['temp']
-                _unit  = "F"
+                _unit  = "˚F"
         # Removing unnecessary '.0' in the end, if exists
         return ("%s %s" % (_value, _unit)).replace(".0", "")
 
