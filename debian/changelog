@@ -3,6 +3,7 @@ indicator-weather (11.03.30~natty1) natty; urgency=low
   * New release in Cloudy series
   * Fix for LP: #739420 "indicator-weather crashed with KeyError in prepare_forecast_data(): 'unit_system'", thanks Felix!
   * Fix for LP: #732569 "weather applet freezes on clicking refresh", thanks Panagiotis!
+  * Fix for LP: #745504 "no degree marker ℃ ℉ displayed", thanks Lucian!
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 30 Mar 2011 23:00:35 +0300
 
