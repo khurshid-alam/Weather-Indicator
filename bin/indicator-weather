@@ -850,7 +850,7 @@ class indicator_weather(threading.Thread):
         if (hasattr(self.winder, 'set_label')):
             log.debug("Indicator: update_label: setting label to '%s'" % label)
             self.previous_label_value = label
-            self.winder.set_label(label) if self.show_label else self.winder.set_label("")
+            self.winder.set_label(label) if self.show_label else self.winder.set_label(" ")
             self.winder.set_status(appindicator.STATUS_ATTENTION)
             self.winder.set_status(appindicator.STATUS_ACTIVE)
 
@@ -984,7 +984,7 @@ class indicator_weather(threading.Thread):
         self.menu.append(quit)
 
         self.winder.set_menu(self.menu)
-        self.update_label("")
+        self.update_label(" ")
 
     # Another city has been selected from radiobutton
     def on_city_changed(self,widget):
