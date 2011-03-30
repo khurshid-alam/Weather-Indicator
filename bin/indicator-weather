@@ -215,11 +215,8 @@ class Location:
 
     # Convert coordinate for google
     def convert_coordinate_for_google(self, value):
-        value = value.replace(".","")
-        while len(value) < 9:
-            value = "".join((value, "0"))
-        value = value[0:9] if "-" in value else value[0:8]
-        return value
+       value = float(value) * 1e6
+       return int(round(value))
 
     # Get necessary location details by its GeoNames details
     def prepare_location(self, geonames_details):

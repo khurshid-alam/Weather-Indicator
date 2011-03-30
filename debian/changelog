@@ -1,3 +1,10 @@
+indicator-weather (11.03.30~natty1) natty; urgency=low
+
+  * New release in Cloudy series
+  * Fix for LP: #739420 "indicator-weather crashed with KeyError in prepare_forecast_data(): 'unit_system'", thanks Felix!
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 30 Mar 2011 23:00:35 +0300
+
 indicator-weather (11.03.27~natty1) natty; urgency=low
 
   * New release in Cloudy series
