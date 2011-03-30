@@ -132,7 +132,7 @@ class Settings:
         self.record = {
           "location" : location_code,
           "data"      : {
-            "label"    : weather.get_temperature(),
+            "label"    : weather.get_temperature(needs_rounding=True),
             "condition": weather.get_condition_label(),
             "icon"     : weather.get_icon_name(),
             "temper"   : weather.get_temperature_label(),
@@ -590,7 +590,7 @@ class Weather:
         return "%s: %s %s" % (_("Pressure"), value, units)
 
     # Get temperature with units value - doesn't include 'Temperature' label
-    def get_temperature(self):
+    def get_temperature(self, needs_rounding = False):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             if (self.__metric_system == MetricSystem.SI):
                 _value = self.__report['current_conditions']['temp_c']
@@ -605,6 +605,9 @@ class Weather:
             else:
                 _value = self.__report['condition']['temp']
                 _unit  = "˚F"
+        # round the value if required
+        if needs_rounding:
+            _value = round(float(_value))
         # Removing unnecessary '.0' in the end, if exists
         return ("%s %s" % (_value, _unit)).replace(".0", "")
 
@@ -1085,7 +1088,7 @@ class indicator_weather(threading.Thread):
         else:
             self.winder.set_icon(self.icon)
             self.settings.save_weather(weather, self.places[self.placechosen][0])
-        self.update_label(weather.get_temperature())
+        self.update_label(weather.get_temperature(needs_rounding=True))
 
         # Notify user, if notifications are enabled
         if self.condition != self.settings.get_value("current") and self.notif == 'U':
