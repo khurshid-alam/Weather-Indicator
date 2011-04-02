@@ -1175,9 +1175,24 @@ class indicator_weather(threading.Thread):
 
     # Quit the applet
     def quit(self, widget, data=None):
-        # Compact the settings DB
-        self.settings.db.db.compact()
-        log.debug("Indicator: Quitting")  
+        log.debug("Indicator: Quitting")
+        try:
+            # Compact the settings DB
+            #self.settings.db.db.compact()
+            #
+            # There is a bug in python client v0.6, db.compact raises error
+            # http://code.google.com/p/couchdb-python/issues/detail?id=141
+            #
+            # It seems that the client should always set the
+            # 'Content-Type': 'application/json' header
+            # So we bypass that compact command and execute a post directly
+            # until the python client gets fixed
+            headers = {
+                'Content-Type': 'application/json'
+            }
+            self.settings.db.db.resource.post('_compact', headers=headers)
+        except Exception, e:
+            log.debug(e)
         gtk.main_quit()
 
 class PreferencesDialog(gtk.Dialog):

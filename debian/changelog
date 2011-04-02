@@ -1,12 +1,13 @@
-indicator-weather (11.03.30~natty1) natty; urgency=low
+indicator-weather (11.04.02~natty1) natty; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #739420 "indicator-weather crashed with KeyError in prepare_forecast_data(): 'unit_system'", thanks Felix!
   * Fix for LP: #732569 "weather applet freezes on clicking refresh", thanks Panagiotis!
   * Fix for LP: #745504 "no degree marker ℃ ℉ displayed", thanks Lucian!
   * Fix for LP: #739029 "Indicator takes up too much space"
+  * Fix for LP: #739029 "Quit button doesn't work", thanks Panagiotis!
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 30 Mar 2011 23:00:35 +0300
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 02 Apr 2011 10:27:04 +0300
 
 indicator-weather (11.03.27~natty1) natty; urgency=low
 
