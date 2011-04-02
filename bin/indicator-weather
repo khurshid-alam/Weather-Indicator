@@ -52,6 +52,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
 from indicator_weather.helpers import get_builder
+from indicator_weather.helpers import monitor_http_proxy
 
 class Settings:
     """ Class to read/write settings """
@@ -1609,6 +1610,9 @@ if __name__ == "__main__":
     if myapp.is_already_running():
         log.info("Another instance of this program is already running")
         sys.exit(_("Another instance of this program is already running"))
+
+    # Set http proxy support
+    monitor_http_proxy(log)
         
     # not running, safe to continue...
     gtk.gdk.threads_init()
