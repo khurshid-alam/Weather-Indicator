@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-22 17:38+0000\n"
+"PO-Revision-Date: 2011-04-01 08:25+0000\n"
 "Last-Translator: Schlussarz <schlussarz@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-23 06:22+0000\n"
+"X-Launchpad-Export-Date: 2011-04-02 06:45+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -27,7 +27,7 @@ msgstr "<b>Jednostka temperatury</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr ""
+msgstr "<b>Źródło danych o pogodzie</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
@@ -55,7 +55,7 @@ msgstr "Imperialne (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
-msgstr "Kilometry na godzinę (km/g)"
+msgstr "Kilometry na godzinę (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -71,7 +71,7 @@ msgstr "Metry na sekundę (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Mile na godzinę (m/g)"
+msgstr "Mile na godzinę (m/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
@@ -83,7 +83,7 @@ msgstr "Powiadamiaj tylko o poważnych ostrzeżeń pogodowych"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
-msgstr "SI (°C)"
+msgstr "Układ SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
@@ -139,11 +139,11 @@ msgstr "Śnieg z deszczem"
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "Deszcz ze śniegiem"
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Deszcz i deszcz ze śniegiem"
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
@@ -167,11 +167,11 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
-msgstr ""
+msgstr "Lekkie opady śniegu"
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr ""
+msgstr "Silne opady śniegu"
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
@@ -183,7 +183,7 @@ msgstr "Grad"
 
 #: ../bin/indicator-weather.py:426
 msgid "Sleet"
-msgstr "Deszcz"
+msgstr "Deszcz ze śniegiem"
 
 #: ../bin/indicator-weather.py:427
 msgid "Dust"
@@ -199,7 +199,7 @@ msgstr "Zamglenie"
 
 #: ../bin/indicator-weather.py:430
 msgid "Smoky"
-msgstr ""
+msgstr "Zadymienie"
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
@@ -240,7 +240,7 @@ msgstr "Bezchmurnie"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Deszcz z gradem"
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
@@ -252,11 +252,11 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "Sporadyczne burze"
 
 #: ../bin/indicator-weather.py:448
 msgid "Scattered showers"
-msgstr ""
+msgstr "Sporadyczne przelotne deszcze"
 
 #: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
 msgid "Heavy snow"
@@ -264,7 +264,7 @@ msgstr "Obfity śnieg"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Sporadyczne opady śniegu"
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
@@ -296,7 +296,7 @@ msgstr "Wiatr"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
-msgstr "m/g"
+msgstr "m/h"
 
 #: ../bin/indicator-weather.py:637
 msgid "m/s"
@@ -329,11 +329,11 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:675
 msgid "E"
-msgstr ""
+msgstr "Wsch"
 
 #: ../bin/indicator-weather.py:677
 msgid "SE"
-msgstr ""
+msgstr "PdWsch"
 
 #: ../bin/indicator-weather.py:679
 msgid "S"
@@ -341,15 +341,15 @@ msgstr "Pd"
 
 #: ../bin/indicator-weather.py:681
 msgid "SW"
-msgstr ""
+msgstr "PdZach"
 
 #: ../bin/indicator-weather.py:683
 msgid "W"
-msgstr ""
+msgstr "Zach"
 
 #: ../bin/indicator-weather.py:685
 msgid "NW"
-msgstr ""
+msgstr "PnZach"
 
 #: ../bin/indicator-weather.py:846
 msgid "Set Up Weather..."
@@ -358,11 +358,11 @@ msgstr "Ustaw pogodę..."
 #: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
 #: ../bin/indicator-weather.py:1059
 msgid "Refresh"
-msgstr "Odśwież"
+msgstr "Odświeżone"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr "Odświeżane..."
+msgstr "Odświeżanie..."
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
@@ -384,7 +384,7 @@ msgstr "Odświeżanie, proszę czekać..."
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr ""
+msgstr "ostatnie odświeżanie nastąpiło przed chwilą"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
@@ -408,23 +408,23 @@ msgstr "Etykieta:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr ""
+msgstr "Inna instancja programu jest już uruchomiona"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr ""
+msgstr "<b>Dom</b>"
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr ""
+msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Dodaj lokalizację"
+msgstr "Dodaj położenie"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Lokalizacja:"
+msgstr "Położenie:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
@@ -443,6 +443,8 @@ msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Proszę sprawdzić czy został dokonany właściwy wybór. Jeśli nie, proszę "
+"wrócić i wybrać właściwe opcje."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
