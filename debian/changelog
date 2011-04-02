@@ -7,8 +7,9 @@ indicator-weather (11.04.02~natty1) natty; urgency=low
   * Fix for LP: #739029 "Indicator takes up too much space"
   * Fix for LP: #739029 "Quit button doesn't work", thanks Panagiotis!
   * Fix for LP: #745634 "http proxy not supported", thanks Panagiotis!
+  * Fix for LP: #742397 "weather applet doesn't refresh information after resume", thanks Panagiotis!
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 02 Apr 2011 10:27:04 +0300
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 02 Apr 2011 11:53:29 +0300
 
 indicator-weather (11.03.27~natty1) natty; urgency=low
 

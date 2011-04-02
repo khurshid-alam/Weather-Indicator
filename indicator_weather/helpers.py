@@ -25,6 +25,8 @@ import os
 import gtk
 import urllib2
 import gconf
+import dbus
+from dbus.mainloop.glib import DBusGMainLoop
 
 from indicator_weather.indicator_weatherconfig import get_data_file
 
@@ -48,6 +50,28 @@ def get_builder(builder_file_name):
     builder.set_translation_domain('indicator-weather')
     builder.add_from_file(ui_filename)
     return builder
+
+def monitor_upower(sleep_handler, resume_handler, log):
+    """
+    Attemts to connect to UPower interface
+    """
+    # http://upower.freedesktop.org/docs/UPower.html
+    try:
+        DBusGMainLoop(set_as_default=True)
+        bus = dbus.SystemBus()
+        if not bus.name_has_owner("org.freedesktop.UPower"):
+            log.info("UPower service is missing, cannot monitor power events")
+            return
+
+        proxy = dbus.SystemBus().get_object("org.freedesktop.UPower",
+                                            "/org/freedesktop/UPower")
+        iface = dbus.Interface(proxy, "org.freedesktop.UPower")
+        iface.connect_to_signal("Sleeping", sleep_handler)
+        iface.connect_to_signal("Resuming", resume_handler)
+        log.info("Monitoring UPower interface")
+
+    except Exception, e:
+        log.error("UPower error: %s" % e)
 
 def on_http_proxy_changed_handler(client, cnxn_id=None, entry=None, data=None):
     """
