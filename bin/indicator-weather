@@ -1549,6 +1549,7 @@ class Assistant(gtk.Assistant):
                 else:
                     displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
                 self.store.append([displayed_city_name, str(city['geonameId']), str(city['lat']), str(city['lng']), str(city['name'])])
+                self.location_input_combo.popup()
         except urllib2.URLError:
             log.error("Assistant: error reaching url '%s'" % url)
 
