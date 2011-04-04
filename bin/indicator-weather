@@ -770,7 +770,7 @@ class indicator_weather(threading.Thread):
         self.winder.set_attention_icon ("weather-indicator-error")
 
         self.refreshed_minutes_ago = 0
-        monitor_upower(self.on_system_sleep, self.on_system_resume, log)
+        monitor_upower(self.on_system_sleep, self.on_system_resume)
 
         log.debug("Indicator: reading settings")
         self.settings = Settings()
@@ -1664,6 +1664,7 @@ def main():
 
 if __name__ == "__main__":
     #Enable and configure logs
+    global log
     log_filename = os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.log")
     log = logging.getLogger('IndicatorWeather')
     log.setLevel(logging.DEBUG)

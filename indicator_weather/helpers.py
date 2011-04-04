@@ -50,11 +50,12 @@ def get_builder(builder_file_name):
     builder.add_from_file(ui_filename)
     return builder
 
-def monitor_upower(sleep_handler, resume_handler, log):
+def monitor_upower(sleep_handler, resume_handler):
     """
     Attemts to connect to UPower interface
     """
     # http://upower.freedesktop.org/docs/UPower.html
+    global log
     try:
         DBusGMainLoop(set_as_default=True)
         bus = dbus.SystemBus()
@@ -72,18 +73,19 @@ def monitor_upower(sleep_handler, resume_handler, log):
     except Exception, e:
         log.error("UPower error: %s" % e)
 
-def proxy_changed(client, log=None):
+def proxy_changed(client):
     """
     Handles http proxy support in urllib2
     """
-    #log.debug("Proxy Handler: loading settings")
+    global log
+    log.debug("Proxy Handler: loading settings")
 
     # Taken from http://forum.compiz.org/viewtopic.php?t=9480
     # get info from GConf about possible proxies, auth, etc
     use_proxy = client.get_boolean("enabled")
     if not use_proxy:
         # no proxy, direct connection
-        #log.debug("Proxy Handler: using direct connection")
+        log.debug("Proxy Handler: using direct connection")
         proxy_info = {}
         proxy_support = urllib2.ProxyHandler(proxy_info)
         
@@ -91,13 +93,13 @@ def proxy_changed(client, log=None):
         proxy_host = client.get_string("host")
         proxy_port = client.get_int("port")
         if proxy_host == None or proxy_port == 0:
-            #log.error("Proxy Handler: invalid proxy_host and proxy_port in gconf")
+            log.error("Proxy Handler: invalid proxy_host and proxy_port in gconf")
             return
 
         use_auth = client.get_bool("use_authentication")
         if not use_auth:
             # simple proxy without auth
-            #log.debug("Proxy Handler: using simple proxy")
+            log.debug("Proxy Handler: using simple proxy")
             proxy_info = {
                 'host': proxy_host,
                 'port': proxy_port
@@ -106,7 +108,7 @@ def proxy_changed(client, log=None):
                 'http': "http://%(host)s:%(port)d" % proxy_info})
         else:
             # proxy with authentication
-            #log.debug("Proxy Handler: using proxy with auth")
+            log.debug("Proxy Handler: using proxy with auth")
             auth_password = client.get_string("authentication_password")
             auth_user = client.get_string("authentication_user")
             if auth_user == None or auth_password == None:
@@ -124,7 +126,7 @@ def proxy_changed(client, log=None):
             proxy_support = urllib2.ProxyHandler({
                 'http': "http://%(user)s:%(pass)s@%(host)s:%(port)d" % proxy_info})
 
-    #log.debug("Proxy info: %s" % proxy_info)
+    log.debug("Proxy info: %s" % proxy_info)
     opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
     urllib2.install_opener(opener)
 
@@ -149,6 +151,8 @@ class TimeFormatter:
     @staticmethod
     def calc_format(timeformat_settings, changed_key=None):
         """ settings init or changed """
+        global log
+        log.debug("Time Formatter: time format changed")
         time_format = timeformat_settings.get_enum("time-format")
 
         if time_format == TimeFormatter.SETTINGS_TIME_24_HOUR:
