@@ -384,6 +384,7 @@ class Weather:
 
     #Available conditions by google icon
     #Format: Google icon name: (day icon, night icon, is a severe weather condition)
+    #Reference: http://www.blindmotion.com/2009/03/google-weather-api-images/
     _GoogleConditions = {
         "sunny"            : ( "weather-clear",      "weather-clear-night",      False),
         "mostly_sunny"     : ( "weather-clear",      "weather-clear-night",      False),
@@ -405,7 +406,7 @@ class Weather:
         "haze"             : ( "weather-fog",        "weather-fog",              False),
         "chance_of_storm"  : ( "weather-storm",      "weather-storm",            True),
         "storm"            : ( "weather-storm",      "weather-storm",            True),
-        "thunderstorm"     : ( "weather-stoom",      "weather-storm",            True),
+        "thunderstorm"     : ( "weather-storm",      "weather-storm",            True),
         "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True),
     }
 
@@ -418,7 +419,7 @@ class Weather:
         '3' : ("weather-storm",             "weather-storm",            True,  _("Severe thunderstorms")),
         '4' : ("weather-storm",             "weather-storm",            True,  _("Thunderstorms")),
         '5' : ("weather-snow",              "weather-snow",             False, _("Mixed rain and snow")),
-        # Use Americal meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
+        # Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
         '6' : ("weather-showers",           "weather-showers",          False, _("Mixed rain and sleet")),
         '7' : ("weather-snow",              "weather-snow",             False, _("Mixed snow and sleet")),
         '8' : ("weather-showers",           "weather-showers",          False, _("Freezing drizzle")),
@@ -481,7 +482,11 @@ class Weather:
             # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
             icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
+
             self.__current_condition = self._GoogleConditions.get(icon_name)
+            if self.__current_condition == None:
+                log.error("ExtendedForecast: unknown Google weather condition '%s'" % icon_name)
+                self.__current_condition = (False, False, False, _(self.__report['current_conditions']['condition']))
 
         # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
@@ -1472,7 +1477,13 @@ class ExtendedForecast(gtk.Window):
         # Fill in icons
         for i in xrange(1,5):
             # Get icon name from dictionary in Weather object for Google icons
-            google_icon = Weather._GoogleConditions[icons[i-1]][0]
+            conds = Weather._GoogleConditions.get(icons[i-1])
+            if conds != None:
+                google_icon = conds[0]
+            else:
+                log.error("ExtendedForecast: unknown Google weather condition '%s'" % icons[i-1])
+                log.error(forecast.forecast)
+                google_icon = 'weather-unknown-condition'
             self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
 
         # Fill in condition labels
