@@ -139,3 +139,38 @@ def monitor_http_proxy(log):
     on_http_proxy_changed_handler(client, data=log)
     # set hook for changes
     client.notify_add("/system/http_proxy", on_http_proxy_changed_handler, log)
+
+class TimeFormatter:
+    """
+    Formats a time object with respect to the settings of indicator-datetime
+    """
+
+    # default format from locale
+    format = "%X"
+
+    SETTINGS_TIME_LOCALE = 0
+    SETTINGS_TIME_12_HOUR = 1
+    SETTINGS_TIME_24_HOUR = 2
+    SETTINGS_TIME_CUSTOM = 3
+
+    @staticmethod
+    def format_time(t):
+        """ do the format """
+        return t.strftime(TimeFormatter.format)
+
+    @staticmethod
+    def calc_format(gsettings, changed_key=None):
+        """ settings init or changed """
+        print "Time Formatter: applying new time format"
+        time_format = gsettings.get_enum("time-format")
+
+        if time_format == TimeFormatter.SETTINGS_TIME_24_HOUR:
+            TimeFormatter.format = "%H:%M"
+
+        elif time_format == TimeFormatter.SETTINGS_TIME_12_HOUR:
+            TimeFormatter.format = "%I:%M %p"
+
+        elif time_format == TimeFormatter.SETTINGS_TIME_CUSTOM or time_format == TimeFormatter.SETTINGS_TIME_LOCALE:
+            # ignore this as it might contain date params
+            #TimeFormatter.format = gsettings.get_string("custom-time-format")
+            TimeFormatter.format = "%X"

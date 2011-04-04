@@ -18,6 +18,7 @@
 ### END LICENSE
 
 import sys, os, shutil, tempfile
+from gi.repository import Gio
 import gtk, pygtk, gobject, pynotify
 pygtk.require('2.0')
 import appindicator
@@ -54,6 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
 from indicator_weather.helpers import get_builder
 from indicator_weather.helpers import monitor_http_proxy
 from indicator_weather.helpers import monitor_upower
+from indicator_weather.helpers import TimeFormatter
 
 class Settings:
     """ Class to read/write settings """
@@ -674,11 +676,12 @@ class Weather:
 
     # Get sunrise label
     def get_sunrise_label(self):
-        return "%s: %s" % (_("Sunrise"), self.__sunrise_t.strftime('%X').replace(":00", ""))
+        return "%s: %s" % (_("Sunrise"), TimeFormatter.format_time(self.__sunrise_t))
 
     # Get sunset label
     def get_sunset_label(self):
-        return "%s: %s" % (_("Sunset"), self.__sunset_t.strftime('%X').replace(":00", ""))
+        return "%s: %s" % (_("Sunset"), TimeFormatter.format_time(self.__sunset_t))
+
 
     # Additional functions
     # Convert wind direction from degrees to localized direction
@@ -1681,6 +1684,11 @@ if __name__ == "__main__":
 
     # Set http proxy support
     monitor_http_proxy(log)
+
+    # Use date-time format as in indicator-datetime
+    gsettings = Gio.Settings.new("com.canonical.indicator.datetime")
+    TimeFormatter.calc_format(gsettings)
+    gsettings.connect("changed", TimeFormatter.calc_format)
         
     # not running, safe to continue...
     gtk.gdk.threads_init()
