@@ -27,7 +27,7 @@
             <property name="xalign">0</property>
             <property name="yalign">0</property>
             <property name="ypad">6</property>
-            <property name="label" translatable="yes">Please input a location in the combobox below:</property>
+            <property name="label" translatable="yes">Please search our database for your location:</property>
             <property name="wrap">True</property>
             <property name="wrap_mode">word-char</property>
           </object>
@@ -58,7 +58,7 @@
                 <child>
                     <object class="GtkButton" id="getcities">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Get cities</property>
+                        <property name="label" translatable="yes">Search</property>
                         <signal name="clicked" handler="on_get_city_names"/>
                     </object>
                     <packing>

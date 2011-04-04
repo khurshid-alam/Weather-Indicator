@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-15 19:00+0000\n"
+"PO-Revision-Date: 2011-03-29 15:32+0000\n"
 "Last-Translator: Ivo <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-16 05:41+0000\n"
+"X-Launchpad-Export-Date: 2011-03-30 05:56+0000\n"
 "X-Generator: Launchpad (build 12559)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -55,7 +55,7 @@ msgstr "Fahrenheit (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
-msgstr "Kilometers per uur (kmh)"
+msgstr "Kilometers per uur (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -71,7 +71,7 @@ msgstr "Meter per seconde (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Mijl per uur (mph)"
+msgstr "Mijl per uur (mp/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
@@ -296,7 +296,7 @@ msgstr "Wind"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
-msgstr "mpu"
+msgstr "mp/u"
 
 #: ../bin/indicator-weather.py:637
 msgid "m/s"
@@ -436,19 +436,19 @@ msgstr "Voer een naam in voor deze locatie:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr "Voer een locatie in in de combobox hieronder:"
+msgstr "Vul hieronder een locatie in:"
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Controleer de volgende instellingen. Als iets niet klopt, ga terug en "
-"verbeter de instellingen."
+"Controleer de volgende instellingen. Als iets niet klopt, ga dan terug en "
+"verbeter het."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr "Herziende keuzes"
+msgstr "Controleer uw keuzes"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
