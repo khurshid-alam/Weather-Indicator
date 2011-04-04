@@ -53,7 +53,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
 from indicator_weather.helpers import get_builder
-from indicator_weather.helpers import monitor_http_proxy
+from indicator_weather.helpers import proxy_changed
 from indicator_weather.helpers import monitor_upower
 from indicator_weather.helpers import TimeFormatter
 
@@ -1683,12 +1683,14 @@ if __name__ == "__main__":
         sys.exit(_("Another instance of this program is already running"))
 
     # Set http proxy support
-    monitor_http_proxy(log)
+    proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
+    proxy_changed(proxy_settings)
+    proxy_settings.connect("changed", proxy_changed)
 
     # Use date-time format as in indicator-datetime
-    gsettings = Gio.Settings.new("com.canonical.indicator.datetime")
-    TimeFormatter.calc_format(gsettings)
-    gsettings.connect("changed", TimeFormatter.calc_format)
+    timeformat_settings = Gio.Settings.new("com.canonical.indicator.datetime")
+    TimeFormatter.calc_format(timeformat_settings)
+    timeformat_settings.connect("changed", TimeFormatter.calc_format)
         
     # not running, safe to continue...
     gtk.gdk.threads_init()
