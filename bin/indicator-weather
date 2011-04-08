@@ -111,7 +111,12 @@ class Settings:
             self.db.update_fields(old_doc_id, self.record)
         else:
             log.debug("Setting: setting '%s' was created" % setting)
-            self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
+            while True:
+                try:
+                    self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
+                    break;
+                except:
+                    log.debug("Settings: exception occurred, retrying")
 
     # Get cached weather by location code.
     # If return_id is True, only document id is returned, otherwise - full weather data
@@ -149,7 +154,12 @@ class Settings:
         if old_doc_id != None:
             self.db.update_fields(old_doc_id, self.record)
         else:    
-            self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
+            while True:
+                try:
+                    self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
+                    break;
+                except:
+                    log.debug("Settings: exception occurred, retrying")
 
     # Get location details by location code
     # If return_id is True, only document id is returned, otherwise - full location data
@@ -184,8 +194,13 @@ class Settings:
         old_doc_id = self.get_location_details(location_code, return_id=True)
         if old_doc_id != None:
             self.db.update_fields(old_doc_id, self.record)
-        else:    
-            self.db.put_record(CouchRecord(self.record, self.location_design_doc))
+        else:
+            while True:
+                try:
+                    self.db.put_record(CouchRecord(self.record, self.location_design_doc))
+                    break;
+                except:
+                    log.debug("Settings: exception occurred, retrying")
 
 class MetricSystem:
     """ Class with available metric systems units """
