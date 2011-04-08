@@ -5,3 +5,8 @@
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon.png weather-indicator
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_unknown_condition.png weather-indicator-unknown
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_connection_error.png weather-indicator-error
+
+#quick fix for incomplete icon themes
+cp -n /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
+cp -n /usr/share/icons/gnome/22x22/status/weather-few-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
+gtk-update-icon-cache /usr/share/icons/gnome/
