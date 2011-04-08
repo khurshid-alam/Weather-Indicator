@@ -3,6 +3,7 @@ indicator-weather (11.04.08~natty1) natty; urgency=low
   * New release in Cloudy series
   * Fix for LP: #743375 "indicator-weather crashed with error in _try_request_with_retries(): [Errno 111] Connection refused"
   * Fix for LP: #747562 "indicator-weather crashed with AttributeError in get_value(): Settings instance has no attribute 'settings_design_doc'"
+  * Fix for LP: #743840 "Crashes on forecast view"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Fri, 08 Apr 2011 20:33:44 +0300
 
