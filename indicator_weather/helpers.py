@@ -25,6 +25,9 @@ __all__ = [
     ]
 
 from gi.repository import Gio
+# this has to be called only once, otherwise we get segfaults
+DCONF_SCHEMAS = Gio.Settings.list_schemas()
+
 import os
 import gtk
 import urllib2
@@ -77,68 +80,90 @@ def monitor_upower(sleep_handler, resume_handler, log):
 
 class ProxyMonitor:
     """ Class to monitor proxy settings """
-    
+        
     @staticmethod
     def monitor_proxy(log):
         ProxyMonitor.log = log
-        proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
-        ProxyMonitor.proxy_changed(proxy_settings)
-        proxy_settings.connect("changed", ProxyMonitor.proxy_changed)
+        # try dconf
+        if "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
+            proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
+            ProxyMonitor.dconf_proxy_changed(proxy_settings)
+            proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
+        else:
+            # try gconf
+            import gconf
+            client = gconf.client_get_default()
+            client.add_dir("/system/http_proxy", gconf.CLIENT_PRELOAD_ONELEVEL)
+            ProxyMonitor.gconf_proxy_changed(client)
+            client.notify_add("/system/http_proxy", ProxyMonitor.gconf_proxy_changed)
 
     @staticmethod
-    def proxy_changed(client):
+    def dconf_proxy_changed(settings):
         """
-        Handles http proxy support in urllib2
+        Loads dconf hhtp proxy settings
         """
-        ProxyMonitor.log.debug("Proxy Handler: loading settings")
-
+        ProxyMonitor.log.debug("ProxyMonitor: loading dconf settings")
+        proxy_info = {}
         # Taken from http://forum.compiz.org/viewtopic.php?t=9480
-        # get info from GConf about possible proxies, auth, etc
-        use_proxy = client.get_boolean("enabled")
-        if not use_proxy:
-            # no proxy, direct connection
-            ProxyMonitor.log.debug("Proxy Handler: using direct connection")
-            proxy_info = {}
-            proxy_support = urllib2.ProxyHandler(proxy_info)
+        if settings.get_boolean("enabled"):
+            proxy_info['host'] = settings.get_string("host")
+            proxy_info['port'] = settings.get_int("port")
+            if settings.get_boolean("use_authentication"):
+                proxy_info['user'] = settings.get_string("authentication_user")
+                proxy_info['pass'] = settings.get_string("authentication_password")
+
+        ProxyMonitor.install_proxy_handler(proxy_info)
+
+    @staticmethod
+    def gconf_proxy_changed(client, cnxn_id=None, entry=None, data=None):
+        """
+        Loads gconf hhtp proxy settings
+        """
+        ProxyMonitor.log.debug("ProxyMonitor: loading gconf settings")
+        proxy_info = {}
+        # Taken from http://forum.compiz.org/viewtopic.php?t=9480
+        if client.get_bool("/system/http_proxy/use_http_proxy"):
+            proxy_info['host'] = client.get_string("/system/http_proxy/host")
+            proxy_info['port'] = client.get_int("/system/http_proxy/port")
+            if client.get_bool("/system/http_proxy/use_authentication"):
+                proxy_info['user'] = client.get_string("/system/http_proxy/authentication_user")
+                proxy_info['pass'] = client.get_string("/system/http_proxy/authentication_password")
+
+        ProxyMonitor.install_proxy_handler(proxy_info)
+
+    @staticmethod
+    def install_proxy_handler(proxy_info):
+        """
+        Installs http proxy support in urllib2
+        """
+        if 'host' not in proxy_info:
+            ProxyMonitor.log.debug("ProxyMonitor: using direct connection")
+            proxy_support = urllib2.ProxyHandler({})
             
-        else:
-            proxy_host = client.get_string("host")
-            proxy_port = client.get_int("port")
-            if proxy_host == None or proxy_port == 0:
-                ProxyMonitor.log.error("Proxy Handler: invalid proxy_host and proxy_port in gconf")
+        elif 'user' not in proxy_info:
+            ProxyMonitor.log.debug("ProxyMonitor: using simple proxy")
+            if proxy_info['host'] is None:
+                ProxyMonitor.log.error("ProxyMonitor: invalid proxy host")
                 return
+            if proxy_info['port'] == 0:
+                ProxyMonitor.log.error("ProxyMonitor: invalid proxy port")
+                return
+            proxy_support = urllib2.ProxyHandler({
+                'http': "http://%(host)s:%(port)d" % proxy_info})
 
-            use_auth = client.get_bool("use_authentication")
-            if not use_auth:
-                # simple proxy without auth
-                ProxyMonitor.log.debug("Proxy Handler: using simple proxy")
-                proxy_info = {
-                    'host': proxy_host,
-                    'port': proxy_port
-                }
-                proxy_support = urllib2.ProxyHandler({
-                    'http': "http://%(host)s:%(port)d" % proxy_info})
-            else:
-                # proxy with authentication
-                ProxyMonitor.log.debug("Proxy Handler: using proxy with auth")
-                auth_password = client.get_string("authentication_password")
-                auth_user = client.get_string("authentication_user")
-                if auth_user == None or auth_password == None:
-                    ProxyMonitor.log.error("Proxy Handler: invalid authentication_user and authentication_password in gconf")
-                    return
-
-                # code from Andre Bocchini <lists@andrebocchini.com>
-                # at http://bytes.com/forum/thread22918.html
-                proxy_info = {
-                    'user': auth_user,
-                    'pass': auth_password,
-                    'host': proxy_host,
-                    'port': proxy_port
-                }
-                proxy_support = urllib2.ProxyHandler({
-                    'http': "http://%(user)s:%(pass)s@%(host)s:%(port)d" % proxy_info})
-
-        ProxyMonitor.log.debug("Proxy info: %s" % proxy_info)
+        else:
+            ProxyMonitor.log.debug("ProxyMonitor: using proxy with auth")
+            if proxy_info['user'] is None:
+                ProxyMonitor.log.error("ProxyMonitor: invalid proxy user")
+                return
+            if proxy_info['pass'] is None:
+                ProxyMonitor.log.error("ProxyMonitor: invalid proxy pass")
+                return
+            proxy_support = urllib2.ProxyHandler({
+                'http': "http://%(user)s:%(pass)s@%(host)s:%(port)d" % proxy_info})
+        
+        #disable this logging as it might log the password
+        #ProxyMonitor.log.debug("Proxy info: %s" % proxy_info)
         opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)
         urllib2.install_opener(opener)
 
@@ -163,9 +188,8 @@ class TimeFormatter:
     @staticmethod
     def monitor_indicator_datetime(log):
         TimeFormatter.log = log
-        schemas = Gio.Settings.list_schemas()
         for schema in TimeFormatter.SCHEMAS:
-            if schema in schemas:
+            if schema in DCONF_SCHEMAS:
                 log.debug("TimeFormatter: loading indicator-datetime settings: %s" % schema)
                 TimeFormatter.settings = Gio.Settings.new(schema)
                 TimeFormatter.calc_format(TimeFormatter.settings)

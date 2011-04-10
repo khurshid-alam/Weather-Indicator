@@ -1,12 +1,14 @@
-indicator-weather (11.04.08~natty1) natty; urgency=low
+indicator-weather (11.04.10~natty1) natty; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #743375 "indicator-weather crashed with error in _try_request_with_retries(): [Errno 111] Connection refused"
   * Fix for LP: #747562 "indicator-weather crashed with AttributeError in get_value(): Settings instance has no attribute 'settings_design_doc'"
-  * Fix for LP: #743840 "Crashes on forecast view"'
+  * Fix for LP: #743840 "Crashes on forecast view"
+  * Fix for LP: #750809 "No "Thunderstorm" icon shown in Forecast only empty place holder.", thanks Felix!
+  * Fix for LP: #743375 "indicator-weather should re-use the time-format of other indicators", thanks Panagiotis!
   * debian/postinst: copy few-clouds to clouds to show all icons (LP: #710295)
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Fri, 08 Apr 2011 20:33:44 +0300
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 10 Apr 2011 10:05:12 +0300
 
 indicator-weather (11.04.02~natty1) natty; urgency=low
 
