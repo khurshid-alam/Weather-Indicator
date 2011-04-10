@@ -1,4 +1,4 @@
-indicator-weather (11.04.10~natty2) natty; urgency=low
+indicator-weather (11.04.10~natty3) natty; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #743375 "indicator-weather crashed with error in _try_request_with_retries(): [Errno 111] Connection refused"
@@ -7,6 +7,7 @@ indicator-weather (11.04.10~natty2) natty; urgency=low
   * Fix for LP: #750809 "No "Thunderstorm" icon shown in Forecast only empty place holder.", thanks Felix!
   * Fix for LP: #743375 "indicator-weather should re-use the time-format of other indicators", thanks Panagiotis!
   * debian/postinst: copy few-clouds to clouds to show all icons (LP: #710295)
+  * Updated dependencies - added python-gconf and gir1.2-glib-2.0
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 10 Apr 2011 10:05:12 +0300
 
