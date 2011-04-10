@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-25 22:43+0000\n"
+"PO-Revision-Date: 2011-04-09 13:27+0000\n"
 "Last-Translator: Matthias Loidolt <kedapperdrake@googlemail.com>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-26 15:05+0000\n"
-"X-Generator: Launchpad (build 12559)\n"
+"X-Launchpad-Export-Date: 2011-04-10 05:59+0000\n"
+"X-Generator: Launchpad (build 12735)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -362,7 +362,7 @@ msgstr "Aktualisieren"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr ""
+msgstr "gerade eben erneuert"
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
@@ -384,7 +384,7 @@ msgstr "Aktualisierung läuft, bitte warten"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr ""
+msgstr "zuletzt gerade eben erneuert"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
@@ -404,7 +404,7 @@ msgstr "Niedrig"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr ""
+msgstr "Schlagwort:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
@@ -416,7 +416,7 @@ msgstr "<b>Home</b>"
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr ""
+msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
@@ -436,7 +436,7 @@ msgstr "Bitte geben Sie einen Namen für den Ort ein:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr ""
+msgstr "Bitte trage einen Ort in der Kombobox unten ein:"
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
@@ -448,7 +448,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr ""
+msgstr "Auswahl überprüfen"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
@@ -468,7 +468,7 @@ msgstr ""
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr ""
+msgstr "Weather Indicator"
 
 #~ msgid "Partly sunny"
 #~ msgstr "Teilweise sonnig"
