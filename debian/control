@@ -23,8 +23,7 @@ Depends: ${misc:Depends},
  python-gtk2,
  python-gconf,
  python-pywapi,
- python-apport,
- gir1.2-glib-2.0
+ python-apport
 Description: A weather indicator for Ubuntu's Indicator Applet
  A weather indicator that displays information for one or multiple places
  in the world
