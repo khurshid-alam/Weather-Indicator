@@ -1,4 +1,4 @@
-# Spanish translation for weather-indicator
+# Bulgarian translation for weather-indicator
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the weather-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-12 17:01+0000\n"
-"Last-Translator: Gonzalo Bulnes Guilpain <Unknown>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"PO-Revision-Date: 2011-04-12 20:44+0000\n"
+"Last-Translator: Svetoslav Stefanov <svetlisashkov@yahoo.com>\n"
+"Language-Team: Bulgarian <bg@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,31 +19,31 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
-msgstr "<b>Notificaciones</b>"
+msgstr "<b>Известявания</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr "<b>Escala de temperatura</b>"
+msgstr "<b>Температурна скала</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr "Fuente de Datos del Clima"
+msgstr "<b>Източник на данни за времето</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Unidad de velocidad del viento</b>"
+msgstr "<b>Мерна единица за скорост на вятъра</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
-msgstr "Beaufort"
+msgstr "Бофорт"
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr "Activar la miniaplicación de indicador del clima"
+msgstr "Влючване на Аплет-индикатор за времето"
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
-msgstr "General"
+msgstr "Основни"
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
@@ -51,37 +51,35 @@ msgstr "Google"
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr "Imperial (°F)"
+msgstr "Имперска (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Kilometers per hour (kph)"
-msgstr "Kilometros por hora (kph)"
+msgstr "Километри в час (kph)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
-msgstr "Nudos"
+msgstr "Възли"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Localización"
+msgstr "Местоположения"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
-msgstr "Metros por segundo (m/s)"
+msgstr "Метри в секунда (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Millas por hora (mph)"
+msgstr "Мили в час (mph)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr "Sin notificaciones"
+msgstr "Без известявания"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
 msgstr ""
-"Usar las notificaciones solamente para alertar sobre condiciones climáticas "
-"severas"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
@@ -89,23 +87,23 @@ msgstr "SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
-msgstr "Mostrar consejos en el menú"
+msgstr "Показване на подсказки в менюто"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr "Unidades"
+msgstr "Единици"
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr "Actualizar cada"
+msgstr "Обновяване на всеки"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr "Usar notificaciones para informar sobre cualquier cambio en el clima"
+msgstr "Използване на известявания за всяка промяна в състоянието на времето"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr "Preferencias del indicador del clima"
+msgstr "Настройка на индикатора за времето"
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
@@ -113,188 +111,188 @@ msgstr "Yahoo!"
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr "minutos"
+msgstr "минути"
 
 #: ../bin/indicator-weather.py:408
 msgid "Tornado"
-msgstr "Tornado"
+msgstr "Торнадо"
 
 #: ../bin/indicator-weather.py:409
 msgid "Tropical storm"
-msgstr "Tormenta Tropical"
+msgstr "Тропическа буря"
 
 #: ../bin/indicator-weather.py:410
 msgid "Hurricane"
-msgstr "Huracán"
+msgstr "Ураган"
 
 #: ../bin/indicator-weather.py:411
 msgid "Severe thunderstorms"
-msgstr "Tormentas eléctricas severas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:412
 msgid "Thunderstorms"
-msgstr "Tormentas eléctricas"
+msgstr "Гръмотевични бури"
 
 #: ../bin/indicator-weather.py:413
 msgid "Mixed rain and snow"
-msgstr "Mezcla de agua y nieve"
+msgstr ""
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
-msgstr "Mezcla de lluvia y aguanieve"
+msgstr ""
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr "Mezcla de nieve y aguanieve"
+msgstr ""
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
-msgstr "Llovizna helada"
+msgstr "Ръмене със заледявания"
 
 #: ../bin/indicator-weather.py:417
 msgid "Drizzle"
-msgstr "Llovizna"
+msgstr "Ръмеж"
 
 #: ../bin/indicator-weather.py:418
 msgid "Freezing rain"
-msgstr "Lluvia helada"
+msgstr "Дъжд със заледявания"
 
 #: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
 msgid "Showers"
-msgstr "Chaparrones"
+msgstr "Превалявания"
 
 #: ../bin/indicator-weather.py:421
 msgid "Snow flurries"
-msgstr "Ráfagas de nieve"
+msgstr ""
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
-msgstr "Lluvia de nieve ligera"
+msgstr ""
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr "Nieve soplante"
+msgstr ""
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
-msgstr "Nieve"
+msgstr "Сняг"
 
 #: ../bin/indicator-weather.py:425
 msgid "Hail"
-msgstr "Granizo"
+msgstr "Градушка"
 
 #: ../bin/indicator-weather.py:426
 msgid "Sleet"
-msgstr "Aguanieve"
+msgstr "Киша"
 
 #: ../bin/indicator-weather.py:427
 msgid "Dust"
-msgstr "Polvo"
+msgstr "Прах"
 
 #: ../bin/indicator-weather.py:428
 msgid "Foggy"
-msgstr "Neblina"
+msgstr "Мъгливо"
 
 #: ../bin/indicator-weather.py:429
 msgid "Haze"
-msgstr "Bruma"
+msgstr "Мараня"
 
 #: ../bin/indicator-weather.py:430
 msgid "Smoky"
-msgstr "humoso"
+msgstr ""
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
-msgstr "Borrascoso"
+msgstr ""
 
 #: ../bin/indicator-weather.py:432
 msgid "Windy"
-msgstr "Ventoso"
+msgstr "Ветровито"
 
 #: ../bin/indicator-weather.py:433
 msgid "Cold"
-msgstr "Frío"
+msgstr "Студено"
 
 #: ../bin/indicator-weather.py:434
 msgid "Cloudy"
-msgstr "Nublado"
+msgstr "Облачно"
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
-msgstr "Mayormente nublado"
+msgstr "Предимно облачно"
 
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
 msgid "Partly cloudy"
-msgstr "Parcialmente nublado"
+msgstr "Частична облачност"
 
 #: ../bin/indicator-weather.py:439
 msgid "Clear"
-msgstr "Despejado"
+msgstr "Ясно"
 
 #: ../bin/indicator-weather.py:440
 msgid "Sunny"
-msgstr "Soleado"
+msgstr "Слънчево"
 
 #: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
 msgid "Fair"
-msgstr "Limpio"
+msgstr "Предимно безоблачно"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
-msgstr "Mezcla de lluvia y granizo"
+msgstr ""
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
-msgstr "Caliente"
+msgstr "Горещо"
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
-msgstr "Tormentas eléctricas aisladas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
 msgid "Scattered thunderstorms"
-msgstr "Tormentas eléctricas dispersas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:448
 msgid "Scattered showers"
-msgstr "Lluvias dispersas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
 msgid "Heavy snow"
-msgstr "Nieve abundante"
+msgstr "Тежък снеговалеж"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
-msgstr "Nevadas aisladas"
+msgstr ""
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
-msgstr "Lluvias con truenos"
+msgstr ""
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
-msgstr "Aguanieve"
+msgstr "Снеговалежи с прекъсвания"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
-msgstr "Lluvias con truenos aislados"
+msgstr ""
 
 #: ../bin/indicator-weather.py:559
 msgid "Humidity"
-msgstr "Humedad"
+msgstr "Влажност"
 
 #: ../bin/indicator-weather.py:578
 msgid "Pressure"
-msgstr "Presión"
+msgstr "Налягане"
 
 #: ../bin/indicator-weather.py:601
 msgid "Temperature"
-msgstr "Temperatura"
+msgstr "Температура"
 
 #: ../bin/indicator-weather.py:629
 msgid "Wind"
-msgstr "Viento"
+msgstr "Вятър"
 
 #: ../bin/indicator-weather.py:634
 msgid "mph"
@@ -310,305 +308,160 @@ msgstr "km/h"
 
 #: ../bin/indicator-weather.py:646
 msgid "knot(s)"
-msgstr "nudo(s)"
+msgstr "възли"
 
 #: ../bin/indicator-weather.py:655
 msgid "Sunrise"
-msgstr "Amanecer"
+msgstr "Изгрев"
 
 #: ../bin/indicator-weather.py:659
 msgid "Sunset"
-msgstr "Ocaso"
+msgstr "Залез"
 
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:671
 msgid "N"
-msgstr "N"
+msgstr "С"
 
 #: ../bin/indicator-weather.py:673
 msgid "NE"
-msgstr "NE"
+msgstr "СИ"
 
 #: ../bin/indicator-weather.py:675
 msgid "E"
-msgstr "E"
+msgstr "И"
 
 #: ../bin/indicator-weather.py:677
 msgid "SE"
-msgstr "SE"
+msgstr "ЮИ"
 
 #: ../bin/indicator-weather.py:679
 msgid "S"
-msgstr "S"
+msgstr "Ю"
 
 #: ../bin/indicator-weather.py:681
 msgid "SW"
-msgstr "SO"
+msgstr "ЮЗ"
 
 #: ../bin/indicator-weather.py:683
 msgid "W"
-msgstr "O"
+msgstr "З"
 
 #: ../bin/indicator-weather.py:685
 msgid "NW"
-msgstr "NO"
+msgstr "СЗ"
 
 #: ../bin/indicator-weather.py:846
 msgid "Set Up Weather..."
-msgstr "Configurar el clima..."
+msgstr "Настройка на времето..."
 
 #: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
 #: ../bin/indicator-weather.py:1059
 msgid "Refresh"
-msgstr "Actualizar"
+msgstr "Обновяване"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr "actualizado justo ahora"
+msgstr "току що е обновено"
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
-msgstr "Pronóstico"
+msgstr "Прогноза"
 
 #. #Preferences
 #: ../bin/indicator-weather.py:952
 msgid "Preferences..."
-msgstr "Preferencias..."
+msgstr "Настройки…"
 
 #: ../bin/indicator-weather.py:989
 #, python-format
 msgid "last refreshed %s min. ago"
-msgstr "actualizado hace %s min"
+msgstr "последно обновяване преди %s минути"
 
 #: ../bin/indicator-weather.py:1019
 msgid "Refreshing, please wait"
-msgstr "Actualizando, por favor espere"
+msgstr "Обновяване, моля изчакайте"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr "actualizado justo ahora"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
-msgstr "Alerta de mal tiempo"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1311
 msgid "Weather Forecast for "
-msgstr "Pronóstico para "
+msgstr ""
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr "Alta"
+msgstr "Високо"
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr "Baja"
+msgstr "Ниско"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr "Etiqueta:"
+msgstr "Етикет:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr "Ya se está ejecutando otra instancia de esta aplicación"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Domicilio</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Añadir una ubicación"
+msgstr "Добавяне на местоположение"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Ubicación:"
+msgstr "Местоположение:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr "Nombre la ubicación"
+msgstr "Име на местоположението"
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr "Introduzca un nombre para esta ubicación:"
+msgstr "Моля въведете име за това местоположение:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr "Por favor introduzca una ubicacion en la caja de busqueda debajo:"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Por favor verifique las elecciones debajo. Si algo no esta correcto, por "
-"favor regrese y seleccione las opciones correctas."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr "Verifique opciones"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
-msgstr "Seleccione una ubicación"
+msgstr "Избор на местоположение"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
-msgstr "Pronóstico Extendido"
+msgstr "Подробна прогноза"
 
 #: ../indicator-weather.desktop.in.h:1
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
-"Un indicador meteorológico que muestra la información para uno o mas lugares "
-"en el mundo"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr "Indicador meteorológico"
-
-#~ msgid "MPH"
-#~ msgstr "MPH"
-
-#~ msgid "MPS"
-#~ msgstr "MPS"
-
-#~ msgid "Mostly sunny"
-#~ msgstr "Mayormente soleado"
-
-#~ msgid "Clear sky"
-#~ msgstr "Cielo despejado"
-
-#~ msgid "Partly sunny"
-#~ msgstr "Parcialmente soleado"
-
-#~ msgid "Scattered clouds"
-#~ msgstr "Nubes dispersas"
-
-#~ msgid "Increasing clouds"
-#~ msgstr "Nubes en aumento"
-
-#~ msgid "Decreasing clouds"
-#~ msgstr "Nubes disminuyendo"
-
-#~ msgid "Broken clouds"
-#~ msgstr "Nubosidad dispersa"
-
-#~ msgid "Dense fog"
-#~ msgstr "Niebla densa"
-
-#~ msgid "Fog"
-#~ msgstr "Niebla"
-
-#~ msgid "Few clouds"
-#~ msgstr "Algunas nubes"
-
-#~ msgid "Becoming cloudy"
-#~ msgstr "Nubosidad en aumento"
-
-#~ msgid "Clearing"
-#~ msgstr "Despejándose"
-
-#~ msgid "Overcast"
-#~ msgstr "Cubierto de nubes"
-
-#~ msgid "Blowing sand"
-#~ msgstr "Viento con arena"
-
-#~ msgid "Blowing dust"
-#~ msgstr "Cortina de polvo"
-
-#~ msgid "Ice fog"
-#~ msgstr "Niebla helada"
-
-#~ msgid "Volcanic ash"
-#~ msgstr "Cenizas volcánicas"
-
-#~ msgid "Ash"
-#~ msgstr "Ceniza"
-
-#~ msgid "Smoke"
-#~ msgstr "Humo"
-
-#~ msgid "Freezing fog"
-#~ msgstr "Niebla helada"
-
-#~ msgid "Frost"
-#~ msgstr "Escarcha"
-
-#~ msgid "Ice crystals"
-#~ msgstr "Cristales de hielo"
-
-#~ msgid "Light snow"
-#~ msgstr "Nieve ligera"
-
-#~ msgid "Blizzard"
-#~ msgstr "Ventisca"
-
-#~ msgid "Snow/rain"
-#~ msgstr "Nieve/lluvia"
-
-#~ msgid "Rain showers"
-#~ msgstr "Aguaceros"
-
-#~ msgid "Rain"
-#~ msgstr "Lluvia"
-
-#~ msgid "Heavy rain"
-#~ msgstr "Lluvia fuerte"
-
-#~ msgid "Storm"
-#~ msgstr "Tormenta"
-
-#~ msgid "Sky"
-#~ msgstr "Cielo"
-
-#~ msgid "Condition"
-#~ msgstr "Condición"
-
-#~ msgid "Wind Chill"
-#~ msgstr "Temperatura del viento"
-
-#~ msgid "mile(s)"
-#~ msgstr "milla(s)"
-
-#~ msgid "km"
-#~ msgstr "km"
-
-#~ msgid "Wind Speed"
-#~ msgstr "Velocidad del viento"
-
-#~ msgid "Wind Direction"
-#~ msgstr "Dirección del viento"
-
-#~ msgid "Visibility"
-#~ msgstr "Visibilidad"
-
-#~ msgid "Connection problem"
-#~ msgstr "Problema de conexión"
-
-#~ msgid "High: "
-#~ msgstr "Alta: "
-
-#~ msgid "Low: "
-#~ msgstr "Baja: "
-
-#~ msgid "If this is not correct, please go back and select a new city."
-#~ msgstr "Si esto no es correcto, retroceda y seleccione una nueva ciudad"
-
-#~ msgid "<big>Rungis, France</big>"
-#~ msgstr "<big>Rungis, France</big>"
-
-#~ msgid "Confirm choice"
-#~ msgstr "Confirmar elección"
-
-#~ msgid "You have selected:"
-#~ msgstr "Ha seleccionado:"
-
-#~ msgid "Please select a location from below:"
-#~ msgstr "Seleccione una ubicación a continuación:"
+msgstr "Индикатор за времето"
