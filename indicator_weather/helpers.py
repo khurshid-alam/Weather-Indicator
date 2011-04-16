@@ -108,9 +108,9 @@ class ProxyMonitor:
         if settings.get_boolean("enabled"):
             proxy_info['host'] = settings.get_string("host")
             proxy_info['port'] = settings.get_int("port")
-            if settings.get_boolean("use_authentication"):
-                proxy_info['user'] = settings.get_string("authentication_user")
-                proxy_info['pass'] = settings.get_string("authentication_password")
+            if settings.get_boolean("use-authentication"):
+                proxy_info['user'] = settings.get_string("authentication-user")
+                proxy_info['pass'] = settings.get_string("authentication-password")
 
         ProxyMonitor.install_proxy_handler(proxy_info)
 
