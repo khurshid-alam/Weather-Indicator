@@ -22,6 +22,7 @@ __all__ = [
     'monitor_upower',
     'ProxyMonitor',
     'TimeFormatter',
+    'NumberFormatter',
     ]
 
 from gi.repository import Gio
@@ -31,6 +32,8 @@ DCONF_SCHEMAS = Gio.Settings.list_schemas()
 import os
 import gtk
 import urllib2
+import locale
+import re
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
 from indicator_weather.indicator_weatherconfig import get_data_file
@@ -219,3 +222,33 @@ class TimeFormatter:
             # ignore this as it might contain date params
             #TimeFormatter.format = gsettings.get_string("custom-time-format")
             TimeFormatter.format = "%X"
+
+class NumberFormatter:
+    """
+    Formats a number with respect to the locale settings
+    """
+
+    # regex to remove trailing zeros
+    re_trailing_zeros = None
+    # regex to replace -0
+    re_minus_zero = re.compile("^-0$")
+
+    @staticmethod
+    def format_float(value, precision = 1):
+        """
+        Formats a float with current locale's conventions (decimal point &
+        grouping), with specified precision.
+        It strips trailing zeros after the decimal point and replaces -0 with 0.
+        """
+        p = int(precision)
+        v = float(value)
+        s = locale.format("%.*f", (p, v), True)
+        if p > 0:
+            # compile regex if needed
+            if NumberFormatter.re_trailing_zeros is None:
+                try: dp = locale.localeconv().get('decimal_point', '.')
+                except: dp = '.'
+                NumberFormatter.re_trailing_zeros = re.compile(dp + "?0+$")
+
+            s = NumberFormatter.re_trailing_zeros.sub('', s)
+        return NumberFormatter.re_minus_zero.sub('0', s)

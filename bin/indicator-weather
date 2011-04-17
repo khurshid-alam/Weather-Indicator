@@ -687,16 +687,16 @@ class Weather:
                 _unit  = "˚F"
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             if (self.__metric_system == MetricSystem.SI):
-                _value = "%.1f" % ((float(self.__report['condition']['temp']) - 32) * 5/9)
+                _value = NumberFormatter.format_float(
+                    ((float(self.__report['condition']['temp']) - 32) * 5/9), 1)
                 _unit  = "˚C"
             else:
                 _value = self.__report['condition']['temp']
                 _unit  = "˚F"
         # round the value if required
         if needs_rounding:
-            _value = round(float(_value))
-        # Removing unnecessary '.0' in the end, if exists
-        return ("%s %s" % (_value, _unit)).replace(".0", "")
+            _value = NumberFormatter.format_float(locale.atof(_value), 0)
+        return ("%s %s" % (_value, _unit))
 
     # Get temperature label
     def get_temperature_label(self):
@@ -749,7 +749,8 @@ class Weather:
 
         # Join wind_info data in a label
         localized_wind_info[len(localized_wind_info)-1] = _unit
-        localized_wind_info[len(localized_wind_info)-2] = ("%0.1f" % _value).replace(".0", "")
+        localized_wind_info[len(localized_wind_info)-2] = \
+            NumberFormatter.format_float(_value, 1)
         return ' '.join(localized_wind_info)
 
     # Get sunrise label
