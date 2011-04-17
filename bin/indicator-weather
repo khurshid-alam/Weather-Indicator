@@ -1794,7 +1794,10 @@ def main():
 if __name__ == "__main__":
     #Enable and configure logs
     global log
-    log_filename = os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.log")
+    cachedir = os.environ.get('XDG_CACHE_HOME','').strip()
+    if not cachedir:
+        cachedir = os.path.expanduser("~/.cache")
+    log_filename = os.path.join(cachedir, "indicator-weather.log")
     log = logging.getLogger('IndicatorWeather')
     log.propagate = False
     log.setLevel(logging.DEBUG)
