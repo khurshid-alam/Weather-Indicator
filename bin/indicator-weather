@@ -930,6 +930,8 @@ class indicator_weather(threading.Thread):
             self.menu_noplace()
         else:
             self.places = eval(self.places)
+            if self.placechosen >= len(self.places):
+                self.placechosen = 0
             self.place = self.places[self.placechosen]
             self.location_details = self.settings.get_location_details(self.place[0])
             if self.location_details in (False, None, '', '[]', "['']"):
@@ -1091,6 +1093,8 @@ class indicator_weather(threading.Thread):
                     self.placechosen = self.places.index(place)
                     break
 
+            if self.placechosen >= len(self.places):
+                self.placechosen = 0
             self.place = self.places[self.placechosen]
             self.location_details = self.settings.get_location_details(self.place[0])
             if self.location_details in (False, None, '', '[]', "['']"):
