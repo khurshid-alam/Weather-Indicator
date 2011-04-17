@@ -1748,9 +1748,10 @@ if __name__ == "__main__":
     global log
     log_filename = os.path.join(os.path.expanduser("~/.cache"), "indicator-weather.log")
     log = logging.getLogger('IndicatorWeather')
+    log.propagate = False
     log.setLevel(logging.DEBUG)
     log_handler = logging.handlers.RotatingFileHandler(log_filename, maxBytes=1024*1024, backupCount=5)
-    log_formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    log_formatter = logging.Formatter("[%(threadName)s] %(asctime)s - %(levelname)s - %(message)s")
     log_handler.setFormatter(log_formatter)
     log.addHandler(log_handler)
 
