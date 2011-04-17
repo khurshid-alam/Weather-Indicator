@@ -189,11 +189,12 @@ class Settings:
             "full name": location_details['full name'],
             "latitude" : location_details['latitude'],
             "longitude": location_details['longitude'],
-            "google id": location_details['google id'],
-            "yahoo id" : location_details['yahoo id'],
-            "noaa id"  : location_details['noaa id'],
           }
         }
+        for key in ("google id", "yahoo id", "noaa id"):
+            if key in location_details:
+                self.record["data"][key]=location_details[key]
+
         # Update previously created element, if exists
         old_doc_id = self.get_location_details(location_code, return_id=True)
         if old_doc_id != None:
@@ -243,12 +244,38 @@ class Location:
     def prepare_location(self, geonames_details):
         self.location_details = {}
         self.location_details['full name'] = geonames_details[0]
+        self.prepare_location_for_google(geonames_details)
+        self.prepare_location_for_yahoo(geonames_details)
+        #TODO: Get noaa id from geonames service
+        self.location_details['noaa id'] = "woot"
 
+        # check mandatory attributes
+        if not hasattr(self, 'location_code') or \
+                'latitude' not in self.location_details or \
+                'longitude' not in self.location_details:
+            return False
+
+        # check that we have at least one supported data source
+        if 'google id' not in self.location_details and \
+                'yahoo id' not in self.location_details:
+            log.error(("Location '%s'" %
+                self.location_details['full name'])) + \
+                "is not supported by current data sources"
+            return False
+
+        return True
+
+    def prepare_location_for_google(self, geonames_details):
         # Format latitude and longitude for Google needs
-        self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
-        self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
-        self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
+        try:
+            self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
+            self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
+            self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
         
+        except Exception, e:
+            log.error(e)
+
+    def prepare_location_for_yahoo(self, geonames_details):
         # Get location details in english for Yahoo
         baseurl = 'http://api.geonames.org/getJSON'
         params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
@@ -262,8 +289,7 @@ class Location:
                 displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
             else:
                 log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
-                self.__found = False
-                return False
+                return
 
             # Get YAHOO WOEID by english name of location
             baseurl = 'http://where.yahooapis.com/geocode'
@@ -276,8 +302,7 @@ class Location:
             yahoo_woeid_result = eval(s)
             if (yahoo_woeid_result['ResultSet']['Error'] != 0) and  (yahoo_woeid_result['ResultSet']['Results'] != None):
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
-                self.__found = False
-                return False
+                return
             else:
                 woeid = yahoo_woeid_result['ResultSet']['Results'][0]['woeid']
                 self.location_code = woeid
@@ -300,22 +325,16 @@ class Location:
                         log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
                     else:
                         log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
-                        self.__found = False
-                        return False
+                        return
                 else:
                     log.error("Location: Can't guid in yahoo RSS response. Full response:\n %s" % s)
-                    self.__found = False
-                    return False
+                    return
 
         except urllib2.URLError:
             log.error("Location: error reaching url '%s'" % url)
-            self.__found = False
-            return False
 
-        #TODO: Get noaa id from geonames service
-        self.location_details['noaa id'] = "woot"
-        self.__found = True
-        return True
+        except Exception, e:
+            log.error(e)
 
     # Return lcoation code and location details
     def export_location_details(self):
@@ -323,11 +342,44 @@ class Location:
 
     # Get fresh weather data and store it to weather object
     def update_weather_data(self, source):
-        if source == WeatherDataSource.GOOGLE:
-            self.weather = Weather(self.location_details['google id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
-        if source == WeatherDataSource.YAHOO:
-            self.weather = Weather(self.location_details['yahoo id'], source, self.metric_system, self.wind_unit, self.location_details['latitude'], self.location_details['longitude'])
+        # gather existing source keys
+        valid_source = None
+        loc_ids = {}
 
+        SOURCES = {
+            WeatherDataSource.GOOGLE : ("google id", "Google"),
+            WeatherDataSource.YAHOO : ("yahoo id", "Yahoo"),
+        }
+
+        for source_id in SOURCES.keys():
+            if SOURCES[source_id][0] in self.location_details:
+                loc_ids[source_id] = SOURCES[source_id][0]
+
+        # try with the default source
+        if source in loc_ids:
+            valid_source = source
+            log.debug(("Location: default weather source '%s' " +
+                "chosen for '%s'") % (SOURCES[valid_source][1],
+                self.location_details['label']))
+
+        # try with the first alternative
+        elif len(loc_ids.keys()):
+            valid_source = loc_ids.keys()[0]
+            log.debug(("Location: non default weather source '%s' " +
+                "chosen for '%s'") % (SOURCES[valid_source][1],
+                self.location_details['label']))
+
+        if valid_source is None:
+            log.error(("Location: no valid weather source can be " +
+                "chosen for '%s'") % (
+                self.location_details['label']))
+            self.weather = None
+        else:
+            self.weather = Weather(
+                self.location_details[loc_ids[valid_source]],
+                valid_source, self.metric_system, self.wind_unit,
+                self.location_details['latitude'],
+                self.location_details['longitude'])
 class Forecast:
     """ Class to get forecast information """
 
