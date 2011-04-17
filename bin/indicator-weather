@@ -30,6 +30,8 @@ from xml.dom.minidom import parseString
 import datetime
 import dbus
 import time
+import traceback
+import types
 # Will be used for humidex
 #import math
 import commands, threading
@@ -380,6 +382,7 @@ class Location:
                 valid_source, self.metric_system, self.wind_unit,
                 self.location_details['latitude'],
                 self.location_details['longitude'])
+
 class Forecast:
     """ Class to get forecast information """
 
@@ -844,7 +847,8 @@ class indicator_weather(threading.Thread):
         self.winder.set_status (appindicator.STATUS_ACTIVE)
         self.winder.set_attention_icon ("weather-indicator-error")
 
-        self.refreshed_minutes_ago = 0
+        self.menu_update_lock = threading.Lock()
+        self.refreshed_minutes_ago = -1
         monitor_upower(self.on_system_sleep, self.on_system_resume, log)
 
         log.debug("Indicator: reading settings")
@@ -1047,7 +1051,7 @@ class indicator_weather(threading.Thread):
         self.menu.append(breaker)
 
         self.refresh_show = gtk.MenuItem()
-        self.set_refresh_label()
+        #label will be set later
         self.refresh_show.connect("activate", self.update_weather)
         self.refresh_show.show()
         self.menu.append(self.refresh_show)
@@ -1116,15 +1120,20 @@ class indicator_weather(threading.Thread):
         """
         now = datetime.datetime.now()
         log.debug("Indicator: system resumes at %s" % now)
-        # update refresh label
-        td = now - self.sleep_time
-        mins_elapsed = td.days/24*60 + td.seconds/60 + self.refreshed_minutes_ago
-        self.update_refresh_label(mins_elapsed)
-        # check if we need to update the weather now or to reschedule the update
-        if mins_elapsed > int(self.rate):
-            self.update_weather()
-        else:
-            self.schedule_weather_update(int(self.rate) - mins_elapsed)
+        # if we have places set
+        if isinstance(self.places, types.ListType) and len(self.places)>0:
+            td = now - self.sleep_time
+            mins_elapsed = td.days/24*60 + td.seconds/60
+            # update refresh label
+            if self.refreshed_minutes_ago >= 0:
+                mins_elapsed += self.refreshed_minutes_ago
+                self.update_refresh_label(mins_elapsed)
+            # check if we need to update the weather now or to reschedule the update
+            min_diff = int(self.rate) - mins_elapsed
+            if min_diff > 0:
+                self.schedule_weather_update(min_diff)
+            else:
+                self.update_weather()
 
     # Schedule weather update
     def schedule_weather_update(self, rate_override = None):
@@ -1159,91 +1168,129 @@ class indicator_weather(threading.Thread):
     def set_refresh_label(self, refreshing=False):
         if refreshing:
             refresh_label=_("Refreshing, please wait")
+        elif self.refreshed_minutes_ago < 0:
+            refresh_label=_("Refresh")
         elif self.refreshed_minutes_ago == 0:
             refresh_label="%s (%s)" % (_("Refresh"), _("just now"))
         else:
-            log.debug("Indicator: updating refresh label, %d min. ago" % self.refreshed_minutes_ago)
             refresh_label = "%s (%s)" % (_("Refresh"), _("%d min. ago") % self.refreshed_minutes_ago)
+        log.debug("Indicator: setting refresh label to '%s'" % refresh_label)
         self.refresh_show.set_label(refresh_label)
 
     # Load weather data from cache and display its values
     def show_cached_weather(self):
-        cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
-        if cached_weather != None:
-            cached_weather = eval(cached_weather)
-            log.debug("Indicator: loading weather from cache for %s" % self.places[self.placechosen])
+        try:
+            self.menu_update_lock.acquire(True)
+
+            cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
+            if cached_weather is not None:
+                cached_weather = eval(cached_weather)
+                log.debug("Indicator: loading weather from cache for %s" % self.places[self.placechosen])
+                self.menu_normal()
+                self.set_refresh_label(True)
+                self.icon = cached_weather['icon']
+                if (self.icon == False):
+                    self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon_unknown_condition.png"))
+                else:
+                    self.winder.set_icon(self.icon)
+
+                self.city_show.set_label(self.places[self.placechosen][1])
+                self.cond_show.set_label(cached_weather['condition'])
+                self.temp_show.set_label(cached_weather['temper'])
+                if cached_weather['humidex'] != None:
+                    self.humidex_show.set_label(cached_weather['humidex'])
+                else:
+                    self.humidex_show.destroy()
+                self.humid_show.set_label(cached_weather['humidity'])
+                self.wind_show.set_label(cached_weather['wind'])
+                self.sunrise_show.set_label(cached_weather['sunrise'])
+                self.sunset_show.set_label(cached_weather['sunset'])
+                self.update_label(cached_weather['label'])
+                self.winder.set_status(appindicator.STATUS_ATTENTION)
+                self.winder.set_status(appindicator.STATUS_ACTIVE)           
+
+        except Exception, e:
+            log.error(e)
+            log.debug(traceback.format_exc(e))
+
+        self.menu_update_lock.release()
+
+    # Get fresh weather data
+    def get_new_weather_data(self, notif = True):
+        
+        # get weather and catch any exception
+        weather = None
+        try:
+            weather = self.get_weather()
+
+        except urllib2.URLError, e:
+            weather = None
+            log.error("Indicator: networking error: %s" % e)
+
+        except Exception, e:
+            weather = None
+            log.error(e)
+            log.debug(traceback.format_exc(e))
+
+        try:
+            # wait until cacher finishes
+            log.debug("Indicator: updateWeather: waiting for 'Cacher' thread to terminate")
+            self.menu_update_lock.acquire(True)
+            self.menu_update_lock.release()
+                
+            if weather is None:
+                # remove the "Refreshing" status
+                self.set_refresh_label()
+                # No data returned - leave cached data to be displayed
+                log.error("Indicator: updateWeather: could not get weather, leaving cached data")
+                # Repeat an attempt in one minute
+                self.schedule_weather_update(1)
+                return
+
+            # Fill in menu with data
+            log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
+            self.condition = weather.get_condition_label()
+            self.icon = weather.get_icon_name()
+            log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.get_temperature_label(), weather.get_humidity_label(), weather.get_wind_label(), weather.get_sunrise_label(), weather.get_sunset_label(), weather.get_temperature()))
+
             self.menu_normal()
-            self.set_refresh_label(True)
-            self.icon = cached_weather['icon']
+            self.update_refresh_label(0)
+            self.city_show.set_label(self.places[self.placechosen][1])
+            self.cond_show.set_label(self.condition)
+            self.temp_show.set_label(weather.get_temperature_label())
+            if (weather.get_humidex_label() != None):
+                self.humidex_show.set_label(weather.get_humidex_label())
+            else:
+                self.humidex_show.destroy()
+            self.humid_show.set_label(weather.get_humidity_label())
+            self.wind_show.set_label(weather.get_wind_label())
+            self.sunrise_show.set_label(weather.get_sunrise_label())
+            self.sunset_show.set_label(weather.get_sunset_label())
+
+            # Saving cached data, unless correct icon is supplied
             if (self.icon == False):
                 self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon_unknown_condition.png"))
             else:
                 self.winder.set_icon(self.icon)
+                self.settings.save_weather(weather, self.places[self.placechosen][0])
+            self.update_label(weather.get_temperature(needs_rounding=True))
 
-            self.city_show.set_label(self.places[self.placechosen][1])
-            self.cond_show.set_label(cached_weather['condition'])
-            self.temp_show.set_label(cached_weather['temper'])
-            if cached_weather['humidex'] != None:
-                self.humidex_show.set_label(cached_weather['humidex'])
-            else:
-                self.humidex_show.destroy()
-            self.humid_show.set_label(cached_weather['humidity'])
-            self.wind_show.set_label(cached_weather['wind'])
-            self.sunrise_show.set_label(cached_weather['sunrise'])
-            self.sunset_show.set_label(cached_weather['sunset'])
-            self.update_label(cached_weather['label'])
-            self.winder.set_status(appindicator.STATUS_ATTENTION)
-            self.winder.set_status(appindicator.STATUS_ACTIVE)           
+            # Notify user, if notifications are enabled
+            if self.condition != self.settings.get_value("current") and self.notif == 'U':
+                # Weather condition has changed
+                log.debug("Indicator: updateWeather: weather has changed, notify")
+                self.notify(self.condition, self.icon)
+            if self.notif == 'S' and weather.condition_is_severe():
+                # Severe weather condition notification
+                log.debug("Indicator: updateWeather: severe condition notification")
+                self.notify(self.condition, self.icon, severe=True)
 
-    # Get fresh weather data
-    def get_new_weather_data(self, notif = True):
-        weather = self.get_weather()
-        if weather == None:
-            # No data returned - leave cached data to be displayed
-            log.error("Indicator: updateWeather: could not get weather, leaving cached data")
-            # Repeat an attempt in one minute
-            self.schedule_weather_update(1)
-            return
+            self.settings.set_value("current", self.condition)
 
-        # Fill in menu with data
-        log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
-        self.condition = weather.get_condition_label()
-        self.icon = weather.get_icon_name()
-        log.debug("Indicator: fill in menu with params: city='%s', temp='%s', humid='%s', wind='%s', sunrise='%s', sunset='%s', puretemp=%s" % (self.places[self.placechosen][1], weather.get_temperature_label(), weather.get_humidity_label(), weather.get_wind_label(), weather.get_sunrise_label(), weather.get_sunset_label(), weather.get_temperature()))
+        except Exception, e:
+            log.error(e)
+            log.debug(traceback.format_exc(e))
 
-        self.menu_normal()
-        self.update_refresh_label(0)
-        self.city_show.set_label(self.places[self.placechosen][1])
-        self.cond_show.set_label(self.condition)
-        self.temp_show.set_label(weather.get_temperature_label())
-        if (weather.get_humidex_label() != None):
-            self.humidex_show.set_label(weather.get_humidex_label())
-        else:
-            self.humidex_show.destroy()
-        self.humid_show.set_label(weather.get_humidity_label())
-        self.wind_show.set_label(weather.get_wind_label())
-        self.sunrise_show.set_label(weather.get_sunrise_label())
-        self.sunset_show.set_label(weather.get_sunset_label())
-
-        # Saving cached data, unless correct icon is supplied
-        if (self.icon == False):
-            self.winder.set_icon(os.path.join(PROJECT_ROOT_DIRECTORY, "share/indicator-weather/media/icon_unknown_condition.png"))
-        else:
-            self.winder.set_icon(self.icon)
-            self.settings.save_weather(weather, self.places[self.placechosen][0])
-        self.update_label(weather.get_temperature(needs_rounding=True))
-
-        # Notify user, if notifications are enabled
-        if self.condition != self.settings.get_value("current") and self.notif == 'U':
-            # Weather condition has changed
-            log.debug("Indicator: updateWeather: weather has changed, notify")
-            self.notify(self.condition, self.icon)
-        if self.notif == 'S' and weather.condition_is_severe():
-            # Severe weather condition notification
-            log.debug("Indicator: updateWeather: severe condition notification")
-            self.notify(self.condition, self.icon, severe=True)
-
-        self.settings.set_value("current", self.condition)
         self.schedule_weather_update()
 
     # Update weather
@@ -1494,6 +1541,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.settings.set_value("placechosen", wi.placechosen)
             wi.location_details = eval(wi.settings.get_location_details(wi.place[0]))
             wi.menu_normal()
+            wi.set_refresh_label()
             need_to_update_weather = True
 
         if need_to_update_weather:
