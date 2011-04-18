@@ -558,7 +558,6 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             # Get data in english locale, then - switch back
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
-            locale_name = locale.getlocale()[0].split('_')[0]
             # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
             icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
@@ -1830,7 +1829,13 @@ if __name__ == "__main__":
     gtk.gdk.threads_init()
     gtk.gdk.threads_enter()
     # Remember locale name
-    locale_name = locale.getlocale()[0].split('_')[0]
+    global locale_name
+    locale_name = locale.getlocale()[0]
+    if locale_name is not None:
+        locale_name = locale_name.split('_')[0]
+    else:
+        locale.setlocale(locale.LC_ALL, 'C') # use default (C) locale
+        locale_name = "en"
     wi = indicator_weather()
     main()
     gtk.gdk.threads_leave()
