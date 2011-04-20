@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-19 06:18+0000\n"
+"PO-Revision-Date: 2011-04-19 06:48+0000\n"
 "Last-Translator: Alexandre Patenaude <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-19 06:20+0000\n"
+"X-Launchpad-Export-Date: 2011-04-20 05:55+0000\n"
 "X-Generator: Launchpad (build 12758)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -63,7 +63,7 @@ msgstr "Nœuds"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Emplacements"
+msgstr "Lieux"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
@@ -80,7 +80,7 @@ msgstr "Pas de notifications"
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
 msgstr ""
-"N'utiliser les notifications que pour donner les alertes de temps violent"
+"Afficher les notifications uniquement lors d'alertes de temps violent"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
@@ -100,12 +100,11 @@ msgstr "Mettre à jour toutes les"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr ""
-"Utiliser les notifications pour donner tous les changements météorologiques"
+msgstr "Afficher les notifications pour tous les changements météorologiques"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr "Préférences de l'indicateur météo"
+msgstr "Configuration de l'indicateur météo"
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
@@ -137,15 +136,15 @@ msgstr "Orages"
 
 #: ../bin/indicator-weather.py:413
 msgid "Mixed rain and snow"
-msgstr "Pluie et neige mêlées"
+msgstr "Mélange de pluie et de neige"
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
-msgstr "Pluie et neige fondue"
+msgstr "Pluie et neige fondante"
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr "Neige partiellement fondue"
+msgstr "Neige et neige fondante"
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
@@ -173,11 +172,11 @@ msgstr "Légères averses de neige"
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr "Rafale de neige"
+msgstr "Poudrerie"
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
-msgstr "Neigeux"
+msgstr "Neige"
 
 #: ../bin/indicator-weather.py:425
 msgid "Hail"
@@ -185,7 +184,7 @@ msgstr "Grêle"
 
 #: ../bin/indicator-weather.py:426
 msgid "Sleet"
-msgstr "Neige fondue"
+msgstr "Neige fondante"
 
 #: ../bin/indicator-weather.py:427
 msgid "Dust"
@@ -205,7 +204,7 @@ msgstr "Enfumé"
 
 #: ../bin/indicator-weather.py:431
 msgid "Blustery"
-msgstr "Bourrasque"
+msgstr "Bourrasques"
 
 #: ../bin/indicator-weather.py:432
 msgid "Windy"
@@ -221,12 +220,12 @@ msgstr "Nuageux"
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
-msgstr "Nuageux"
+msgstr "Plutôt nuageux"
 
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
 msgid "Partly cloudy"
-msgstr "Nébulosité"
+msgstr "Partiellement nuageux"
 
 #: ../bin/indicator-weather.py:439
 msgid "Clear"
@@ -398,11 +397,11 @@ msgstr "Prévisions météo pour "
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr "Haute"
+msgstr "Maximum"
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr "Basse"
+msgstr "Minimum"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
@@ -410,7 +409,7 @@ msgstr "Label :"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr "Un autre instance de ce programme est déjà lancée"
+msgstr "Une autre instance de ce programme est déjà en cours d'exécution"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
@@ -422,39 +421,39 @@ msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Ajouter une localité"
+msgstr "Ajouter un lieu"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Emplacement :"
+msgstr "Lieu :"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr "Nom de l'emplacement"
+msgstr "Nom du lieu"
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr "Entrez un nom pour cet emplacement :"
+msgstr "Entrez un nom pour ce lieu :"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr "Entrez un emplacement dans la liste déroulante ci-dessous:"
+msgstr "Saisissez un lieu dans la liste déroulante ci-dessous:"
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Vérifiez les choix ci-dessous. Si quelque chose n'est pas correct, revenez "
-"en arrière et sélectionnez les bonnes options."
+"Vérifiez les informations ci-dessous. Si elles sont incorrectes, revenez en "
+"arrière et sélectionnez les bonnes options."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr "Rappel des choix"
+msgstr "Validation des informations"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
-msgstr "Sélectionnez un emplacement"
+msgstr "Sélectionnez un lieu"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
@@ -466,7 +465,7 @@ msgid ""
 "the world"
 msgstr ""
 "Un indicateur météo qui affiche les informations pour un ou plusieurs "
-"emplacements dans le monde"
+"endroits dans le monde"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
