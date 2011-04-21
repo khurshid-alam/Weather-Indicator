@@ -1673,6 +1673,8 @@ class Assistant(gtk.Assistant):
         self.location_input_combo.set_model(self.store)
         self.location_input_combo.set_text_column(0)
         self.location_entry = self.builder.get_object("entrylocation")
+        self.place_selected = None
+        self.location = None
 
         self.assistant.set_forward_page_func(self.next_page)
 
@@ -1705,11 +1707,15 @@ class Assistant(gtk.Assistant):
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
             self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
+        else:
+            self.place_selected = None
+            self.location = None
+            self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
 
     # Create a location object out of a selected location
     def next_page(self, current_page):
         log.debug("Assistant: moved to page %s" % current_page)
-        if (self.assistant.get_current_page() == 0) and (not hasattr(self, 'location')) and (hasattr(self, 'place_selected')):
+        if (self.assistant.get_current_page() == 0) and not self.location and self.place_selected:
             # Label input page
             log.debug("Assistant: Page %s: got location with code %s" % (current_page, self.place_selected[1]))
             self.location = Location(wi.metric_system, wi.wind_unit)
