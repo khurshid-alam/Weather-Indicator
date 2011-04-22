@@ -24,10 +24,12 @@ __all__ = [
     'TimeFormatter',
     'NumberFormatter',
     ]
-
-from gi.repository import Gio
-# this has to be called only once, otherwise we get segfaults
-DCONF_SCHEMAS = Gio.Settings.list_schemas()
+try:
+    from gi.repository import Gio
+    # this has to be called only once, otherwise we get segfaults
+    DCONF_SCHEMAS = Gio.Settings.list_schemas()
+except ImportError:
+    pass
 
 import os
 import gtk
@@ -88,11 +90,15 @@ class ProxyMonitor:
     def monitor_proxy(log):
         ProxyMonitor.log = log
         # try dconf
-        if "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
-            proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
-            ProxyMonitor.dconf_proxy_changed(proxy_settings)
-            proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
-        else:
+        try:
+            if "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
+                proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
+                ProxyMonitor.dconf_proxy_changed(proxy_settings)
+                proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
+            else:
+                # make except block work
+                raise Exception;
+        except:
             # try gconf
             import gconf
             client = gconf.client_get_default()
@@ -192,14 +198,17 @@ class TimeFormatter:
     def monitor_indicator_datetime(log):
         TimeFormatter.log = log
         for schema in TimeFormatter.SCHEMAS:
-            if schema in DCONF_SCHEMAS:
-                log.debug("TimeFormatter: loading indicator-datetime settings: %s" % schema)
-                TimeFormatter.settings = Gio.Settings.new(schema)
-                TimeFormatter.calc_format(TimeFormatter.settings)
-                TimeFormatter.settings.connect("changed", TimeFormatter.calc_format)
-                break
-        else:
-            log.debug("TimeFormatter: indicator-datetime settings not found")
+            try:
+                if schema in DCONF_SCHEMAS:
+                    log.debug("TimeFormatter: loading indicator-datetime settings: %s" % schema)
+                    TimeFormatter.settings = Gio.Settings.new(schema)
+                    TimeFormatter.calc_format(TimeFormatter.settings)
+                    TimeFormatter.settings.connect("changed", TimeFormatter.calc_format)
+                    break
+                else:
+                    raise Exception;
+            except:
+                log.debug("TimeFormatter: indicator-datetime settings not found")
 
     @staticmethod
     def format_time(t):

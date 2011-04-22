@@ -2,6 +2,7 @@ indicator-weather (11.04.24~natty4) natty; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #747733 "indicator-weather crashed with TypeError in next_page(): unknown type (null)"
+  * Fix for LP: #757195 "Again: Version 11.04.10~lucid4 doesn't start"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 21 Apr 2011 22:22:01 +0300
 

@@ -17,8 +17,11 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
+try:
+    from gi.repository import Gio
+except ImportError:
+    pass
 import sys, os, shutil, tempfile
-from gi.repository import Gio
 import gtk, pygtk, gobject, pynotify
 pygtk.require('2.0')
 import appindicator
