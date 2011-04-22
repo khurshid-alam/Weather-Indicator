@@ -7,6 +7,11 @@ xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indica
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_connection_error.png weather-indicator-error
 
 #quick fix for incomplete icon themes
-cp -n /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
-cp -n /usr/share/icons/gnome/22x22/status/weather-few-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
+if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
+    ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
+    ln -s /usr/share/icons/gnome/22x22/status/weather-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
+    gtk-update-icon-cache /usr/share/icons/gnome/
+else
+    exit 0
+fi
 gtk-update-icon-cache /usr/share/icons/gnome/
