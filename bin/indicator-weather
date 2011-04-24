@@ -122,9 +122,9 @@ class Settings:
                 try:
                     self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
                     break;
-                except:
-                    log.debug("Settings: exception occurred, retrying")
-                    time.sleep(3)
+                except Exception as e:
+                    log.debug("Settings: exception occurred:\n %s" % str(e))
+                    time.sleep(10)
 
     # Get cached weather by location code.
     # If return_id is True, only document id is returned, otherwise - full weather data
