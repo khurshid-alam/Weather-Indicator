@@ -73,8 +73,8 @@ class Settings:
                 self.db = CouchDatabase("weatherindicator", create = True)
                 break
             except dbus.exceptions.DBusException as e:
-                log.debug("Settings: DBus exception occurred, retrying")
-                time.sleep(3)
+                log.debug("Settings: DBus exception occurred:\n" % str(e))
+                time.sleep(10)
 
         # Settings view
         self.settings_design_doc = "settings"
