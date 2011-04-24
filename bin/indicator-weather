@@ -582,37 +582,26 @@ class Weather:
 
     #Get sunrise/sunset times, calculate whether it is night already
     def get_sun_data(self):
-        # Weather source is Google
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            # Grab data from earthtools.org
-            now = datetime.datetime.now() 
-            url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
-            try:
-                f = urllib2.urlopen(url)
-                s=f.read()
-                parsed = parseString(s)
-                sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
-                sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
-                timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-                dst = parsed.getElementsByTagName("dst")[0].firstChild.nodeValue
-                self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S')
-                self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S')
-                if dst == '1':
-                    self.__sunrise_t = datetime.datetime.combine(self.__sunrise_t.date(), self.__sunrise_t.time()) - datetime.timedelta(hours=1)
-                    self.__sunset_t = datetime.datetime.combine(self.__sunset_t.date(), self.__sunset_t.time()) - datetime.timedelta(hours=1)
-                    self.__sunrise_t = self.__sunrise_t.time()
-                    self.__sunset_t = self.__sunset_t.time()
-            except urllib2.URLError:
-                log.error("Weather: error reaching url '%s'" % url)
-
-        # Weather source is Yahoo - grab sunset/sunrise from report
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            sunrise = self.__report['astronomy']['sunrise']
-            sunset = self.__report['astronomy']['sunset']
-            locale.setlocale(locale.LC_ALL, 'C')
-            self.__sunrise_t = datetime.datetime.strptime(sunrise, "%I:%M %p").time()
-            self.__sunset_t = datetime.datetime.strptime(sunset, "%I:%M %p").time()
-            locale.resetlocale()
+        # Grab data from earthtools.org
+        now = datetime.datetime.now() 
+        url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
+        try:
+            f = urllib2.urlopen(url)
+            s=f.read()
+            parsed = parseString(s)
+            sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
+            sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
+            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
+            dst = parsed.getElementsByTagName("dst")[0].firstChild.nodeValue
+            self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S')
+            self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S')
+            if dst == '1':
+                self.__sunrise_t = datetime.datetime.combine(self.__sunrise_t.date(), self.__sunrise_t.time()) - datetime.timedelta(hours=1)
+                self.__sunset_t = datetime.datetime.combine(self.__sunset_t.date(), self.__sunset_t.time()) - datetime.timedelta(hours=1)
+                self.__sunrise_t = self.__sunrise_t.time()
+                self.__sunset_t = self.__sunset_t.time()
+        except urllib2.URLError:
+            log.error("Weather: error reaching url '%s'" % url)
 
         # Calculate, whether it is night or day
         now = datetime.datetime.now().time()

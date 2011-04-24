@@ -5,6 +5,7 @@ indicator-weather (11.04.24~natty4) natty; urgency=low
   * Fix for LP: #757195 "Again: Version 11.04.10~lucid4 doesn't start"
   * Fix for LP: #758309 "dpkg error when installing latest build on Ubuntu 11.04 Beta", using patch from Andrew Starr-Bochicchio
   * Fix for LP: #766049 "Traceback on startup: No module named desktopcouch.records.server"
+  * Fix for LP: #753309 "weather applet displays wrong sunset/sunrise times", using earthtools for both Google and Yahoo
   * python-apport is now recommended only, thanks Andrew
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 23 Apr 2011 10:30:41 +0300
