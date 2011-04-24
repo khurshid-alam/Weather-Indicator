@@ -1328,7 +1328,7 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: open About dialog")  
         self.aboutdialog = gtk.AboutDialog()
         self.aboutdialog.set_name(_("Weather Indicator"))
-        self.aboutdialog.set_version("11.04.10 'Cloudy'")
+        self.aboutdialog.set_version("11.04.24 'Cloudy 5'")
 
         ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY, "share/doc/indicator-weather/AUTHORS"), "r")
         self.aboutdialog.set_copyright(ifile.read().replace('\x0c', ''))
