@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-22 19:24+0000\n"
+"PO-Revision-Date: 2011-04-27 16:04+0000\n"
 "Last-Translator: Pavol Klačanský <pavol@klacansky.com>\n"
 "Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-23 06:22+0000\n"
-"X-Generator: Launchpad (build 12559)\n"
+"X-Launchpad-Export-Date: 2011-04-28 05:47+0000\n"
+"X-Generator: Launchpad (build 12758)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -127,7 +127,7 @@ msgstr "Hurikán"
 
 #: ../bin/indicator-weather.py:411
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "Silné búrky"
 
 #: ../bin/indicator-weather.py:412
 msgid "Thunderstorms"
@@ -135,7 +135,7 @@ msgstr "Búrky"
 
 #: ../bin/indicator-weather.py:413
 msgid "Mixed rain and snow"
-msgstr ""
+msgstr "Dážď so snehom"
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
@@ -248,11 +248,11 @@ msgstr "Horúco"
 
 #: ../bin/indicator-weather.py:445
 msgid "Isolated thunderstorms"
-msgstr ""
+msgstr "Samostatné búrky"
 
 #: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "Rozptýlené búrky"
 
 #: ../bin/indicator-weather.py:448
 msgid "Scattered showers"
