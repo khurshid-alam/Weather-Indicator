@@ -249,6 +249,8 @@ class Location:
     def prepare_location(self, geonames_details):
         self.location_details = {}
         self.location_details['full name'] = geonames_details[0]
+        self.location_details['latitude'] = geonames_details[2]
+        self.location_details['longitude'] = geonames_details[3]
         self.prepare_location_for_google(geonames_details)
         self.prepare_location_for_yahoo(geonames_details)
         #TODO: Get noaa id from geonames service
@@ -273,9 +275,9 @@ class Location:
     def prepare_location_for_google(self, geonames_details):
         # Format latitude and longitude for Google needs
         try:
-            self.location_details['latitude'] = self.convert_coordinate_for_google(geonames_details[2])
-            self.location_details['longitude'] = self.convert_coordinate_for_google(geonames_details[3])
-            self.location_details['google id'] = ",,,%s,%s" % (self.location_details['latitude'], self.location_details['longitude'])
+            lat = self.convert_coordinate_for_google(geonames_details[2])
+            lon = self.convert_coordinate_for_google(geonames_details[3])
+            self.location_details['google id'] = ",,,%s,%s" % (lat, lon)
         
         except Exception, e:
             log.error(e)
@@ -582,34 +584,53 @@ class Weather:
 
     #Get sunrise/sunset times, calculate whether it is night already
     def get_sun_data(self):
-        # Grab data from earthtools.org
-        now = datetime.datetime.now() 
-        url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/1' % (self.__lat, self.__lon, now.day, now.month)
+        self.__night = False
+        self.__sunrise_t = None
+        self.__sunset_t = None
+        # Grab local datetime and the daylight saving status (1/0)
+        # from earthtools.org
+        url = 'http://www.earthtools.org/timezone-1.1/%s/%s' % \
+            (self.__lat, self.__lon)
+        try:
+            f = urllib2.urlopen(url)
+            s = f.read()
+            parsed = parseString(s)
+            localtime = parsed.getElementsByTagName(
+                "isotime")[0].firstChild.nodeValue
+            dst = parsed.getElementsByTagName(
+                "dst")[0].firstChild.nodeValue
+            # strip timezone info
+            localtime = datetime.datetime.strptime(localtime.rsplit(' ',1)[0],
+                '%Y-%m-%d %H:%M:%S')
+            dst = 1 if dst == "True" else 0
+
+        except urllib2.URLError:
+            log.error("Weather: error reaching url '%s'" % url)
+            return
+        
+        # Grab sunrise/sunset from earthtools.org
+        url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/%s' % \
+            (self.__lat, self.__lon, localtime.day, localtime.month, dst)
         try:
             f = urllib2.urlopen(url)
             s=f.read()
             parsed = parseString(s)
             sunrise = parsed.getElementsByTagName("morning")[0].getElementsByTagName("sunrise")[0].firstChild.nodeValue
             sunset  = parsed.getElementsByTagName("evening")[0].getElementsByTagName("sunset")[0].firstChild.nodeValue
-            timezone = parsed.getElementsByTagName("timezone")[0].firstChild.nodeValue
-            dst = parsed.getElementsByTagName("dst")[0].firstChild.nodeValue
-            self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S')
-            self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S')
-            if dst == '1':
-                self.__sunrise_t = datetime.datetime.combine(self.__sunrise_t.date(), self.__sunrise_t.time()) - datetime.timedelta(hours=1)
-                self.__sunset_t = datetime.datetime.combine(self.__sunset_t.date(), self.__sunset_t.time()) - datetime.timedelta(hours=1)
-                self.__sunrise_t = self.__sunrise_t.time()
-                self.__sunset_t = self.__sunset_t.time()
+            self.__sunrise_t = datetime.datetime.strptime(sunrise, '%H:%M:%S').time()
+            self.__sunset_t = datetime.datetime.strptime(sunset, '%H:%M:%S').time()
         except urllib2.URLError:
             log.error("Weather: error reaching url '%s'" % url)
+            return
 
         # Calculate, whether it is night or day
-        now = datetime.datetime.now().time()
-        if now<self.__sunrise_t or now>self.__sunset_t:
+        if localtime.time()<self.__sunrise_t or localtime.time()>self.__sunset_t:
             self.__night = True
         else:
             self.__night = False
-        log.debug("Weather: got sunrise '%s', sunset '%s', night = %s" % (self.__sunrise_t, self.__sunset_t, self.__night))
+        log.debug("Weather: got localtime " +
+            "%s, dst %s, sunrise '%s', sunset '%s', night = %s" % (
+            localtime, dst, self.__sunrise_t, self.__sunset_t, self.__night))
 
     # Return True, if weather condition is severe
     def condition_is_severe(self):
