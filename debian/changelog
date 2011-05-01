@@ -1,8 +1,15 @@
+indicator-weather (11.05.01~natty1) natty; urgency=low
+
+  * New release in Cloudy series
+  * Fix for LP: #765464 "do not see indicator-weather on the panel", thanks Panagiotis!
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 01 May 2011 09:50:43 +0300
+
 indicator-weather (11.04.24~natty4) natty; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #747733 "indicator-weather crashed with TypeError in next_page(): unknown type (null)"
-  * Fix for LP: #757195 "Again: Version 11.04.10~lucid4 doesn't start"
+  * Fix for LP: #757195 "Again: Version 11.04.10~natty4 doesn't start"
   * Fix for LP: #758309 "dpkg error when installing latest build on Ubuntu 11.04 Beta", using patch from Andrew Starr-Bochicchio
   * Fix for LP: #766049 "Traceback on startup: No module named desktopcouch.records.server"
   * Fix for LP: #753309 "weather applet displays wrong sunset/sunrise times", using earthtools for both Google and Yahoo
