@@ -400,10 +400,15 @@ class Forecast:
     # Initialize a class with metric system, wind units, location and current user locale
     def __init__ (self, units, lat, lon, locale):
         self.metric_system = units
-        self.lat = lat
-        self.lon = lon
+        self.lat = self.convert_coordinate_for_google(lat)
+        self.lon = self.convert_coordinate_for_google(lon)
         self.locale = locale
 
+    # Convert coordinate for google
+    def convert_coordinate_for_google(self, value):
+       value = float(value) * 1e6
+       return int(round(value))
+       
     # Get and store forecast data. For now using Google only
     def prepare_forecast_data(self):
         self.daysofweek = []
