@@ -1,7 +1,8 @@
 indicator-weather (11.05.01~natty1) natty; urgency=low
 
   * New release in Cloudy series
-  * Fix for LP: #765464 "do not see indicator-weather on the panel", thanks Panagiotis!
+  * Fix for LP: #765464 "sunrise and sunset info incorrect", thanks Panagiotis!
+  * Fix for LP: #771872 "Start the indicator after it has been installed"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 01 May 2011 09:50:43 +0300
 
