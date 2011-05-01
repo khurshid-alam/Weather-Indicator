@@ -4,6 +4,7 @@ indicator-weather (11.05.01~natty1) natty; urgency=low
   * Fix for LP: #765464 "sunrise and sunset info incorrect", thanks Panagiotis!
   * Fix for LP: #771872 "Start the indicator after it has been installed"
   * Fix for LP: #772552 "weather applet doesn't start"
+  * Fix for LP: #769842 "Weather Indicator should clear up corrupted DB"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 01 May 2011 09:50:43 +0300
 

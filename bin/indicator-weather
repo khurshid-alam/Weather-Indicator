@@ -71,25 +71,31 @@ class Settings:
         while True:
             try:
                 self.db = CouchDatabase("weatherindicator", create = True)
+
+                # Settings view
+                self.settings_design_doc = "settings"
+                self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
+                self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
+
+                # Cached weather view
+                self.weather_design_doc = "weather"
+                self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
+                self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
+
+                # Location info view
+                self.location_design_doc = "location"
+                self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
+                self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
                 break
             except dbus.exceptions.DBusException as e:
                 log.debug("Settings: DBus exception occurred:\n %s" % str(e))
                 time.sleep(10)
-
-        # Settings view
-        self.settings_design_doc = "settings"
-        self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
-        self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
-
-        # Cached weather view
-        self.weather_design_doc = "weather"
-        self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
-        self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
-
-        # Location info view
-        self.location_design_doc = "location"
-        self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
-        self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
+            except Exception as e:
+                log.debug("Settings: exception occurred while creating views:\n %s" % str(e))
+                log.debug("Settings: dropping the DB")
+                
+                server = self.db._server
+                del server['weatherindicator']
 
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
@@ -166,8 +172,8 @@ class Settings:
                 try:
                     self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
                     break;
-                except:
-                    log.debug("Settings: exception occurred, retrying")
+                except Exception as e:
+                    log.debug("Settings: exception occurred, retrying. exception:\n %s" % str(e))
                     time.sleep(3)
 
     # Get location details by location code
@@ -209,8 +215,8 @@ class Settings:
                 try:
                     self.db.put_record(CouchRecord(self.record, self.location_design_doc))
                     break;
-                except:
-                    log.debug("Settings: exception occurred, retrying")
+                except Exception as e:
+                    log.debug("Settings: exception occurred, retrying. exception:\n %s" % str(e))
                     time.sleep(3)
 
 class MetricSystem:
