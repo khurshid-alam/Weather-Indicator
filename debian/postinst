@@ -15,6 +15,3 @@ else
     exit 0
 fi
 gtk-update-icon-cache /usr/share/icons/gnome/
-
-#run indicator after it has been installed
-indicator-weather
