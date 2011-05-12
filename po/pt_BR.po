@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-25 02:42+0000\n"
-"Last-Translator: Mauricio Pretto <Unknown>\n"
+"PO-Revision-Date: 2011-05-12 01:52+0000\n"
+"Last-Translator: Sam Samuels <gemini_sam_samuels@hotmail.co.uk>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-26 06:02+0000\n"
-"X-Generator: Launchpad (build 12758)\n"
+"X-Launchpad-Export-Date: 2011-05-12 05:58+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -219,7 +219,7 @@ msgstr "Nublado"
 
 #: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
 msgid "Mostly cloudy"
-msgstr ""
+msgstr "Parcialmente nublado"
 
 #: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
 #: ../bin/indicator-weather.py:452
@@ -264,7 +264,7 @@ msgstr "Neve forte"
 
 #: ../bin/indicator-weather.py:450
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Parcialmente nublado"
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
@@ -272,7 +272,7 @@ msgstr "Tempestades"
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
-msgstr ""
+msgstr "Quedas de neve"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
@@ -384,7 +384,7 @@ msgstr "Atualizando, aguarde"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr ""
+msgstr "última atualização agora"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
@@ -396,15 +396,15 @@ msgstr "Previsão do Tempo para "
 
 #: ../bin/indicator-weather.py:1343
 msgid "High"
-msgstr ""
+msgstr "Alta"
 
 #: ../bin/indicator-weather.py:1345
 msgid "Low"
-msgstr ""
+msgstr "Baixa"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr ""
+msgstr "Legenda"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
@@ -424,7 +424,7 @@ msgstr "Adicionar uma localidade"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr ""
+msgstr "Local:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
