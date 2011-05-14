@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-05-12 14:44+0000\n"
+"PO-Revision-Date: 2011-05-13 11:38+0000\n"
 "Last-Translator: Isak Frants <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-13 05:47+0000\n"
+"X-Launchpad-Export-Date: 2011-05-14 05:48+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -139,11 +139,11 @@ msgstr "Snöblandat regn"
 
 #: ../bin/indicator-weather.py:414
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "Blandat regn och snöblandat regn"
 
 #: ../bin/indicator-weather.py:415
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Blandat snö och snöblandat regn"
 
 #: ../bin/indicator-weather.py:416
 msgid "Freezing drizzle"
@@ -163,15 +163,15 @@ msgstr "Regnskurar"
 
 #: ../bin/indicator-weather.py:421
 msgid "Snow flurries"
-msgstr ""
+msgstr "Lätt snöfall"
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
-msgstr ""
+msgstr "Lätta snöbyar"
 
 #: ../bin/indicator-weather.py:423
 msgid "Blowing snow"
-msgstr ""
+msgstr "Snöstorm"
 
 #: ../bin/indicator-weather.py:424
 msgid "Snow"
@@ -240,7 +240,7 @@ msgstr "Måttligt"
 
 #: ../bin/indicator-weather.py:443
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Blandat regn och hagel"
 
 #: ../bin/indicator-weather.py:444
 msgid "Hot"
@@ -376,11 +376,11 @@ msgstr "Inställningar..."
 #: ../bin/indicator-weather.py:989
 #, python-format
 msgid "last refreshed %s min. ago"
-msgstr ""
+msgstr "uppdaterad för %s min. sedan"
 
 #: ../bin/indicator-weather.py:1019
 msgid "Refreshing, please wait"
-msgstr ""
+msgstr "Uppdaterar, var god vänta"
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
@@ -436,17 +436,18 @@ msgstr "Ange ett namn för denna plats:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr ""
+msgstr "Fyll i en plats i rutan här under:"
 
 #: ../data/ui/Assistant.ui.h:9
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Granska dina gjorda val. Om något är felaktigt, gå tillbaka och ändra."
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr ""
+msgstr "Granska dina val"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Select a location"
@@ -461,6 +462,7 @@ msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
+"En väderindikator som visar information om en eller flera platser i världen"
 
 #: ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
