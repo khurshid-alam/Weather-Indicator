@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-19 06:48+0000\n"
-"Last-Translator: Alexandre Patenaude <Unknown>\n"
+"PO-Revision-Date: 2011-05-18 13:16+0000\n"
+"Last-Translator: Arzach <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-20 05:55+0000\n"
-"X-Generator: Launchpad (build 12758)\n"
+"X-Launchpad-Export-Date: 2011-05-19 06:21+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -75,7 +75,7 @@ msgstr "Mille par heure (mi/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr "Pas de notifications"
+msgstr "Pas de notification"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
@@ -385,7 +385,7 @@ msgstr "Actualisation en cours..."
 
 #: ../bin/indicator-weather.py:1059
 msgid "last refreshed just now"
-msgstr "dernière acrualisation à l'instant"
+msgstr "dernière actualisation à l'instant"
 
 #: ../bin/indicator-weather.py:1106
 msgid "Severe weather alert"
@@ -405,7 +405,7 @@ msgstr "Minimum"
 
 #: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr "Label :"
+msgstr "Libellé :"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
@@ -413,7 +413,7 @@ msgstr "Une autre instance de ce programme est déjà en cours d'exécution"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Acceuil</b>"
+msgstr "<b>Accueil</b>"
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"

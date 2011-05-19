@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-18 23:58+0000\n"
-"Last-Translator: Panagiotis Skintzos <Unknown>\n"
+"PO-Revision-Date: 2011-05-19 00:22+0000\n"
+"Last-Translator: Renji NsK <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-19 06:20+0000\n"
-"X-Generator: Launchpad (build 12758)\n"
+"X-Launchpad-Export-Date: 2011-05-19 06:21+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -163,7 +163,7 @@ msgstr "Μπόρα"
 
 #: ../bin/indicator-weather.py:421
 msgid "Snow flurries"
-msgstr ""
+msgstr "Πιθανές Χιονοπτώσεις"
 
 #: ../bin/indicator-weather.py:422
 msgid "Light snow showers"
@@ -268,7 +268,7 @@ msgstr "Διάσπαρτες μπόρες χιονιού"
 
 #: ../bin/indicator-weather.py:453
 msgid "Thundershowers"
-msgstr ""
+msgstr "Καταιγίδες"
 
 #: ../bin/indicator-weather.py:454
 msgid "Snow showers"
@@ -276,7 +276,7 @@ msgstr "Μπόρες χιονιού"
 
 #: ../bin/indicator-weather.py:455
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Τοπικές καταιγίδες"
 
 #: ../bin/indicator-weather.py:559
 msgid "Humidity"
@@ -408,7 +408,7 @@ msgstr "Ετικέτα:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr ""
+msgstr "Το πρόγραμμα αυτό εκτελείται ήδη"
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
