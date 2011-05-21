@@ -6,439 +6,458 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-26 06:38+0000\n"
-"Last-Translator: Mantas Kriaučiūnas <mantas@akl.lt>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-05-20 09:51+0000\n"
+"Last-Translator: Launchpad Translations Administrators "
+"<rosetta@launchpad.net>\n"
 "Language-Team: Lithuanian <lt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-27 05:44+0000\n"
-"X-Generator: Launchpad (build 12758)\n"
-
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Pranešimai</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Temperatūros skalė</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Orų duomenų šaltinis</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Vėjo greičio vienetai</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Boforto"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Įjungti orų indikatoriaus programėlę"
-
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Bendri"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Imperinė (°F)"
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilometrai per valandą (km/h)"
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Mazgai"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Vietos"
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Metrai per sekundę (m/s)"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Mylios per valandą (mph)"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Nėra pranešimų"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
-
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "Rodyti patarimus progrozės meniu"
-
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Matavimo vienetai"
-
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Atnaujinti kas"
-
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Naudoti pranešimus kiekvienam oro sąlygų pasikeitimui"
-
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr "Orų indikatoriaus nustatymai"
-
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
-
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
-msgstr "min."
-
-#: ../bin/indicator-weather.py:408
-msgid "Tornado"
-msgstr "Tornadas"
-
-#: ../bin/indicator-weather.py:409
-msgid "Tropical storm"
-msgstr "Tropinė audra"
-
-#: ../bin/indicator-weather.py:410
-msgid "Hurricane"
-msgstr "Uraganas"
-
-#: ../bin/indicator-weather.py:411
-msgid "Severe thunderstorms"
-msgstr "Smarki audra"
-
-#: ../bin/indicator-weather.py:412
-msgid "Thunderstorms"
-msgstr "Perkūnija"
-
-#: ../bin/indicator-weather.py:413
-msgid "Mixed rain and snow"
-msgstr "Šlapdriba (lietus ir sniegas)"
-
-#: ../bin/indicator-weather.py:414
-msgid "Mixed rain and sleet"
-msgstr "Lietus bei šlapdriba"
-
-#: ../bin/indicator-weather.py:415
-msgid "Mixed snow and sleet"
-msgstr "Sniegas bei šlapdriba"
-
-#: ../bin/indicator-weather.py:416
-msgid "Freezing drizzle"
-msgstr "Šąlanti dulksna"
-
-#: ../bin/indicator-weather.py:417
-msgid "Drizzle"
-msgstr "Dulksna"
-
-#: ../bin/indicator-weather.py:418
-msgid "Freezing rain"
-msgstr "Šąlantis lietus"
-
-#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
-msgid "Showers"
-msgstr "Liūtys"
-
-#: ../bin/indicator-weather.py:421
-msgid "Snow flurries"
-msgstr ""
-
-#: ../bin/indicator-weather.py:422
-msgid "Light snow showers"
-msgstr ""
-
-#: ../bin/indicator-weather.py:423
-msgid "Blowing snow"
-msgstr "Pustomas sniegas"
-
-#: ../bin/indicator-weather.py:424
-msgid "Snow"
-msgstr "Sniegas"
-
-#: ../bin/indicator-weather.py:425
-msgid "Hail"
-msgstr "Kruša"
-
-#: ../bin/indicator-weather.py:426
-msgid "Sleet"
-msgstr "Šlapdriba"
-
-#: ../bin/indicator-weather.py:427
-msgid "Dust"
-msgstr "Dulkės"
-
-#: ../bin/indicator-weather.py:428
-msgid "Foggy"
-msgstr "Rūkas"
-
-#: ../bin/indicator-weather.py:429
-msgid "Haze"
-msgstr "Migla"
-
-#: ../bin/indicator-weather.py:430
-msgid "Smoky"
-msgstr "Dūmai"
-
-#: ../bin/indicator-weather.py:431
-msgid "Blustery"
-msgstr "Audringa"
-
-#: ../bin/indicator-weather.py:432
-msgid "Windy"
-msgstr "Vėjuota"
-
-#: ../bin/indicator-weather.py:433
-msgid "Cold"
-msgstr "Šaltis"
-
-#: ../bin/indicator-weather.py:434
-msgid "Cloudy"
-msgstr "Debesuota"
-
-#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
-msgid "Mostly cloudy"
-msgstr "Labai debesuota"
-
-#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
-#: ../bin/indicator-weather.py:452
-msgid "Partly cloudy"
-msgstr "Vietomis debesuota"
-
-#: ../bin/indicator-weather.py:439
-msgid "Clear"
-msgstr "Giedra"
-
-#: ../bin/indicator-weather.py:440
-msgid "Sunny"
-msgstr "Saulėta"
-
-#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
-msgid "Fair"
-msgstr "Giedra"
-
-#: ../bin/indicator-weather.py:443
-msgid "Mixed rain and hail"
-msgstr ""
-
-#: ../bin/indicator-weather.py:444
-msgid "Hot"
-msgstr "Karšta"
-
-#: ../bin/indicator-weather.py:445
-msgid "Isolated thunderstorms"
-msgstr ""
-
-#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
-msgid "Scattered thunderstorms"
-msgstr ""
-
-#: ../bin/indicator-weather.py:448
-msgid "Scattered showers"
-msgstr ""
-
-#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
-msgid "Heavy snow"
-msgstr "Stipriai sninga"
-
-#: ../bin/indicator-weather.py:450
-msgid "Scattered snow showers"
-msgstr ""
-
-#: ../bin/indicator-weather.py:453
-msgid "Thundershowers"
-msgstr ""
-
-#: ../bin/indicator-weather.py:454
-msgid "Snow showers"
-msgstr "Itin stipriai sninga"
-
-#: ../bin/indicator-weather.py:455
-msgid "Isolated thundershowers"
-msgstr ""
-
-#: ../bin/indicator-weather.py:559
-msgid "Humidity"
-msgstr "Drėgmė"
-
-#: ../bin/indicator-weather.py:578
-msgid "Pressure"
-msgstr "Slėgis"
-
-#: ../bin/indicator-weather.py:601
-msgid "Temperature"
-msgstr "Temperatūra"
-
-#: ../bin/indicator-weather.py:629
-msgid "Wind"
-msgstr "Vėjas"
-
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mph"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "mazgai"
-
-#: ../bin/indicator-weather.py:655
-msgid "Sunrise"
-msgstr "Saulėtekis"
-
-#: ../bin/indicator-weather.py:659
-msgid "Sunset"
-msgstr "Saulėlydis"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:671
-msgid "N"
-msgstr "Š"
-
-#: ../bin/indicator-weather.py:673
-msgid "NE"
-msgstr "ŠR"
-
-#: ../bin/indicator-weather.py:675
-msgid "E"
-msgstr "R"
-
-#: ../bin/indicator-weather.py:677
-msgid "SE"
-msgstr "PR"
-
-#: ../bin/indicator-weather.py:679
-msgid "S"
-msgstr "P"
-
-#: ../bin/indicator-weather.py:681
-msgid "SW"
-msgstr "PV"
-
-#: ../bin/indicator-weather.py:683
-msgid "W"
-msgstr "V"
-
-#: ../bin/indicator-weather.py:685
-msgid "NW"
-msgstr "ŠV"
-
-#: ../bin/indicator-weather.py:846
-msgid "Set Up Weather..."
-msgstr "Nustatyti orus ir vietoves..."
-
-#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
-#: ../bin/indicator-weather.py:1059
-msgid "Refresh"
-msgstr "Atnaujinti"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "ką tik atnaujinta"
-
-#: ../bin/indicator-weather.py:946
-msgid "Forecast"
-msgstr "Orų prognozė"
-
-#. #Preferences
-#: ../bin/indicator-weather.py:952
-msgid "Preferences..."
-msgstr "Nustatymai..."
-
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "paskutinis atnaujinimas prieš %s min."
-
-#: ../bin/indicator-weather.py:1019
-msgid "Refreshing, please wait"
-msgstr "Atnaujinama, prašome palaukti"
-
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "paskutinis atnaujinimas ką tik"
-
-#: ../bin/indicator-weather.py:1106
-msgid "Severe weather alert"
-msgstr "Svarbi informacija apie orus"
-
-#: ../bin/indicator-weather.py:1311
+"X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
+"Language: lt\n"
+
+#: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
 msgstr "Orų prognozė - "
 
-#: ../bin/indicator-weather.py:1343
+#: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
 msgstr "Aukšta"
 
-#: ../bin/indicator-weather.py:1345
+#: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
 msgstr "Žema"
 
-#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+#: ../src/service/indicator_weather_service/indicator.py:433
+msgid "Severe weather alert"
+msgstr "Svarbi informacija apie orus"
+
+#: ../src/service/indicator_weather_service/indicator.py:556
+msgid "translator-credits"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:128
+msgid "Set Up Weather..."
+msgstr "Nustatyti orus ir vietoves..."
+
+#: ../src/service/indicator_weather_service/menu.py:137
+msgid "About..."
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:146
+msgid "Preferences..."
+msgstr "Nustatymai..."
+
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
+msgid "Refresh"
+msgstr "Atnaujinti"
+
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:614
+msgid "just now"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/menu.py:618
+#, python-format
+msgid "%d min. ago"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Etiketė:"
 
-#: ../bin/indicator-weather.py:1522
-msgid "Another instance of this program is already running"
-msgstr "Programa jau yra paleista"
-
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Namai</b>"
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
+#: ../src/service/indicator_weather_service/weather.py:204
+msgid "Condition"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:306
+msgid "Humidity"
+msgstr "Drėgmė"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:347
+msgid "Wind"
+msgstr "Vėjas"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:376
+msgid "Sunrise"
+msgstr "Saulėtekis"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:384
+msgid "Sunset"
+msgstr "Saulėlydis"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:57
+msgid "Tornado"
+msgstr "Tornadas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:58
+msgid "Tropical storm"
+msgstr "Tropinė audra"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:59
+msgid "Hurricane"
+msgstr "Uraganas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:60
+msgid "Severe thunderstorms"
+msgstr "Smarki audra"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:61
+msgid "Thunderstorms"
+msgstr "Perkūnija"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:62
+msgid "Mixed rain and snow"
+msgstr "Šlapdriba (lietus ir sniegas)"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:64
+msgid "Mixed rain and sleet"
+msgstr "Lietus bei šlapdriba"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:65
+msgid "Mixed snow and sleet"
+msgstr "Sniegas bei šlapdriba"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:66
+msgid "Freezing drizzle"
+msgstr "Šąlanti dulksna"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:67
+msgid "Drizzle"
+msgstr "Dulksna"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:68
+msgid "Freezing rain"
+msgstr "Šąlantis lietus"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:69
+#: ../src/service/indicator_weather_service/providers/yahoo.py:70
+msgid "Showers"
+msgstr "Liūtys"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:71
+msgid "Snow flurries"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:72
+msgid "Light snow showers"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:73
+msgid "Blowing snow"
+msgstr "Pustomas sniegas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:74
+msgid "Snow"
+msgstr "Sniegas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:75
+msgid "Hail"
+msgstr "Kruša"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:76
+msgid "Sleet"
+msgstr "Šlapdriba"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:77
+msgid "Dust"
+msgstr "Dulkės"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:78
+msgid "Foggy"
+msgstr "Rūkas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:79
+msgid "Haze"
+msgstr "Migla"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:80
+msgid "Smoky"
+msgstr "Dūmai"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:81
+msgid "Blustery"
+msgstr "Audringa"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:82
+msgid "Windy"
+msgstr "Vėjuota"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:83
+msgid "Cold"
+msgstr "Šaltis"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:84
+msgid "Cloudy"
+msgstr "Debesuota"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:85
+#: ../src/service/indicator_weather_service/providers/yahoo.py:86
+msgid "Mostly cloudy"
+msgstr "Labai debesuota"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:87
+#: ../src/service/indicator_weather_service/providers/yahoo.py:88
+#: ../src/service/indicator_weather_service/providers/yahoo.py:102
+msgid "Partly cloudy"
+msgstr "Vietomis debesuota"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:89
+msgid "Clear"
+msgstr "Giedra"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:90
+msgid "Sunny"
+msgstr "Saulėta"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:91
+#: ../src/service/indicator_weather_service/providers/yahoo.py:92
+msgid "Fair"
+msgstr "Giedra"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:93
+msgid "Mixed rain and hail"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:94
+msgid "Hot"
+msgstr "Karšta"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:95
+msgid "Isolated thunderstorms"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:96
+#: ../src/service/indicator_weather_service/providers/yahoo.py:97
+msgid "Scattered thunderstorms"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:98
+msgid "Scattered showers"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:99
+#: ../src/service/indicator_weather_service/providers/yahoo.py:101
+msgid "Heavy snow"
+msgstr "Stipriai sninga"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:100
+msgid "Scattered snow showers"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:103
+msgid "Thundershowers"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:104
+msgid "Snow showers"
+msgstr "Itin stipriai sninga"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:105
+msgid "Isolated thundershowers"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:106
+msgid "Unknown condition"
+msgstr ""
+
+#: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Pridėti vietovę"
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Vieta:"
+#: ../data/ui/Assistant.ui:35
+msgid "Please search our database for your location:"
+msgstr ""
 
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr "Vietovės pavadinimas"
+#: ../data/ui/Assistant.ui:75
+msgid "Search"
+msgstr ""
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:97
+msgid "Select a location"
+msgstr "Pasirinkite vietovę"
+
+#: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Įveskite šios vietos pavadinimą:"
 
-#: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Įveskite vietą išskleidžiamajame sąraše žemiau:"
+#: ../data/ui/Assistant.ui:137
+msgid "Name the location"
+msgstr "Vietovės pavadinimas"
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -446,86 +465,154 @@ msgstr ""
 "Peržiūrėkite žemiau esančius pasirinkimus. Jei kas nors jums netinka - "
 "grįžkite atgal ir pasirinkite teisingai."
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:206
+msgid "<b>Home</b>"
+msgstr "<b>Namai</b>"
+
+#: ../data/ui/Assistant.ui:244
+msgid "Location:"
+msgstr "Vieta:"
+
+#: ../data/ui/Assistant.ui:258
+msgid "<b>Orange, Texas</b>"
+msgstr ""
+
+#: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Pasirinkimo apžvalga"
 
-#: ../data/ui/Assistant.ui.h:11
-msgid "Select a location"
-msgstr "Pasirinkite vietovę"
+#: ../data/ui/PreferencesDialog.ui:31
+msgid "Weather Indicator Preferences"
+msgstr "Orų indikatoriaus nustatymai"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Išplėsta orų prognozė"
-
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
 msgstr ""
-"Orų indikatorius, rodantis orų informaciją bei prognozes vienai ar kelioms "
-"Žemės vietovėms"
 
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Orų indikatorius ir prognozės"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr ""
 
-#~ msgid "Clear sky"
-#~ msgstr "Giedras dangus"
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr ""
 
-#~ msgid "Increasing clouds"
-#~ msgstr "Debesuotumas didėja"
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr ""
 
-#~ msgid "Scattered clouds"
-#~ msgstr "Išsisklaidę debesys"
+#: ../data/ui/PreferencesDialog.ui:183
+msgid "<b>Notifications</b>"
+msgstr "<b>Pranešimai</b>"
 
-#~ msgid "Decreasing clouds"
-#~ msgstr "Debesuotumas mažėja"
+#: ../data/ui/PreferencesDialog.ui:203
+msgid "No notifications"
+msgstr "Nėra pranešimų"
 
-#~ msgid "Broken clouds"
-#~ msgstr "Su pragiedruliais"
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "Only use notifications to give severe weather alerts"
+msgstr ""
 
-#~ msgid "Fog"
-#~ msgstr "Rūkas"
+#: ../data/ui/PreferencesDialog.ui:237
+msgid "Use notifications to give every weather condition change"
+msgstr "Naudoti pranešimus kiekvienam oro sąlygų pasikeitimui"
 
-#~ msgid "Dense fog"
-#~ msgstr "Tirštas rūkas"
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr ""
 
-#~ msgid "Few clouds"
-#~ msgstr "Mažai debesuota"
+#: ../data/ui/PreferencesDialog.ui:300
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Orų duomenų šaltinis</b>"
 
-#~ msgid "Clearing"
-#~ msgstr "Debesys nyksta"
+#: ../data/ui/PreferencesDialog.ui:320
+msgid "Google"
+msgstr "Google"
 
-#~ msgid "Overcast"
-#~ msgstr "Debesuota"
+#: ../data/ui/PreferencesDialog.ui:336
+msgid "Yahoo!"
+msgstr "Yahoo!"
 
-#~ msgid "Blowing sand"
-#~ msgstr "Pučiamas smėlis"
+#: ../data/ui/PreferencesDialog.ui:380
+msgid "Update every"
+msgstr "Atnaujinti kas"
 
-#~ msgid "Blowing dust"
-#~ msgstr "Pučiamos dulkės"
+#: ../data/ui/PreferencesDialog.ui:412
+msgid "minutes"
+msgstr "min."
 
-#~ msgid "Volcanic ash"
-#~ msgstr "Vulkaniniai pelenai"
+#: ../data/ui/PreferencesDialog.ui:440
+msgid "General"
+msgstr "Bendri"
 
-#~ msgid "Smoke"
-#~ msgstr "Dūmai"
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr ""
 
-#~ msgid "Ash"
-#~ msgstr "Pelenai"
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr ""
 
-#~ msgid "Freezing fog"
-#~ msgstr "Šalantis rūkas"
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr ""
 
-#~ msgid "Ice crystals"
-#~ msgstr "Ledo kristalai"
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
 
-#~ msgid "Blizzard"
-#~ msgstr "Pūga"
+#: ../data/ui/PreferencesDialog.ui:559
+msgid "Label"
+msgstr ""
 
-#~ msgid "Light snow"
-#~ msgstr "Silpnai sninga"
+#: ../data/ui/PreferencesDialog.ui:570
+msgid "Notes"
+msgstr ""
 
-#~ msgid "Snow/rain"
-#~ msgstr "Sniegas, lietus"
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:627
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Temperatūros skalė</b>"
+
+#: ../data/ui/PreferencesDialog.ui:647
+msgid "Imperial (°F)"
+msgstr "Imperinė (°F)"
+
+#: ../data/ui/PreferencesDialog.ui:663
+msgid "SI (metric, °C)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:703
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Vėjo greičio vienetai</b>"
+
+#: ../data/ui/PreferencesDialog.ui:723
+msgid "Meter per second (m/s)"
+msgstr "Metrai per sekundę (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui:739
+msgid "Miles per hour (mph)"
+msgstr "Mylios per valandą (mph)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Beaufort"
+msgstr "Boforto"
+
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Knots"
+msgstr "Mazgai"
+
+#: ../data/ui/PreferencesDialog.ui:826
+msgid "Units"
+msgstr "Matavimo vienetai"
+
+#: ../data/ui/PreferencesDialog.ui:931
+msgid "Locations"
+msgstr "Vietos"
