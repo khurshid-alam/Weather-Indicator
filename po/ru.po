@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-05-20 09:51+0000\n"
-"Last-Translator: Launchpad Translations Administrators "
-"<rosetta@launchpad.net>\n"
+"PO-Revision-Date: 2011-05-23 08:12+0000\n"
+"Last-Translator: Vadim Rutkovsky <roignac@gmail.com>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: ru\n"
 
@@ -38,11 +37,13 @@ msgstr "Предупреждение о погодных условиях"
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Vadim Rutkovsky https://launchpad.net/~roignac"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "ошибка"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
@@ -50,7 +51,7 @@ msgstr "Настройка погоды..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr ""
+msgstr "О программе"
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
@@ -65,32 +66,32 @@ msgstr "Обновить"
 
 #: ../src/service/indicator_weather_service/menu.py:167
 msgid "Warning..."
-msgstr ""
+msgstr "Внимание..."
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "Нет данных"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "Прогноз..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "Обновление"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "пожалуйста, подождите"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
-msgstr ""
+msgstr "только что"
 
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "%d мин. назад"
 
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
@@ -103,7 +104,7 @@ msgstr "Состояние"
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
-msgstr ""
+msgstr "Температура:"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
@@ -115,7 +116,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:238
 msgid "Temperature and humidity"
-msgstr ""
+msgstr "Температура и влажность"
 
 #: ../src/service/indicator_weather_service/weather.py:246
 msgid "Humidex:"
@@ -127,27 +128,27 @@ msgstr "Humidex"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "Температура и влажность (Канада)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
-msgstr ""
+msgstr "Температура ветра:"
 
 #: ../src/service/indicator_weather_service/weather.py:257
 msgid "Wind chill"
-msgstr ""
+msgstr "Температура ветра"
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
-msgstr ""
+msgstr "Температура и ветер"
 
 #: ../src/service/indicator_weather_service/weather.py:266
 msgid "Feels like:"
-msgstr ""
+msgstr "Комфортность:"
 
 #: ../src/service/indicator_weather_service/weather.py:267
 msgid "Feels like"
-msgstr ""
+msgstr "Комфорт"
 
 #: ../src/service/indicator_weather_service/weather.py:268
 msgid "Heat index or wind chill"
@@ -175,19 +176,19 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "Температура, влажность и ветер (Австралия)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
-msgstr ""
+msgstr "Точка росы:"
 
 #: ../src/service/indicator_weather_service/weather.py:297
 msgid "Dewpoint"
-msgstr ""
+msgstr "Точка росы"
 
 #: ../src/service/indicator_weather_service/weather.py:305
 msgid "Humidity:"
-msgstr ""
+msgstr "Влажность:"
 
 #: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
@@ -195,7 +196,7 @@ msgstr "Влажность"
 
 #: ../src/service/indicator_weather_service/weather.py:314
 msgid "Visibility:"
-msgstr ""
+msgstr "Видимость:"
 
 #: ../src/service/indicator_weather_service/weather.py:315
 msgid "Visibility"
@@ -204,19 +205,19 @@ msgstr "Видимость"
 #: ../src/service/indicator_weather_service/weather.py:316
 #: ../src/service/indicator_weather_service/weather.py:338
 msgid "Only from Yahoo!"
-msgstr ""
+msgstr "Только от Yahoo!"
 
 #: ../src/service/indicator_weather_service/weather.py:336
 msgid "Barometer:"
-msgstr ""
+msgstr "Барометр:"
 
 #: ../src/service/indicator_weather_service/weather.py:337
 msgid "Barometer"
-msgstr ""
+msgstr "Барометр"
 
 #: ../src/service/indicator_weather_service/weather.py:346
 msgid "Wind:"
-msgstr ""
+msgstr "Ветер:"
 
 #: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
@@ -224,19 +225,19 @@ msgstr "Ветер"
 
 #: ../src/service/indicator_weather_service/weather.py:365
 msgid "Sun:"
-msgstr ""
+msgstr "Солнце:"
 
 #: ../src/service/indicator_weather_service/weather.py:366
 msgid "Sun"
-msgstr ""
+msgstr "Солнце"
 
 #: ../src/service/indicator_weather_service/weather.py:367
 msgid "Sunrise and sunset"
-msgstr ""
+msgstr "Восход и закат"
 
 #: ../src/service/indicator_weather_service/weather.py:375
 msgid "Sunrise:"
-msgstr ""
+msgstr "Восход:"
 
 #: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
@@ -244,7 +245,7 @@ msgstr "Восход"
 
 #: ../src/service/indicator_weather_service/weather.py:383
 msgid "Sunset:"
-msgstr ""
+msgstr "Закат:"
 
 #: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
@@ -252,11 +253,11 @@ msgstr "Закат"
 
 #: ../src/service/indicator_weather_service/weather.py:1283
 msgid "Now:"
-msgstr ""
+msgstr "Сейчас:"
 
 #: ../src/service/indicator_weather_service/weather.py:1291
 msgid "Today:"
-msgstr ""
+msgstr "Сегодня:"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
@@ -431,7 +432,7 @@ msgstr "Местами ливень с грозой"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:106
 msgid "Unknown condition"
-msgstr ""
+msgstr "Неизвестно"
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
@@ -439,11 +440,11 @@ msgstr "Добавить место"
 
 #: ../data/ui/Assistant.ui:35
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "Пожалуйста используйте поиск чтобы найти ваш город"
 
 #: ../data/ui/Assistant.ui:75
 msgid "Search"
-msgstr ""
+msgstr "Поиск"
 
 #: ../data/ui/Assistant.ui:97
 msgid "Select a location"
@@ -487,19 +488,19 @@ msgstr "Настройки апплета «Индикатор погоды»"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
-msgstr ""
+msgstr "<b>Индикатор</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
-msgstr ""
+msgstr "Показывать только иконку погоды"
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
-msgstr ""
+msgstr "Показывать только температуру"
 
 #: ../data/ui/PreferencesDialog.ui:143
 msgid "Show weather icon and temperature"
-msgstr ""
+msgstr "Показывать иконку и температуру"
 
 #: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
@@ -519,7 +520,7 @@ msgstr "При каждом изменения погоды"
 
 #: ../data/ui/PreferencesDialog.ui:268
 msgid "Apply for all locations"
-msgstr ""
+msgstr "Применить для всех городов"
 
 #: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"

@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-05-20 09:51+0000\n"
-"Last-Translator: Launchpad Translations Administrators "
-"<rosetta@launchpad.net>\n"
+"PO-Revision-Date: 2011-05-23 18:13+0000\n"
+"Last-Translator: Gabriell H. R. Nascimento <gabriellhrn@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-21 06:16+0000\n"
+"X-Launchpad-Export-Date: 2011-05-24 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: pt_BR\n"
 
@@ -38,11 +37,13 @@ msgstr "Alerta severo de clima"
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Gabriell H. R. Nascimento https://launchpad.net/~gabriellhrn"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "erro"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
@@ -50,7 +51,7 @@ msgstr "Configurar Clima..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr ""
+msgstr "Sobre..."
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
@@ -69,19 +70,19 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "Nenhum dado disponível"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "Previsão..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "Atualizando"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "espere, por favor"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
@@ -90,7 +91,7 @@ msgstr ""
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "%d min. atrás"
 
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
@@ -103,7 +104,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
-msgstr ""
+msgstr "Temperatura:"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
