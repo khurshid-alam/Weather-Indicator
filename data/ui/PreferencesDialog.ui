@@ -313,7 +313,7 @@
                             </child>
                             <child>
                               <object class="GtkRadioButton" id="si">
-                                <property name="label" translatable="yes">SI (°C)</property>
+                                <property name="label" translatable="yes">SI (metric, °C)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
