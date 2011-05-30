@@ -1,3 +1,16 @@
+indicator-weather (11.05.30~oneiric1) natty; urgency=low
+
+  * New release in Cloudy series
+  * Fix for LP: #776586 "I get "Unknown error occurred while picking up weather data" when trying to open forecast."
+  * Fix for LP: #784935 "indicator-weather crash - KeyError: 'wind_condition'"
+  * Fix for LP: #788780	"indicator disappears with no reason"
+  * Fix for LP: #774406	"Insufficient http-proxy detection", thanks Panagiotis
+  * Fix for LP: #782572	"The log should contain Weather Indicator version"
+  * Fix for LP: #780585	"Celsius is not an SI unit"
+  * Fix for LP: #780817	"units mislabeled as kph"
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 30 May 2011 03:20:58 -0700
+
 indicator-weather (11.05.01~oneiric2) natty; urgency=low
 
   * New release in Cloudy series
