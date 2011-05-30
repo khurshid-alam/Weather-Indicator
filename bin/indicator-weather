@@ -58,6 +58,8 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
+VERSION = "11.05.30 'Cloudy 7'"
+
 from indicator_weather.helpers import *
 
 class Settings:
@@ -672,7 +674,7 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             if 'condition' in self.__localized_report['current_conditions'].keys():
                 condition = self.__localized_report['current_conditions']['condition']
-            else
+            else:
                 condition = _("Unknown condition")
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             condition = self.__current_condition[3]
@@ -1370,7 +1372,7 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: open About dialog")  
         self.aboutdialog = gtk.AboutDialog()
         self.aboutdialog.set_name(_("Weather Indicator"))
-        self.aboutdialog.set_version("11.05.01 'Cloudy 6'")
+        self.aboutdialog.set_version(VERSION)
 
         ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY, "share/doc/indicator-weather/AUTHORS"), "r")
         self.aboutdialog.set_copyright(ifile.read().replace('\x0c', ''))
@@ -1852,6 +1854,7 @@ if __name__ == "__main__":
 
     log.info("------------------------------")
     log.info("Started Weather Indicator from %s" % PROJECT_ROOT_DIRECTORY)
+    log.info("Weather Indicator version %s" % VERSION)
 
     # Single instance stuff for weather indicator
     myapp = SingleInstance("/tmp/indicator-weather-%d.pid" % os.getuid())
