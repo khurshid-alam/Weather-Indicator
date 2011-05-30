@@ -396,7 +396,7 @@
                             </child>
                             <child>
                               <object class="GtkRadioButton" id="kph">
-                                <property name="label" translatable="yes">Km per hour (kph)</property>
+                                <property name="label" translatable="yes">Km per hour (km/h)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
