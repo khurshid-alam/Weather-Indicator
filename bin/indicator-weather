@@ -423,7 +423,7 @@ class Forecast:
 
             for forecast in self.forecast['forecasts']:
                 self.daysofweek.append(forecast["day_of_week"])
-                self.icons.append(forecast["icon"].split("/ig/images/weather/")[-1].split(".gif")[0])
+                self.icons.append(forecast["icon"].split("http://g0.gstatic.com/images/icons/onebox/weather_")[-1].split("-40.gif")[0])
                 self.conditions.append(forecast["condition"])
             self.error_message = None
 
@@ -483,16 +483,16 @@ class Weather:
     #Reference: http://www.blindmotion.com/2009/03/google-weather-api-images/
     _GoogleConditions = {
         "sunny"            : ( "weather-clear",      "weather-clear-night",      False),
-        "mostly_sunny"     : ( "weather-clear",      "weather-clear-night",      False),
-        "partly_cloudy"    : ( "weather-few-clouds", "weather-few-clouds-night", False),
-        "mostly_cloudy"    : ( "weather-overcast",   "weather-overcast",         False),
+        "mostlysunny"      : ( "weather-clear",      "weather-clear-night",      False),
+        "partlycloudy"     : ( "weather-few-clouds", "weather-few-clouds-night", False),
+        "mostlycloudy"     : ( "weather-overcast",   "weather-overcast",         False),
         "cloudy"           : ( "weather-clouds",     "weather-clouds-night",     False),
         "rain"             : ( "weather-showers",    "weather-showers",          False),
-        "chance_of_rain"   : ( "weather-showers",    "weather-showers",          False),
+        "chanceofrain"     : ( "weather-showers",    "weather-showers",          False),
         "sleet"            : ( "weather-snow",       "weather-snow",             False),
-        "rain_snow"        : ( "weather-snow",       "weather-snow",             False),
+        "rainsnow"         : ( "weather-snow",       "weather-snow",             False),
         "snow"             : ( "weather-snow",       "weather-snow",             False),
-        "chance_of_snow"   : ( "weather-snow",       "weather-snow",             False),
+        "chanceofsnow"     : ( "weather-snow",       "weather-snow",             False),
         "icy"              : ( "weather-snow",       "weather-snow",             False),
         "flurries"         : ( "weather-snow",       "weather-snow",             False),
         "dust"             : ( "weather-fog",        "weather-fog",              False),
@@ -500,10 +500,12 @@ class Weather:
         "mist"             : ( "weather-fog",        "weather-fog",              False),
         "smoke"            : ( "weather-fog",        "weather-fog",              False),
         "haze"             : ( "weather-fog",        "weather-fog",              False),
-        "chance_of_storm"  : ( "weather-storm",      "weather-storm",            True),
+        "chanceofstorm"    : ( "weather-storm",      "weather-storm",            True),
         "storm"            : ( "weather-storm",      "weather-storm",            True),
         "thunderstorm"     : ( "weather-storm",      "weather-storm",            True),
-        "chance_of_tstorm" : ( "weather-storm",      "weather-storm",            True),
+        "chanceoftstorm"   : ( "weather-storm",      "weather-storm",            True),
+        "scatteredshowers" : ( "weather-showers-scattered", "weather-showers-scattered", True),
+        "scatteredthunderstorms" : ( "weather-storm",       "weather-storm",             True),
     }
 
     #Available conditions by yahoo condition code
@@ -576,7 +578,7 @@ class Weather:
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
             # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
-            icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
+            icon_name = self.__report['current_conditions']['icon'].replace('http://g0.gstatic.com/images/icons/onebox/weather_', '').replace('-40.gif', '')
 
             self.__current_condition = self._GoogleConditions.get(icon_name)
             if self.__current_condition == None:
