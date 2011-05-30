@@ -743,10 +743,15 @@ class Weather:
     def get_wind_label(self):
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
             # Convert units picked up from Google and replace units with currently configured
-            localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
-            wind_direction = localized_wind_info[1]
-            wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
-            wind_speed = wind_info[3]
+            if 'wind_condition' in self.__localized_report['current_conditions'].keys():
+                localized_wind_info = self.__localized_report['current_conditions']['wind_condition'].split(' ')
+                wind_direction = localized_wind_info[1]
+                wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
+                wind_speed = wind_info[3]
+            else:
+                wind_direction = 'unknown'
+                wind_info = 'unknown'
+                wind_speed = 'unknown'
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             # Create a similar to Google wind_info structure from Yahoo data
