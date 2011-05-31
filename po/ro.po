@@ -8,48 +8,48 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-26 21:55+0000\n"
-"Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
+"PO-Revision-Date: 2011-05-30 17:25+0000\n"
+"Last-Translator: Adi <Unknown>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-27 06:27+0000\n"
-"X-Generator: Launchpad (build 12559)\n"
+"X-Launchpad-Export-Date: 2011-05-31 05:52+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
+#: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
 msgstr "<b>Notificări</b>"
 
-#: ../data/ui/PreferencesDialog.ui.h:2
+#: ../data/ui/PreferencesDialog.ui:627
 msgid "<b>Temperature Scale</b>"
-msgstr ""
+msgstr "Unitate temperatură"
 
-#: ../data/ui/PreferencesDialog.ui.h:3
+#: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"
-msgstr ""
+msgstr "Sursă informații meteo"
 
-#: ../data/ui/PreferencesDialog.ui.h:4
+#: ../data/ui/PreferencesDialog.ui:703
 msgid "<b>Wind Speed Unit</b>"
-msgstr ""
+msgstr "Unitate viteză vânt"
 
-#: ../data/ui/PreferencesDialog.ui.h:5
+#: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
 msgstr "Beaufort"
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr ""
+msgstr "Activează Weather Indicator Applet"
 
-#: ../data/ui/PreferencesDialog.ui.h:7
+#: ../data/ui/PreferencesDialog.ui:440
 msgid "General"
 msgstr "General"
 
-#: ../data/ui/PreferencesDialog.ui.h:8
+#: ../data/ui/PreferencesDialog.ui:320
 msgid "Google"
 msgstr "Google"
 
-#: ../data/ui/PreferencesDialog.ui.h:9
+#: ../data/ui/PreferencesDialog.ui:647
 msgid "Imperial (°F)"
 msgstr "Imperial (°F)"
 
@@ -57,29 +57,29 @@ msgstr "Imperial (°F)"
 msgid "Kilometers per hour (kph)"
 msgstr "Kilometri pe oră (km/h)"
 
-#: ../data/ui/PreferencesDialog.ui.h:11
+#: ../data/ui/PreferencesDialog.ui:787
 msgid "Knots"
 msgstr "Noduri"
 
-#: ../data/ui/PreferencesDialog.ui.h:12
+#: ../data/ui/PreferencesDialog.ui:931
 msgid "Locations"
 msgstr "Locații"
 
-#: ../data/ui/PreferencesDialog.ui.h:13
+#: ../data/ui/PreferencesDialog.ui:723
 msgid "Meter per second (m/s)"
 msgstr "Metri pe secundă (m/s)"
 
-#: ../data/ui/PreferencesDialog.ui.h:14
+#: ../data/ui/PreferencesDialog.ui:739
 msgid "Miles per hour (mph)"
 msgstr "Mile pe oră (mi/h)"
 
-#: ../data/ui/PreferencesDialog.ui.h:15
+#: ../data/ui/PreferencesDialog.ui:203
 msgid "No notifications"
 msgstr "Fără notificări"
 
-#: ../data/ui/PreferencesDialog.ui.h:16
+#: ../data/ui/PreferencesDialog.ui:220
 msgid "Only use notifications to give severe weather alerts"
-msgstr ""
+msgstr "Folosește notificările doar pentru alerte de vreme severă"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (°C)"
@@ -87,198 +87,204 @@ msgstr "SI (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show tips in menu"
-msgstr ""
+msgstr "Arată informații ajutătoare în meniu"
 
-#: ../data/ui/PreferencesDialog.ui.h:19
+#: ../data/ui/PreferencesDialog.ui:826
 msgid "Units"
 msgstr "Unități"
 
-#: ../data/ui/PreferencesDialog.ui.h:20
+#: ../data/ui/PreferencesDialog.ui:380
 msgid "Update every"
 msgstr "Actualizează la fiecare"
 
-#: ../data/ui/PreferencesDialog.ui.h:21
+#: ../data/ui/PreferencesDialog.ui:237
 msgid "Use notifications to give every weather condition change"
-msgstr ""
+msgstr "Folosește notificările pentru toate schimbările de vreme"
 
-#: ../data/ui/PreferencesDialog.ui.h:22
+#: ../data/ui/PreferencesDialog.ui:31
 msgid "Weather Indicator Preferences"
-msgstr ""
+msgstr "Preferințe Weather Indicator"
 
-#: ../data/ui/PreferencesDialog.ui.h:23
+#: ../data/ui/PreferencesDialog.ui:336
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
-#: ../data/ui/PreferencesDialog.ui.h:24
+#: ../data/ui/PreferencesDialog.ui:412
 msgid "minutes"
 msgstr "minute"
 
-#: ../bin/indicator-weather.py:408
+#: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
 msgstr "Tornadă"
 
-#: ../bin/indicator-weather.py:409
+#: ../src/service/indicator_weather_service/providers/yahoo.py:58
 msgid "Tropical storm"
 msgstr "Furtună tropicală"
 
-#: ../bin/indicator-weather.py:410
+#: ../src/service/indicator_weather_service/providers/yahoo.py:59
 msgid "Hurricane"
 msgstr "Uragan"
 
-#: ../bin/indicator-weather.py:411
+#: ../src/service/indicator_weather_service/providers/yahoo.py:60
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "Furtună puternică"
 
-#: ../bin/indicator-weather.py:412
+#: ../src/service/indicator_weather_service/providers/yahoo.py:61
 msgid "Thunderstorms"
-msgstr ""
+msgstr "Furtună"
 
-#: ../bin/indicator-weather.py:413
+#: ../src/service/indicator_weather_service/providers/yahoo.py:62
 msgid "Mixed rain and snow"
-msgstr ""
+msgstr "Ploaie și ninsoare amestecate"
 
-#: ../bin/indicator-weather.py:414
+#: ../src/service/indicator_weather_service/providers/yahoo.py:64
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "Ploaie și lapoviță amestecate"
 
-#: ../bin/indicator-weather.py:415
+#: ../src/service/indicator_weather_service/providers/yahoo.py:65
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Ninsoare și lapoviță amestecate"
 
-#: ../bin/indicator-weather.py:416
+#: ../src/service/indicator_weather_service/providers/yahoo.py:66
 msgid "Freezing drizzle"
 msgstr "Burniță care îngheață"
 
-#: ../bin/indicator-weather.py:417
+#: ../src/service/indicator_weather_service/providers/yahoo.py:67
 msgid "Drizzle"
 msgstr "Burniță"
 
-#: ../bin/indicator-weather.py:418
+#: ../src/service/indicator_weather_service/providers/yahoo.py:68
 msgid "Freezing rain"
 msgstr "Ploaie cu depunere de polei"
 
-#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
+#: ../src/service/indicator_weather_service/providers/yahoo.py:69
+#: ../src/service/indicator_weather_service/providers/yahoo.py:70
 msgid "Showers"
 msgstr "Averse"
 
-#: ../bin/indicator-weather.py:421
+#: ../src/service/indicator_weather_service/providers/yahoo.py:71
 msgid "Snow flurries"
-msgstr ""
+msgstr "Fulgi de zăpadă"
 
-#: ../bin/indicator-weather.py:422
+#: ../src/service/indicator_weather_service/providers/yahoo.py:72
 msgid "Light snow showers"
-msgstr ""
+msgstr "Ninsori ușoare"
 
-#: ../bin/indicator-weather.py:423
+#: ../src/service/indicator_weather_service/providers/yahoo.py:73
 msgid "Blowing snow"
-msgstr ""
+msgstr "Zăpadă viscolită"
 
-#: ../bin/indicator-weather.py:424
+#: ../src/service/indicator_weather_service/providers/yahoo.py:74
 msgid "Snow"
 msgstr "Zăpadă"
 
-#: ../bin/indicator-weather.py:425
+#: ../src/service/indicator_weather_service/providers/yahoo.py:75
 msgid "Hail"
 msgstr "Grindină"
 
-#: ../bin/indicator-weather.py:426
+#: ../src/service/indicator_weather_service/providers/yahoo.py:76
 msgid "Sleet"
 msgstr "Lapoviţă"
 
-#: ../bin/indicator-weather.py:427
+#: ../src/service/indicator_weather_service/providers/yahoo.py:77
 msgid "Dust"
 msgstr "Praf"
 
-#: ../bin/indicator-weather.py:428
+#: ../src/service/indicator_weather_service/providers/yahoo.py:78
 msgid "Foggy"
 msgstr "Ceţos"
 
-#: ../bin/indicator-weather.py:429
+#: ../src/service/indicator_weather_service/providers/yahoo.py:79
 msgid "Haze"
 msgstr "Pâclă"
 
-#: ../bin/indicator-weather.py:430
+#: ../src/service/indicator_weather_service/providers/yahoo.py:80
 msgid "Smoky"
-msgstr ""
+msgstr "Fumuriu"
 
-#: ../bin/indicator-weather.py:431
+#: ../src/service/indicator_weather_service/providers/yahoo.py:81
 msgid "Blustery"
-msgstr ""
+msgstr "Rafale de vânt"
 
-#: ../bin/indicator-weather.py:432
+#: ../src/service/indicator_weather_service/providers/yahoo.py:82
 msgid "Windy"
-msgstr ""
+msgstr "Vânt"
 
-#: ../bin/indicator-weather.py:433
+#: ../src/service/indicator_weather_service/providers/yahoo.py:83
 msgid "Cold"
-msgstr ""
+msgstr "Frig"
 
-#: ../bin/indicator-weather.py:434
+#: ../src/service/indicator_weather_service/providers/yahoo.py:84
 msgid "Cloudy"
 msgstr "Înnourat"
 
-#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
+#: ../src/service/indicator_weather_service/providers/yahoo.py:85
+#: ../src/service/indicator_weather_service/providers/yahoo.py:86
 msgid "Mostly cloudy"
-msgstr ""
+msgstr "în mare parte înnourat"
 
-#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
-#: ../bin/indicator-weather.py:452
+#: ../src/service/indicator_weather_service/providers/yahoo.py:87
+#: ../src/service/indicator_weather_service/providers/yahoo.py:88
+#: ../src/service/indicator_weather_service/providers/yahoo.py:102
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Parţial înnourat"
 
-#: ../bin/indicator-weather.py:439
+#: ../src/service/indicator_weather_service/providers/yahoo.py:89
 msgid "Clear"
 msgstr "Clar"
 
-#: ../bin/indicator-weather.py:440
+#: ../src/service/indicator_weather_service/providers/yahoo.py:90
 msgid "Sunny"
 msgstr "Însorit"
 
-#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
+#: ../src/service/indicator_weather_service/providers/yahoo.py:91
+#: ../src/service/indicator_weather_service/providers/yahoo.py:92
 msgid "Fair"
-msgstr ""
+msgstr "Rezonabilă"
 
-#: ../bin/indicator-weather.py:443
+#: ../src/service/indicator_weather_service/providers/yahoo.py:93
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Ploaie și grindină"
 
-#: ../bin/indicator-weather.py:444
+#: ../src/service/indicator_weather_service/providers/yahoo.py:94
 msgid "Hot"
-msgstr ""
+msgstr "Caniculă"
 
-#: ../bin/indicator-weather.py:445
+#: ../src/service/indicator_weather_service/providers/yahoo.py:95
 msgid "Isolated thunderstorms"
-msgstr ""
+msgstr "Furtuni izolate"
 
-#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
+#: ../src/service/indicator_weather_service/providers/yahoo.py:96
+#: ../src/service/indicator_weather_service/providers/yahoo.py:97
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "Furtuni izolate"
 
-#: ../bin/indicator-weather.py:448
+#: ../src/service/indicator_weather_service/providers/yahoo.py:98
 msgid "Scattered showers"
-msgstr ""
+msgstr "Ploi izolate"
 
-#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
+#: ../src/service/indicator_weather_service/providers/yahoo.py:99
+#: ../src/service/indicator_weather_service/providers/yahoo.py:101
 msgid "Heavy snow"
 msgstr "Ninsoare puternică"
 
-#: ../bin/indicator-weather.py:450
+#: ../src/service/indicator_weather_service/providers/yahoo.py:100
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Ninsori izolate"
 
-#: ../bin/indicator-weather.py:453
+#: ../src/service/indicator_weather_service/providers/yahoo.py:103
 msgid "Thundershowers"
-msgstr ""
+msgstr "Ploi torențiale"
 
-#: ../bin/indicator-weather.py:454
+#: ../src/service/indicator_weather_service/providers/yahoo.py:104
 msgid "Snow showers"
 msgstr "Averse de ninsoare"
 
-#: ../bin/indicator-weather.py:455
+#: ../src/service/indicator_weather_service/providers/yahoo.py:105
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Ploi torențiale izolate"
 
-#: ../bin/indicator-weather.py:559
+#: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
 msgstr "Umiditate"
 
@@ -290,7 +296,7 @@ msgstr "Presiune"
 msgid "Temperature"
 msgstr "Temperatură"
 
-#: ../bin/indicator-weather.py:629
+#: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
 msgstr "Vânt"
 
@@ -310,11 +316,11 @@ msgstr "km/h"
 msgid "knot(s)"
 msgstr "noduri"
 
-#: ../bin/indicator-weather.py:655
+#: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
 msgstr "Răsărit"
 
-#: ../bin/indicator-weather.py:659
+#: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
 msgstr "Asfinţit"
 
@@ -351,25 +357,26 @@ msgstr "V"
 msgid "NW"
 msgstr "NV"
 
-#: ../bin/indicator-weather.py:846
+#: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
-msgstr ""
+msgstr "Setează vremea"
 
-#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
-#: ../bin/indicator-weather.py:1059
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
 msgid "Refresh"
 msgstr "Actualizează"
 
 #: ../bin/indicator-weather.py:941
 msgid "refreshed just now"
-msgstr ""
+msgstr "tocmai actualizat"
 
 #: ../bin/indicator-weather.py:946
 msgid "Forecast"
-msgstr ""
+msgstr "Prognoză"
 
-#. #Preferences
-#: ../bin/indicator-weather.py:952
+#: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
 msgstr "Preferințe..."
 
@@ -386,75 +393,78 @@ msgstr "Se actualizează, așteptați"
 msgid "last refreshed just now"
 msgstr "actualizat acum câteva momente"
 
-#: ../bin/indicator-weather.py:1106
+#: ../src/service/indicator_weather_service/indicator.py:433
 msgid "Severe weather alert"
-msgstr ""
+msgstr "Alertă vreme severă"
 
-#: ../bin/indicator-weather.py:1311
+#: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
-msgstr ""
+msgstr "Prognoza pentru "
 
-#: ../bin/indicator-weather.py:1343
+#: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
-msgstr ""
+msgstr "Ridicat(ă)"
 
-#: ../bin/indicator-weather.py:1345
+#: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
-msgstr ""
+msgstr "Scăzut(ă)"
 
-#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Etichetă:"
 
 #: ../bin/indicator-weather.py:1522
 msgid "Another instance of this program is already running"
-msgstr ""
+msgstr "Altă instanță a acestui program deja rulează"
 
-#: ../data/ui/Assistant.ui.h:1
+#: ../data/ui/Assistant.ui:206
 msgid "<b>Home</b>"
-msgstr ""
+msgstr "<b>Acasă</b>"
 
-#: ../data/ui/Assistant.ui.h:2
+#: ../data/ui/Assistant.ui:258
 msgid "<b>Orange, Texas</b>"
-msgstr ""
+msgstr "<b>Orange, Texas</b>"
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Adaugă o locație"
 
-#: ../data/ui/Assistant.ui.h:5
+#: ../data/ui/Assistant.ui:244
 msgid "Location:"
 msgstr "Locație:"
 
-#: ../data/ui/Assistant.ui.h:6
+#: ../data/ui/Assistant.ui:137
 msgid "Name the location"
 msgstr "Numele locației"
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Introduceți un nume pentru această locație:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr ""
+msgstr "Introduceți o locație în căsuța de mai jos:"
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Revizuiți alegerile făcute. Dacă ceva nu este în regulă, întoarceți-vă și "
+"selectați valorile corecte."
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:289
 msgid "Review choices"
-msgstr ""
+msgstr "Revizuiți alegerile"
 
-#: ../data/ui/Assistant.ui.h:11
+#: ../data/ui/Assistant.ui:97
 msgid "Select a location"
 msgstr "Selectați o locație"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
-msgstr ""
+msgstr "Prognoză extinsă"
 
 #: ../indicator-weather.desktop.in.h:1
 msgid ""

@@ -8,32 +8,32 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-09 23:30+0000\n"
-"Last-Translator: Vadim Rutkovsky <roignac@gmail.com>\n"
+"PO-Revision-Date: 2011-05-30 11:24+0000\n"
+"Last-Translator: Evgeny <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-11 05:56+0000\n"
-"X-Generator: Launchpad (build 12559)\n"
+"X-Launchpad-Export-Date: 2011-05-31 05:52+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
+#: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
 msgstr "<b>Уведомления</b>"
 
-#: ../data/ui/PreferencesDialog.ui.h:2
+#: ../data/ui/PreferencesDialog.ui:627
 msgid "<b>Temperature Scale</b>"
 msgstr "<b>Температурная шкала</b>"
 
-#: ../data/ui/PreferencesDialog.ui.h:3
+#: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>Сервис погодных данных</b>"
 
-#: ../data/ui/PreferencesDialog.ui.h:4
+#: ../data/ui/PreferencesDialog.ui:703
 msgid "<b>Wind Speed Unit</b>"
 msgstr "<b>Единицы измерения скорости ветра</b>"
 
-#: ../data/ui/PreferencesDialog.ui.h:5
+#: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
 msgstr "Бофорт"
 
@@ -41,15 +41,15 @@ msgstr "Бофорт"
 msgid "Enable the Weather Indicator Applet"
 msgstr "Включить апплет «Индикатор погоды»"
 
-#: ../data/ui/PreferencesDialog.ui.h:7
+#: ../data/ui/PreferencesDialog.ui:440
 msgid "General"
 msgstr "Основные"
 
-#: ../data/ui/PreferencesDialog.ui.h:8
+#: ../data/ui/PreferencesDialog.ui:320
 msgid "Google"
 msgstr "Google"
 
-#: ../data/ui/PreferencesDialog.ui.h:9
+#: ../data/ui/PreferencesDialog.ui:647
 msgid "Imperial (°F)"
 msgstr "Английская (°F)"
 
@@ -57,27 +57,27 @@ msgstr "Английская (°F)"
 msgid "Kilometers per hour (kph)"
 msgstr "Километры в час (км/ч)"
 
-#: ../data/ui/PreferencesDialog.ui.h:11
+#: ../data/ui/PreferencesDialog.ui:787
 msgid "Knots"
 msgstr "Узлы"
 
-#: ../data/ui/PreferencesDialog.ui.h:12
+#: ../data/ui/PreferencesDialog.ui:931
 msgid "Locations"
 msgstr "Расположения"
 
-#: ../data/ui/PreferencesDialog.ui.h:13
+#: ../data/ui/PreferencesDialog.ui:723
 msgid "Meter per second (m/s)"
 msgstr "Метры в секунду (м/c)"
 
-#: ../data/ui/PreferencesDialog.ui.h:14
+#: ../data/ui/PreferencesDialog.ui:739
 msgid "Miles per hour (mph)"
 msgstr "Мили в час"
 
-#: ../data/ui/PreferencesDialog.ui.h:15
+#: ../data/ui/PreferencesDialog.ui:203
 msgid "No notifications"
-msgstr "Выкл. уведомления"
+msgstr "Выключить уведомления"
 
-#: ../data/ui/PreferencesDialog.ui.h:16
+#: ../data/ui/PreferencesDialog.ui:220
 msgid "Only use notifications to give severe weather alerts"
 msgstr "Только при штормовом предупреждении"
 
@@ -89,196 +89,202 @@ msgstr "CИ (°C)"
 msgid "Show tips in menu"
 msgstr "Показать подсказки в меню"
 
-#: ../data/ui/PreferencesDialog.ui.h:19
+#: ../data/ui/PreferencesDialog.ui:826
 msgid "Units"
 msgstr "Единицы измерения"
 
-#: ../data/ui/PreferencesDialog.ui.h:20
+#: ../data/ui/PreferencesDialog.ui:380
 msgid "Update every"
-msgstr "Обновить каждые"
+msgstr "Обновлять каждые"
 
-#: ../data/ui/PreferencesDialog.ui.h:21
+#: ../data/ui/PreferencesDialog.ui:237
 msgid "Use notifications to give every weather condition change"
 msgstr "При каждом изменения погоды"
 
-#: ../data/ui/PreferencesDialog.ui.h:22
+#: ../data/ui/PreferencesDialog.ui:31
 msgid "Weather Indicator Preferences"
 msgstr "Настройки апплета «Индикатор погоды»"
 
-#: ../data/ui/PreferencesDialog.ui.h:23
+#: ../data/ui/PreferencesDialog.ui:336
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
-#: ../data/ui/PreferencesDialog.ui.h:24
+#: ../data/ui/PreferencesDialog.ui:412
 msgid "minutes"
-msgstr "мин"
+msgstr "мин."
 
-#: ../bin/indicator-weather.py:408
+#: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
 msgstr "Торнадо"
 
-#: ../bin/indicator-weather.py:409
+#: ../src/service/indicator_weather_service/providers/yahoo.py:58
 msgid "Tropical storm"
 msgstr "Тропический шторм"
 
-#: ../bin/indicator-weather.py:410
+#: ../src/service/indicator_weather_service/providers/yahoo.py:59
 msgid "Hurricane"
 msgstr "Ураган"
 
-#: ../bin/indicator-weather.py:411
+#: ../src/service/indicator_weather_service/providers/yahoo.py:60
 msgid "Severe thunderstorms"
 msgstr "Сильная гроза"
 
-#: ../bin/indicator-weather.py:412
+#: ../src/service/indicator_weather_service/providers/yahoo.py:61
 msgid "Thunderstorms"
 msgstr "Гроза"
 
-#: ../bin/indicator-weather.py:413
+#: ../src/service/indicator_weather_service/providers/yahoo.py:62
 msgid "Mixed rain and snow"
 msgstr "Дождь со снегом"
 
-#: ../bin/indicator-weather.py:414
+#: ../src/service/indicator_weather_service/providers/yahoo.py:64
 msgid "Mixed rain and sleet"
 msgstr "Дождь со снегом"
 
-#: ../bin/indicator-weather.py:415
+#: ../src/service/indicator_weather_service/providers/yahoo.py:65
 msgid "Mixed snow and sleet"
 msgstr "Мокрый снег"
 
-#: ../bin/indicator-weather.py:416
+#: ../src/service/indicator_weather_service/providers/yahoo.py:66
 msgid "Freezing drizzle"
 msgstr "Изморозь"
 
-#: ../bin/indicator-weather.py:417
+#: ../src/service/indicator_weather_service/providers/yahoo.py:67
 msgid "Drizzle"
-msgstr "Морось"
+msgstr "Небольшой дождь"
 
-#: ../bin/indicator-weather.py:418
+#: ../src/service/indicator_weather_service/providers/yahoo.py:68
 msgid "Freezing rain"
 msgstr "Дождь с градом"
 
-#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
+#: ../src/service/indicator_weather_service/providers/yahoo.py:69
+#: ../src/service/indicator_weather_service/providers/yahoo.py:70
 msgid "Showers"
-msgstr "Ливни"
+msgstr "Обильные осадки"
 
-#: ../bin/indicator-weather.py:421
+#: ../src/service/indicator_weather_service/providers/yahoo.py:71
 msgid "Snow flurries"
-msgstr "Порывы снега"
+msgstr "Метель"
 
-#: ../bin/indicator-weather.py:422
+#: ../src/service/indicator_weather_service/providers/yahoo.py:72
 msgid "Light snow showers"
 msgstr "Небольшой снегопад"
 
-#: ../bin/indicator-weather.py:423
+#: ../src/service/indicator_weather_service/providers/yahoo.py:73
 msgid "Blowing snow"
 msgstr "Низовая метель"
 
-#: ../bin/indicator-weather.py:424
+#: ../src/service/indicator_weather_service/providers/yahoo.py:74
 msgid "Snow"
 msgstr "Снег"
 
-#: ../bin/indicator-weather.py:425
+#: ../src/service/indicator_weather_service/providers/yahoo.py:75
 msgid "Hail"
 msgstr "Град"
 
-#: ../bin/indicator-weather.py:426
+#: ../src/service/indicator_weather_service/providers/yahoo.py:76
 msgid "Sleet"
 msgstr "Дождь со снегом"
 
-#: ../bin/indicator-weather.py:427
+#: ../src/service/indicator_weather_service/providers/yahoo.py:77
 msgid "Dust"
 msgstr "Пыль"
 
-#: ../bin/indicator-weather.py:428
+#: ../src/service/indicator_weather_service/providers/yahoo.py:78
 msgid "Foggy"
-msgstr "Туманно"
+msgstr "Туман"
 
-#: ../bin/indicator-weather.py:429
+#: ../src/service/indicator_weather_service/providers/yahoo.py:79
 msgid "Haze"
 msgstr "Дымка"
 
-#: ../bin/indicator-weather.py:430
+#: ../src/service/indicator_weather_service/providers/yahoo.py:80
 msgid "Smoky"
 msgstr "Дымно"
 
-#: ../bin/indicator-weather.py:431
+#: ../src/service/indicator_weather_service/providers/yahoo.py:81
 msgid "Blustery"
 msgstr "Порывы ветра"
 
-#: ../bin/indicator-weather.py:432
+#: ../src/service/indicator_weather_service/providers/yahoo.py:82
 msgid "Windy"
 msgstr "Ветрено"
 
-#: ../bin/indicator-weather.py:433
+#: ../src/service/indicator_weather_service/providers/yahoo.py:83
 msgid "Cold"
 msgstr "Холодно"
 
-#: ../bin/indicator-weather.py:434
+#: ../src/service/indicator_weather_service/providers/yahoo.py:84
 msgid "Cloudy"
 msgstr "Облачно"
 
-#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
+#: ../src/service/indicator_weather_service/providers/yahoo.py:85
+#: ../src/service/indicator_weather_service/providers/yahoo.py:86
 msgid "Mostly cloudy"
 msgstr "Преимущественно облачно"
 
-#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
-#: ../bin/indicator-weather.py:452
+#: ../src/service/indicator_weather_service/providers/yahoo.py:87
+#: ../src/service/indicator_weather_service/providers/yahoo.py:88
+#: ../src/service/indicator_weather_service/providers/yahoo.py:102
 msgid "Partly cloudy"
-msgstr "Частично облачно"
+msgstr "Облачно с прояснениями"
 
-#: ../bin/indicator-weather.py:439
+#: ../src/service/indicator_weather_service/providers/yahoo.py:89
 msgid "Clear"
 msgstr "Ясно"
 
-#: ../bin/indicator-weather.py:440
+#: ../src/service/indicator_weather_service/providers/yahoo.py:90
 msgid "Sunny"
 msgstr "Солнечно"
 
-#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
+#: ../src/service/indicator_weather_service/providers/yahoo.py:91
+#: ../src/service/indicator_weather_service/providers/yahoo.py:92
 msgid "Fair"
 msgstr "Ясно"
 
-#: ../bin/indicator-weather.py:443
+#: ../src/service/indicator_weather_service/providers/yahoo.py:93
 msgid "Mixed rain and hail"
 msgstr "Дождь с градом"
 
-#: ../bin/indicator-weather.py:444
+#: ../src/service/indicator_weather_service/providers/yahoo.py:94
 msgid "Hot"
 msgstr "Жарко"
 
-#: ../bin/indicator-weather.py:445
+#: ../src/service/indicator_weather_service/providers/yahoo.py:95
 msgid "Isolated thunderstorms"
 msgstr "Отдельные грозы"
 
-#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
+#: ../src/service/indicator_weather_service/providers/yahoo.py:96
+#: ../src/service/indicator_weather_service/providers/yahoo.py:97
 msgid "Scattered thunderstorms"
 msgstr "Местами грозы"
 
-#: ../bin/indicator-weather.py:448
+#: ../src/service/indicator_weather_service/providers/yahoo.py:98
 msgid "Scattered showers"
-msgstr "Местами ливни"
+msgstr "Местами обильные осадки"
 
-#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
+#: ../src/service/indicator_weather_service/providers/yahoo.py:99
+#: ../src/service/indicator_weather_service/providers/yahoo.py:101
 msgid "Heavy snow"
-msgstr "Сильный снег"
+msgstr "Обильный снегопад"
 
-#: ../bin/indicator-weather.py:450
+#: ../src/service/indicator_weather_service/providers/yahoo.py:100
 msgid "Scattered snow showers"
 msgstr "Местами снегопад"
 
-#: ../bin/indicator-weather.py:453
+#: ../src/service/indicator_weather_service/providers/yahoo.py:103
 msgid "Thundershowers"
 msgstr "Ливень с грозой"
 
-#: ../bin/indicator-weather.py:454
+#: ../src/service/indicator_weather_service/providers/yahoo.py:104
 msgid "Snow showers"
 msgstr "Пурга"
 
-#: ../bin/indicator-weather.py:455
+#: ../src/service/indicator_weather_service/providers/yahoo.py:105
 msgid "Isolated thundershowers"
 msgstr "Местами ливень с грозой"
 
-#: ../bin/indicator-weather.py:559
+#: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
 msgstr "Влажность"
 
@@ -290,7 +296,7 @@ msgstr "Давление"
 msgid "Temperature"
 msgstr "Температура"
 
-#: ../bin/indicator-weather.py:629
+#: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
 msgstr "Ветер"
 
@@ -310,13 +316,13 @@ msgstr "км/ч"
 msgid "knot(s)"
 msgstr "узел"
 
-#: ../bin/indicator-weather.py:655
+#: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
 msgstr "Восход"
 
-#: ../bin/indicator-weather.py:659
+#: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
-msgstr "Закат"
+msgstr "Заход"
 
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:671
@@ -351,12 +357,14 @@ msgstr "З"
 msgid "NW"
 msgstr "СЗ"
 
-#: ../bin/indicator-weather.py:846
+#: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
 msgstr "Настройка погоды..."
 
-#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
-#: ../bin/indicator-weather.py:1059
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -368,8 +376,7 @@ msgstr "обновлено только что"
 msgid "Forecast"
 msgstr "Прогноз погоды"
 
-#. #Preferences
-#: ../bin/indicator-weather.py:952
+#: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
 msgstr "Параметры…"
 
@@ -386,23 +393,24 @@ msgstr "Идёт обновление"
 msgid "last refreshed just now"
 msgstr "обновлено только что"
 
-#: ../bin/indicator-weather.py:1106
+#: ../src/service/indicator_weather_service/indicator.py:433
 msgid "Severe weather alert"
 msgstr "Предупреждение о погодных условиях"
 
-#: ../bin/indicator-weather.py:1311
+#: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
 msgstr "Прогноз погоды для "
 
-#: ../bin/indicator-weather.py:1343
+#: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
 msgstr "От"
 
-#: ../bin/indicator-weather.py:1345
+#: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
 msgstr "До"
 
-#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Метка:"
 
@@ -410,35 +418,35 @@ msgstr "Метка:"
 msgid "Another instance of this program is already running"
 msgstr "Экземляр программы уже запущен"
 
-#: ../data/ui/Assistant.ui.h:1
+#: ../data/ui/Assistant.ui:206
 msgid "<b>Home</b>"
 msgstr "<b>Дом</b>"
 
-#: ../data/ui/Assistant.ui.h:2
+#: ../data/ui/Assistant.ui:258
 msgid "<b>Orange, Texas</b>"
 msgstr "<b>Оранж, Техас</b>"
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Добавить место"
 
-#: ../data/ui/Assistant.ui.h:5
+#: ../data/ui/Assistant.ui:244
 msgid "Location:"
 msgstr "Место:"
 
-#: ../data/ui/Assistant.ui.h:6
+#: ../data/ui/Assistant.ui:137
 msgid "Name the location"
 msgstr "Выберите имя для места"
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
-msgstr "Введите название места"
+msgstr "Введите название места:"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid "Please input a location in the combobox below:"
-msgstr "Введите название города"
+msgstr "Введите название города:"
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -446,11 +454,11 @@ msgstr ""
 "Проверьте, правильно ли указаны данные. Вы можете вернуться назад и внести "
 "изменения."
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Проверьте ваш выбор"
 
-#: ../data/ui/Assistant.ui.h:11
+#: ../data/ui/Assistant.ui:97
 msgid "Select a location"
 msgstr "Выберите место"
 

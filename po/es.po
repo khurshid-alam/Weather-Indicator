@@ -6,441 +6,460 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-04-12 17:01+0000\n"
-"Last-Translator: Gonzalo Bulnes Guilpain <Unknown>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-05-27 16:29+0000\n"
+"Last-Translator: Paco Molinero <paco@byasl.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-13 14:33+0000\n"
-"X-Generator: Launchpad (build 12735)\n"
-
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Notificaciones</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Escala de temperatura</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "Fuente de Datos del Clima"
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Unidad de velocidad del viento</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Beaufort"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Activar la miniaplicación de indicador del clima"
-
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "General"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Imperial (°F)"
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilometros por hora (kph)"
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Nudos"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Localización"
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Metros por segundo (m/s)"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Millas por hora (mph)"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Sin notificaciones"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr ""
-"Usar las notificaciones solamente para alertar sobre condiciones climáticas "
-"severas"
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
-
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "Mostrar consejos en el menú"
-
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Unidades"
-
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Actualizar cada"
-
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Usar notificaciones para informar sobre cualquier cambio en el clima"
-
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr "Preferencias del indicador del clima"
-
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
-
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
-msgstr "minutos"
-
-#: ../bin/indicator-weather.py:408
-msgid "Tornado"
-msgstr "Tornado"
-
-#: ../bin/indicator-weather.py:409
-msgid "Tropical storm"
-msgstr "Tormenta Tropical"
-
-#: ../bin/indicator-weather.py:410
-msgid "Hurricane"
-msgstr "Huracán"
-
-#: ../bin/indicator-weather.py:411
-msgid "Severe thunderstorms"
-msgstr "Tormentas eléctricas severas"
-
-#: ../bin/indicator-weather.py:412
-msgid "Thunderstorms"
-msgstr "Tormentas eléctricas"
-
-#: ../bin/indicator-weather.py:413
-msgid "Mixed rain and snow"
-msgstr "Mezcla de agua y nieve"
-
-#: ../bin/indicator-weather.py:414
-msgid "Mixed rain and sleet"
-msgstr "Mezcla de lluvia y aguanieve"
-
-#: ../bin/indicator-weather.py:415
-msgid "Mixed snow and sleet"
-msgstr "Mezcla de nieve y aguanieve"
-
-#: ../bin/indicator-weather.py:416
-msgid "Freezing drizzle"
-msgstr "Llovizna helada"
-
-#: ../bin/indicator-weather.py:417
-msgid "Drizzle"
-msgstr "Llovizna"
-
-#: ../bin/indicator-weather.py:418
-msgid "Freezing rain"
-msgstr "Lluvia helada"
-
-#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
-msgid "Showers"
-msgstr "Chaparrones"
-
-#: ../bin/indicator-weather.py:421
-msgid "Snow flurries"
-msgstr "Ráfagas de nieve"
-
-#: ../bin/indicator-weather.py:422
-msgid "Light snow showers"
-msgstr "Lluvia de nieve ligera"
-
-#: ../bin/indicator-weather.py:423
-msgid "Blowing snow"
-msgstr "Nieve soplante"
-
-#: ../bin/indicator-weather.py:424
-msgid "Snow"
-msgstr "Nieve"
-
-#: ../bin/indicator-weather.py:425
-msgid "Hail"
-msgstr "Granizo"
-
-#: ../bin/indicator-weather.py:426
-msgid "Sleet"
-msgstr "Aguanieve"
-
-#: ../bin/indicator-weather.py:427
-msgid "Dust"
-msgstr "Polvo"
-
-#: ../bin/indicator-weather.py:428
-msgid "Foggy"
-msgstr "Neblina"
-
-#: ../bin/indicator-weather.py:429
-msgid "Haze"
-msgstr "Bruma"
-
-#: ../bin/indicator-weather.py:430
-msgid "Smoky"
-msgstr "humoso"
-
-#: ../bin/indicator-weather.py:431
-msgid "Blustery"
-msgstr "Borrascoso"
-
-#: ../bin/indicator-weather.py:432
-msgid "Windy"
-msgstr "Ventoso"
-
-#: ../bin/indicator-weather.py:433
-msgid "Cold"
-msgstr "Frío"
-
-#: ../bin/indicator-weather.py:434
-msgid "Cloudy"
-msgstr "Nublado"
-
-#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
-msgid "Mostly cloudy"
-msgstr "Mayormente nublado"
-
-#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
-#: ../bin/indicator-weather.py:452
-msgid "Partly cloudy"
-msgstr "Parcialmente nublado"
-
-#: ../bin/indicator-weather.py:439
-msgid "Clear"
-msgstr "Despejado"
-
-#: ../bin/indicator-weather.py:440
-msgid "Sunny"
-msgstr "Soleado"
-
-#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
-msgid "Fair"
-msgstr "Limpio"
-
-#: ../bin/indicator-weather.py:443
-msgid "Mixed rain and hail"
-msgstr "Mezcla de lluvia y granizo"
-
-#: ../bin/indicator-weather.py:444
-msgid "Hot"
-msgstr "Caliente"
-
-#: ../bin/indicator-weather.py:445
-msgid "Isolated thunderstorms"
-msgstr "Tormentas eléctricas aisladas"
-
-#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
-msgid "Scattered thunderstorms"
-msgstr "Tormentas eléctricas dispersas"
-
-#: ../bin/indicator-weather.py:448
-msgid "Scattered showers"
-msgstr "Lluvias dispersas"
-
-#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
-msgid "Heavy snow"
-msgstr "Nieve abundante"
-
-#: ../bin/indicator-weather.py:450
-msgid "Scattered snow showers"
-msgstr "Nevadas aisladas"
-
-#: ../bin/indicator-weather.py:453
-msgid "Thundershowers"
-msgstr "Lluvias con truenos"
-
-#: ../bin/indicator-weather.py:454
-msgid "Snow showers"
-msgstr "Aguanieve"
-
-#: ../bin/indicator-weather.py:455
-msgid "Isolated thundershowers"
-msgstr "Lluvias con truenos aislados"
-
-#: ../bin/indicator-weather.py:559
-msgid "Humidity"
-msgstr "Humedad"
-
-#: ../bin/indicator-weather.py:578
-msgid "Pressure"
-msgstr "Presión"
-
-#: ../bin/indicator-weather.py:601
-msgid "Temperature"
-msgstr "Temperatura"
-
-#: ../bin/indicator-weather.py:629
-msgid "Wind"
-msgstr "Viento"
-
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mph"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "nudo(s)"
-
-#: ../bin/indicator-weather.py:655
-msgid "Sunrise"
-msgstr "Amanecer"
-
-#: ../bin/indicator-weather.py:659
-msgid "Sunset"
-msgstr "Ocaso"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:671
-msgid "N"
-msgstr "N"
-
-#: ../bin/indicator-weather.py:673
-msgid "NE"
-msgstr "NE"
-
-#: ../bin/indicator-weather.py:675
-msgid "E"
-msgstr "E"
-
-#: ../bin/indicator-weather.py:677
-msgid "SE"
-msgstr "SE"
-
-#: ../bin/indicator-weather.py:679
-msgid "S"
-msgstr "S"
-
-#: ../bin/indicator-weather.py:681
-msgid "SW"
-msgstr "SO"
-
-#: ../bin/indicator-weather.py:683
-msgid "W"
-msgstr "O"
-
-#: ../bin/indicator-weather.py:685
-msgid "NW"
-msgstr "NO"
-
-#: ../bin/indicator-weather.py:846
-msgid "Set Up Weather..."
-msgstr "Configurar el clima..."
-
-#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
-#: ../bin/indicator-weather.py:1059
-msgid "Refresh"
-msgstr "Actualizar"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "actualizado justo ahora"
-
-#: ../bin/indicator-weather.py:946
-msgid "Forecast"
-msgstr "Pronóstico"
-
-#. #Preferences
-#: ../bin/indicator-weather.py:952
-msgid "Preferences..."
-msgstr "Preferencias..."
-
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "actualizado hace %s min"
-
-#: ../bin/indicator-weather.py:1019
-msgid "Refreshing, please wait"
-msgstr "Actualizando, por favor espere"
-
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "actualizado justo ahora"
-
-#: ../bin/indicator-weather.py:1106
-msgid "Severe weather alert"
-msgstr "Alerta de mal tiempo"
-
-#: ../bin/indicator-weather.py:1311
+"X-Launchpad-Export-Date: 2011-05-28 05:51+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
+"Language: es\n"
+
+#: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
 msgstr "Pronóstico para "
 
-#: ../bin/indicator-weather.py:1343
+#: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
 msgstr "Alta"
 
-#: ../bin/indicator-weather.py:1345
+#: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
 msgstr "Baja"
 
-#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+#: ../src/service/indicator_weather_service/indicator.py:433
+msgid "Severe weather alert"
+msgstr "Alerta de mal tiempo"
+
+#: ../src/service/indicator_weather_service/indicator.py:556
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Fitoschido https://launchpad.net/~fitoschido\n"
+"  Paco Molinero https://launchpad.net/~franciscomol"
+
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "error"
+
+#: ../src/service/indicator_weather_service/menu.py:128
+msgid "Set Up Weather..."
+msgstr "Configurar el clima..."
+
+#: ../src/service/indicator_weather_service/menu.py:137
+msgid "About..."
+msgstr "Acerca de..."
+
+#: ../src/service/indicator_weather_service/menu.py:146
+msgid "Preferences..."
+msgstr "Preferencias..."
+
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
+msgid "Refresh"
+msgstr "Actualizar"
+
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Aviso..."
+
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "No hay datos disponibles"
+
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Pronóstico..."
+
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Actualizando"
+
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "espere"
+
+#: ../src/service/indicator_weather_service/menu.py:614
+msgid "just now"
+msgstr "justo ahora"
+
+#: ../src/service/indicator_weather_service/menu.py:618
+#, python-format
+msgid "%d min. ago"
+msgstr "hace %d min."
+
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Etiqueta:"
 
-#: ../bin/indicator-weather.py:1522
-msgid "Another instance of this program is already running"
-msgstr "Ya se está ejecutando otra instancia de esta aplicación"
+#: ../src/service/indicator_weather_service/weather.py:204
+msgid "Condition"
+msgstr "Condición"
 
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Domicilio</b>"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Temperatura:"
 
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr ""
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Temperatura y humedad"
+
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr "Temperatura y humedad (Canadá)"
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr "Temperatura y viento"
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "Sensación térmica:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr "Sensación térmica"
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr "Sensación térmica (CA):"
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr "Sensación térmica (CA)"
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr "Sensación térmica (AU):"
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr "Sensación térmica (AU)"
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr "Tmperatura, humedad y viento (Australia)"
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Humedad:"
+
+#: ../src/service/indicator_weather_service/weather.py:306
+msgid "Humidity"
+msgstr "Humedad"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Visibilidad:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Visibilidad"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr "De Yahoo!"
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr "Barómetro:"
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr "Barómetro"
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Viento:"
+
+#: ../src/service/indicator_weather_service/weather.py:347
+msgid "Wind"
+msgstr "Viento"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr "Sol:"
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr "Amanecer y atardecer"
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "Amanecer:"
+
+#: ../src/service/indicator_weather_service/weather.py:376
+msgid "Sunrise"
+msgstr "Amanecer"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "Ocaso:"
+
+#: ../src/service/indicator_weather_service/weather.py:384
+msgid "Sunset"
+msgstr "Ocaso"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr "Ahora:"
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "Hoy:"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:57
+msgid "Tornado"
+msgstr "Tornado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:58
+msgid "Tropical storm"
+msgstr "Tormenta tropical"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:59
+msgid "Hurricane"
+msgstr "Huracán"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:60
+msgid "Severe thunderstorms"
+msgstr "Tormentas eléctricas severas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:61
+msgid "Thunderstorms"
+msgstr "Tormentas eléctricas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:62
+msgid "Mixed rain and snow"
+msgstr "Mezcla de lluvia y nieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:64
+msgid "Mixed rain and sleet"
+msgstr "Mezcla de lluvia y aguanieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:65
+msgid "Mixed snow and sleet"
+msgstr "Mezcla de nieve y aguanieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:66
+msgid "Freezing drizzle"
+msgstr "Llovizna helada"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:67
+msgid "Drizzle"
+msgstr "Llovizna"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:68
+msgid "Freezing rain"
+msgstr "Lluvia helada"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:69
+#: ../src/service/indicator_weather_service/providers/yahoo.py:70
+msgid "Showers"
+msgstr "Chaparrones"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:71
+msgid "Snow flurries"
+msgstr "Ráfagas de nieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:72
+msgid "Light snow showers"
+msgstr "Lluvia de nieve ligera"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:73
+msgid "Blowing snow"
+msgstr "Nieve soplante"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:74
+msgid "Snow"
+msgstr "Nieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:75
+msgid "Hail"
+msgstr "Granizo"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:76
+msgid "Sleet"
+msgstr "Aguanieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:77
+msgid "Dust"
+msgstr "Polvo"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:78
+msgid "Foggy"
+msgstr "Neblina"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:79
+msgid "Haze"
+msgstr "Bruma"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:80
+msgid "Smoky"
+msgstr "humoso"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:81
+msgid "Blustery"
+msgstr "Borrascoso"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:82
+msgid "Windy"
+msgstr "Ventoso"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:83
+msgid "Cold"
+msgstr "Frío"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:84
+msgid "Cloudy"
+msgstr "Nublado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:85
+#: ../src/service/indicator_weather_service/providers/yahoo.py:86
+msgid "Mostly cloudy"
+msgstr "Mayormente nublado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:87
+#: ../src/service/indicator_weather_service/providers/yahoo.py:88
+#: ../src/service/indicator_weather_service/providers/yahoo.py:102
+msgid "Partly cloudy"
+msgstr "Parcialmente nublado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:89
+msgid "Clear"
+msgstr "Despejado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:90
+msgid "Sunny"
+msgstr "Soleado"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:91
+#: ../src/service/indicator_weather_service/providers/yahoo.py:92
+msgid "Fair"
+msgstr "Buen tiempo"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:93
+msgid "Mixed rain and hail"
+msgstr "Mezcla de lluvia y granizo"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:94
+msgid "Hot"
+msgstr "Calor"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:95
+msgid "Isolated thunderstorms"
+msgstr "Tormentas eléctricas aisladas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:96
+#: ../src/service/indicator_weather_service/providers/yahoo.py:97
+msgid "Scattered thunderstorms"
+msgstr "Tormentas eléctricas dispersas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:98
+msgid "Scattered showers"
+msgstr "Lluvias dispersas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:99
+#: ../src/service/indicator_weather_service/providers/yahoo.py:101
+msgid "Heavy snow"
+msgstr "Nieve abundante"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:100
+msgid "Scattered snow showers"
+msgstr "Nevadas aisladas"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:103
+msgid "Thundershowers"
+msgstr "Lluvias con truenos"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:104
+msgid "Snow showers"
+msgstr "Aguanieve"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:105
+msgid "Isolated thundershowers"
+msgstr "Lluvias con truenos aislados"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:106
+msgid "Unknown condition"
+msgstr "Condición desconocida"
+
+#: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Añadir una ubicación"
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Ubicación:"
+#: ../data/ui/Assistant.ui:35
+msgid "Please search our database for your location:"
+msgstr "Busque su ubicación en nuestra base de datos:"
 
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr "Nombre la ubicación"
+#: ../data/ui/Assistant.ui:75
+msgid "Search"
+msgstr "Buscar"
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:97
+msgid "Select a location"
+msgstr "Seleccione una ubicación"
+
+#: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Introduzca un nombre para esta ubicación:"
 
-#: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Por favor introduzca una ubicacion en la caja de busqueda debajo:"
+#: ../data/ui/Assistant.ui:137
+msgid "Name the location"
+msgstr "Nombre la ubicación"
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -448,167 +467,156 @@ msgstr ""
 "Por favor verifique las elecciones debajo. Si algo no esta correcto, por "
 "favor regrese y seleccione las opciones correctas."
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:206
+msgid "<b>Home</b>"
+msgstr "<b>Domicilio</b>"
+
+#: ../data/ui/Assistant.ui:244
+msgid "Location:"
+msgstr "Ubicación:"
+
+#: ../data/ui/Assistant.ui:258
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
+#: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Verifique opciones"
 
-#: ../data/ui/Assistant.ui.h:11
-msgid "Select a location"
-msgstr "Seleccione una ubicación"
+#: ../data/ui/PreferencesDialog.ui:31
+msgid "Weather Indicator Preferences"
+msgstr "Preferencias del indicador del clima"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Pronóstico Extendido"
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr "<b>Indicador</b>"
 
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr "Solo mostrar icono de clima"
+
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr "Solo mostrar temperatura"
+
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr "Mostrar icono de clima y temperatura"
+
+#: ../data/ui/PreferencesDialog.ui:183
+msgid "<b>Notifications</b>"
+msgstr "<b>Notificaciones</b>"
+
+#: ../data/ui/PreferencesDialog.ui:203
+msgid "No notifications"
+msgstr "Sin notificaciones"
+
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "Only use notifications to give severe weather alerts"
 msgstr ""
-"Un indicador meteorológico que muestra la información para uno o mas lugares "
-"en el mundo"
+"Usar las notificaciones solamente para alertar sobre condiciones climáticas "
+"severas"
 
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Indicador meteorológico"
+#: ../data/ui/PreferencesDialog.ui:237
+msgid "Use notifications to give every weather condition change"
+msgstr "Usar notificaciones para informar sobre cualquier cambio en el clima"
 
-#~ msgid "MPH"
-#~ msgstr "MPH"
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr "Aplicar a todas las ubicaciones"
 
-#~ msgid "MPS"
-#~ msgstr "MPS"
+#: ../data/ui/PreferencesDialog.ui:300
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Fuente de datos de clima</b>"
 
-#~ msgid "Mostly sunny"
-#~ msgstr "Mayormente soleado"
+#: ../data/ui/PreferencesDialog.ui:320
+msgid "Google"
+msgstr "Google"
 
-#~ msgid "Clear sky"
-#~ msgstr "Cielo despejado"
+#: ../data/ui/PreferencesDialog.ui:336
+msgid "Yahoo!"
+msgstr "Yahoo!"
 
-#~ msgid "Partly sunny"
-#~ msgstr "Parcialmente soleado"
+#: ../data/ui/PreferencesDialog.ui:380
+msgid "Update every"
+msgstr "Actualizar cada"
 
-#~ msgid "Scattered clouds"
-#~ msgstr "Nubes dispersas"
+#: ../data/ui/PreferencesDialog.ui:412
+msgid "minutes"
+msgstr "minutos"
 
-#~ msgid "Increasing clouds"
-#~ msgstr "Nubes en aumento"
+#: ../data/ui/PreferencesDialog.ui:440
+msgid "General"
+msgstr "General"
 
-#~ msgid "Decreasing clouds"
-#~ msgstr "Nubes disminuyendo"
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr "Mostrar pronóstico"
 
-#~ msgid "Broken clouds"
-#~ msgstr "Nubosidad dispersa"
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr "Mostrar clima para todas las ubicaciones"
 
-#~ msgid "Dense fog"
-#~ msgstr "Niebla densa"
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr ""
 
-#~ msgid "Fog"
-#~ msgstr "Niebla"
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
 
-#~ msgid "Few clouds"
-#~ msgstr "Algunas nubes"
+#: ../data/ui/PreferencesDialog.ui:559
+msgid "Label"
+msgstr "Etiqueta"
 
-#~ msgid "Becoming cloudy"
-#~ msgstr "Nubosidad en aumento"
+#: ../data/ui/PreferencesDialog.ui:570
+msgid "Notes"
+msgstr "Notas"
 
-#~ msgid "Clearing"
-#~ msgstr "Despejándose"
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr "Menú"
 
-#~ msgid "Overcast"
-#~ msgstr "Cubierto de nubes"
+#: ../data/ui/PreferencesDialog.ui:627
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Escala de temperatura</b>"
 
-#~ msgid "Blowing sand"
-#~ msgstr "Viento con arena"
+#: ../data/ui/PreferencesDialog.ui:647
+msgid "Imperial (°F)"
+msgstr "Imperial (°F)"
 
-#~ msgid "Blowing dust"
-#~ msgstr "Cortina de polvo"
+#: ../data/ui/PreferencesDialog.ui:663
+msgid "SI (metric, °C)"
+msgstr "SI (métrico, °C)"
 
-#~ msgid "Ice fog"
-#~ msgstr "Niebla helada"
+#: ../data/ui/PreferencesDialog.ui:703
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Unidad de velocidad del viento</b>"
 
-#~ msgid "Volcanic ash"
-#~ msgstr "Cenizas volcánicas"
+#: ../data/ui/PreferencesDialog.ui:723
+msgid "Meter per second (m/s)"
+msgstr "Metros por segundo (m/s)"
 
-#~ msgid "Ash"
-#~ msgstr "Ceniza"
+#: ../data/ui/PreferencesDialog.ui:739
+msgid "Miles per hour (mph)"
+msgstr "Millas por hora (mph)"
 
-#~ msgid "Smoke"
-#~ msgstr "Humo"
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr "Km por hora (km/h)"
 
-#~ msgid "Freezing fog"
-#~ msgstr "Niebla helada"
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Beaufort"
+msgstr "Beaufort"
 
-#~ msgid "Frost"
-#~ msgstr "Escarcha"
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Knots"
+msgstr "Nudos"
 
-#~ msgid "Ice crystals"
-#~ msgstr "Cristales de hielo"
+#: ../data/ui/PreferencesDialog.ui:826
+msgid "Units"
+msgstr "Unidades"
 
-#~ msgid "Light snow"
-#~ msgstr "Nieve ligera"
-
-#~ msgid "Blizzard"
-#~ msgstr "Ventisca"
-
-#~ msgid "Snow/rain"
-#~ msgstr "Nieve/lluvia"
-
-#~ msgid "Rain showers"
-#~ msgstr "Aguaceros"
-
-#~ msgid "Rain"
-#~ msgstr "Lluvia"
-
-#~ msgid "Heavy rain"
-#~ msgstr "Lluvia fuerte"
-
-#~ msgid "Storm"
-#~ msgstr "Tormenta"
-
-#~ msgid "Sky"
-#~ msgstr "Cielo"
-
-#~ msgid "Condition"
-#~ msgstr "Condición"
-
-#~ msgid "Wind Chill"
-#~ msgstr "Temperatura del viento"
-
-#~ msgid "mile(s)"
-#~ msgstr "milla(s)"
-
-#~ msgid "km"
-#~ msgstr "km"
-
-#~ msgid "Wind Speed"
-#~ msgstr "Velocidad del viento"
-
-#~ msgid "Wind Direction"
-#~ msgstr "Dirección del viento"
-
-#~ msgid "Visibility"
-#~ msgstr "Visibilidad"
-
-#~ msgid "Connection problem"
-#~ msgstr "Problema de conexión"
-
-#~ msgid "High: "
-#~ msgstr "Alta: "
-
-#~ msgid "Low: "
-#~ msgstr "Baja: "
-
-#~ msgid "If this is not correct, please go back and select a new city."
-#~ msgstr "Si esto no es correcto, retroceda y seleccione una nueva ciudad"
-
-#~ msgid "<big>Rungis, France</big>"
-#~ msgstr "<big>Rungis, France</big>"
-
-#~ msgid "Confirm choice"
-#~ msgstr "Confirmar elección"
-
-#~ msgid "You have selected:"
-#~ msgstr "Ha seleccionado:"
-
-#~ msgid "Please select a location from below:"
-#~ msgstr "Seleccione una ubicación a continuación:"
+#: ../data/ui/PreferencesDialog.ui:931
+msgid "Locations"
+msgstr "Ubicaciones"

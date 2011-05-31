@@ -1,4 +1,4 @@
-# Polish translation for weather-indicator
+# Norwegian Bokmal translation for weather-indicator
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the weather-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -11,29 +11,29 @@ msgstr ""
 "PO-Revision-Date: 2011-05-20 09:51+0000\n"
 "Last-Translator: Launchpad Translations Administrators "
 "<rosetta@launchpad.net>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
-"Language: pl\n"
+"Language: nb\n"
 
 #: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
-msgstr "Prognoza pogody dla "
+msgstr "Værvarsel for "
 
 #: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
-msgstr "Najwyższa"
+msgstr "Høyt"
 
 #: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
-msgstr "Najniższa"
+msgstr "Lavt"
 
 #: ../src/service/indicator_weather_service/indicator.py:433
 msgid "Severe weather alert"
-msgstr "Poważne ostrzeżenie pogodowe"
+msgstr "Varsel om ekstremvær"
 
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
@@ -46,7 +46,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
-msgstr "Ustaw pogodę..."
+msgstr "Innstillinger for vær..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
@@ -54,14 +54,14 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
-msgstr "Ustawienia..."
+msgstr "Brukervalg..."
 
 #: ../src/service/indicator_weather_service/menu.py:156
 #: ../src/service/indicator_weather_service/menu.py:609
 #: ../src/service/indicator_weather_service/menu.py:613
 #: ../src/service/indicator_weather_service/menu.py:617
 msgid "Refresh"
-msgstr "Odświeżone"
+msgstr "Oppdater"
 
 #: ../src/service/indicator_weather_service/menu.py:167
 msgid "Warning..."
@@ -95,7 +95,7 @@ msgstr ""
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
 msgid "Label:"
-msgstr "Etykieta:"
+msgstr "Etikett:"
 
 #: ../src/service/indicator_weather_service/weather.py:204
 msgid "Condition"
@@ -191,7 +191,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
-msgstr "Wilgotność"
+msgstr "Luftfuktighet"
 
 #: ../src/service/indicator_weather_service/weather.py:314
 msgid "Visibility:"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
-msgstr "Wiatr"
+msgstr "Vind"
 
 #: ../src/service/indicator_weather_service/weather.py:365
 msgid "Sun:"
@@ -240,7 +240,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
-msgstr "Wschód słońca"
+msgstr "Soloppgang"
 
 #: ../src/service/indicator_weather_service/weather.py:383
 msgid "Sunset:"
@@ -248,7 +248,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
-msgstr "Zachód słońca"
+msgstr "Solnedgang"
 
 #: ../src/service/indicator_weather_service/weather.py:1283
 msgid "Now:"
@@ -260,174 +260,174 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
-msgstr "Huragan"
+msgstr "Tornado"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:58
 msgid "Tropical storm"
-msgstr "Burza tropikalna"
+msgstr "Tropestorm"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:59
 msgid "Hurricane"
-msgstr "Huragan"
+msgstr "Orkan"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:60
 msgid "Severe thunderstorms"
-msgstr "Silne burze"
+msgstr "Alvorlige tordenvær/-stormer"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:61
 msgid "Thunderstorms"
-msgstr "Burze"
+msgstr "Tordenvær/-stormer"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:62
 msgid "Mixed rain and snow"
-msgstr "Śnieg z deszczem"
+msgstr "Sludd"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:64
 msgid "Mixed rain and sleet"
-msgstr "Deszcz i deszcz ze śniegiem"
+msgstr "Regn og sludd"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:65
 msgid "Mixed snow and sleet"
-msgstr "Śnieg i deszcz ze śniegiem"
+msgstr "Sne og sludd"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:66
 msgid "Freezing drizzle"
-msgstr "Zamarzająca mżawka"
+msgstr "Frysende yr"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:67
 msgid "Drizzle"
-msgstr "Mżawka"
+msgstr "Yr"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:68
 msgid "Freezing rain"
-msgstr "Zamarzający deszcz"
+msgstr "Frysende regn"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:69
 #: ../src/service/indicator_weather_service/providers/yahoo.py:70
 msgid "Showers"
-msgstr "Ulewy"
+msgstr "Byger"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:71
 msgid "Snow flurries"
-msgstr "Opady śniegu"
+msgstr "Vindkast/snevær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:72
 msgid "Light snow showers"
-msgstr "Lekkie opady śniegu"
+msgstr "Lett snevær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:73
 msgid "Blowing snow"
-msgstr "Silne opady śniegu"
+msgstr "Vind/snevær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:74
 msgid "Snow"
-msgstr "Śnieg"
+msgstr "Sne"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:75
 msgid "Hail"
-msgstr "Grad"
+msgstr "Hagl"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:76
 msgid "Sleet"
-msgstr "Deszcz ze śniegiem"
+msgstr "Sludd"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:77
 msgid "Dust"
-msgstr "Kurz"
+msgstr "Støv"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:78
 msgid "Foggy"
-msgstr "Mgliście"
+msgstr "Tåkete"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:79
 msgid "Haze"
-msgstr "Zamglenie"
+msgstr "Dis"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:80
 msgid "Smoky"
-msgstr "Zadymienie"
+msgstr "Røkfylt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:81
 msgid "Blustery"
-msgstr "Porywisty wiatr"
+msgstr "Kastevind"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:82
 msgid "Windy"
-msgstr "Wietrznie"
+msgstr "Vindfylt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:83
 msgid "Cold"
-msgstr "Zimno"
+msgstr "Kaldt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:84
 msgid "Cloudy"
-msgstr "Pochmurno"
+msgstr "Overskyet"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:85
 #: ../src/service/indicator_weather_service/providers/yahoo.py:86
 msgid "Mostly cloudy"
-msgstr "Spore zachmurzenie"
+msgstr "Mest overskyet"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:87
 #: ../src/service/indicator_weather_service/providers/yahoo.py:88
 #: ../src/service/indicator_weather_service/providers/yahoo.py:102
 msgid "Partly cloudy"
-msgstr "Częściowe zachmurzenie"
+msgstr "Skiftende skydekke"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:89
 msgid "Clear"
-msgstr "Bezchmurnie"
+msgstr "Klar himmel"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:90
 msgid "Sunny"
-msgstr "Słonecznie"
+msgstr "Solfylt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:91
 #: ../src/service/indicator_weather_service/providers/yahoo.py:92
 msgid "Fair"
-msgstr "Bezchmurnie"
+msgstr "Pent"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:93
 msgid "Mixed rain and hail"
-msgstr "Deszcz z gradem"
+msgstr "Regn og hagl"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:94
 msgid "Hot"
-msgstr "Upał"
+msgstr "Varmt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:95
 msgid "Isolated thunderstorms"
-msgstr "Pojedyncze burze"
+msgstr "Enkelte forekomster av tordenvær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:96
 #: ../src/service/indicator_weather_service/providers/yahoo.py:97
 msgid "Scattered thunderstorms"
-msgstr "Sporadyczne burze"
+msgstr "Spredte forekomster av tordenvær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:98
 msgid "Scattered showers"
-msgstr "Sporadyczne przelotne deszcze"
+msgstr "Spredte regnbyger"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:99
 #: ../src/service/indicator_weather_service/providers/yahoo.py:101
 msgid "Heavy snow"
-msgstr "Obfity śnieg"
+msgstr "Tungt snevær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:100
 msgid "Scattered snow showers"
-msgstr "Sporadyczne opady śniegu"
+msgstr "Spredte snebyger"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:103
 msgid "Thundershowers"
-msgstr "Krótkie burze"
+msgstr "Tordenvær"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:104
 msgid "Snow showers"
-msgstr "Przelotne opady śniegu"
+msgstr "Snebyger"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:105
 msgid "Isolated thundershowers"
-msgstr "Pojedyncze krótkie burze"
+msgstr "Enkelte forekomster av regn- og tordenbyger"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:106
 msgid "Unknown condition"
@@ -435,7 +435,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
-msgstr "Dodaj położenie"
+msgstr "Legg til et nytt sted"
 
 #: ../data/ui/Assistant.ui:35
 msgid "Please search our database for your location:"
@@ -447,43 +447,43 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui:97
 msgid "Select a location"
-msgstr "Wybierz położenie"
+msgstr "Velg et sted"
 
 #: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
-msgstr "Wprowadź nazwę dla tej lokalizacji:"
+msgstr "Vennligst legg inn et navn for stedet"
 
 #: ../data/ui/Assistant.ui:137
 msgid "Name the location"
-msgstr "Nazwa miejscowości"
+msgstr "Gi stedet et navn"
 
 #: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Proszę sprawdzić czy został dokonany właściwy wybór. Jeśli nie, proszę "
-"wrócić i wybrać właściwe opcje."
+"Vennligst gå igjennom valgene du har foretatt. Om det er noe som ikke "
+"stemmer, bør du går tilbake og rette det opp."
 
 #: ../data/ui/Assistant.ui:206
 msgid "<b>Home</b>"
-msgstr "<b>Dom</b>"
+msgstr "<b>Hjem</b>"
 
 #: ../data/ui/Assistant.ui:244
 msgid "Location:"
-msgstr "Położenie:"
+msgstr "Sted:"
 
 #: ../data/ui/Assistant.ui:258
 msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+msgstr "<b>Oslo, Norge</b>"
 
 #: ../data/ui/Assistant.ui:289
 msgid "Review choices"
-msgstr "Sprawdzenie wyborów"
+msgstr "Sjekk valgene"
 
 #: ../data/ui/PreferencesDialog.ui:31
 msgid "Weather Indicator Preferences"
-msgstr "Ustawienia powiadamiania o pogodzie"
+msgstr "Innstillinger for Værvarsling"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
@@ -503,19 +503,19 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
-msgstr "<b>Powiadomienia</b>"
+msgstr "<b>Notifications</b>"
 
 #: ../data/ui/PreferencesDialog.ui:203
 msgid "No notifications"
-msgstr "Brak powiadomień"
+msgstr "Ingen varslinger"
 
 #: ../data/ui/PreferencesDialog.ui:220
 msgid "Only use notifications to give severe weather alerts"
-msgstr "Powiadamiaj tylko o poważnych ostrzeżeń pogodowych"
+msgstr "Bare gi varsling ved melding om ekstremvær"
 
 #: ../data/ui/PreferencesDialog.ui:237
 msgid "Use notifications to give every weather condition change"
-msgstr "Powiadamiaj o każdej zmianie warunków pogodowych"
+msgstr "Gi varsling om enhver værforandring"
 
 #: ../data/ui/PreferencesDialog.ui:268
 msgid "Apply for all locations"
@@ -523,7 +523,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"
-msgstr "<b>Źródło danych o pogodzie</b>"
+msgstr "Kilde for værdata"
 
 #: ../data/ui/PreferencesDialog.ui:320
 msgid "Google"
@@ -535,15 +535,15 @@ msgstr "Yahoo!"
 
 #: ../data/ui/PreferencesDialog.ui:380
 msgid "Update every"
-msgstr "Aktualizuj co"
+msgstr "Oppdater hver(t)"
 
 #: ../data/ui/PreferencesDialog.ui:412
 msgid "minutes"
-msgstr "minuty"
+msgstr "minutter"
 
 #: ../data/ui/PreferencesDialog.ui:440
 msgid "General"
-msgstr "Ogólne"
+msgstr "Generelt"
 
 #: ../data/ui/PreferencesDialog.ui:460
 msgid "Show forecast"
@@ -575,11 +575,11 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:627
 msgid "<b>Temperature Scale</b>"
-msgstr "<b>Jednostka temperatury</b>"
+msgstr "Temperaturskala"
 
 #: ../data/ui/PreferencesDialog.ui:647
 msgid "Imperial (°F)"
-msgstr "Imperialne (°F)"
+msgstr "Fahrenheit  (°F)"
 
 #: ../data/ui/PreferencesDialog.ui:663
 msgid "SI (metric, °C)"
@@ -587,15 +587,15 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:703
 msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Jednostka prędkości wiatru</b>"
+msgstr "Måleenhet for vindhastighet"
 
 #: ../data/ui/PreferencesDialog.ui:723
 msgid "Meter per second (m/s)"
-msgstr "Metry na sekundę (m/s)"
+msgstr "Meter pr. sekund (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui:739
 msgid "Miles per hour (mph)"
-msgstr "Mile na godzinę (m/h)"
+msgstr "Miles pt. time (mph)"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Km per hour (kph)"
@@ -603,16 +603,16 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
-msgstr "Stopnie Beauforta"
+msgstr "Beaufort"
 
 #: ../data/ui/PreferencesDialog.ui:787
 msgid "Knots"
-msgstr "Węzły"
+msgstr "Knop"
 
 #: ../data/ui/PreferencesDialog.ui:826
 msgid "Units"
-msgstr "Jednostki"
+msgstr "Enheter"
 
 #: ../data/ui/PreferencesDialog.ui:931
 msgid "Locations"
-msgstr "Miejsca"
+msgstr "Steder"

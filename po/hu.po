@@ -6,439 +6,459 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-03-30 06:54+0000\n"
-"Last-Translator: aolah <Unknown>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-05-26 07:28+0000\n"
+"Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-03-31 06:33+0000\n"
-"X-Generator: Launchpad (build 12559)\n"
-
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Értesítések</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Hőmérsékleti skála</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Időjárási adatok forrása</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Szélsebesség egysége</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Beaufort"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Időjárás-jelentés engedélyezése"
-
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Általános"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Angolszász (°F)"
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilométer per óra (km/h)"
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Csomó"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Helyek"
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Méter per másodperc (m/s)"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Mérföld per óra (mérföld/óra)"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Nincsenek értesítések"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Értesítés csak riasztás esetén"
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
-
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "Javaslatok megjelenítése a menüben"
-
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Mértékegységek"
-
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Frissítés"
-
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Értesítés minden időjárás-változásról"
-
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr "Időjárás-jelentés beállításai"
-
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
-
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
-msgstr "percenként"
-
-#: ../bin/indicator-weather.py:408
-msgid "Tornado"
-msgstr "Tornádó"
-
-#: ../bin/indicator-weather.py:409
-msgid "Tropical storm"
-msgstr "Trópusi vihar"
-
-#: ../bin/indicator-weather.py:410
-msgid "Hurricane"
-msgstr "Hurrikán"
-
-#: ../bin/indicator-weather.py:411
-msgid "Severe thunderstorms"
-msgstr "Jelentős zivatarok"
-
-#: ../bin/indicator-weather.py:412
-msgid "Thunderstorms"
-msgstr "Viharok"
-
-#: ../bin/indicator-weather.py:413
-msgid "Mixed rain and snow"
-msgstr "Havas eső"
-
-#: ../bin/indicator-weather.py:414
-msgid "Mixed rain and sleet"
-msgstr "Ónos eső"
-
-#: ../bin/indicator-weather.py:415
-msgid "Mixed snow and sleet"
-msgstr "Havazás és jégeső"
-
-#: ../bin/indicator-weather.py:416
-msgid "Freezing drizzle"
-msgstr "Jeges szitálás"
-
-#: ../bin/indicator-weather.py:417
-msgid "Drizzle"
-msgstr "Szitáló eső"
-
-#: ../bin/indicator-weather.py:418
-msgid "Freezing rain"
-msgstr "Fagyos eső"
-
-#: ../bin/indicator-weather.py:419 ../bin/indicator-weather.py:420
-msgid "Showers"
-msgstr "Záporok"
-
-#: ../bin/indicator-weather.py:421
-msgid "Snow flurries"
-msgstr "Hózáporok"
-
-#: ../bin/indicator-weather.py:422
-msgid "Light snow showers"
-msgstr "Könnyű hózápor"
-
-#: ../bin/indicator-weather.py:423
-msgid "Blowing snow"
-msgstr "Hófúvás"
-
-#: ../bin/indicator-weather.py:424
-msgid "Snow"
-msgstr "Hó"
-
-#: ../bin/indicator-weather.py:425
-msgid "Hail"
-msgstr "Jégeső"
-
-#: ../bin/indicator-weather.py:426
-msgid "Sleet"
-msgstr "Ólmos eső"
-
-#: ../bin/indicator-weather.py:427
-msgid "Dust"
-msgstr "Por"
-
-#: ../bin/indicator-weather.py:428
-msgid "Foggy"
-msgstr "Ködös"
-
-#: ../bin/indicator-weather.py:429
-msgid "Haze"
-msgstr "Száraz légköri homály"
-
-#: ../bin/indicator-weather.py:430
-msgid "Smoky"
-msgstr "Füstös"
-
-#: ../bin/indicator-weather.py:431
-msgid "Blustery"
-msgstr "Erős széllökések"
-
-#: ../bin/indicator-weather.py:432
-msgid "Windy"
-msgstr "Szeles"
-
-#: ../bin/indicator-weather.py:433
-msgid "Cold"
-msgstr "Hideg"
-
-#: ../bin/indicator-weather.py:434
-msgid "Cloudy"
-msgstr "Felhős"
-
-#: ../bin/indicator-weather.py:435 ../bin/indicator-weather.py:436
-msgid "Mostly cloudy"
-msgstr "Nagyrészt felhős"
-
-#: ../bin/indicator-weather.py:437 ../bin/indicator-weather.py:438
-#: ../bin/indicator-weather.py:452
-msgid "Partly cloudy"
-msgstr "Részben felhős"
-
-#: ../bin/indicator-weather.py:439
-msgid "Clear"
-msgstr "Tiszta"
-
-#: ../bin/indicator-weather.py:440
-msgid "Sunny"
-msgstr "Napsütés"
-
-#: ../bin/indicator-weather.py:441 ../bin/indicator-weather.py:442
-msgid "Fair"
-msgstr "Szép idő"
-
-#: ../bin/indicator-weather.py:443
-msgid "Mixed rain and hail"
-msgstr "Jeges eső"
-
-#: ../bin/indicator-weather.py:444
-msgid "Hot"
-msgstr "Hőség"
-
-#: ../bin/indicator-weather.py:445
-msgid "Isolated thunderstorms"
-msgstr "Elszigetelt viharok"
-
-#: ../bin/indicator-weather.py:446 ../bin/indicator-weather.py:447
-msgid "Scattered thunderstorms"
-msgstr "Szórványosan zivatarok"
-
-#: ../bin/indicator-weather.py:448
-msgid "Scattered showers"
-msgstr "Szórványosan záporok"
-
-#: ../bin/indicator-weather.py:449 ../bin/indicator-weather.py:451
-msgid "Heavy snow"
-msgstr "Erős havazás"
-
-#: ../bin/indicator-weather.py:450
-msgid "Scattered snow showers"
-msgstr "Szórványosan hózáporok"
-
-#: ../bin/indicator-weather.py:453
-msgid "Thundershowers"
-msgstr "Zivatarok"
-
-#: ../bin/indicator-weather.py:454
-msgid "Snow showers"
-msgstr "Hózápor"
-
-#: ../bin/indicator-weather.py:455
-msgid "Isolated thundershowers"
-msgstr "Elszigetelt zivatarok"
-
-#: ../bin/indicator-weather.py:559
-msgid "Humidity"
-msgstr "Páratartalom"
-
-#: ../bin/indicator-weather.py:578
-msgid "Pressure"
-msgstr "Légnyomás"
-
-#: ../bin/indicator-weather.py:601
-msgid "Temperature"
-msgstr "Hőmérséklet"
-
-#: ../bin/indicator-weather.py:629
-msgid "Wind"
-msgstr "Szél"
-
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mph"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "csomó"
-
-#: ../bin/indicator-weather.py:655
-msgid "Sunrise"
-msgstr "Napkelte"
-
-#: ../bin/indicator-weather.py:659
-msgid "Sunset"
-msgstr "Napnyugta"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:671
-msgid "N"
-msgstr "É"
-
-#: ../bin/indicator-weather.py:673
-msgid "NE"
-msgstr "ÉK"
-
-#: ../bin/indicator-weather.py:675
-msgid "E"
-msgstr "K"
-
-#: ../bin/indicator-weather.py:677
-msgid "SE"
-msgstr "DK"
-
-#: ../bin/indicator-weather.py:679
-msgid "S"
-msgstr "D"
-
-#: ../bin/indicator-weather.py:681
-msgid "SW"
-msgstr "DNy"
-
-#: ../bin/indicator-weather.py:683
-msgid "W"
-msgstr "Ny"
-
-#: ../bin/indicator-weather.py:685
-msgid "NW"
-msgstr "ÉNy"
-
-#: ../bin/indicator-weather.py:846
-msgid "Set Up Weather..."
-msgstr "Időjárás-jelentés beállítása…"
-
-#: ../bin/indicator-weather.py:941 ../bin/indicator-weather.py:989
-#: ../bin/indicator-weather.py:1059
-msgid "Refresh"
-msgstr "Frissítés"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "most frissítve"
-
-#: ../bin/indicator-weather.py:946
-msgid "Forecast"
-msgstr "Előrejelzés"
-
-#. #Preferences
-#: ../bin/indicator-weather.py:952
-msgid "Preferences..."
-msgstr "Beállítások…"
-
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "utoljára %s perce frissítve"
-
-#: ../bin/indicator-weather.py:1019
-msgid "Refreshing, please wait"
-msgstr "Frissítés, egy pillanat"
-
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "nemrég frissítve"
-
-#: ../bin/indicator-weather.py:1106
-msgid "Severe weather alert"
-msgstr "Időjárási riasztás"
-
-#: ../bin/indicator-weather.py:1311
+"X-Launchpad-Export-Date: 2011-05-27 06:03+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
+"Language: hu\n"
+
+#: ../src/service/indicator_weather_service/forecast.py:62
 msgid "Weather Forecast for "
 msgstr "Időjárás-előrejelzés: "
 
-#: ../bin/indicator-weather.py:1343
+#: ../src/service/indicator_weather_service/forecast.py:90
 msgid "High"
 msgstr "Legmagasabb"
 
-#: ../bin/indicator-weather.py:1345
+#: ../src/service/indicator_weather_service/forecast.py:95
 msgid "Low"
 msgstr "Legalacsonyabb"
 
-#: ../bin/indicator-weather.py:1438 ../data/ui/Assistant.ui.h:4
+#: ../src/service/indicator_weather_service/indicator.py:433
+msgid "Severe weather alert"
+msgstr "Időjárási riasztás"
+
+#: ../src/service/indicator_weather_service/indicator.py:556
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Richard Somlói https://launchpad.net/~ricsipontaz"
+
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "hiba"
+
+#: ../src/service/indicator_weather_service/menu.py:128
+msgid "Set Up Weather..."
+msgstr "Időjárás-jelentés beállítása…"
+
+#: ../src/service/indicator_weather_service/menu.py:137
+msgid "About..."
+msgstr "Névjegy…"
+
+#: ../src/service/indicator_weather_service/menu.py:146
+msgid "Preferences..."
+msgstr "Beállítások…"
+
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
+msgid "Refresh"
+msgstr "Frissítés"
+
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Figyelmeztetés…"
+
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "Nincs elérhető adat"
+
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Előrejelzés…"
+
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Frissítés"
+
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "kérem várjon"
+
+#: ../src/service/indicator_weather_service/menu.py:614
+msgid "just now"
+msgstr "épp most"
+
+#: ../src/service/indicator_weather_service/menu.py:618
+#, python-format
+msgid "%d min. ago"
+msgstr "%d perce"
+
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Címke:"
 
-#: ../bin/indicator-weather.py:1522
-msgid "Another instance of this program is already running"
-msgstr "Már fut a program egy másik példánya"
+#: ../src/service/indicator_weather_service/weather.py:204
+msgid "Condition"
+msgstr "Helyzet"
 
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Otthon</b>"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Hőmérséklet:"
 
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr "Hőindex:"
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr "Hőindex"
+
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Hőmérséklet és páratartalom"
+
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr "Humidex"
+
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr "Hőmérséklet és páratartalom (Kanada)"
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr "Hőmérséklet és széljárás"
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr "Hőmérséklet, páratartalom és széljárás (Ausztrália)"
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr "Harmatpont:"
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr "Harmatpont"
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Páratartalom:"
+
+#: ../src/service/indicator_weather_service/weather.py:306
+msgid "Humidity"
+msgstr "Páratartalom"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Látótávolság:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Látótávolság"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr "Csak a Yahoo! oldalról"
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr "Barométer:"
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr "Barométer"
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Szél:"
+
+#: ../src/service/indicator_weather_service/weather.py:347
+msgid "Wind"
+msgstr "Szél"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr "Napkelte és napnyugta"
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "Napkelte:"
+
+#: ../src/service/indicator_weather_service/weather.py:376
+msgid "Sunrise"
+msgstr "Napkelte"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "Napnyugta:"
+
+#: ../src/service/indicator_weather_service/weather.py:384
+msgid "Sunset"
+msgstr "Napnyugta"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr "Most:"
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "Ma:"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:57
+msgid "Tornado"
+msgstr "Tornádó"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:58
+msgid "Tropical storm"
+msgstr "Trópusi vihar"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:59
+msgid "Hurricane"
+msgstr "Hurrikán"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:60
+msgid "Severe thunderstorms"
+msgstr "Jelentős zivatarok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:61
+msgid "Thunderstorms"
+msgstr "Viharok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:62
+msgid "Mixed rain and snow"
+msgstr "Havas eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:64
+msgid "Mixed rain and sleet"
+msgstr "Ónos eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:65
+msgid "Mixed snow and sleet"
+msgstr "Havazás és jégeső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:66
+msgid "Freezing drizzle"
+msgstr "Jeges szitálás"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:67
+msgid "Drizzle"
+msgstr "Szitáló eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:68
+msgid "Freezing rain"
+msgstr "Fagyos eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:69
+#: ../src/service/indicator_weather_service/providers/yahoo.py:70
+msgid "Showers"
+msgstr "Záporok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:71
+msgid "Snow flurries"
+msgstr "Hózáporok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:72
+msgid "Light snow showers"
+msgstr "Könnyű hózápor"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:73
+msgid "Blowing snow"
+msgstr "Hófúvás"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:74
+msgid "Snow"
+msgstr "Hó"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:75
+msgid "Hail"
+msgstr "Jégeső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:76
+msgid "Sleet"
+msgstr "Ólmos eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:77
+msgid "Dust"
+msgstr "Por"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:78
+msgid "Foggy"
+msgstr "Ködös"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:79
+msgid "Haze"
+msgstr "Száraz légköri homály"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:80
+msgid "Smoky"
+msgstr "Füstös"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:81
+msgid "Blustery"
+msgstr "Erős széllökések"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:82
+msgid "Windy"
+msgstr "Szeles"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:83
+msgid "Cold"
+msgstr "Hideg"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:84
+msgid "Cloudy"
+msgstr "Felhős"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:85
+#: ../src/service/indicator_weather_service/providers/yahoo.py:86
+msgid "Mostly cloudy"
+msgstr "Nagyrészt felhős"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:87
+#: ../src/service/indicator_weather_service/providers/yahoo.py:88
+#: ../src/service/indicator_weather_service/providers/yahoo.py:102
+msgid "Partly cloudy"
+msgstr "Részben felhős"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:89
+msgid "Clear"
+msgstr "Tiszta"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:90
+msgid "Sunny"
+msgstr "Napsütés"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:91
+#: ../src/service/indicator_weather_service/providers/yahoo.py:92
+msgid "Fair"
+msgstr "Szép idő"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:93
+msgid "Mixed rain and hail"
+msgstr "Jeges eső"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:94
+msgid "Hot"
+msgstr "Hőség"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:95
+msgid "Isolated thunderstorms"
+msgstr "Elszigetelt viharok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:96
+#: ../src/service/indicator_weather_service/providers/yahoo.py:97
+msgid "Scattered thunderstorms"
+msgstr "Szórványosan zivatarok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:98
+msgid "Scattered showers"
+msgstr "Szórványosan záporok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:99
+#: ../src/service/indicator_weather_service/providers/yahoo.py:101
+msgid "Heavy snow"
+msgstr "Erős havazás"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:100
+msgid "Scattered snow showers"
+msgstr "Szórványosan hózáporok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:103
+msgid "Thundershowers"
+msgstr "Zivatarok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:104
+msgid "Snow showers"
+msgstr "Hózápor"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:105
+msgid "Isolated thundershowers"
+msgstr "Elszigetelt zivatarok"
+
+#: ../src/service/indicator_weather_service/providers/yahoo.py:106
+msgid "Unknown condition"
+msgstr ""
+
+#: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Hely hozzáadása"
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Hely:"
+#: ../data/ui/Assistant.ui:35
+msgid "Please search our database for your location:"
+msgstr ""
 
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr "Nevezze el a helyet"
+#: ../data/ui/Assistant.ui:75
+msgid "Search"
+msgstr "Keresés"
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:97
+msgid "Select a location"
+msgstr "Válasszon egy helyet"
+
+#: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Adja meg a hely nevét:"
 
-#: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Kérem adjon meg adjon meg egy helyet:"
+#: ../data/ui/Assistant.ui:137
+msgid "Name the location"
+msgstr "Nevezze el a helyet"
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -446,375 +466,154 @@ msgstr ""
 "Tekintse át a választásait alább. Ha valami nem megfelelő, akkor lépjen "
 "vissza, és válassza ki a helyes beállításokat."
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:206
+msgid "<b>Home</b>"
+msgstr "<b>Otthon</b>"
+
+#: ../data/ui/Assistant.ui:244
+msgid "Location:"
+msgstr "Hely:"
+
+#: ../data/ui/Assistant.ui:258
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
+#: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Tekintse át a választásait"
 
-#: ../data/ui/Assistant.ui.h:11
-msgid "Select a location"
-msgstr "Válasszon egy helyet"
-
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Bővebb előrejelzés"
-
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
-msgstr "Időjárás-jelentés a világ több pontjáról"
-
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Időjárás-jelentés"
-
-#~ msgid "Decreasing clouds"
-#~ msgstr "Csökkenő felhőzet"
-
-#~ msgid "Patchy fog"
-#~ msgstr "Foltokban ködös"
-
-#~ msgid "Areas fog"
-#~ msgstr "Helyenként ködös"
-
-#~ msgid "Dense fog"
-#~ msgstr "Sűrű köd"
-
-#~ msgid "Volcanic ash"
-#~ msgstr "Vulkáni hamu"
-
-#~ msgid "Clear sky"
-#~ msgstr "Derült ég"
-
-#~ msgid "Snow/rain"
-#~ msgstr "Hó vagy eső"
-
-#~ msgid "mile(s)"
-#~ msgstr "mérföld"
-
-#~ msgid "Wind Direction"
-#~ msgstr "Szélirány"
-
-#~ msgid "<big>Update every (min.)</big>"
-#~ msgstr "<big>Frissítési időköz (perc)</big>"
-
-#~ msgid "MPH"
-#~ msgstr "MPH"
-
-#~ msgid "Imperial"
-#~ msgstr "Angolszász"
-
-#~ msgid "<big>Locations</big>"
-#~ msgstr "<big>Helyek</big>"
-
-#~ msgid "<big>Notifications</big>"
-#~ msgstr "<big>Értesítések</big>"
-
-#~ msgid "<big>Metric Scale</big>"
-#~ msgstr "<big>Metrikus skála</big>"
-
-#~ msgid "<big>Wind Speed Unit</big>"
-#~ msgstr "<big>Szélsebesség mértékegysége</big>"
-
-#~ msgid "MPS"
-#~ msgstr "MPS"
-
-#~ msgid "SI"
-#~ msgstr "SI"
-
-#~ msgid "Increasing clouds"
-#~ msgstr "Növekvő felhőzet"
-
-#~ msgid "Few clouds"
-#~ msgstr "Kevés felhő"
-
-#~ msgid "Broken clouds"
-#~ msgstr "Szakadozott felhőzet"
-
-#~ msgid "Scattered clouds"
-#~ msgstr "Elszórtan felhős"
-
-#~ msgid "Overcast"
-#~ msgstr "Borult ég"
-
-#~ msgid "Fog"
-#~ msgstr "Köd"
-
-#~ msgid "Blowing dust"
-#~ msgstr "Porfúvás"
-
-#~ msgid "Clearing"
-#~ msgstr "Tisztul"
-
-#~ msgid "Gradual clearing"
-#~ msgstr "Fokozatosan tisztul"
-
-#~ msgid "Patchy ice fog"
-#~ msgstr "Foltokban jeges köd"
-
-#~ msgid "Blowing sand"
-#~ msgstr "Homokfúvás"
-
-#~ msgid "Areas haze"
-#~ msgstr "Helyenként száraz légköri homály"
-
-#~ msgid "Patchy haze"
-#~ msgstr "Foltokban száraz légköri homály"
-
-#~ msgid "Patchy freezing fog"
-#~ msgstr "Foltokban zúzmarás köd"
-
-#~ msgid "Areas freezing fog"
-#~ msgstr "Helyenként zúzmarás köd"
-
-#~ msgid "Areas ice fog"
-#~ msgstr "Helyenként jeges köd"
-
-#~ msgid "Ice fog"
-#~ msgstr "Jeges köd"
-
-#~ msgid "Freezing fog"
-#~ msgstr "Zúzmarás köd"
-
-#~ msgid "Smoke"
-#~ msgstr "Füst"
-
-#~ msgid "Ash"
-#~ msgstr "Hamu"
-
-#~ msgid "Areas ash"
-#~ msgstr "Helyenként hamu"
-
-#~ msgid "Patchy ash"
-#~ msgstr "Foltokban hamu"
-
-#~ msgid "Patchy smoke"
-#~ msgstr "Foltokban füst"
-
-#~ msgid "Areas smoke"
-#~ msgstr "Helyenként füst"
-
-#~ msgid "Freezing spray"
-#~ msgstr "Fagyos permet"
-
-#~ msgid "Areas frost"
-#~ msgstr "Helyenként fagy"
-
-#~ msgid "Frost"
-#~ msgstr "Fagy"
-
-#~ msgid "Patchy frost"
-#~ msgstr "Foltokban fagy"
-
-#~ msgid "Ice crystals"
-#~ msgstr "Jég"
-
-#~ msgid "Areas ice crystals"
-#~ msgstr "Helyenként jég"
-
-#~ msgid "Patchy ice crystals"
-#~ msgstr "Foltokban jég"
-
-#~ msgid "Blizzard"
-#~ msgstr "Hóvihar"
-
-#~ msgid "Light snow"
-#~ msgstr "Hószállingózás"
-
-#~ msgid "Chance snow showers"
-#~ msgstr "Hózápor előfordulhat"
-
-#~ msgid "Snow showers likely"
-#~ msgstr "Hózápor valószínű"
-
-#~ msgid "Slight chance snow/rain"
-#~ msgstr "Hó vagy eső lehet"
-
-#~ msgid "Snow/rain likely"
-#~ msgstr "Hó vagy eső valószínű"
-
-#~ msgid "Chance snow/rain"
-#~ msgstr "Hó vagy eső előfordulhat"
-
-#~ msgid "Chance wintry mix"
-#~ msgstr "Hó és eső előfordulhat"
-
-#~ msgid "Slight chance wintry mix"
-#~ msgstr "Hó és eső lehet"
-
-#~ msgid "Wintry mix likely"
-#~ msgstr "Hó és eső valószínű"
-
-#~ msgid "Slight chance rain"
-#~ msgstr "Eső lehet"
-
-#~ msgid "Slight chance snow showers"
-#~ msgstr "Hózápor lehet"
-
-#~ msgid "Slight chance rain showers"
-#~ msgstr "Zápor lehet"
-
-#~ msgid "Slight chance thunderstorms"
-#~ msgstr "Vihar lehet"
-
-#~ msgid "Slight chance rain/freezing rain"
-#~ msgstr "Eső/fagyos eső lehet"
-
-#~ msgid "Slight chance snow/sleet"
-#~ msgstr "Hó/ólmos eső lehet"
-
-#~ msgid "Slight chance drizzle"
-#~ msgstr "Szitáló eső lehet"
-
-#~ msgid "Slight chance sleet"
-#~ msgstr "Ólmos eső lehet"
-
-#~ msgid "Slight chance freezing rain"
-#~ msgstr "Fagyos eső lehet"
-
-#~ msgid "Chance rain showers"
-#~ msgstr "Zápor előfordulhat"
-
-#~ msgid "Chance snow/sleet"
-#~ msgstr "Hó/ólmos eső előfordulhat"
-
-#~ msgid "Chance sleet"
-#~ msgstr "Ólmos eső előfordulhat"
-
-#~ msgid "Chance rain"
-#~ msgstr "Eső előfordulhat"
-
-#~ msgid "Chance rain/freezing rain"
-#~ msgstr "Eső/fagyos eső előfordulhat"
-
-#~ msgid "Chance thunderstorms"
-#~ msgstr "Vihar előfordulhat"
-
-#~ msgid "Chance drizzle"
-#~ msgstr "Szitáló eső előfordulhat"
-
-#~ msgid "Chance freezing rain"
-#~ msgstr "Fagyos eső előfordulhat"
-
-#~ msgid "Sleet likely"
-#~ msgstr "Ólmos eső valószínű"
-
-#~ msgid "Snow/sleet"
-#~ msgstr "Hó/ólmos eső"
-
-#~ msgid "Snow/sleet likely"
-#~ msgstr "Hó/ólmos eső valószínű"
-
-#~ msgid "Wintry mix"
-#~ msgstr "Hó és eső"
-
-#~ msgid "Rain showers likely"
-#~ msgstr "Zápor valószínű"
-
-#~ msgid "Rain showers"
-#~ msgstr "Záporok"
-
-#~ msgid "Rain likely"
-#~ msgstr "Eső valószínű"
-
-#~ msgid "Rain"
-#~ msgstr "Eső"
-
-#~ msgid "Heavy rain"
-#~ msgstr "Heves esőzés"
-
-#~ msgid "Freezing drizzle likely"
-#~ msgstr "Jeges szitálás valószínű"
-
-#~ msgid "Chance freezing drizzle"
-#~ msgstr "Jeges szitálás előfordulhat"
-
-#~ msgid "Slight chance freezing drizzle"
-#~ msgstr "Jeges szitálás lehet"
-
-#~ msgid "Drizzle likely"
-#~ msgstr "Szitáló eső valószínű"
-
-#~ msgid "Freezing rain likely"
-#~ msgstr "Fagyos eső valószínű"
-
-#~ msgid "Rain/freezing rain likely"
-#~ msgstr "Eső/fagyos eső valószínű"
-
-#~ msgid "Rain/freezing rain"
-#~ msgstr "Eső/fagyos eső"
-
-#~ msgid "Storm"
-#~ msgstr "Vihar"
-
-#~ msgid "Thunderstorms likely"
-#~ msgstr "Vihar valószínű"
-
-#~ msgid "Dew Point"
-#~ msgstr "Harmatpont"
-
-#~ msgid "Sky"
-#~ msgstr "Ég"
-
-#~ msgid "Water spout"
-#~ msgstr "Tuba"
-
-#~ msgid "Condition"
-#~ msgstr "Helyzet"
-
-#~ msgid "Error retreiving condition"
-#~ msgstr "Hiba a helyzet lekérésekor"
-
-#~ msgid "Wind Chill"
-#~ msgstr "Hőérzet"
-
-#~ msgid "km"
-#~ msgstr "km"
-
-#~ msgid "Wind Speed"
-#~ msgstr "Szélsebesség"
-
-#~ msgid "Visibility"
-#~ msgstr "Látótávolság"
-
-#~ msgid "Connection problem"
-#~ msgstr "Kapcsolathiba"
-
-#~ msgid "High: "
-#~ msgstr "Magas: "
-
-#~ msgid "Low: "
-#~ msgstr "Alacsony: "
-
-#~ msgid "Mostly sunny"
-#~ msgstr "Nagyrészt napos"
-
-#~ msgid "Partly sunny"
-#~ msgstr "Részlegesen napos"
-
-#~ msgid "If this is not correct, please go back and select a new city."
-#~ msgstr "Ha nem megfelelő, akkor lépjen vissza, és válasszon másik várost."
-
-#~ msgid "<big>Rungis, France</big>"
-#~ msgstr "<big>Rungis, Franciaország</big>"
-
-#~ msgid "Confirm choice"
-#~ msgstr "Erősítse meg a választást"
-
-#~ msgid "Becoming sunny"
-#~ msgstr "Kiderül"
-
-#~ msgid "Becoming cloudy"
-#~ msgstr "Felhősödik"
-
-#~ msgid "Clearing late"
-#~ msgstr "Mostanában tisztul"
-
-#~ msgid "You have selected:"
-#~ msgstr "Ezt választotta:"
-
-#~ msgid "Please select a location from below:"
-#~ msgstr "Válasszon alább egy helyet:"
-
-#~ msgid "Humidex"
-#~ msgstr "Humidex"
+#: ../data/ui/PreferencesDialog.ui:31
+msgid "Weather Indicator Preferences"
+msgstr "Időjárás-jelentés beállításai"
+
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr "Csak az időjárási ikon megjelenítése"
+
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr "Csak a hőmérséklet megjelenítése"
+
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr "Időjárási ikon és hőmérséklet megjelenítése"
+
+#: ../data/ui/PreferencesDialog.ui:183
+msgid "<b>Notifications</b>"
+msgstr "<b>Értesítések</b>"
+
+#: ../data/ui/PreferencesDialog.ui:203
+msgid "No notifications"
+msgstr "Nincsenek értesítések"
+
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Értesítés csak riasztás esetén"
+
+#: ../data/ui/PreferencesDialog.ui:237
+msgid "Use notifications to give every weather condition change"
+msgstr "Értesítés minden időjárás-változásról"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr "Minden helynél alkalmaz"
+
+#: ../data/ui/PreferencesDialog.ui:300
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Időjárási adatok forrása</b>"
+
+#: ../data/ui/PreferencesDialog.ui:320
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui:336
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui:380
+msgid "Update every"
+msgstr "Frissítés"
+
+#: ../data/ui/PreferencesDialog.ui:412
+msgid "minutes"
+msgstr "percenként"
+
+#: ../data/ui/PreferencesDialog.ui:440
+msgid "General"
+msgstr "Általános"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr "Előrejelzés megjelenítése"
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr "Időjárás megjelenítés minden helynél"
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr "Irreleváns mezők elrejtése"
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:559
+msgid "Label"
+msgstr "Címke"
+
+#: ../data/ui/PreferencesDialog.ui:570
+msgid "Notes"
+msgstr "Megjegyzések"
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr "Menü"
+
+#: ../data/ui/PreferencesDialog.ui:627
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Hőmérsékleti skála</b>"
+
+#: ../data/ui/PreferencesDialog.ui:647
+msgid "Imperial (°F)"
+msgstr "Angolszász (°F)"
+
+#: ../data/ui/PreferencesDialog.ui:663
+msgid "SI (metric, °C)"
+msgstr "SI (metrikus, °C)"
+
+#: ../data/ui/PreferencesDialog.ui:703
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Szélsebesség egysége</b>"
+
+#: ../data/ui/PreferencesDialog.ui:723
+msgid "Meter per second (m/s)"
+msgstr "Méter per másodperc (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui:739
+msgid "Miles per hour (mph)"
+msgstr "Mérföld per óra (mérföld/óra)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr "Kilométer per óra (kph)"
+
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Beaufort"
+msgstr "Beaufort"
+
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Knots"
+msgstr "Csomó"
+
+#: ../data/ui/PreferencesDialog.ui:826
+msgid "Units"
+msgstr "Mértékegységek"
+
+#: ../data/ui/PreferencesDialog.ui:931
+msgid "Locations"
+msgstr "Helyek"
