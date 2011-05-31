@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-05-21 17:54+0000\n"
-"Last-Translator: Silverman <Unknown>\n"
+"PO-Revision-Date: 2011-05-30 17:25+0000\n"
+"Last-Translator: Adi <Unknown>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-22 05:56+0000\n"
+"X-Launchpad-Export-Date: 2011-05-31 05:52+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 
 #: ../data/ui/PreferencesDialog.ui:183
@@ -200,11 +200,11 @@ msgstr "Pâclă"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:80
 msgid "Smoky"
-msgstr ""
+msgstr "Fumuriu"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:81
 msgid "Blustery"
-msgstr ""
+msgstr "Rafale de vânt"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:82
 msgid "Windy"
@@ -274,7 +274,7 @@ msgstr "Ninsori izolate"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:103
 msgid "Thundershowers"
-msgstr ""
+msgstr "Ploi torențiale"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:104
 msgid "Snow showers"
@@ -282,7 +282,7 @@ msgstr "Averse de ninsoare"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:105
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Ploi torențiale izolate"
 
 #: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
@@ -359,7 +359,7 @@ msgstr "NV"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
-msgstr ""
+msgstr "Setează vremea"
 
 #: ../src/service/indicator_weather_service/menu.py:156
 #: ../src/service/indicator_weather_service/menu.py:609
