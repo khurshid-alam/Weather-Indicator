@@ -39,9 +39,6 @@ import types
 #import math
 import commands, threading
 import logging, logging.handlers
-import couchdb
-from desktopcouch.records.server import CouchDatabase
-from desktopcouch.records.record import Record as CouchRecord
 import pywapi
 
 import gettext
@@ -58,102 +55,139 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "11.05.30 'Cloudy 7'"
+VERSION = "11.05.31 'Cloudy 8'"
 
 from indicator_weather.helpers import *
+
+INFO_TYPE            = 'type'
+INFO_SETTING         = 'setting'
 
 class Settings:
     """ Class to read/write settings """
     db = None
+    BASE_KEY             = 'apps.indicators.weather'
+    WEATHER_KEY          = 'weather'
+    LOCATIONS_KEY        = 'locations'
+    INDICATOR_DISPLAY    = 'show_label'
+    NOTIFICATIONS        = 'notif'
+    WEATHER_SOURCE       = 'data_source'
+    REFRESH_RATE         = 'refresh_rate'
+    METRIC_SYSTEM        = 'unit'
+    WIND_UNIT            = 'wind'
+    PLACECHOSEN          = 'placechosen'
+    PLACES               = 'places'
 
-    # Open the DB and prepare views
-    #TODO: Create view when package is installed?
+    # info dict
+    # INFO_TYPE    : Python type
+    # INFO_SETTING : dconf setting name
+    INFO = {
+        INDICATOR_DISPLAY : {
+            INFO_TYPE : types.IntType,
+            INFO_SETTING : 'indicator-display'
+        },
+        NOTIFICATIONS : {
+            INFO_TYPE : types.StringType,
+            INFO_SETTING : 'notifications'
+        },
+        WEATHER_SOURCE : {
+            INFO_TYPE : types.StringType,
+            INFO_SETTING : 'weather-source'
+        },
+        REFRESH_RATE : {
+            INFO_TYPE : types.IntType,
+            INFO_SETTING : 'refresh-rate'
+        },
+        METRIC_SYSTEM : {
+            INFO_TYPE : types.StringType,
+            INFO_SETTING : 'metric-system'
+        },
+        WIND_UNIT : {
+            INFO_TYPE : types.StringType,
+            INFO_SETTING : 'wind-unit'
+        },
+        PLACECHOSEN : {
+            INFO_TYPE : types.IntType,
+            INFO_SETTING: 'placechosen'
+        },
+        PLACES : {
+            INFO_TYPE : types.ListType,
+            INFO_SETTING: 'places'
+        },
+    }
+
+    # Open the DB
     def prepare_settings_store(self):
         log.debug("Settings: preparing settings store")
-        while True:
-            try:
-                self.db = CouchDatabase("weatherindicator", create = True)
-
-                # Settings view
-                self.settings_design_doc = "settings"
-                self.settings_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.name, doc);}}" % self.settings_design_doc
-                self.db.add_view("get_setting", self.settings_view, None, self.settings_design_doc)
-
-                # Cached weather view
-                self.weather_design_doc = "weather"
-                self.weather_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.weather_design_doc
-                self.db.add_view("get_weather", self.weather_view, None, self.weather_design_doc)
-
-                # Location info view
-                self.location_design_doc = "location"
-                self.location_view = "function(doc) {if (doc.record_type == '%s') {emit(doc.location, doc)} ;}" % self.location_design_doc
-                self.db.add_view("get_location", self.location_view, None, self.location_design_doc)
-                break
-            except dbus.exceptions.DBusException as e:
-                log.debug("Settings: DBus exception occurred:\n %s" % str(e))
-                time.sleep(10)
-            except Exception as e:
-                log.debug("Settings: exception occurred while creating views:\n %s" % str(e))
-                log.debug("Settings: dropping the DB")
-                
-                server = self.db._server
-                del server['weatherindicator']
+        try:
+            self.db = Gio.Settings.new(self.BASE_KEY)
+        except Exception as e:
+            log.debug("Settings: exception occurred while opening settings:\n %s" % str(e))
 
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
-        log.debug("Setting: getting value for %s" % setting)
-        view = self.db.execute_view("get_setting", self.settings_design_doc)[setting]
-        if hasattr(view, 'rows') and len(view.rows) > 0:
-            if return_id:
-                return str(view.rows[0].value['_id'])
-            else:
-                return str(view.rows[0].value['value'])
+        log.debug("Settings: getting value for %s" % setting)
+        setting_name = Settings.INFO[setting][INFO_SETTING]
+        if setting_name in self.db.list_keys():
+            setting_type = Settings.INFO[setting][INFO_TYPE]
+            get_func = {
+                types.IntType:     self.db.get_int,
+                types.StringType:  self.db.get_string,
+                types.BooleanType: self.db.get_boolean,
+                types.ListType:    self.db.get_string,
+                types.DictType:    self.db.get_string,
+                types.NoneType:    self.db.get_value,
+            }[setting_type]
+            return get_func(setting_name)
         else:
-            log.debug("Setting: can't find value for %s" % setting)
+            self.log.debug("Settings: can't find value for %s" % setting)
             return None
 
     # Set a setting value
     def set_value(self, setting, value):
-        log.debug("Setting: setting '%s'='%s'" % (setting, value))
-        self.record = {
-            "name" : setting,
-            "value": value
-        }
-        #Update previously created document, if exists
-        old_doc_id = self.get_value(setting, return_id=True)
-        if old_doc_id != None:
-            log.debug("Setting: setting '%s' was updated" % setting)
-            self.db.update_fields(old_doc_id, self.record)
+        
+        value = '' if value is None else value
+        value = str(value) if type(value) is types.ListType else value
+        log.debug("Settings: setting '%s'='%s'" % (setting, value))
+
+        setting_name = Settings.INFO[setting][INFO_SETTING]
+        if setting_name in self.db.list_keys():
+            setting_type = Settings.INFO[setting][INFO_TYPE]
+            set_func = {
+                types.IntType:     self.db.set_int,
+                types.StringType:  self.db.set_string,
+                types.BooleanType: self.db.set_boolean,
+                types.ListType:    self.db.set_string,
+                types.DictType:    self.db.set_string,
+                types.NoneType:    self.db.set_value,
+            }[setting_type]
+            set_func(setting_name, value)
         else:
-            log.debug("Setting: setting '%s' was created" % setting)
-            while True:
-                try:
-                    self.db.put_record(CouchRecord(self.record, self.settings_design_doc))
-                    break;
-                except Exception as e:
-                    log.debug("Settings: exception occurred:\n %s" % str(e))
-                    time.sleep(10)
+            log.debug( \
+                "Settings: schema for '%s' not found, aborting" % setting)
 
     # Get cached weather by location code.
     # If return_id is True, only document id is returned, otherwise - full weather data
     def get_weather(self, location_code, return_id = False):
-        log.debug("Setting: getting cached weather for %s" % location_code)
-        view = self.db.execute_view("get_weather", self.weather_design_doc)[location_code]
-        if hasattr(view, 'rows') and len(view.rows) > 0:
-            if return_id:
-                return str(view.rows[0].value['_id'])
+        log.debug("Settings: getting cached weather for %s" % \
+            location_code)
+        if self.WEATHER_KEY in self.db.list_keys():
+            cached_weather_string = self.db.get_string(self.WEATHER_KEY)
+            cached_weather = {} if cached_weather_string == ''\
+                else eval(cached_weather_string)
+            if location_code in cached_weather.keys():
+                return str(cached_weather[location_code])
             else:
-                return str(view.rows[0].value['data'])
+                log.debug(\
+                    "Settings: can't find value for %s" % location_code)
+                return None
         else:
-            log.debug("Setting: can't find cached weather for %s" % location_code)
+            log.debug("Settings: can't find %s setting" % WEATHER_KEY)
             return None
 
     # Save weather info in cache for specific location
     def save_weather(self, weather, location_code):
-        log.debug("Setting: Saving cached weather data")
-        self.record = {
-          "location" : location_code,
-          "data"      : {
+              
+        record = {
             "label"    : weather.get_temperature(needs_rounding=True),
             "condition": weather.get_condition_label(),
             "icon"     : weather.get_icon_name(),
@@ -163,64 +197,51 @@ class Settings:
             "wind"     : weather.get_wind_label(),
             "sunrise"  : weather.get_sunrise_label(),
             "sunset"   : weather.get_sunset_label()
-          }
         }
-        #Update previously created document, if exists
-        old_doc_id = self.get_weather(location_code, return_id=True)
-        if old_doc_id != None:
-            self.db.update_fields(old_doc_id, self.record)
-        else:    
-            while True:
-                try:
-                    self.db.put_record(CouchRecord(self.record, self.weather_design_doc))
-                    break;
-                except Exception as e:
-                    log.debug("Settings: exception occurred, retrying. exception:\n %s" % str(e))
-                    time.sleep(3)
+        log.debug("Settings: setting '%s'='%s'" % (location_code, record))
+
+        if self.WEATHER_KEY in self.db.list_keys():
+            cached_weather_string = self.db.get_string(self.WEATHER_KEY)
+            cached_weather = {} if cached_weather_string == ''\
+                else eval(cached_weather_string)
+            cached_weather[location_code] = record
+            cached_weather_string = str(cached_weather)
+            self.db.set_string(self.WEATHER_KEY, cached_weather_string)
+        else:
+            log.debug(\
+                "Settings: schema for '%s' not found, aborting" % setting)
 
     # Get location details by location code
     # If return_id is True, only document id is returned, otherwise - full location data
     def get_location_details(self, location_code, return_id = False):
-        log.debug("Setting: getting location details for %s" % location_code)
-        view = self.db.execute_view("get_location", self.location_design_doc)[location_code]
-        if hasattr(view, 'rows') and len(view.rows) > 0:
-            if return_id:
-                return str(view.rows[0].value['_id'])
+        if self.LOCATIONS_KEY in self.db.list_keys():
+            locations_string = self.db.get_string(self.LOCATIONS_KEY)
+            locations = {} if locations_string == ''\
+                else eval(locations_string)
+            if location_code in locations.keys():
+                return str(locations[location_code])
             else:
-                return str(view.rows[0].value['data'])
+                log.debug(\
+                    "Settings: can't find value for %s" % location_code)
+                return None
         else:
-            log.debug("Setting: can't find location details for %s" % location_code)
+            log.debug("Settings: can't find location details for %s" % \
+                location_code)
             return None
 
     # Save location details
     def save_location_details(self, location_details, location_code):
-        log.debug("Setting: Saving location details data")
-        self.record = {
-          "location" : location_code,
-          "data"      : {
-            "label"    : location_details['label'],
-            "full name": location_details['full name'],
-            "latitude" : location_details['latitude'],
-            "longitude": location_details['longitude'],
-          }
-        }
-        for key in ("google id", "yahoo id", "noaa id"):
-            if key in location_details:
-                self.record["data"][key]=location_details[key]
+        log.debug("Settings: setting '%s'='%s'" %\
+            (location_code, location_details))
 
-        # Update previously created element, if exists
-        old_doc_id = self.get_location_details(location_code, return_id=True)
-        if old_doc_id != None:
-            self.db.update_fields(old_doc_id, self.record)
-        else:
-            while True:
-                try:
-                    self.db.put_record(CouchRecord(self.record, self.location_design_doc))
-                    break;
-                except Exception as e:
-                    log.debug("Settings: exception occurred, retrying. exception:\n %s" % str(e))
-                    time.sleep(3)
-
+        if self.LOCATIONS_KEY in self.db.list_keys():
+            locations_string = self.db.get_string(self.LOCATIONS_KEY)
+            locations = {} if locations_string == ''\
+                else eval(locations_string)
+            locations[location_code] = location_details
+            locations_string = str(locations)
+            self.db.set_string(self.LOCATIONS_KEY, locations_string)
+            
 class MetricSystem:
     """ Class with available metric systems units """
     SI = 1
@@ -1221,7 +1242,7 @@ class indicator_weather(threading.Thread):
     def show_cached_weather(self):
         try:
             self.menu_update_lock.acquire(True)
-
+            self.previous_condition = None
             cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
             if cached_weather is not None:
                 cached_weather = eval(cached_weather)
@@ -1235,6 +1256,7 @@ class indicator_weather(threading.Thread):
                     self.winder.set_icon(self.icon)
 
                 self.city_show.set_label(self.places[self.placechosen][1])
+                self.previous_condition = cached_weather['condition']
                 self.cond_show.set_label(cached_weather['condition'])
                 self.temp_show.set_label(cached_weather['temper'])
                 if cached_weather['humidex'] != None:
@@ -1316,7 +1338,7 @@ class indicator_weather(threading.Thread):
             self.update_label(weather.get_temperature(needs_rounding=True))
 
             # Notify user, if notifications are enabled
-            if self.condition != self.settings.get_value("current") and self.notif == 'U':
+            if self.condition != self.previous_condition and self.notif == 'U':
                 # Weather condition has changed
                 log.debug("Indicator: updateWeather: weather has changed, notify")
                 self.notify(self.condition, self.icon)
@@ -1325,7 +1347,7 @@ class indicator_weather(threading.Thread):
                 log.debug("Indicator: updateWeather: severe condition notification")
                 self.notify(self.condition, self.icon, severe=True)
 
-            self.settings.set_value("current", self.condition)
+            self.previous_condition = self.condition
 
         except Exception, e:
             log.error(e)
@@ -1455,14 +1477,15 @@ class PreferencesDialog(gtk.Dialog):
         log.debug("Preferences: Loading places")
         if wi.places != None:
             for place in wi.places:
-                log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
-                newplace = list()
-                newplace.append(place[1])
-                newplace.append(place[0])
-                newplace.append(wi.settings.get_location_details(place[0]))
+                if len(place)>1:
+                    log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
+                    newplace = list()
+                    newplace.append(place[1])
+                    newplace.append(place[0])
+                    newplace.append(wi.settings.get_location_details(place[0]))
             
-                self.builder.get_object('citieslist').append(newplace)
-            self.builder.get_object('ok_button').set_sensitive(True)
+                    self.builder.get_object('citieslist').append(newplace)
+                self.builder.get_object('ok_button').set_sensitive(True)
             
         self.builder.connect_signals(self)
 
