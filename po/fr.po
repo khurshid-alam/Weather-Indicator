@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-05-20 09:51+0000\n"
-"Last-Translator: Launchpad Translations Administrators "
-"<rosetta@launchpad.net>\n"
+"PO-Revision-Date: 2011-06-01 04:40+0000\n"
+"Last-Translator: François Laurent <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
+"X-Launchpad-Export-Date: 2011-06-01 05:42+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: fr\n"
 
@@ -38,11 +37,14 @@ msgstr "Alerte méteo importante"
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  CHABOT Simon https://launchpad.net/~simon-chabot\n"
+"  François Laurent https://launchpad.net/~francois.laurent"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "erreur"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
@@ -50,7 +52,7 @@ msgstr "Configurer la météo..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr ""
+msgstr "À Propos..."
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
@@ -65,32 +67,32 @@ msgstr "Actualiser"
 
 #: ../src/service/indicator_weather_service/menu.py:167
 msgid "Warning..."
-msgstr ""
+msgstr "Attention…"
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "Aucune donnée disponible."
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "Prévision..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "Actualisation"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "Patientez"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
-msgstr ""
+msgstr "Actuellement"
 
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "il y a %d min."
 
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
@@ -103,31 +105,31 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
-msgstr ""
+msgstr "Température :"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
-msgstr ""
+msgstr "Indice de chaleur:"
 
 #: ../src/service/indicator_weather_service/weather.py:237
 msgid "Heat index"
-msgstr ""
+msgstr "Indice de chaleur"
 
 #: ../src/service/indicator_weather_service/weather.py:238
 msgid "Temperature and humidity"
-msgstr ""
+msgstr "Température et humidité"
 
 #: ../src/service/indicator_weather_service/weather.py:246
 msgid "Humidex:"
-msgstr ""
+msgstr "Indice d'humidité :"
 
 #: ../src/service/indicator_weather_service/weather.py:247
 msgid "Humidex"
-msgstr ""
+msgstr "Indice d'humidité"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "Température et humidité"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
@@ -139,15 +141,15 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
-msgstr ""
+msgstr "Température et vent"
 
 #: ../src/service/indicator_weather_service/weather.py:266
 msgid "Feels like:"
-msgstr ""
+msgstr "Ressentie :"
 
 #: ../src/service/indicator_weather_service/weather.py:267
 msgid "Feels like"
-msgstr ""
+msgstr "Ressentie"
 
 #: ../src/service/indicator_weather_service/weather.py:268
 msgid "Heat index or wind chill"
@@ -175,19 +177,19 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "Température, humidité et vent (Australie)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
-msgstr ""
+msgstr "température de rosée"
 
 #: ../src/service/indicator_weather_service/weather.py:297
 msgid "Dewpoint"
-msgstr ""
+msgstr "Température de rosée"
 
 #: ../src/service/indicator_weather_service/weather.py:305
 msgid "Humidity:"
-msgstr ""
+msgstr "Humidité :"
 
 #: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
@@ -195,28 +197,28 @@ msgstr "Humidité"
 
 #: ../src/service/indicator_weather_service/weather.py:314
 msgid "Visibility:"
-msgstr ""
+msgstr "Visibilité :"
 
 #: ../src/service/indicator_weather_service/weather.py:315
 msgid "Visibility"
-msgstr ""
+msgstr "Visibilité"
 
 #: ../src/service/indicator_weather_service/weather.py:316
 #: ../src/service/indicator_weather_service/weather.py:338
 msgid "Only from Yahoo!"
-msgstr ""
+msgstr "Seulement depuis Yahoo!"
 
 #: ../src/service/indicator_weather_service/weather.py:336
 msgid "Barometer:"
-msgstr ""
+msgstr "Baromètre :"
 
 #: ../src/service/indicator_weather_service/weather.py:337
 msgid "Barometer"
-msgstr ""
+msgstr "Baromètre"
 
 #: ../src/service/indicator_weather_service/weather.py:346
 msgid "Wind:"
-msgstr ""
+msgstr "Vent :"
 
 #: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
@@ -224,7 +226,7 @@ msgstr "Vent"
 
 #: ../src/service/indicator_weather_service/weather.py:365
 msgid "Sun:"
-msgstr ""
+msgstr "Soleil :"
 
 #: ../src/service/indicator_weather_service/weather.py:366
 msgid "Sun"
@@ -232,11 +234,11 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:367
 msgid "Sunrise and sunset"
-msgstr ""
+msgstr "Lever et coucher de soleil"
 
 #: ../src/service/indicator_weather_service/weather.py:375
 msgid "Sunrise:"
-msgstr ""
+msgstr "Levé du soleil :"
 
 #: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
@@ -244,7 +246,7 @@ msgstr "Lever du soleil"
 
 #: ../src/service/indicator_weather_service/weather.py:383
 msgid "Sunset:"
-msgstr ""
+msgstr "Couché du soleil :"
 
 #: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
@@ -252,11 +254,11 @@ msgstr "Coucher du soleil"
 
 #: ../src/service/indicator_weather_service/weather.py:1283
 msgid "Now:"
-msgstr ""
+msgstr "Actuellement :"
 
 #: ../src/service/indicator_weather_service/weather.py:1291
 msgid "Today:"
-msgstr ""
+msgstr "Aujourd'hui :"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
@@ -431,7 +433,7 @@ msgstr "Averses orageuses isolées"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:106
 msgid "Unknown condition"
-msgstr ""
+msgstr "Conditions inconnues"
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
@@ -443,7 +445,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui:75
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #: ../data/ui/Assistant.ui:97
 msgid "Select a location"
@@ -487,7 +489,7 @@ msgstr "Configuration de l'indicateur météo"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
-msgstr ""
+msgstr "<b>Indicateur</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
@@ -495,11 +497,11 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
-msgstr ""
+msgstr "Afficher seulement la température"
 
 #: ../data/ui/PreferencesDialog.ui:143
 msgid "Show weather icon and temperature"
-msgstr ""
+msgstr "Afficher l'icone de la météo et de la température"
 
 #: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
@@ -520,7 +522,7 @@ msgstr "Afficher les notifications pour tous les changements météorologiques"
 
 #: ../data/ui/PreferencesDialog.ui:268
 msgid "Apply for all locations"
-msgstr ""
+msgstr "Appliquer pour tous les lieux"
 
 #: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"
@@ -548,15 +550,15 @@ msgstr "Général"
 
 #: ../data/ui/PreferencesDialog.ui:460
 msgid "Show forecast"
-msgstr ""
+msgstr "Afficher les prévisions"
 
 #: ../data/ui/PreferencesDialog.ui:475
 msgid "Show weather for all locations"
-msgstr ""
+msgstr "Afficher la météo pour tous les lieux"
 
 #: ../data/ui/PreferencesDialog.ui:490
 msgid "Hide irrelevant fields"
-msgstr ""
+msgstr "Masquer les champs impertinants"
 
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
@@ -572,7 +574,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 #: ../data/ui/PreferencesDialog.ui:627
 msgid "<b>Temperature Scale</b>"
@@ -600,7 +602,7 @@ msgstr "Mille par heure (mi/h)"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Km per hour (kph)"
-msgstr ""
+msgstr "Kilomètre par heure (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
