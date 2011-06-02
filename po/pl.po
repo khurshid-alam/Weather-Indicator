@@ -8,14 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-05-20 09:51+0000\n"
-"Last-Translator: Launchpad Translations Administrators "
-"<rosetta@launchpad.net>\n"
+"PO-Revision-Date: 2011-06-01 07:21+0000\n"
+"Last-Translator: fioletowyb <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
+"X-Launchpad-Export-Date: 2011-06-02 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: pl\n"
 
@@ -38,11 +37,13 @@ msgstr "Poważne ostrzeżenie pogodowe"
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  fioletowyb https://launchpad.net/~fioletowyb"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "błąd"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
@@ -50,7 +51,7 @@ msgstr "Ustaw pogodę..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr ""
+msgstr "O programie..."
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
@@ -69,28 +70,28 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "Brak dostępnych danych"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "Prognoza..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "Odświeżanie"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "proszę czekać"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
-msgstr ""
+msgstr "przed chwilą"
 
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "%d min. temu"
 
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
@@ -99,7 +100,7 @@ msgstr "Etykieta:"
 
 #: ../src/service/indicator_weather_service/weather.py:204
 msgid "Condition"
-msgstr ""
+msgstr "Stan pogody"
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"

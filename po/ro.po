@@ -6,112 +6,259 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-05-30 17:25+0000\n"
-"Last-Translator: Adi <Unknown>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-06-01 12:49+0000\n"
+"Last-Translator: Dan Telecan <telecan_dan@yahoo.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-31 05:52+0000\n"
+"X-Launchpad-Export-Date: 2011-06-02 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
+"Language: ro\n"
 
-#: ../data/ui/PreferencesDialog.ui:183
-msgid "<b>Notifications</b>"
-msgstr "<b>Notificări</b>"
+#: ../src/service/indicator_weather_service/forecast.py:62
+msgid "Weather Forecast for "
+msgstr "Prognoza pentru "
 
-#: ../data/ui/PreferencesDialog.ui:627
-msgid "<b>Temperature Scale</b>"
-msgstr "Unitate temperatură"
+#: ../src/service/indicator_weather_service/forecast.py:90
+msgid "High"
+msgstr "Ridicat(ă)"
 
-#: ../data/ui/PreferencesDialog.ui:300
-msgid "<b>Weather Data Source</b>"
-msgstr "Sursă informații meteo"
+#: ../src/service/indicator_weather_service/forecast.py:95
+msgid "Low"
+msgstr "Scăzut(ă)"
 
-#: ../data/ui/PreferencesDialog.ui:703
-msgid "<b>Wind Speed Unit</b>"
-msgstr "Unitate viteză vânt"
+#: ../src/service/indicator_weather_service/indicator.py:433
+msgid "Severe weather alert"
+msgstr "Alertă vreme severă"
 
-#: ../data/ui/PreferencesDialog.ui:771
-msgid "Beaufort"
-msgstr "Beaufort"
+#: ../src/service/indicator_weather_service/indicator.py:556
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Adi https://launchpad.net/~aditzah-z\n"
+"  Dan Telecan https://launchpad.net/~telecan-dan"
 
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Activează Weather Indicator Applet"
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "eroare"
 
-#: ../data/ui/PreferencesDialog.ui:440
-msgid "General"
-msgstr "General"
+#: ../src/service/indicator_weather_service/menu.py:128
+msgid "Set Up Weather..."
+msgstr "Setează vremea"
 
-#: ../data/ui/PreferencesDialog.ui:320
-msgid "Google"
-msgstr "Google"
+#: ../src/service/indicator_weather_service/menu.py:137
+msgid "About..."
+msgstr "Despre..."
 
-#: ../data/ui/PreferencesDialog.ui:647
-msgid "Imperial (°F)"
-msgstr "Imperial (°F)"
+#: ../src/service/indicator_weather_service/menu.py:146
+msgid "Preferences..."
+msgstr "Preferințe..."
 
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilometri pe oră (km/h)"
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
+msgid "Refresh"
+msgstr "Actualizează"
 
-#: ../data/ui/PreferencesDialog.ui:787
-msgid "Knots"
-msgstr "Noduri"
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Avertisment..."
 
-#: ../data/ui/PreferencesDialog.ui:931
-msgid "Locations"
-msgstr "Locații"
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "Nu există date disponibile"
 
-#: ../data/ui/PreferencesDialog.ui:723
-msgid "Meter per second (m/s)"
-msgstr "Metri pe secundă (m/s)"
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Prognoză..."
 
-#: ../data/ui/PreferencesDialog.ui:739
-msgid "Miles per hour (mph)"
-msgstr "Mile pe oră (mi/h)"
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Se actualizează"
 
-#: ../data/ui/PreferencesDialog.ui:203
-msgid "No notifications"
-msgstr "Fără notificări"
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "așteptați"
 
-#: ../data/ui/PreferencesDialog.ui:220
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Folosește notificările doar pentru alerte de vreme severă"
+#: ../src/service/indicator_weather_service/menu.py:614
+msgid "just now"
+msgstr "acum"
 
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
+#: ../src/service/indicator_weather_service/menu.py:618
+#, python-format
+msgid "%d min. ago"
+msgstr "de %d min."
 
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "Arată informații ajutătoare în meniu"
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
+msgid "Label:"
+msgstr "Etichetă:"
 
-#: ../data/ui/PreferencesDialog.ui:826
-msgid "Units"
-msgstr "Unități"
+#: ../src/service/indicator_weather_service/weather.py:204
+msgid "Condition"
+msgstr "Condiţii"
 
-#: ../data/ui/PreferencesDialog.ui:380
-msgid "Update every"
-msgstr "Actualizează la fiecare"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Temperatură:"
 
-#: ../data/ui/PreferencesDialog.ui:237
-msgid "Use notifications to give every weather condition change"
-msgstr "Folosește notificările pentru toate schimbările de vreme"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr "Indice de căldură:"
 
-#: ../data/ui/PreferencesDialog.ui:31
-msgid "Weather Indicator Preferences"
-msgstr "Preferințe Weather Indicator"
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr "Indice de căldură"
 
-#: ../data/ui/PreferencesDialog.ui:336
-msgid "Yahoo!"
-msgstr "Yahoo!"
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Temperatura și umiditatea"
 
-#: ../data/ui/PreferencesDialog.ui:412
-msgid "minutes"
-msgstr "minute"
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr "Temperatura resimțită:"
+
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr "Temperatura resimțită"
+
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr "Temperatură și umiditate (Canada)"
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr "Temperatură și vânt"
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "Se simte ca:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr "Se simte ca"
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr "Se simte ca (CA):"
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr "Se simte ca (CA)"
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr "Se simte ca (AU):"
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr "Se simte ca (AU)"
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr "Temperatură, umiditate și vânt (Australia)"
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr "Punct de rouă:"
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr "Punct de rouă"
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Umiditate:"
+
+#: ../src/service/indicator_weather_service/weather.py:306
+msgid "Humidity"
+msgstr "Umiditate"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Vizibilitate:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Vizibilitate"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr "Doar de la Yahoo!"
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr "Barometru:"
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr "Barometru"
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Vânt:"
+
+#: ../src/service/indicator_weather_service/weather.py:347
+msgid "Wind"
+msgstr "Vânt"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr "Soare:"
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr "Soare"
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr "Răsărit și apus"
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "Răsărit:"
+
+#: ../src/service/indicator_weather_service/weather.py:376
+msgid "Sunrise"
+msgstr "Răsărit"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "Apus:"
+
+#: ../src/service/indicator_weather_service/weather.py:384
+msgid "Sunset"
+msgstr "Asfinţit"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr "Acum:"
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "Azi:"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
@@ -284,167 +431,33 @@ msgstr "Averse de ninsoare"
 msgid "Isolated thundershowers"
 msgstr "Ploi torențiale izolate"
 
-#: ../src/service/indicator_weather_service/weather.py:306
-msgid "Humidity"
-msgstr "Umiditate"
-
-#: ../bin/indicator-weather.py:578
-msgid "Pressure"
-msgstr "Presiune"
-
-#: ../bin/indicator-weather.py:601
-msgid "Temperature"
-msgstr "Temperatură"
-
-#: ../src/service/indicator_weather_service/weather.py:347
-msgid "Wind"
-msgstr "Vânt"
-
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mi/h"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "noduri"
-
-#: ../src/service/indicator_weather_service/weather.py:376
-msgid "Sunrise"
-msgstr "Răsărit"
-
-#: ../src/service/indicator_weather_service/weather.py:384
-msgid "Sunset"
-msgstr "Asfinţit"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:671
-msgid "N"
-msgstr "N"
-
-#: ../bin/indicator-weather.py:673
-msgid "NE"
-msgstr "NE"
-
-#: ../bin/indicator-weather.py:675
-msgid "E"
-msgstr "E"
-
-#: ../bin/indicator-weather.py:677
-msgid "SE"
-msgstr "SE"
-
-#: ../bin/indicator-weather.py:679
-msgid "S"
-msgstr "S"
-
-#: ../bin/indicator-weather.py:681
-msgid "SW"
-msgstr "SV"
-
-#: ../bin/indicator-weather.py:683
-msgid "W"
-msgstr "V"
-
-#: ../bin/indicator-weather.py:685
-msgid "NW"
-msgstr "NV"
-
-#: ../src/service/indicator_weather_service/menu.py:128
-msgid "Set Up Weather..."
-msgstr "Setează vremea"
-
-#: ../src/service/indicator_weather_service/menu.py:156
-#: ../src/service/indicator_weather_service/menu.py:609
-#: ../src/service/indicator_weather_service/menu.py:613
-#: ../src/service/indicator_weather_service/menu.py:617
-msgid "Refresh"
-msgstr "Actualizează"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "tocmai actualizat"
-
-#: ../bin/indicator-weather.py:946
-msgid "Forecast"
-msgstr "Prognoză"
-
-#: ../src/service/indicator_weather_service/menu.py:146
-msgid "Preferences..."
-msgstr "Preferințe..."
-
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "actualizat ultima dată acum %s minute"
-
-#: ../bin/indicator-weather.py:1019
-msgid "Refreshing, please wait"
-msgstr "Se actualizează, așteptați"
-
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "actualizat acum câteva momente"
-
-#: ../src/service/indicator_weather_service/indicator.py:433
-msgid "Severe weather alert"
-msgstr "Alertă vreme severă"
-
-#: ../src/service/indicator_weather_service/forecast.py:62
-msgid "Weather Forecast for "
-msgstr "Prognoza pentru "
-
-#: ../src/service/indicator_weather_service/forecast.py:90
-msgid "High"
-msgstr "Ridicat(ă)"
-
-#: ../src/service/indicator_weather_service/forecast.py:95
-msgid "Low"
-msgstr "Scăzut(ă)"
-
-#: ../src/service/indicator_weather_service/prefs.py:396
-#: ../data/ui/Assistant.ui:192
-msgid "Label:"
-msgstr "Etichetă:"
-
-#: ../bin/indicator-weather.py:1522
-msgid "Another instance of this program is already running"
-msgstr "Altă instanță a acestui program deja rulează"
-
-#: ../data/ui/Assistant.ui:206
-msgid "<b>Home</b>"
-msgstr "<b>Acasă</b>"
-
-#: ../data/ui/Assistant.ui:258
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+#: ../src/service/indicator_weather_service/providers/yahoo.py:106
+msgid "Unknown condition"
+msgstr "Condiții necunoscute"
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Adaugă o locație"
 
-#: ../data/ui/Assistant.ui:244
-msgid "Location:"
-msgstr "Locație:"
+#: ../data/ui/Assistant.ui:35
+msgid "Please search our database for your location:"
+msgstr "Căutați în baza de date locația dumneavoastră:"
 
-#: ../data/ui/Assistant.ui:137
-msgid "Name the location"
-msgstr "Numele locației"
+#: ../data/ui/Assistant.ui:75
+msgid "Search"
+msgstr "Caută"
+
+#: ../data/ui/Assistant.ui:97
+msgid "Select a location"
+msgstr "Selectați o locație"
 
 #: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Introduceți un nume pentru această locație:"
 
-#: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Introduceți o locație în căsuța de mai jos:"
+#: ../data/ui/Assistant.ui:137
+msgid "Name the location"
+msgstr "Numele locației"
 
 #: ../data/ui/Assistant.ui:151
 msgid ""
@@ -454,26 +467,154 @@ msgstr ""
 "Revizuiți alegerile făcute. Dacă ceva nu este în regulă, întoarceți-vă și "
 "selectați valorile corecte."
 
+#: ../data/ui/Assistant.ui:206
+msgid "<b>Home</b>"
+msgstr "<b>Acasă</b>"
+
+#: ../data/ui/Assistant.ui:244
+msgid "Location:"
+msgstr "Locație:"
+
+#: ../data/ui/Assistant.ui:258
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
 #: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Revizuiți alegerile"
 
-#: ../data/ui/Assistant.ui:97
-msgid "Select a location"
-msgstr "Selectați o locație"
+#: ../data/ui/PreferencesDialog.ui:31
+msgid "Weather Indicator Preferences"
+msgstr "Preferințe Weather Indicator"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Prognoză extinsă"
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr "<b>Indicator</b>"
 
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
-msgstr ""
-"Un indicator pentru vreme care afișează informații pentru una sau mai multe "
-"locații de pe glob"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr "Arată doar pictograma de vreme"
 
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Indicator vreme"
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr "Arată doar temperatura"
+
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr "Arată pictograma de vreme și temperatura"
+
+#: ../data/ui/PreferencesDialog.ui:183
+msgid "<b>Notifications</b>"
+msgstr "<b>Notificări</b>"
+
+#: ../data/ui/PreferencesDialog.ui:203
+msgid "No notifications"
+msgstr "Fără notificări"
+
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Folosește notificările doar pentru alerte de vreme severă"
+
+#: ../data/ui/PreferencesDialog.ui:237
+msgid "Use notifications to give every weather condition change"
+msgstr "Folosește notificările pentru toate schimbările de vreme"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr "Aplică pentru toate locațiile"
+
+#: ../data/ui/PreferencesDialog.ui:300
+msgid "<b>Weather Data Source</b>"
+msgstr "Sursă informații meteo"
+
+#: ../data/ui/PreferencesDialog.ui:320
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui:336
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui:380
+msgid "Update every"
+msgstr "Actualizează la fiecare"
+
+#: ../data/ui/PreferencesDialog.ui:412
+msgid "minutes"
+msgstr "minute"
+
+#: ../data/ui/PreferencesDialog.ui:440
+msgid "General"
+msgstr "General"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr "Arată prognoza"
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr "Arată vremea pentru toate locațiile"
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr "Ascunde câmpurile irelevante"
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr "Câmpurile care să fie afișate"
+
+#: ../data/ui/PreferencesDialog.ui:559
+msgid "Label"
+msgstr "Etichetă"
+
+#: ../data/ui/PreferencesDialog.ui:570
+msgid "Notes"
+msgstr "Observații"
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr "Meniu"
+
+#: ../data/ui/PreferencesDialog.ui:627
+msgid "<b>Temperature Scale</b>"
+msgstr "Unitate temperatură"
+
+#: ../data/ui/PreferencesDialog.ui:647
+msgid "Imperial (°F)"
+msgstr "Imperial (°F)"
+
+#: ../data/ui/PreferencesDialog.ui:663
+msgid "SI (metric, °C)"
+msgstr "SI (metric, °C)"
+
+#: ../data/ui/PreferencesDialog.ui:703
+msgid "<b>Wind Speed Unit</b>"
+msgstr "Unitate viteză vânt"
+
+#: ../data/ui/PreferencesDialog.ui:723
+msgid "Meter per second (m/s)"
+msgstr "Metri pe secundă (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui:739
+msgid "Miles per hour (mph)"
+msgstr "Mile pe oră (mi/h)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr "Km/h"
+
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Beaufort"
+msgstr "Beaufort"
+
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Knots"
+msgstr "Noduri"
+
+#: ../data/ui/PreferencesDialog.ui:826
+msgid "Units"
+msgstr "Unități"
+
+#: ../data/ui/PreferencesDialog.ui:931
+msgid "Locations"
+msgstr "Locații"

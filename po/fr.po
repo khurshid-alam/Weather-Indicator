@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-06-01 04:40+0000\n"
-"Last-Translator: François Laurent <Unknown>\n"
+"PO-Revision-Date: 2011-06-01 17:17+0000\n"
+"Last-Translator: Delarocque Julien <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-01 05:42+0000\n"
+"X-Launchpad-Export-Date: 2011-06-02 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: fr\n"
 
@@ -32,13 +32,14 @@ msgstr "Minimum"
 
 #: ../src/service/indicator_weather_service/indicator.py:433
 msgid "Severe weather alert"
-msgstr "Alerte méteo importante"
+msgstr "Alerte de temps violent"
 
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  CHABOT Simon https://launchpad.net/~simon-chabot\n"
+"  Delarocque Julien https://launchpad.net/~jdelarocque\n"
 "  François Laurent https://launchpad.net/~francois.laurent"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
@@ -87,7 +88,7 @@ msgstr "Patientez"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
-msgstr "Actuellement"
+msgstr "À l'instant"
 
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
@@ -101,7 +102,7 @@ msgstr "Libellé :"
 
 #: ../src/service/indicator_weather_service/weather.py:204
 msgid "Condition"
-msgstr ""
+msgstr "État"
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
@@ -109,7 +110,7 @@ msgstr "Température :"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
-msgstr "Indice de chaleur:"
+msgstr "Indice de chaleur :"
 
 #: ../src/service/indicator_weather_service/weather.py:237
 msgid "Heat index"
@@ -129,15 +130,15 @@ msgstr "Indice d'humidité"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr "Température et humidité"
+msgstr "Température et humidité (Canada)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
-msgstr ""
+msgstr "Température ressentie :"
 
 #: ../src/service/indicator_weather_service/weather.py:257
 msgid "Wind chill"
-msgstr ""
+msgstr "Ressenti"
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
@@ -153,27 +154,27 @@ msgstr "Ressentie"
 
 #: ../src/service/indicator_weather_service/weather.py:268
 msgid "Heat index or wind chill"
-msgstr ""
+msgstr "Indice de chaleur ou température ressentie"
 
 #: ../src/service/indicator_weather_service/weather.py:276
 msgid "Feels like (CA):"
-msgstr ""
+msgstr "Ressenti (CA) :"
 
 #: ../src/service/indicator_weather_service/weather.py:277
 msgid "Feels like (CA)"
-msgstr ""
+msgstr "Ressenti (CA)"
 
 #: ../src/service/indicator_weather_service/weather.py:278
 msgid "Humidex or wind chill (Canada)"
-msgstr ""
+msgstr "Indice de chaleur ou température ressentie (Canada)"
 
 #: ../src/service/indicator_weather_service/weather.py:286
 msgid "Feels like (AU):"
-msgstr ""
+msgstr "Ressenti (AU) :"
 
 #: ../src/service/indicator_weather_service/weather.py:287
 msgid "Feels like (AU)"
-msgstr ""
+msgstr "Ressenti (AU)"
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
@@ -230,7 +231,7 @@ msgstr "Soleil :"
 
 #: ../src/service/indicator_weather_service/weather.py:366
 msgid "Sun"
-msgstr ""
+msgstr "Soleil"
 
 #: ../src/service/indicator_weather_service/weather.py:367
 msgid "Sunrise and sunset"
@@ -331,11 +332,11 @@ msgstr "Grêle"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:76
 msgid "Sleet"
-msgstr "Neige fondante"
+msgstr "Neige fondue"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:77
 msgid "Dust"
-msgstr "Poussières"
+msgstr "Poussière"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:78
 msgid "Foggy"
@@ -441,7 +442,7 @@ msgstr "Ajouter un lieu"
 
 #: ../data/ui/Assistant.ui:35
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "Rechercher votre lieu dans notre base de données :"
 
 #: ../data/ui/Assistant.ui:75
 msgid "Search"
@@ -493,7 +494,7 @@ msgstr "<b>Indicateur</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
-msgstr ""
+msgstr "Afficher seulement l'icône météo"
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
@@ -562,15 +563,15 @@ msgstr "Masquer les champs impertinants"
 
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
-msgstr ""
+msgstr "Données météo à afficher"
 
 #: ../data/ui/PreferencesDialog.ui:559
 msgid "Label"
-msgstr ""
+msgstr "Libellé"
 
 #: ../data/ui/PreferencesDialog.ui:570
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
@@ -586,7 +587,7 @@ msgstr "Impériale (°F)"
 
 #: ../data/ui/PreferencesDialog.ui:663
 msgid "SI (metric, °C)"
-msgstr ""
+msgstr "Système international d’unités (SI, °C)"
 
 #: ../data/ui/PreferencesDialog.ui:703
 msgid "<b>Wind Speed Unit</b>"
