@@ -1,3 +1,11 @@
+indicator-weather (11.05.31~oneiric3) oneiric; urgency=low
+
+  * Bugfix version for Cloudy 8
+  * Display correct icon and description for empty condition in forecast (LP: #791733)
+  * Updated google icon paths for Google icons (LP: #791724)
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 02 Jun 2011 02:15:24 -0700
+
 indicator-weather (11.05.31~oneiric2) oneiric; urgency=low
 
   * Bugfix version for Cloudy 8
