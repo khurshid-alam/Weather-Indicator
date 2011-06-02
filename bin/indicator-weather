@@ -581,7 +581,7 @@ class Weather:
         '45': ("weather-storm",             "weather-storm",            True,  _("Thundershowers")),
         '46': ("weather-snow",              "weather-snow",             False, _("Snow showers")),
         '47': ("weather-storm",             "weather-storm",            True,  _("Isolated thundershowers")),
-        '3200': (False,                    False,                      False, _("Unknown condition"))
+        '3200': (False,                     False,                      False, _("Unknown condition"))
     }
 
     # Initialize and get fresh data
@@ -604,7 +604,7 @@ class Weather:
             self.__current_condition = self._GoogleConditions.get(icon_name)
             if self.__current_condition == None:
                 log.error("ExtendedForecast: unknown Google weather condition '%s'" % icon_name)
-                self.__current_condition = (False, False, False, _(self.__report['current_conditions']['condition']))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
 
         # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
@@ -1676,12 +1676,16 @@ class ExtendedForecast(gtk.Window):
                 else:
                     log.error("ExtendedForecast: unknown Google weather condition '%s'" % icons[i-1])
                     log.error(forecast.forecast)
-                    google_icon = 'weather-unknown-condition'
+                    google_icon = 'weather-indicator-unknown'
                 self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
 
             # Fill in condition labels
             for i in xrange(1,5):
-                self.builder.get_object('day%scond' % str(i)).set_label(conditions[i-1])
+                if conditions[i-1] != '':
+                    condition = conditions[i-1]
+                else:
+                    condition = _("Unknown condition")
+                self.builder.get_object('day%scond' % str(i)).set_label(condition)
                 
             # Fill in High and Low temperatures
             if wi.metric_system == MetricSystem.SI:
