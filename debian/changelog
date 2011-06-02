@@ -1,3 +1,11 @@
+indicator-weather (11.05.31~oneiric2) oneiric; urgency=low
+
+  * Bugfix version for Cloudy 8
+  * Attach dconf settings to apport results (LP: #731911)
+  * Store show_label in dconf correctly (LP: #791398)
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 02 Jun 2011 00:53:06 -0700
+
 indicator-weather (11.05.31~oneiric1) oneiric; urgency=low
 
   * New release in Cloudy series

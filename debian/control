@@ -16,6 +16,7 @@ Architecture: all
 XB-Python-Version: ${python:Versions}
 Depends: ${misc:Depends},
  ${python:Depends},
+ libglib2.0-bin,
  python-appindicator,
  python-notify,
  python-gobject,
