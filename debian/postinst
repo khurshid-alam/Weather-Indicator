@@ -11,6 +11,15 @@ echo "Installing indicator dconf schema..."
 cp /usr/share/indicator-weather/indicator-weather.gschema.xml /usr/share/glib-2.0/schemas
 glib-compile-schemas /usr/share/glib-2.0/schemas
 
+#installing the application in autostart folders for all users
+echo "Creating autostart files..."
+for user in /home/*
+do
+    mkdir -p ${user}/.config/autostart
+    cp /usr/share/indicator-weather/indicator-weather.desktop ${user}/.config/autostart/
+    chmod 777 ${user}/.config/autostart -R
+done
+
 #quick fix for incomplete icon themes
 echo "Fixing incomplete weather icons..."
 if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
@@ -20,4 +29,3 @@ if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
 else
     exit 0
 fi
-gtk-update-icon-cache /usr/share/icons/gnome/
