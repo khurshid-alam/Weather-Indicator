@@ -6,112 +6,258 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
-"PO-Revision-Date: 2011-05-21 15:22+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-06-01 05:33+0000\n"
 "Last-Translator: Isak Frants <Unknown>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-22 05:56+0000\n"
+"X-Launchpad-Export-Date: 2011-06-02 06:03+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
+"Language: sv\n"
 
-#: ../data/ui/PreferencesDialog.ui:183
-msgid "<b>Notifications</b>"
-msgstr "<b>Notifieringar</b>"
+#: ../src/service/indicator_weather_service/forecast.py:62
+msgid "Weather Forecast for "
+msgstr "Väderprognos för "
 
-#: ../data/ui/PreferencesDialog.ui:627
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Temperaturskala</b>"
+#: ../src/service/indicator_weather_service/forecast.py:90
+msgid "High"
+msgstr "Hög"
 
-#: ../data/ui/PreferencesDialog.ui:300
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Källa för väder</b>"
+#: ../src/service/indicator_weather_service/forecast.py:95
+msgid "Low"
+msgstr "Låg"
 
-#: ../data/ui/PreferencesDialog.ui:703
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Vindenhet</b>"
+#: ../src/service/indicator_weather_service/indicator.py:433
+msgid "Severe weather alert"
+msgstr "Allvarlig vädervarning"
 
-#: ../data/ui/PreferencesDialog.ui:771
-msgid "Beaufort"
-msgstr "Beaufort"
+#: ../src/service/indicator_weather_service/indicator.py:556
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Isak Frants https://launchpad.net/~isakfrants"
 
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Aktivera indikatorpanelprogrammet för väder"
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "fel"
 
-#: ../data/ui/PreferencesDialog.ui:440
-msgid "General"
-msgstr "Allmänt"
+#: ../src/service/indicator_weather_service/menu.py:128
+msgid "Set Up Weather..."
+msgstr "Ställ in väder..."
 
-#: ../data/ui/PreferencesDialog.ui:320
-msgid "Google"
-msgstr "Google"
+#: ../src/service/indicator_weather_service/menu.py:137
+msgid "About..."
+msgstr "Om..."
 
-#: ../data/ui/PreferencesDialog.ui:647
-msgid "Imperial (°F)"
-msgstr "Brittisk (°F)"
+#: ../src/service/indicator_weather_service/menu.py:146
+msgid "Preferences..."
+msgstr "Inställningar..."
 
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilometer per timme (km/h)"
+#: ../src/service/indicator_weather_service/menu.py:156
+#: ../src/service/indicator_weather_service/menu.py:609
+#: ../src/service/indicator_weather_service/menu.py:613
+#: ../src/service/indicator_weather_service/menu.py:617
+msgid "Refresh"
+msgstr "Uppdatera"
 
-#: ../data/ui/PreferencesDialog.ui:787
-msgid "Knots"
-msgstr "Knop"
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Varning..."
 
-#: ../data/ui/PreferencesDialog.ui:931
-msgid "Locations"
-msgstr "Platser"
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "Inget data tillgängligt"
 
-#: ../data/ui/PreferencesDialog.ui:723
-msgid "Meter per second (m/s)"
-msgstr "Meter per sekund (m/s)"
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Prognos..."
 
-#: ../data/ui/PreferencesDialog.ui:739
-msgid "Miles per hour (mph)"
-msgstr "Mil per timme (mph)"
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Uppdaterar"
 
-#: ../data/ui/PreferencesDialog.ui:203
-msgid "No notifications"
-msgstr "Inga notifieringar"
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "var god vänta"
 
-#: ../data/ui/PreferencesDialog.ui:220
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Använd endast notifieringar för att visa allvarliga vädervarningar"
+#: ../src/service/indicator_weather_service/menu.py:614
+msgid "just now"
+msgstr "just nu"
 
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
+#: ../src/service/indicator_weather_service/menu.py:618
+#, python-format
+msgid "%d min. ago"
+msgstr "%d min. sedan"
 
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "Visa tips i menyn"
+#: ../src/service/indicator_weather_service/prefs.py:396
+#: ../data/ui/Assistant.ui:192
+msgid "Label:"
+msgstr "Namn:"
 
-#: ../data/ui/PreferencesDialog.ui:826
-msgid "Units"
-msgstr "Enheter"
+#: ../src/service/indicator_weather_service/weather.py:204
+msgid "Condition"
+msgstr "Villkor"
 
-#: ../data/ui/PreferencesDialog.ui:380
-msgid "Update every"
-msgstr "Uppdatera var"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Temperatur:"
 
-#: ../data/ui/PreferencesDialog.ui:237
-msgid "Use notifications to give every weather condition change"
-msgstr "Använd notifieringar för att visa varenda väderförändring"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr "Värmeindex:"
 
-#: ../data/ui/PreferencesDialog.ui:31
-msgid "Weather Indicator Preferences"
-msgstr "Inställningar för väderindikator"
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr "Värmeindex"
 
-#: ../data/ui/PreferencesDialog.ui:336
-msgid "Yahoo!"
-msgstr "Yahoo!"
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Temperatur och luftfuktighet"
 
-#: ../data/ui/PreferencesDialog.ui:412
-msgid "minutes"
-msgstr "minut"
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr "Luftfuktighetsindex:"
+
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr "Luftfuktighetsindex"
+
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr "Temperatur och luftfuktighet (Kanada)"
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr "Vindavkylning:"
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr "Vindavkylning"
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr "Temperatur och vind"
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "Känns som:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr "Känns som"
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr "Värmeindex eller vindavkylning"
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr "Känns som (CA):"
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr "Känns som (CA)"
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr "Luftfuktighetsindex eller vindavkylning (Kanada)"
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr "Känns som (AU):"
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr "Känns som (AU)"
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr "Temperatur, luftfuktighet och vind (Australien)"
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr "Daggpunkt:"
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr "Daggpunkt"
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Luftfuktighet:"
+
+#: ../src/service/indicator_weather_service/weather.py:306
+msgid "Humidity"
+msgstr "Luftfuktighet"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Sikt:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Sikt"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr "Bara från Yahoo!"
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr "Barometer:"
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr "Barometer"
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Vind:"
+
+#: ../src/service/indicator_weather_service/weather.py:347
+msgid "Wind"
+msgstr "Vind"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr "Sol:"
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr "Sol"
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr "Soluppgång och solnedgång"
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "Soluppgång:"
+
+#: ../src/service/indicator_weather_service/weather.py:376
+msgid "Sunrise"
+msgstr "Soluppgång"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "Solnedgång:"
+
+#: ../src/service/indicator_weather_service/weather.py:384
+msgid "Sunset"
+msgstr "Solnedgång"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr "Nu:"
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "Idag:"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
@@ -284,167 +430,33 @@ msgstr "Snöbyar"
 msgid "Isolated thundershowers"
 msgstr "Lokala åskskurar"
 
-#: ../src/service/indicator_weather_service/weather.py:306
-msgid "Humidity"
-msgstr "Luftfuktighet"
-
-#: ../bin/indicator-weather.py:578
-msgid "Pressure"
-msgstr "Tryck"
-
-#: ../bin/indicator-weather.py:601
-msgid "Temperature"
-msgstr "Temperatur"
-
-#: ../src/service/indicator_weather_service/weather.py:347
-msgid "Wind"
-msgstr "Vind"
-
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mph"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "knop"
-
-#: ../src/service/indicator_weather_service/weather.py:376
-msgid "Sunrise"
-msgstr "Soluppgång"
-
-#: ../src/service/indicator_weather_service/weather.py:384
-msgid "Sunset"
-msgstr "Solnedgång"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:671
-msgid "N"
-msgstr "N"
-
-#: ../bin/indicator-weather.py:673
-msgid "NE"
-msgstr "NÖ"
-
-#: ../bin/indicator-weather.py:675
-msgid "E"
-msgstr "Ö"
-
-#: ../bin/indicator-weather.py:677
-msgid "SE"
-msgstr "SÖ"
-
-#: ../bin/indicator-weather.py:679
-msgid "S"
-msgstr "S"
-
-#: ../bin/indicator-weather.py:681
-msgid "SW"
-msgstr "SV"
-
-#: ../bin/indicator-weather.py:683
-msgid "W"
-msgstr "V"
-
-#: ../bin/indicator-weather.py:685
-msgid "NW"
-msgstr "NV"
-
-#: ../src/service/indicator_weather_service/menu.py:128
-msgid "Set Up Weather..."
-msgstr "Ställ in väder..."
-
-#: ../src/service/indicator_weather_service/menu.py:156
-#: ../src/service/indicator_weather_service/menu.py:609
-#: ../src/service/indicator_weather_service/menu.py:613
-#: ../src/service/indicator_weather_service/menu.py:617
-msgid "Refresh"
-msgstr "Uppdatera"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "uppdaterade just"
-
-#: ../bin/indicator-weather.py:946
-msgid "Forecast"
-msgstr "Prognos"
-
-#: ../src/service/indicator_weather_service/menu.py:146
-msgid "Preferences..."
-msgstr "Inställningar..."
-
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "uppdaterad för %s min. sedan"
-
-#: ../bin/indicator-weather.py:1019
-msgid "Refreshing, please wait"
-msgstr "Uppdaterar, var god vänta"
-
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "uppdaterade just"
-
-#: ../src/service/indicator_weather_service/indicator.py:433
-msgid "Severe weather alert"
-msgstr "Allvarlig vädervarning"
-
-#: ../src/service/indicator_weather_service/forecast.py:62
-msgid "Weather Forecast for "
-msgstr "Väderprognos för "
-
-#: ../src/service/indicator_weather_service/forecast.py:90
-msgid "High"
-msgstr "Hög"
-
-#: ../src/service/indicator_weather_service/forecast.py:95
-msgid "Low"
-msgstr "Låg"
-
-#: ../src/service/indicator_weather_service/prefs.py:396
-#: ../data/ui/Assistant.ui:192
-msgid "Label:"
-msgstr "Namn:"
-
-#: ../bin/indicator-weather.py:1522
-msgid "Another instance of this program is already running"
-msgstr "En annan instans av detta program körs redan"
-
-#: ../data/ui/Assistant.ui:206
-msgid "<b>Home</b>"
-msgstr "<b>Hem</b>"
-
-#: ../data/ui/Assistant.ui:258
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+#: ../src/service/indicator_weather_service/providers/yahoo.py:106
+msgid "Unknown condition"
+msgstr "Okänt tillstånd"
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
 msgstr "Lägg till en plats"
 
-#: ../data/ui/Assistant.ui:244
-msgid "Location:"
-msgstr "Plats:"
+#: ../data/ui/Assistant.ui:35
+msgid "Please search our database for your location:"
+msgstr "Sök efter din plats i vår databas:"
 
-#: ../data/ui/Assistant.ui:137
-msgid "Name the location"
-msgstr "Namnge platsen"
+#: ../data/ui/Assistant.ui:75
+msgid "Search"
+msgstr "Sök"
+
+#: ../data/ui/Assistant.ui:97
+msgid "Select a location"
+msgstr "Välj en plats"
 
 #: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
 msgstr "Ange ett namn för denna plats:"
 
-#: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Fyll i en plats i rutan här under:"
+#: ../data/ui/Assistant.ui:137
+msgid "Name the location"
+msgstr "Namnge platsen"
 
 #: ../data/ui/Assistant.ui:151
 msgid ""
@@ -453,25 +465,154 @@ msgid ""
 msgstr ""
 "Granska dina gjorda val. Om något är felaktigt, gå tillbaka och ändra."
 
+#: ../data/ui/Assistant.ui:206
+msgid "<b>Home</b>"
+msgstr "<b>Hem</b>"
+
+#: ../data/ui/Assistant.ui:244
+msgid "Location:"
+msgstr "Plats:"
+
+#: ../data/ui/Assistant.ui:258
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
 #: ../data/ui/Assistant.ui:289
 msgid "Review choices"
 msgstr "Granska dina val"
 
-#: ../data/ui/Assistant.ui:97
-msgid "Select a location"
-msgstr "Välj en plats"
+#: ../data/ui/PreferencesDialog.ui:31
+msgid "Weather Indicator Preferences"
+msgstr "Inställningar för väderindikator"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Utökad prognos"
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr "<b>Indikator</b>"
 
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
-msgstr ""
-"En väderindikator som visar information om en eller flera platser i världen"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr "Visa endast väderikon"
 
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Väderindikator"
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr "Visa endast temperatur"
+
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr "Visa både väderikon och temperatur"
+
+#: ../data/ui/PreferencesDialog.ui:183
+msgid "<b>Notifications</b>"
+msgstr "<b>Notifieringar</b>"
+
+#: ../data/ui/PreferencesDialog.ui:203
+msgid "No notifications"
+msgstr "Inga notifieringar"
+
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Använd endast notifieringar för att visa allvarliga vädervarningar"
+
+#: ../data/ui/PreferencesDialog.ui:237
+msgid "Use notifications to give every weather condition change"
+msgstr "Använd notifieringar för att visa varenda väderförändring"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr "Verkställ för alla platser"
+
+#: ../data/ui/PreferencesDialog.ui:300
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Källa för väder</b>"
+
+#: ../data/ui/PreferencesDialog.ui:320
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui:336
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui:380
+msgid "Update every"
+msgstr "Uppdatera var"
+
+#: ../data/ui/PreferencesDialog.ui:412
+msgid "minutes"
+msgstr "minut"
+
+#: ../data/ui/PreferencesDialog.ui:440
+msgid "General"
+msgstr "Allmänt"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr "Visa prognos"
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr "Visa väder för alla platser"
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr "Göm irrelevanta fält"
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr "Väderraportsfält som visas"
+
+#: ../data/ui/PreferencesDialog.ui:559
+msgid "Label"
+msgstr "Namn"
+
+#: ../data/ui/PreferencesDialog.ui:570
+msgid "Notes"
+msgstr "Anteckningar"
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr "Meny"
+
+#: ../data/ui/PreferencesDialog.ui:627
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Temperaturskala</b>"
+
+#: ../data/ui/PreferencesDialog.ui:647
+msgid "Imperial (°F)"
+msgstr "Brittisk (°F)"
+
+#: ../data/ui/PreferencesDialog.ui:663
+msgid "SI (metric, °C)"
+msgstr "SI (metrisk, °C)"
+
+#: ../data/ui/PreferencesDialog.ui:703
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Vindenhet</b>"
+
+#: ../data/ui/PreferencesDialog.ui:723
+msgid "Meter per second (m/s)"
+msgstr "Meter per sekund (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui:739
+msgid "Miles per hour (mph)"
+msgstr "Mil per timme (mph)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr "Km per timme (km/h)"
+
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Beaufort"
+msgstr "Beaufort"
+
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Knots"
+msgstr "Knop"
+
+#: ../data/ui/PreferencesDialog.ui:826
+msgid "Units"
+msgstr "Enheter"
+
+#: ../data/ui/PreferencesDialog.ui:931
+msgid "Locations"
+msgstr "Platser"
