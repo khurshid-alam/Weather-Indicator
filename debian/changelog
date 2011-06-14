@@ -2,8 +2,9 @@ indicator-weather (11.05.31~maverick5) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Show default labels if some data from providers is missing (LP: #794473)
+  * Using try-catch instead self.db.list_keys() for Maverick users (LP: #791615)
 
- -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 14 Jun 2011 01:48:30 -0700
+ -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 14 Jun 2011 04:12:33 -0700
 
 indicator-weather (11.05.31~maverick4) maverick; urgency=low
 

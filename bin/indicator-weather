@@ -127,7 +127,7 @@ class Settings:
     def get_value(self, setting, return_id = False):
         log.debug("Settings: getting value for %s" % setting)
         setting_name = Settings.INFO[setting][INFO_SETTING]
-        if setting_name in self.db.list_keys():
+        try:
             setting_type = Settings.INFO[setting][INFO_TYPE]
             get_func = {
                 types.IntType:     self.db.get_int,
@@ -138,7 +138,7 @@ class Settings:
                 types.NoneType:    self.db.get_value,
             }[setting_type]
             return get_func(setting_name)
-        else:
+        except:
             self.log.debug("Settings: can't find value for %s" % setting)
             return None
 
