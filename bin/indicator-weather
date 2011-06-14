@@ -241,6 +241,8 @@ class Settings:
             locations[location_code] = location_details
             locations_string = str(locations)
             self.db.set_string(self.LOCATIONS_KEY, locations_string)
+        except:
+            pass
             
 class MetricSystem:
     """ Class with available metric systems units """
@@ -651,11 +653,12 @@ class Weather:
                 log.error("Weather: got data '%s'" % str(self.__report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
                 
-            elif 'code' not in self.__report['condition'].keys():
+            elif 'code' in self.__report['condition'].keys():
                 icon_name = self.__report['condition']['code']
                 self.__current_condition = self._YahooConditions.get(icon_name)
                 
             else:
+                icon_name = ""
                 log.error("Weather: could not get icon name from Yahoo report")
                 log.error("Weather: got data '%s'" % str(self.__report['condition']))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
@@ -792,7 +795,7 @@ class Weather:
                 _unit  = "˚F"
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             if (self.__metric_system == MetricSystem.SI) \
-            and 'temp' in self.__report['current_conditions'].keys():
+            and 'temp' in self.__report['condition'].keys():
                 _value = NumberFormatter.format_float(
                     ((float(self.__report['condition']['temp']) - 32) * 5/9), 1)
                 _unit  = "˚C"
