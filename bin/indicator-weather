@@ -613,13 +613,29 @@ class Weather:
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
             # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
-            icon_path = self.__report['current_conditions']['icon']
-            if '/ig/images/weather/' in icon_path:
-                icon_name = self.__report['current_conditions']['icon'].replace('/ig/images/weather/', '').replace('.gif', '')
-            elif 'http://g0.gstatic.com/images/icons/onebox' in icon_path:
-                icon_name = self.__report['current_conditions']['icon'].replace('http://g0.gstatic.com/images/icons/onebox/weather_', '').replace('-40.gif', '')
+            
+            if 'current_conditions' not in self.__report.keys():
+                log.error("Weather: could not get Google weather condition from report")
+                log.error("Weather: got data '%s'" % str(self.__report))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
+
+            if 'current_conditions' not in self.__localized_report.keys():
+                log.error("Weather: could not get Google weather condition from localized report")
+                log.error("Weather: got data '%s'" % str(self.__localized_report))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
+            
+            if 'icon' in self.__report['current_conditions'].keys():
+                icon_path = self.__report['current_conditions']['icon']
+                if '/ig/images/weather/' in icon_path:
+                    icon_name = icon_path.replace('/ig/images/weather/', '').replace('.gif', '')
+                elif 'http://g0.gstatic.com/images/icons/onebox' in icon_path:
+                    icon_name = icon_path.replace('http://g0.gstatic.com/images/icons/onebox/weather_', '').replace('-40.gif', '')
+                else:
+                    icon_name = icon_path
             else:
-                icon_name = icon_path
+                log.error("Weather: could not get weather icon from report")
+                log.error("Weather: got data '%s'" % str(self.__report['current_conditions']))
+                icon_name = ""
                 
             self.__current_condition = self._GoogleConditions.get(icon_name)
             if self.__current_condition == None:
@@ -630,8 +646,20 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
             self.__localized_report = self.__report
-            icon_name = self.__report['condition']['code']
-            self.__current_condition = self._YahooConditions.get(icon_name)
+            if 'condition' not in self.__report.keys():
+                log.error("Weather: could not get Yahoo weather condition from report")
+                log.error("Weather: got data '%s'" % str(self.__report))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
+                
+            elif 'code' not in self.__report['condition'].keys():
+                icon_name = self.__report['condition']['code']
+                self.__current_condition = self._YahooConditions.get(icon_name)
+                
+            else:
+                log.error("Weather: could not get icon name from Yahoo report")
+                log.error("Weather: got data '%s'" % str(self.__report['condition']))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
+                
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
         #Prepare sunrise/sunset data
         self.get_sun_data()
@@ -721,9 +749,12 @@ class Weather:
 
     # Get humidity label
     def get_humidity_label(self):
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
+        humidity = "%s: ---%%" % (_("Humidity"))
+        if self.__weather_datasource == WeatherDataSource.GOOGLE \
+            and 'humidity' in self.__localized_report['current_conditions']:
             humidity = self.__localized_report['current_conditions']['humidity']
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
+        if self.__weather_datasource == WeatherDataSource.YAHOO \
+            and 'humidity' in self.__localized_report['atmosphere']:
             humidity = "%s: %s%%" % (_("Humidity"), self.__localized_report['atmosphere']['humidity'])
         return humidity
 
@@ -740,22 +771,28 @@ class Weather:
             # TODO: Empty for Google, use NOAA data?
             value = "---"
             unit = ""
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
+        if self.__weather_datasource == WeatherDataSource.YAHOO \
+            and 'pressure' in self.__localized_report['atmosphere'].keys() \
+            and 'pressure' in self.__localized_report['units'].keys():
             value = self.__localized_report['atmosphere']['pressure']
             unit = self.__localized_report['units']['pressure']
         return "%s: %s %s" % (_("Pressure"), value, units)
 
     # Get temperature with units value - doesn't include 'Temperature' label
     def get_temperature(self, needs_rounding = False):
+        _value = "---"
+        _unit = ""
         if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            if (self.__metric_system == MetricSystem.SI):
+            if (self.__metric_system == MetricSystem.SI) \
+            and 'temp_c' in self.__report['current_conditions'].keys():
                 _value = self.__report['current_conditions']['temp_c']
                 _unit  = "˚C"
-            else:
+            elif 'temp_f' in self.__report['current_conditions'].keys():
                 _value = self.__report['current_conditions']['temp_f']
                 _unit  = "˚F"
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            if (self.__metric_system == MetricSystem.SI):
+            if (self.__metric_system == MetricSystem.SI) \
+            and 'temp' in self.__report['current_conditions'].keys():
                 _value = NumberFormatter.format_float(
                     ((float(self.__report['condition']['temp']) - 32) * 5/9), 1)
                 _unit  = "˚C"
@@ -763,7 +800,7 @@ class Weather:
                 _value = self.__report['condition']['temp']
                 _unit  = "˚F"
         # round the value if required
-        if needs_rounding:
+        if needs_rounding and _value != "---":
             _value = NumberFormatter.format_float(locale.atof(_value), 0)
         return ("%s %s" % (_value, _unit))
 
