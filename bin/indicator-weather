@@ -150,7 +150,7 @@ class Settings:
         log.debug("Settings: setting '%s'='%s'" % (setting, value))
 
         setting_name = Settings.INFO[setting][INFO_SETTING]
-        if setting_name in self.db.list_keys():
+        try:
             setting_type = Settings.INFO[setting][INFO_TYPE]
             set_func = {
                 types.IntType:     self.db.set_int,
@@ -161,7 +161,7 @@ class Settings:
                 types.NoneType:    self.db.set_value,
             }[setting_type]
             set_func(setting_name, value)
-        else:
+        except:
             log.debug( \
                 "Settings: schema for '%s' not found, aborting" % setting)
 
@@ -170,7 +170,7 @@ class Settings:
     def get_weather(self, location_code, return_id = False):
         log.debug("Settings: getting cached weather for %s" % \
             location_code)
-        if self.WEATHER_KEY in self.db.list_keys():
+        try:
             cached_weather_string = self.db.get_string(self.WEATHER_KEY)
             cached_weather = {} if cached_weather_string == ''\
                 else eval(cached_weather_string)
@@ -180,7 +180,7 @@ class Settings:
                 log.debug(\
                     "Settings: can't find value for %s" % location_code)
                 return None
-        else:
+        except:
             log.debug("Settings: can't find %s setting" % WEATHER_KEY)
             return None
 
@@ -200,21 +200,21 @@ class Settings:
         }
         log.debug("Settings: setting '%s'='%s'" % (location_code, record))
 
-        if self.WEATHER_KEY in self.db.list_keys():
+        try:
             cached_weather_string = self.db.get_string(self.WEATHER_KEY)
             cached_weather = {} if cached_weather_string == ''\
                 else eval(cached_weather_string)
             cached_weather[location_code] = record
             cached_weather_string = str(cached_weather)
             self.db.set_string(self.WEATHER_KEY, cached_weather_string)
-        else:
+        except:
             log.debug(\
                 "Settings: schema for '%s' not found, aborting" % setting)
 
     # Get location details by location code
     # If return_id is True, only document id is returned, otherwise - full location data
     def get_location_details(self, location_code, return_id = False):
-        if self.LOCATIONS_KEY in self.db.list_keys():
+        try:
             locations_string = self.db.get_string(self.LOCATIONS_KEY)
             locations = {} if locations_string == ''\
                 else eval(locations_string)
@@ -224,7 +224,7 @@ class Settings:
                 log.debug(\
                     "Settings: can't find value for %s" % location_code)
                 return None
-        else:
+        except:
             log.debug("Settings: can't find location details for %s" % \
                 location_code)
             return None
@@ -234,7 +234,7 @@ class Settings:
         log.debug("Settings: setting '%s'='%s'" %\
             (location_code, location_details))
 
-        if self.LOCATIONS_KEY in self.db.list_keys():
+        try:
             locations_string = self.db.get_string(self.LOCATIONS_KEY)
             locations = {} if locations_string == ''\
                 else eval(locations_string)
