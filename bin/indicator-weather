@@ -975,7 +975,7 @@ class indicator_weather(threading.Thread):
         self.wind  = self.settings.get_value("wind")
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
-        self.places = self.settings.get_value("places")
+        self.places = str(self.settings.get_value("places"))
         self.show_label = self.settings.get_value("show_label")
 
         log.debug("Preferences: got settings: rate=%s, unit=%s, notif=%s, wind=%s, placechosen=%s, places=%s" %
@@ -1516,7 +1516,7 @@ class PreferencesDialog(gtk.Dialog):
         self.builder.get_object('rate').set_value(float(wi.rate))
 
         log.debug("Preferences: Loading places")
-        if wi.places != None and len(eval(wi.places))>0:
+        if wi.places != None:
             for place in wi.places:
                 if len(place)>1:
                     log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
@@ -1526,7 +1526,7 @@ class PreferencesDialog(gtk.Dialog):
                     newplace.append(wi.settings.get_location_details(place[0]))
             
                     self.builder.get_object('citieslist').append(newplace)
-                self.builder.get_object('ok_button').set_sensitive(True)
+                    self.builder.get_object('ok_button').set_sensitive(True)
             
         self.builder.connect_signals(self)
 
