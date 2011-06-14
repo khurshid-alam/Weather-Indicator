@@ -1516,7 +1516,7 @@ class PreferencesDialog(gtk.Dialog):
         self.builder.get_object('rate').set_value(float(wi.rate))
 
         log.debug("Preferences: Loading places")
-        if wi.places != None:
+        if wi.places != None and len(eval(wi.places))>0:
             for place in wi.places:
                 if len(place)>1:
                     log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
