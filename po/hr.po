@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-06-02 09:29+0000\n"
+"PO-Revision-Date: 2011-06-07 14:30+0000\n"
 "Last-Translator: Miroslav Matejaš <silverspace@ubuntu-hr.org>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-03 06:00+0000\n"
+"X-Launchpad-Export-Date: 2011-06-08 05:43+0000\n"
 "X-Generator: Launchpad (build 12959)\n"
 "Language: hr\n"
 
@@ -38,24 +38,25 @@ msgstr ""
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
-"  Miroslav Matejaš https://launchpad.net/~silverspace+amd64"
+"  Miroslav Matejaš https://launchpad.net/~silverspace+amd64\n"
+"  zvacet https://launchpad.net/~zvacet"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "greška"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
-msgstr "Postavljanje vrijeme ..."
+msgstr "Postavljeno vrijeme ..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr "O programu..."
+msgstr "O programu"
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
-msgstr "Osobitosti..."
+msgstr "Osobitosti"
 
 #: ../src/service/indicator_weather_service/menu.py:156
 #: ../src/service/indicator_weather_service/menu.py:609
@@ -98,25 +99,21 @@ msgstr "prije %d min."
 msgid "Label:"
 msgstr "Naziv:"
 
-#: ../src/service/indicator_weather_service/weather.py:204
-msgid "Condition"
-msgstr "Stanje"
-
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
 msgstr "Temperatura:"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
-msgstr ""
+msgstr "Indeks vrućine:"
 
 #: ../src/service/indicator_weather_service/weather.py:237
 msgid "Heat index"
-msgstr ""
+msgstr "Indeks vrućine"
 
 #: ../src/service/indicator_weather_service/weather.py:238
 msgid "Temperature and humidity"
-msgstr ""
+msgstr "Temperatira i vlažnost"
 
 #: ../src/service/indicator_weather_service/weather.py:246
 msgid "Humidex:"
@@ -128,19 +125,19 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "Temperatura i vlažnost (Kanada)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
-msgstr ""
+msgstr "Hladnoća vjetra:"
 
 #: ../src/service/indicator_weather_service/weather.py:257
 msgid "Wind chill"
-msgstr ""
+msgstr "Hladnoća vjetra"
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
-msgstr ""
+msgstr "Temperatura i vjetar"
 
 #: ../src/service/indicator_weather_service/weather.py:266
 msgid "Feels like:"
@@ -152,7 +149,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:268
 msgid "Heat index or wind chill"
-msgstr ""
+msgstr "Indeks vrućine ili hladnoća vjetra"
 
 #: ../src/service/indicator_weather_service/weather.py:276
 msgid "Feels like (CA):"
@@ -176,7 +173,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "Temperatura,vlažnost i vjetar (Australija)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
@@ -314,7 +311,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:72
 msgid "Light snow showers"
-msgstr ""
+msgstr "Lagani ljetni pljuskovi"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:73
 msgid "Blowing snow"
@@ -338,7 +335,7 @@ msgstr "Prašina"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:78
 msgid "Foggy"
-msgstr "Magla"
+msgstr "Maglovito"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:79
 msgid "Haze"
@@ -440,7 +437,7 @@ msgstr "Dodaj lokaciju"
 
 #: ../data/ui/Assistant.ui:35
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "Molim pretražite našu bazu podataka za vašu lokaciju:"
 
 #: ../data/ui/Assistant.ui:75
 msgid "Search"
@@ -452,7 +449,7 @@ msgstr "Odaberite lokaciju"
 
 #: ../data/ui/Assistant.ui:111
 msgid "Please enter a name for this location:"
-msgstr ""
+msgstr "Molim unesite ime za ovu lokaciju:"
 
 #: ../data/ui/Assistant.ui:137
 msgid "Name the location"
@@ -463,6 +460,8 @@ msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Molim pregledasjte izbore ispod.Ako bolo što nije u redu,vratite se i "
+"odaberite ispravne opcije."
 
 #: ../data/ui/Assistant.ui:206
 msgid "<b>Home</b>"
@@ -478,7 +477,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui:289
 msgid "Review choices"
-msgstr ""
+msgstr "Pregledaj izbore"
 
 #: ../data/ui/PreferencesDialog.ui:31
 msgid "Weather Indicator Preferences"
@@ -486,19 +485,19 @@ msgstr "Postavke pokazatelja vremena"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
-msgstr ""
+msgstr "<b>Pokazatelj</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
-msgstr ""
+msgstr "Pokaži samo ikonu vremena"
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
-msgstr ""
+msgstr "Pokaži samo temperaturu"
 
 #: ../data/ui/PreferencesDialog.ui:143
 msgid "Show weather icon and temperature"
-msgstr ""
+msgstr "Pokaži ikonu vremena i temperaturu"
 
 #: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
@@ -550,7 +549,7 @@ msgstr "Prikaži prognozu"
 
 #: ../data/ui/PreferencesDialog.ui:475
 msgid "Show weather for all locations"
-msgstr ""
+msgstr "Pokaži vrijeme za sve lokacije"
 
 #: ../data/ui/PreferencesDialog.ui:490
 msgid "Hide irrelevant fields"
@@ -559,14 +558,6 @@ msgstr ""
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
 msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui:559
-msgid "Label"
-msgstr "Naziv"
-
-#: ../data/ui/PreferencesDialog.ui:570
-msgid "Notes"
-msgstr "Bilješke"
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
@@ -582,7 +573,7 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:663
 msgid "SI (metric, °C)"
-msgstr ""
+msgstr "SI (metrički, °C)"
 
 #: ../data/ui/PreferencesDialog.ui:703
 msgid "<b>Wind Speed Unit</b>"
@@ -594,7 +585,7 @@ msgstr "Metara u sekundi (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui:739
 msgid "Miles per hour (mph)"
-msgstr "Metara na sat (m/h)"
+msgstr "Milja na sat (mph)"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Km per hour (kph)"
@@ -602,7 +593,7 @@ msgstr "Kilometara na sat (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
-msgstr ""
+msgstr "Bofor"
 
 #: ../data/ui/PreferencesDialog.ui:787
 msgid "Knots"
@@ -615,3 +606,12 @@ msgstr "Jedinice mjere"
 #: ../data/ui/PreferencesDialog.ui:931
 msgid "Locations"
 msgstr "Lokacije"
+
+#~ msgid "Condition"
+#~ msgstr "Stanje"
+
+#~ msgid "Label"
+#~ msgstr "Naziv"
+
+#~ msgid "Notes"
+#~ msgstr "Bilješke"

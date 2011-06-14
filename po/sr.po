@@ -8,15 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-05-20 09:51+0000\n"
-"Last-Translator: Launchpad Translations Administrators "
-"<rosetta@launchpad.net>\n"
+"PO-Revision-Date: 2011-06-10 17:09+0000\n"
+"Last-Translator: Предраг Љубеновић <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-21 06:15+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-06-11 06:14+0000\n"
+"X-Generator: Launchpad (build 13168)\n"
 "Language: sr\n"
 
 #: ../src/service/indicator_weather_service/forecast.py:62
@@ -38,11 +37,13 @@ msgstr "Упозорење лошег времена"
 #: ../src/service/indicator_weather_service/indicator.py:556
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Предраг Љубеновић https://launchpad.net/~predragljubenovic"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "грешка"
 
 #: ../src/service/indicator_weather_service/menu.py:128
 msgid "Set Up Weather..."
@@ -50,7 +51,7 @@ msgstr "Подеси прогнозу..."
 
 #: ../src/service/indicator_weather_service/menu.py:137
 msgid "About..."
-msgstr ""
+msgstr "О програму..."
 
 #: ../src/service/indicator_weather_service/menu.py:146
 msgid "Preferences..."
@@ -65,45 +66,41 @@ msgstr "Освежи"
 
 #: ../src/service/indicator_weather_service/menu.py:167
 msgid "Warning..."
-msgstr ""
+msgstr "Упозорење..."
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "Подаци нису доступни"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "Временска прогноза..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "Освежавам"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "молим сачекајте"
 
 #: ../src/service/indicator_weather_service/menu.py:614
 msgid "just now"
-msgstr ""
+msgstr "Управо"
 
 #: ../src/service/indicator_weather_service/menu.py:618
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "пре %d мин."
 
 #: ../src/service/indicator_weather_service/prefs.py:396
 #: ../data/ui/Assistant.ui:192
 msgid "Label:"
 msgstr "Ознака:"
 
-#: ../src/service/indicator_weather_service/weather.py:204
-msgid "Condition"
-msgstr ""
-
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
-msgstr ""
+msgstr "Температура:"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
@@ -115,7 +112,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:238
 msgid "Temperature and humidity"
-msgstr ""
+msgstr "Температура и влажност"
 
 #: ../src/service/indicator_weather_service/weather.py:246
 msgid "Humidex:"
@@ -127,7 +124,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "Температура и влажност (Канада)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
@@ -139,7 +136,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
-msgstr ""
+msgstr "Температура и ветар"
 
 #: ../src/service/indicator_weather_service/weather.py:266
 msgid "Feels like:"
@@ -175,7 +172,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "Температура, влажност и ветар (Аустралија)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
@@ -187,7 +184,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:305
 msgid "Humidity:"
-msgstr ""
+msgstr "Влажност:"
 
 #: ../src/service/indicator_weather_service/weather.py:306
 msgid "Humidity"
@@ -195,28 +192,28 @@ msgstr "Влажност"
 
 #: ../src/service/indicator_weather_service/weather.py:314
 msgid "Visibility:"
-msgstr ""
+msgstr "Видљивост"
 
 #: ../src/service/indicator_weather_service/weather.py:315
 msgid "Visibility"
-msgstr ""
+msgstr "Видљивост"
 
 #: ../src/service/indicator_weather_service/weather.py:316
 #: ../src/service/indicator_weather_service/weather.py:338
 msgid "Only from Yahoo!"
-msgstr ""
+msgstr "Само од Јахуа!"
 
 #: ../src/service/indicator_weather_service/weather.py:336
 msgid "Barometer:"
-msgstr ""
+msgstr "Барометар:"
 
 #: ../src/service/indicator_weather_service/weather.py:337
 msgid "Barometer"
-msgstr ""
+msgstr "Барометар"
 
 #: ../src/service/indicator_weather_service/weather.py:346
 msgid "Wind:"
-msgstr ""
+msgstr "Ветар:"
 
 #: ../src/service/indicator_weather_service/weather.py:347
 msgid "Wind"
@@ -224,19 +221,19 @@ msgstr "Ветар"
 
 #: ../src/service/indicator_weather_service/weather.py:365
 msgid "Sun:"
-msgstr ""
+msgstr "Сунце:"
 
 #: ../src/service/indicator_weather_service/weather.py:366
 msgid "Sun"
-msgstr ""
+msgstr "Сунце"
 
 #: ../src/service/indicator_weather_service/weather.py:367
 msgid "Sunrise and sunset"
-msgstr ""
+msgstr "Излазак и залазак сунца"
 
 #: ../src/service/indicator_weather_service/weather.py:375
 msgid "Sunrise:"
-msgstr ""
+msgstr "Излазак Сунца:"
 
 #: ../src/service/indicator_weather_service/weather.py:376
 msgid "Sunrise"
@@ -244,7 +241,7 @@ msgstr "Сунце излази"
 
 #: ../src/service/indicator_weather_service/weather.py:383
 msgid "Sunset:"
-msgstr ""
+msgstr "Залазак Сунца:"
 
 #: ../src/service/indicator_weather_service/weather.py:384
 msgid "Sunset"
@@ -252,11 +249,11 @@ msgstr "Сунце залази"
 
 #: ../src/service/indicator_weather_service/weather.py:1283
 msgid "Now:"
-msgstr ""
+msgstr "Сада:"
 
 #: ../src/service/indicator_weather_service/weather.py:1291
 msgid "Today:"
-msgstr ""
+msgstr "Данас:"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:57
 msgid "Tornado"
@@ -431,7 +428,7 @@ msgstr "Меестимичне олује праћене грмњавином"
 
 #: ../src/service/indicator_weather_service/providers/yahoo.py:106
 msgid "Unknown condition"
-msgstr ""
+msgstr "Непознато стање"
 
 #: ../data/ui/Assistant.ui:10
 msgid "Add a location"
@@ -439,11 +436,11 @@ msgstr "Додај локацију"
 
 #: ../data/ui/Assistant.ui:35
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "Молимо нађите вашу локацију у нашој бази:"
 
 #: ../data/ui/Assistant.ui:75
 msgid "Search"
-msgstr ""
+msgstr "Тражи"
 
 #: ../data/ui/Assistant.ui:97
 msgid "Select a location"
@@ -487,19 +484,19 @@ msgstr "Подешавање временског индикатора"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
-msgstr ""
+msgstr "<b>Индикатор</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
-msgstr ""
+msgstr "Прикажи само иконицу времена"
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
-msgstr ""
+msgstr "Прикажи само температуру"
 
 #: ../data/ui/PreferencesDialog.ui:143
 msgid "Show weather icon and temperature"
-msgstr ""
+msgstr "Прикажи иконицу времена и температуру"
 
 #: ../data/ui/PreferencesDialog.ui:183
 msgid "<b>Notifications</b>"
@@ -519,7 +516,7 @@ msgstr "Прикажи обавештења за све временске ус�
 
 #: ../data/ui/PreferencesDialog.ui:268
 msgid "Apply for all locations"
-msgstr ""
+msgstr "Пријави се за све локације"
 
 #: ../data/ui/PreferencesDialog.ui:300
 msgid "<b>Weather Data Source</b>"
@@ -547,27 +544,19 @@ msgstr "Опште"
 
 #: ../data/ui/PreferencesDialog.ui:460
 msgid "Show forecast"
-msgstr ""
+msgstr "Прикажи прогнозу"
 
 #: ../data/ui/PreferencesDialog.ui:475
 msgid "Show weather for all locations"
-msgstr ""
+msgstr "Прикажи време за све локације"
 
 #: ../data/ui/PreferencesDialog.ui:490
 msgid "Hide irrelevant fields"
-msgstr ""
+msgstr "Сакриј небитна поља"
 
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui:559
-msgid "Label"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui:570
-msgid "Notes"
-msgstr ""
+msgstr "Поља извештаја која се приказују"
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
@@ -599,7 +588,7 @@ msgstr "Миља на сат (ми)"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Km per hour (kph)"
-msgstr ""
+msgstr "Км на сат (Км/ч)"
 
 #: ../data/ui/PreferencesDialog.ui:771
 msgid "Beaufort"
