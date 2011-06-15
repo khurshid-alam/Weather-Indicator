@@ -7,33 +7,33 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-03-09 22:55+0200\n"
+"POT-Creation-Date: 2011-05-31 02:47-0700\n"
 "PO-Revision-Date: 2011-05-30 14:27+0000\n"
 "Last-Translator: Dražen Matešić <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-05-31 05:52+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-06-15 05:48+0000\n"
+"X-Generator: Launchpad (build 13168)\n"
 
-#: ../data/ui/PreferencesDialog.ui:183
+#: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
 msgstr "<b>Obvestila</b>"
 
-#: ../data/ui/PreferencesDialog.ui:627
+#: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
 msgstr "<b>Merilo temperature</b>"
 
-#: ../data/ui/PreferencesDialog.ui:300
+#: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>Vir podatkov vremena</b>"
 
-#: ../data/ui/PreferencesDialog.ui:703
+#: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
 msgstr "<b>Enota hitrosti vetra</b>"
 
-#: ../data/ui/PreferencesDialog.ui:771
+#: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
 msgstr "Beaufort"
 
@@ -41,412 +41,409 @@ msgstr "Beaufort"
 msgid "Enable the Weather Indicator Applet"
 msgstr "Omogoči aplet Kazalnik vremena"
 
-#: ../data/ui/PreferencesDialog.ui:440
+#: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
 msgstr "Splošno"
 
-#: ../data/ui/PreferencesDialog.ui:320
+#: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
 msgstr "Google"
 
-#: ../data/ui/PreferencesDialog.ui:647
+#: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
 msgstr "Imperialno (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Kilometers per hour (kph)"
-msgstr "Kilometrov na uro (km/h)"
+msgid "Km per hour (km/h)"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui:787
+#: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
 msgstr "Vozli"
 
-#: ../data/ui/PreferencesDialog.ui:931
+#: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
 msgstr "Mesta"
 
-#: ../data/ui/PreferencesDialog.ui:723
+#: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
 msgstr "Metrov na sekundo (m/s)"
 
-#: ../data/ui/PreferencesDialog.ui:739
+#: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
 msgstr "Milj na uro (mph)"
 
-#: ../data/ui/PreferencesDialog.ui:203
+#: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
 msgstr "Brez opozoril"
 
-#: ../data/ui/PreferencesDialog.ui:220
+#: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
 msgstr "Uporabi opozorila samo za skrajne vremenske razmere"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (°C)"
-msgstr "SI (°C)"
+msgid "SI (metric, °C)"
+msgstr "SI (metrično, °C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show tips in menu"
-msgstr "V meniju kaži nasvete"
+msgid "Show temperature near indicator"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui:826
+#: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
 msgstr "Enote"
 
-#: ../data/ui/PreferencesDialog.ui:380
+#: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
 msgstr "Posodobi vsakih"
 
-#: ../data/ui/PreferencesDialog.ui:237
+#: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
 msgstr "Uporabi opozorila za kakršnokoli spremembo vremenskih pogojev"
 
-#: ../data/ui/PreferencesDialog.ui:31
+#: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
 msgstr "Nastavitve Kazalnika Vremena"
 
-#: ../data/ui/PreferencesDialog.ui:336
+#: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
-#: ../data/ui/PreferencesDialog.ui:412
+#: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
 msgstr "minut"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:57
+#: ../bin/indicator-weather.py:457
+msgid "Unknown error occurred while picking up weather data"
+msgstr ""
+
+#: ../bin/indicator-weather.py:537
 msgid "Tornado"
 msgstr "Tornado"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:58
+#: ../bin/indicator-weather.py:538
 msgid "Tropical storm"
 msgstr "Tropska nevihta"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:59
+#: ../bin/indicator-weather.py:539
 msgid "Hurricane"
 msgstr "Orkan"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:60
+#: ../bin/indicator-weather.py:540
 msgid "Severe thunderstorms"
 msgstr "Hude nevihte"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:61
+#: ../bin/indicator-weather.py:541
 msgid "Thunderstorms"
 msgstr "Nevihte"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:62
+#: ../bin/indicator-weather.py:542
 msgid "Mixed rain and snow"
 msgstr "Mešan dež in sneg"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:64
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
+#: ../bin/indicator-weather.py:544
 msgid "Mixed rain and sleet"
 msgstr "Mešan dež ter žled"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:65
+#: ../bin/indicator-weather.py:545
 msgid "Mixed snow and sleet"
 msgstr "Mešan sneg ter žled"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:66
+#: ../bin/indicator-weather.py:546
 msgid "Freezing drizzle"
 msgstr "Zmrzujoče pršenje"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:67
+#: ../bin/indicator-weather.py:547
 msgid "Drizzle"
 msgstr "Pršenje"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:68
+#: ../bin/indicator-weather.py:548
 msgid "Freezing rain"
 msgstr "Zmrzujoč dež"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:69
-#: ../src/service/indicator_weather_service/providers/yahoo.py:70
+#: ../bin/indicator-weather.py:549 ../bin/indicator-weather.py:550
 msgid "Showers"
 msgstr "Plohe"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:71
+#: ../bin/indicator-weather.py:551
 msgid "Snow flurries"
 msgstr "Snežni meteži"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:72
+#: ../bin/indicator-weather.py:552
 msgid "Light snow showers"
 msgstr "Rahle snežne plohe"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:73
+#: ../bin/indicator-weather.py:553
 msgid "Blowing snow"
 msgstr "Snežni vihar"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:74
+#: ../bin/indicator-weather.py:554
 msgid "Snow"
 msgstr "Sneg"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:75
+#: ../bin/indicator-weather.py:555
 msgid "Hail"
 msgstr "Toča"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:76
+#: ../bin/indicator-weather.py:556
 msgid "Sleet"
 msgstr "Žled"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:77
+#: ../bin/indicator-weather.py:557
 msgid "Dust"
 msgstr "Prah"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:78
+#: ../bin/indicator-weather.py:558
 msgid "Foggy"
 msgstr "Megleno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:79
+#: ../bin/indicator-weather.py:559
 msgid "Haze"
 msgstr "Meglica"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:80
+#: ../bin/indicator-weather.py:560
 msgid "Smoky"
 msgstr "Smog"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:81
+#: ../bin/indicator-weather.py:561
 msgid "Blustery"
 msgstr "Viharno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:82
+#: ../bin/indicator-weather.py:562
 msgid "Windy"
 msgstr "Vetrovno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:83
+#: ../bin/indicator-weather.py:563
 msgid "Cold"
 msgstr "Mrzlo"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:84
+#: ../bin/indicator-weather.py:564
 msgid "Cloudy"
 msgstr "Oblačno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:85
-#: ../src/service/indicator_weather_service/providers/yahoo.py:86
+#: ../bin/indicator-weather.py:565 ../bin/indicator-weather.py:566
 msgid "Mostly cloudy"
 msgstr "Pretežno oblačno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:87
-#: ../src/service/indicator_weather_service/providers/yahoo.py:88
-#: ../src/service/indicator_weather_service/providers/yahoo.py:102
+#: ../bin/indicator-weather.py:567 ../bin/indicator-weather.py:568
+#: ../bin/indicator-weather.py:582
 msgid "Partly cloudy"
 msgstr "Delno oblačno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:89
+#: ../bin/indicator-weather.py:569
 msgid "Clear"
 msgstr "Jasno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:90
+#: ../bin/indicator-weather.py:570
 msgid "Sunny"
 msgstr "Sončno"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:91
-#: ../src/service/indicator_weather_service/providers/yahoo.py:92
+#: ../bin/indicator-weather.py:571 ../bin/indicator-weather.py:572
 msgid "Fair"
 msgstr "Lepo"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:93
+#: ../bin/indicator-weather.py:573
 msgid "Mixed rain and hail"
 msgstr "Mešan dež ter toča"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:94
+#: ../bin/indicator-weather.py:574
 msgid "Hot"
 msgstr "Vroče"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:95
+#: ../bin/indicator-weather.py:575
 msgid "Isolated thunderstorms"
 msgstr "Izolirane nevihte"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:96
-#: ../src/service/indicator_weather_service/providers/yahoo.py:97
+#: ../bin/indicator-weather.py:576 ../bin/indicator-weather.py:577
 msgid "Scattered thunderstorms"
 msgstr "Razpršene nevihte"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:98
+#: ../bin/indicator-weather.py:578
 msgid "Scattered showers"
 msgstr "Razpršene plohe"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:99
-#: ../src/service/indicator_weather_service/providers/yahoo.py:101
+#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:581
 msgid "Heavy snow"
 msgstr "Močno sneženje"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:100
+#: ../bin/indicator-weather.py:580
 msgid "Scattered snow showers"
 msgstr "Razpršene snežne plohe"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:103
+#: ../bin/indicator-weather.py:583
 msgid "Thundershowers"
 msgstr "Plohe z nevihtami"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:104
+#: ../bin/indicator-weather.py:584
 msgid "Snow showers"
 msgstr "Snežne plohe"
 
-#: ../src/service/indicator_weather_service/providers/yahoo.py:105
+#: ../bin/indicator-weather.py:585
 msgid "Isolated thundershowers"
 msgstr "Izolirane plohe z nevihtami"
 
-#: ../src/service/indicator_weather_service/weather.py:306
+#: ../bin/indicator-weather.py:586 ../bin/indicator-weather.py:699
+msgid "Unknown condition"
+msgstr "Neznan pogoj"
+
+#: ../bin/indicator-weather.py:709
 msgid "Humidity"
 msgstr "Vlažnost"
 
-#: ../bin/indicator-weather.py:578
+#: ../bin/indicator-weather.py:728
 msgid "Pressure"
 msgstr "Pritisk"
 
-#: ../bin/indicator-weather.py:601
+#: ../bin/indicator-weather.py:754
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: ../src/service/indicator_weather_service/weather.py:347
+#: ../bin/indicator-weather.py:778 ../bin/indicator-weather.py:779
+#: ../bin/indicator-weather.py:780
+msgid "Unknown"
+msgstr ""
+
+#: ../bin/indicator-weather.py:787
 msgid "Wind"
 msgstr "Veter"
 
-#: ../bin/indicator-weather.py:634
-msgid "mph"
-msgstr "mph"
-
-#: ../bin/indicator-weather.py:637
-msgid "m/s"
-msgstr "m/s"
-
-#: ../bin/indicator-weather.py:643
-msgid "km/h"
-msgstr "km/h"
-
-#: ../bin/indicator-weather.py:646
-msgid "knot(s)"
-msgstr "vozl(ov)"
-
-#: ../src/service/indicator_weather_service/weather.py:376
+#: ../bin/indicator-weather.py:814
 msgid "Sunrise"
 msgstr "Sončni vzhod"
 
-#: ../src/service/indicator_weather_service/weather.py:384
+#: ../bin/indicator-weather.py:818
 msgid "Sunset"
 msgstr "Sončni zahod"
 
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:671
+#: ../bin/indicator-weather.py:831
 msgid "N"
 msgstr "S"
 
-#: ../bin/indicator-weather.py:673
+#: ../bin/indicator-weather.py:833
 msgid "NE"
 msgstr "SV"
 
-#: ../bin/indicator-weather.py:675
+#: ../bin/indicator-weather.py:835
 msgid "E"
 msgstr "V"
 
-#: ../bin/indicator-weather.py:677
+#: ../bin/indicator-weather.py:837
 msgid "SE"
 msgstr "JV"
 
-#: ../bin/indicator-weather.py:679
+#: ../bin/indicator-weather.py:839
 msgid "S"
 msgstr "J"
 
-#: ../bin/indicator-weather.py:681
+#: ../bin/indicator-weather.py:841
 msgid "SW"
 msgstr "JZ"
 
-#: ../bin/indicator-weather.py:683
+#: ../bin/indicator-weather.py:843
 msgid "W"
 msgstr "Z"
 
-#: ../bin/indicator-weather.py:685
+#: ../bin/indicator-weather.py:845
 msgid "NW"
 msgstr "SZ"
 
-#: ../src/service/indicator_weather_service/menu.py:128
+#: ../bin/indicator-weather.py:1016
 msgid "Set Up Weather..."
 msgstr "Nastavi vreme ..."
 
-#: ../src/service/indicator_weather_service/menu.py:156
-#: ../src/service/indicator_weather_service/menu.py:609
-#: ../src/service/indicator_weather_service/menu.py:613
-#: ../src/service/indicator_weather_service/menu.py:617
-msgid "Refresh"
-msgstr "Osveži"
-
-#: ../bin/indicator-weather.py:941
-msgid "refreshed just now"
-msgstr "pravkar osveženo"
-
-#: ../bin/indicator-weather.py:946
+#: ../bin/indicator-weather.py:1118
 msgid "Forecast"
 msgstr "Napoved"
 
-#: ../src/service/indicator_weather_service/menu.py:146
+#. #Preferences
+#: ../bin/indicator-weather.py:1124
 msgid "Preferences..."
 msgstr "Možnosti ..."
 
-#: ../bin/indicator-weather.py:989
-#, python-format
-msgid "last refreshed %s min. ago"
-msgstr "nazadnje osveženo %s min. nazaj"
+#. #About
+#: ../bin/indicator-weather.py:1130
+msgid "About..."
+msgstr "O programu ..."
 
-#: ../bin/indicator-weather.py:1019
+#: ../bin/indicator-weather.py:1231
 msgid "Refreshing, please wait"
 msgstr "Osvežujem"
 
-#: ../bin/indicator-weather.py:1059
-msgid "last refreshed just now"
-msgstr "pravkar osveženo"
+#: ../bin/indicator-weather.py:1233 ../bin/indicator-weather.py:1235
+#: ../bin/indicator-weather.py:1237
+msgid "Refresh"
+msgstr "Osveži"
 
-#: ../src/service/indicator_weather_service/indicator.py:433
+#: ../bin/indicator-weather.py:1235
+msgid "just now"
+msgstr "pravkar"
+
+#: ../bin/indicator-weather.py:1237
+#, python-format
+msgid "%d min. ago"
+msgstr "%d min nazaj"
+
+#: ../bin/indicator-weather.py:1378
 msgid "Severe weather alert"
 msgstr "Opozorilo za nevarno vreme"
 
-#: ../src/service/indicator_weather_service/forecast.py:62
+#: ../bin/indicator-weather.py:1396 ../indicator-weather.desktop.in.h:2
+msgid "Weather Indicator"
+msgstr "Kazalnik vremena"
+
+#: ../bin/indicator-weather.py:1408
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Dražen Matešić https://launchpad.net/~crazylemon"
+
+#: ../bin/indicator-weather.py:1643
 msgid "Weather Forecast for "
 msgstr "Vremenska napoved za "
 
-#: ../src/service/indicator_weather_service/forecast.py:90
+#: ../bin/indicator-weather.py:1694
 msgid "High"
 msgstr "Visoko"
 
-#: ../src/service/indicator_weather_service/forecast.py:95
+#: ../bin/indicator-weather.py:1696
 msgid "Low"
 msgstr "Nizko"
 
-#: ../src/service/indicator_weather_service/prefs.py:396
-#: ../data/ui/Assistant.ui:192
+#: ../bin/indicator-weather.py:1797 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
 msgstr "Oznaka:"
 
-#: ../bin/indicator-weather.py:1522
+#: ../bin/indicator-weather.py:1887
 msgid "Another instance of this program is already running"
 msgstr "V ozadju že teče primerek tega programa"
 
-#: ../data/ui/Assistant.ui:206
+#: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
 msgstr "<b>Domov</b>"
 
-#: ../data/ui/Assistant.ui:258
+#: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
 msgstr "<b>Koper, Slovenija</b>"
 
-#: ../data/ui/Assistant.ui:10
+#: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr "Dodaj mesto"
 
-#: ../data/ui/Assistant.ui:244
+#: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
 msgstr "Mesto:"
 
-#: ../data/ui/Assistant.ui:137
+#: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
 msgstr "Poimenuj mesto"
 
-#: ../data/ui/Assistant.ui:111
+#: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
 msgstr "Prosim vnesite ime za to mesto:"
 
 #: ../data/ui/Assistant.ui.h:8
-msgid "Please input a location in the combobox below:"
-msgstr "Prosim vnesite mesto v polje spodaj:"
-
-#: ../data/ui/Assistant.ui:151
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -454,11 +451,19 @@ msgstr ""
 "Prosim preglejte izbire spodaj. Če nekaj ni pravilno, pojdite nazaj ter "
 "izberite pravilno možnost."
 
-#: ../data/ui/Assistant.ui:289
+#: ../data/ui/Assistant.ui.h:9
+msgid "Please search our database for your location:"
+msgstr "Prosim poiščite vaš kraj:"
+
+#: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
 msgstr "Pregled izbir"
 
-#: ../data/ui/Assistant.ui:97
+#: ../data/ui/Assistant.ui.h:11
+msgid "Search"
+msgstr "Išči"
+
+#: ../data/ui/Assistant.ui.h:12
 msgid "Select a location"
 msgstr "Izberite mesto"
 
@@ -472,6 +477,42 @@ msgid ""
 "the world"
 msgstr "Kazalnik vremena, kateri pokaže podatke za eno ali več mest"
 
-#: ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Kazalnik vremena"
+#~ msgid "Kilometers per hour (kph)"
+#~ msgstr "Kilometrov na uro (km/h)"
+
+#~ msgid "SI (°C)"
+#~ msgstr "SI (°C)"
+
+#~ msgid "Show tips in menu"
+#~ msgstr "V meniju kaži nasvete"
+
+#~ msgid "mph"
+#~ msgstr "mph"
+
+#~ msgid "knot(s)"
+#~ msgstr "vozl(ov)"
+
+#~ msgid "km/h"
+#~ msgstr "km/h"
+
+#~ msgid "m/s"
+#~ msgstr "m/s"
+
+#~ msgid "refreshed just now"
+#~ msgstr "pravkar osveženo"
+
+#, python-format
+#~ msgid "last refreshed %s min. ago"
+#~ msgstr "nazadnje osveženo %s min. nazaj"
+
+#~ msgid "last refreshed just now"
+#~ msgstr "pravkar osveženo"
+
+#~ msgid "Please input a location in the combobox below:"
+#~ msgstr "Prosim vnesite mesto v polje spodaj:"
+
+#~ msgid "Condition"
+#~ msgstr "Pogoj"
+
+#~ msgid "Visibility"
+#~ msgstr "Vidnost"
