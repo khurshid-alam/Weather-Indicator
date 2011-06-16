@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-31 02:47-0700\n"
-"PO-Revision-Date: 2011-06-15 01:02+0000\n"
-"Last-Translator: Vadim Rutkovsky <roignac@gmail.com>\n"
+"PO-Revision-Date: 2011-06-15 17:30+0000\n"
+"Last-Translator: Ilis <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-15 05:48+0000\n"
+"X-Launchpad-Export-Date: 2011-06-16 05:27+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: ru\n"
 
@@ -44,7 +44,7 @@ msgstr "Включить апплет «Индикатор погоды»"
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
-msgstr "Основные"
+msgstr "Главное"
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
@@ -64,7 +64,7 @@ msgstr "Узлы"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Расположения"
+msgstr "Места"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
@@ -80,7 +80,7 @@ msgstr "Выключить уведомления"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr "Только при штормовом предупреждении"
+msgstr "Уведомлять только при штормовом предупреждении"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (metric, °C)"
@@ -100,7 +100,7 @@ msgstr "Обновлять каждые"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr "При каждом изменения погоды"
+msgstr "Уведомлять при каждом изменении погоды"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
@@ -112,7 +112,7 @@ msgstr "Yahoo!"
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr "мин."
+msgstr "мин"
 
 #: ../bin/indicator-weather.py:457
 msgid "Unknown error occurred while picking up weather data"
@@ -120,7 +120,7 @@ msgstr "Неизвестная ошибка произошла при получ
 
 #: ../bin/indicator-weather.py:537
 msgid "Tornado"
-msgstr "Торнадо"
+msgstr "Смерч"
 
 #: ../bin/indicator-weather.py:538
 msgid "Tropical storm"
@@ -140,12 +140,12 @@ msgstr "Гроза"
 
 #: ../bin/indicator-weather.py:542
 msgid "Mixed rain and snow"
-msgstr "Дождь со снегом"
+msgstr "Снег с дождём"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather.py:544
 msgid "Mixed rain and sleet"
-msgstr "Дождь со снегом"
+msgstr "Снег с дождём"
 
 #: ../bin/indicator-weather.py:545
 msgid "Mixed snow and sleet"
@@ -177,7 +177,7 @@ msgstr "Небольшой снегопад"
 
 #: ../bin/indicator-weather.py:553
 msgid "Blowing snow"
-msgstr "Низовая метель"
+msgstr "Позёмка"
 
 #: ../bin/indicator-weather.py:554
 msgid "Snow"
@@ -189,7 +189,7 @@ msgstr "Град"
 
 #: ../bin/indicator-weather.py:556
 msgid "Sleet"
-msgstr "Дождь со снегом"
+msgstr "Снег с дождём"
 
 #: ../bin/indicator-weather.py:557
 msgid "Dust"
@@ -286,7 +286,7 @@ msgstr "Местами ливень с грозой"
 
 #: ../bin/indicator-weather.py:586 ../bin/indicator-weather.py:699
 msgid "Unknown condition"
-msgstr "Неизвестно"
+msgstr "Погода неизвестна"
 
 #: ../bin/indicator-weather.py:709
 msgid "Humidity"
@@ -408,11 +408,11 @@ msgstr "Прогноз погоды для "
 
 #: ../bin/indicator-weather.py:1694
 msgid "High"
-msgstr "От"
+msgstr "До"
 
 #: ../bin/indicator-weather.py:1696
 msgid "Low"
-msgstr "До"
+msgstr "От"
 
 #: ../bin/indicator-weather.py:1797 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
@@ -456,7 +456,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
-msgstr "Пожалуйста используйте поиск чтобы найти ваш город"
+msgstr "Используйте поиск места в базе данных"
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
@@ -464,7 +464,7 @@ msgstr "Проверьте ваш выбор"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
-msgstr "Поиск"
+msgstr "Найти"
 
 #: ../data/ui/Assistant.ui.h:12
 msgid "Select a location"
@@ -855,9 +855,6 @@ msgstr ""
 #~ msgid "Please select a location from the location tree"
 #~ msgstr "Выберите место из дерева"
 
-#~ msgid "Humidex"
-#~ msgstr "Humidex"
-
 #~ msgid "Rain/freezing rain"
 #~ msgstr "Дождь/ледяной дождь"
 
@@ -891,3 +888,6 @@ msgstr ""
 
 #~ msgid "Please input a location in the combobox below:"
 #~ msgstr "Введите название города:"
+
+#~ msgid "Humidex"
+#~ msgstr "Температура с учётом влажности"

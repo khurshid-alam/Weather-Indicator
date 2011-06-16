@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-15 05:48+0000\n"
+"X-Launchpad-Export-Date: 2011-06-16 05:27+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: pl\n"
 
@@ -361,12 +361,12 @@ msgstr "Prognoza pogody"
 #. #Preferences
 #: ../bin/indicator-weather.py:1124
 msgid "Preferences..."
-msgstr "Preferencje..."
+msgstr "Ustawienia..."
 
 #. #About
 #: ../bin/indicator-weather.py:1130
 msgid "About..."
-msgstr "O wtyczce..."
+msgstr "Informacje..."
 
 #: ../bin/indicator-weather.py:1231
 msgid "Refreshing, please wait"
@@ -379,7 +379,7 @@ msgstr "Odśwież"
 
 #: ../bin/indicator-weather.py:1235
 msgid "just now"
-msgstr "Tylko co"
+msgstr "przed chwilą"
 
 #: ../bin/indicator-weather.py:1237
 #, python-format
@@ -576,3 +576,6 @@ msgstr ""
 
 #~ msgid "Visibility"
 #~ msgstr "Widoczność"
+
+#~ msgid "Humidex"
+#~ msgstr "Humidex"
