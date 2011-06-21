@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-06-16 05:31+0000\n"
-"Last-Translator: fioletowyb <Unknown>\n"
+"PO-Revision-Date: 2011-06-20 10:13+0000\n"
+"Last-Translator: Michał Ćwikliński <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-17 05:37+0000\n"
+"X-Launchpad-Export-Date: 2011-06-21 06:08+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: pl\n"
 
@@ -38,6 +38,7 @@ msgstr "Poważne ostrzeżenie pogodowe"
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
+"  Michał Ćwikliński https://launchpad.net/~mcwiklinski\n"
 "  Vadim Rutkovsky https://launchpad.net/~roignac\n"
 "  Wojciech Romatowski https://launchpad.net/~mann78\n"
 "  fioletowyb https://launchpad.net/~fioletowyb"
@@ -165,11 +166,11 @@ msgstr "Humidex albo temperatura odczuwalna (Kanada)"
 
 #: ../src/service/indicator_weather_service/weather.py:286
 msgid "Feels like (AU):"
-msgstr ""
+msgstr "Odczucie"
 
 #: ../src/service/indicator_weather_service/weather.py:287
 msgid "Feels like (AU)"
-msgstr ""
+msgstr "Odczucie"
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
