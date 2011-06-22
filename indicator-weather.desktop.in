@@ -1,9 +1,10 @@
 [Desktop Entry]
 _Name=Weather Indicator
 _Comment=A weather indicator that displays information for one or multiple places in the world
-GenericName=Weather Indicator
+GenericName=Weather Applet
 Categories=GNOME;Utility;
 Exec=indicator-weather
 Icon=/usr/share/indicator-weather/media/icon.png
-Terminal=false
+Hidden=False
+X-GNOME-Autostart-enabled=true
 Type=Application

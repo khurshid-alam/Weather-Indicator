@@ -1,11 +1,17 @@
-indicator-weather (11.05.31~oneiric6) oneiric; urgency=low
+indicator-weather (11.05.31~oneiric7) maverick; urgency=low
+
+  * Ported from python-support to dh_python2
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 22 Jun 2011 02:27:38 -0700
+
+indicator-weather (11.05.31~oneiric6) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Proper fix of self.db.list_keys() for Maverick users (LP: #791615)
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 14 Jun 2011 05:12:19 -0700
 
-indicator-weather (11.05.31~oneiric5) oneiric; urgency=low
+indicator-weather (11.05.31~maverick5) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Show default labels if some data from providers is missing (LP: #794473)
@@ -13,14 +19,14 @@ indicator-weather (11.05.31~oneiric5) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 14 Jun 2011 04:12:33 -0700
 
-indicator-weather (11.05.31~oneiric4) oneiric; urgency=low
+indicator-weather (11.05.31~maverick4) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Another update for Google icon path changes
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 06 Jun 2011 02:57:42 -0700
 
-indicator-weather (11.05.31~oneiric3) oneiric; urgency=low
+indicator-weather (11.05.31~maverick3) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Display correct icon and description for empty condition in forecast (LP: #791733)
@@ -28,7 +34,7 @@ indicator-weather (11.05.31~oneiric3) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 02 Jun 2011 02:15:24 -0700
 
-indicator-weather (11.05.31~oneiric2) oneiric; urgency=low
+indicator-weather (11.05.31~maverick2) maverick; urgency=low
 
   * Bugfix version for Cloudy 8
   * Attach dconf settings to apport results (LP: #731911)
@@ -36,14 +42,14 @@ indicator-weather (11.05.31~oneiric2) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 02 Jun 2011 00:53:06 -0700
 
-indicator-weather (11.05.31~oneiric1) oneiric; urgency=low
+indicator-weather (11.05.31~maverick1) maverick; urgency=low
 
   * New release in Cloudy series
   * Ported settings to dconf, which will solve a number of desktopcouch-related bugs
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Tue, 31 May 2011 02:43:24 -0700
 
-indicator-weather (11.05.30~oneiric1) oneiric; urgency=low
+indicator-weather (11.05.30~maverick1) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #776586 "I get "Unknown error occurred while picking up weather data" when trying to open forecast."
@@ -56,21 +62,21 @@ indicator-weather (11.05.30~oneiric1) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 30 May 2011 03:20:58 -0700
 
-indicator-weather (11.05.01~oneiric2) oneiric; urgency=low
+indicator-weather (11.05.01~maverick2) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #765464 "sunrise and sunset info incorrect", thanks Panagiotis!
-  * Fix for LP: #775630 "package indicator-weather 11.05.01~oneiric1 failed to install/upgrade"
+  * Fix for LP: #775630 "package indicator-weather 11.05.01~maverick1 failed to install/upgrade"
   * Fix for LP: #772552 "weather applet doesn't start"
   * Fix for LP: #769842 "Weather Indicator should clear up corrupted DB"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 02 May 2011 19:59:36 +0300
 
-indicator-weather (11.04.24~oneiric4) oneiric; urgency=low
+indicator-weather (11.04.24~maverick4) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #747733 "indicator-weather crashed with TypeError in next_page(): unknown type (null)"
-  * Fix for LP: #757195 "Again: Version 11.04.10~oneiric4 doesn't start"
+  * Fix for LP: #757195 "Again: Version 11.04.10~maverick4 doesn't start"
   * Fix for LP: #758309 "dpkg error when installing latest build on Ubuntu 11.04 Beta", using patch from Andrew Starr-Bochicchio
   * Fix for LP: #766049 "Traceback on startup: No module named desktopcouch.records.server"
   * Fix for LP: #753309 "weather applet displays wrong sunset/sunrise times", using earthtools for both Google and Yahoo
@@ -79,7 +85,7 @@ indicator-weather (11.04.24~oneiric4) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 24 Apr 2011 10:57:00 +0300
 
-indicator-weather (11.04.10~oneiric4) oneiric; urgency=low
+indicator-weather (11.04.10~maverick4) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #743375 "indicator-weather crashed with error in _try_request_with_retries(): [Errno 111] Connection refused"
@@ -92,7 +98,7 @@ indicator-weather (11.04.10~oneiric4) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 10 Apr 2011 10:05:12 +0300
 
-indicator-weather (11.04.02~oneiric) oneiric; urgency=low
+indicator-weather (11.04.02~maverick) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #739420 "indicator-weather crashed with KeyError in prepare_forecast_data(): 'unit_system'", thanks Felix!
@@ -105,7 +111,7 @@ indicator-weather (11.04.02~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 02 Apr 2011 12:08:56 +0300
 
-indicator-weather (11.03.27~oneiric) oneiric; urgency=low
+indicator-weather (11.03.27~maverick) maverick; urgency=low
 
   * New release in Cloudy series
   * Fix for LP: #739907 "indicator-weather failed to start falsely reporting duplicate instance", thanks Felix!
@@ -120,7 +126,7 @@ indicator-weather (11.03.27~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 27 Mar 2011 13:27:42 +0300
 
-indicator-weather (11.03.20~oneiric2) oneiric; urgency=low
+indicator-weather (11.03.20~maverick2) maverick; urgency=low
 
   * Quick fix release for Cloudy
   * Fix for LP: #738804 "indicator-weather crashed with KeyError in on_get_city_names(): 'geonames'"
@@ -128,21 +134,21 @@ indicator-weather (11.03.20~oneiric2) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 20 Mar 2011 20:05:29 +0200
 
-indicator-weather (11.03.20~oneiric) oneiric; urgency=low
+indicator-weather (11.03.20~maverick) maverick; urgency=low
 
   * Releasing 11.03.20 "Cloudy" version
   * Fix for LP: #738503 "indicator-weather crashed with IOError in about(): [Errno 2] No such file or directory: '../AUTHORS' after clicking About..."
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 20 Mar 2011 07:54:50 +0200
 
-indicator-weather (11.02.13+unstable+bzr217+rc3~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+unstable+bzr217+rc3~maverick) maverick; urgency=low
 
   * Release Candidate 3
   * Fix for LP: #713846 "Weather Indicator should have About page"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 19 Mar 2011 11:26:54 +0200
 
-indicator-weather (11.02.13+unstable+bzr214+rc1~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+unstable+bzr214+rc1~maverick) maverick; urgency=low
 
   * Release Candidate 2
   * Fix for LP: #735928 "indicator-weather crashed with NameError in prepare_settings_store(): global name 'DBusException' is not defined"
@@ -151,7 +157,7 @@ indicator-weather (11.02.13+unstable+bzr214+rc1~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sat, 19 Mar 2011 01:33:31 +0200
 
-indicator-weather (11.02.13+unstable+bzr210+rc1~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+unstable+bzr210+rc1~maverick) maverick; urgency=low
 
   * Release Candidate 1
   * Fix for LP: #733760 "indicator-weather crashed with KeyError in save_location_details(): 'yahoo id'"
@@ -162,20 +168,20 @@ indicator-weather (11.02.13+unstable+bzr210+rc1~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 09:21:57 +0200
 
-indicator-weather (11.02.13+unstable+bzr204~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+unstable+bzr204~maverick) maverick; urgency=low
 
   * Fix for LP: #732434 "indicator-weather crashed with DBusException in call_blocking(): org.freedesktop.DBus.Error.NoReply"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 09:21:57 +0200
 
-indicator-weather (11.02.13+unstable+bzr203~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+unstable+bzr203~maverick) maverick; urgency=low
 
   * Fixes for incorrect and missing icons
   * Fix for LP: #732275 "CouchDB exception on db.compact()"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 10 Mar 2011 00:23:14 +0200
 
-indicator-weather (11.02.13~unstable+bzr200~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13~unstable+bzr200~maverick) maverick; urgency=low
 
   * Implemented Desktopcouch support
   * Using PyWAPI to get data
@@ -183,7 +189,7 @@ indicator-weather (11.02.13~unstable+bzr200~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 09 Mar 2011 22:55:00 +0200
 
-indicator-weather (11.02.13+bzr180~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13+bzr180~maverick) maverick; urgency=low
 
   * Implemented UI improvements. Thanks, Andrew
   * Fix for LP: #719693 "[regression] Menu item will not show up in GNOME-Menu", thanks Andrew Starr-Bochicchio
@@ -194,11 +200,11 @@ indicator-weather (11.02.13+bzr180~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Thu, 17 Feb 2011 00:13:01 +0200
 
-indicator-weather (11.02.13~oneiric) oneiric; urgency=low
+indicator-weather (11.02.13~maverick) maverick; urgency=low
 
   * Migrate to gweather + pymetar data sources
   * Added an option to choose wind units
-  * Fix for labels crash in oneiric
+  * Fix for labels crash in maverick
   * Removed countries without cities from the tree
   * Updated connection handling
   * Minor fixes for UI in Preferences dialog
@@ -235,142 +241,142 @@ indicator-weather (11.02.13~oneiric) oneiric; urgency=low
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 13 Feb 2011 09:28:08 +0200
 
-indicator-weather (11.01.16~oneiric) oneiric; urgency=low
+indicator-weather (11.01.16~maverick) maverick; urgency=low
 
   * Fix for Bug #618108 "Label is not shown in the dialogs when specified"
   * Fix for Bug #604265 "First configuration weather unit setting not saved"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Sun, 16 Jan 2011 14:17:27 +0200
 
-indicator-weather (10.07.16~oneiric) oneiric; urgency=low
+indicator-weather (10.07.16~maverick) maverick; urgency=low
 
   * Bugfix : list index out of range fixed
 
  -- ridem <mehd36@gmail.com>  Sun, 11 Jul 2010 01:11:10 +0200
 
-indicator-weather (10.07.15~oneiric) oneiric; urgency=low
+indicator-weather (10.07.15~maverick) maverick; urgency=low
 
   * Sunlight-sunset added/night-day icons/ assistant made thanks to
     cullen, but no label support for now
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 21:32:53 +0200
 
-indicator-weather (10.07.14~oneiric) oneiric; urgency=low
+indicator-weather (10.07.14~maverick) maverick; urgency=low
 
   * Autostart hidden and works, Assistant works, but needs polish now
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 04:06:24 +0200
 
-indicator-weather (10.07.13~oneiric) oneiric; urgency=low
+indicator-weather (10.07.13~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:48:49 +0200
 
-indicator-weather (10.07.13~oneiric) oneiric; urgency=low
+indicator-weather (10.07.13~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:44:18 +0200
 
-indicator-weather (10.07.13~oneiric) oneiric; urgency=low
+indicator-weather (10.07.13~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:36:52 +0200
 
-indicator-weather (10.07.13~oneiric) oneiric; urgency=low
+indicator-weather (10.07.13~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:31:03 +0200
 
-indicator-weather (10.07.13~oneiric) oneiric; urgency=low
+indicator-weather (10.07.13~maverick) maverick; urgency=low
 
   * Autostart, right category, find location in assistant, assistant not
     finished yet
 
  -- ridem <mehd36@gmail.com>  Sat, 10 Jul 2010 02:01:21 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 02:00:37 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 01:01:59 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:54:23 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:53:35 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:49:41 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:45:09 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:44:28 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:42:08 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:38:48 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:36:36 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * New release.
 
  -- Mehdi Rejraji <mehdi@portable-mehdi>  Sat, 10 Jul 2010 00:27:40 +0200
 
-indicator-weather (10.07.12~oneiric) oneiric; urgency=low
+indicator-weather (10.07.12~maverick) maverick; urgency=low
 
   * Work on assistant
 
  -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:26:35 +0200
 
-indicator-weather (10.07.11~oneiric) oneiric; urgency=low
+indicator-weather (10.07.11~maverick) maverick; urgency=low
 
   * No intrusion for the first run
 
  -- ridem <mehd36@gmail.com>  Fri, 09 Jul 2010 01:23:33 +0200
 
-indicator-weather (10.07.10~oneiric) oneiric; urgency=low
+indicator-weather (10.07.10~maverick) maverick; urgency=low
 
   * Now etended forecast uses chosen unit
   * places addded/edited/removed only after Ok. Nice editing and
