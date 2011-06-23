@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-31 02:47-0700\n"
+"POT-Creation-Date: 2011-06-22 02:48-0700\n"
 "PO-Revision-Date: 2011-03-11 03:49+0000\n"
 "Last-Translator: Ernesto2k <boramism@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-15 05:48+0000\n"
+"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: ko\n"
 
@@ -114,309 +114,312 @@ msgstr "야후!"
 msgid "minutes"
 msgstr "분"
 
-#: ../bin/indicator-weather.py:457
+#: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
 msgstr ""
 
-#: ../bin/indicator-weather.py:537
+#: ../bin/indicator-weather.py:551
 msgid "Tornado"
 msgstr "토네이도"
 
-#: ../bin/indicator-weather.py:538
+#: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
 msgstr "열대 폭풍우"
 
-#: ../bin/indicator-weather.py:539
+#: ../bin/indicator-weather.py:553
 msgid "Hurricane"
 msgstr "허리케인"
 
-#: ../bin/indicator-weather.py:540
+#: ../bin/indicator-weather.py:554
 msgid "Severe thunderstorms"
 msgstr "맹렬한 뇌우"
 
-#: ../bin/indicator-weather.py:541
+#: ../bin/indicator-weather.py:555
 msgid "Thunderstorms"
 msgstr "뇌우"
 
-#: ../bin/indicator-weather.py:542
+#: ../bin/indicator-weather.py:556
 msgid "Mixed rain and snow"
 msgstr "비가 섞인 눈"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
-#: ../bin/indicator-weather.py:544
+#: ../bin/indicator-weather.py:558
 msgid "Mixed rain and sleet"
 msgstr "진눈깨비가 섞인 비"
 
-#: ../bin/indicator-weather.py:545
+#: ../bin/indicator-weather.py:559
 msgid "Mixed snow and sleet"
 msgstr "진눈깨비가 섞인 눈"
 
-#: ../bin/indicator-weather.py:546
+#: ../bin/indicator-weather.py:560
 msgid "Freezing drizzle"
 msgstr "얼어붙는 이슬비"
 
-#: ../bin/indicator-weather.py:547
+#: ../bin/indicator-weather.py:561
 msgid "Drizzle"
 msgstr "이슬비"
 
-#: ../bin/indicator-weather.py:548
+#: ../bin/indicator-weather.py:562
 msgid "Freezing rain"
 msgstr "얼어붙는 비"
 
-#: ../bin/indicator-weather.py:549 ../bin/indicator-weather.py:550
+#: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
 msgstr "소나기"
 
-#: ../bin/indicator-weather.py:551
+#: ../bin/indicator-weather.py:565
 msgid "Snow flurries"
 msgstr "눈발 흩날림"
 
-#: ../bin/indicator-weather.py:552
+#: ../bin/indicator-weather.py:566
 msgid "Light snow showers"
 msgstr "소낙눈 조금"
 
-#: ../bin/indicator-weather.py:553
+#: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
 msgstr "날린 눈"
 
-#: ../bin/indicator-weather.py:554
+#: ../bin/indicator-weather.py:568
 msgid "Snow"
 msgstr "눈"
 
-#: ../bin/indicator-weather.py:555
+#: ../bin/indicator-weather.py:569
 msgid "Hail"
 msgstr "우박"
 
-#: ../bin/indicator-weather.py:556
+#: ../bin/indicator-weather.py:570
 msgid "Sleet"
 msgstr "진눈깨비"
 
-#: ../bin/indicator-weather.py:557
+#: ../bin/indicator-weather.py:571
 msgid "Dust"
 msgstr "먼지"
 
-#: ../bin/indicator-weather.py:558
+#: ../bin/indicator-weather.py:572
 msgid "Foggy"
 msgstr "안개"
 
-#: ../bin/indicator-weather.py:559
+#: ../bin/indicator-weather.py:573
 msgid "Haze"
 msgstr "아지랑이"
 
-#: ../bin/indicator-weather.py:560
+#: ../bin/indicator-weather.py:574
 msgid "Smoky"
 msgstr "연기"
 
-#: ../bin/indicator-weather.py:561
+#: ../bin/indicator-weather.py:575
 msgid "Blustery"
 msgstr "거센 바람"
 
-#: ../bin/indicator-weather.py:562
+#: ../bin/indicator-weather.py:576
 msgid "Windy"
 msgstr "바람"
 
-#: ../bin/indicator-weather.py:563
+#: ../bin/indicator-weather.py:577
 msgid "Cold"
 msgstr "추움"
 
-#: ../bin/indicator-weather.py:564
+#: ../bin/indicator-weather.py:578
 msgid "Cloudy"
 msgstr "구름"
 
-#: ../bin/indicator-weather.py:565 ../bin/indicator-weather.py:566
+#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
 msgid "Mostly cloudy"
 msgstr "구름 많음"
 
-#: ../bin/indicator-weather.py:567 ../bin/indicator-weather.py:568
-#: ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:596
 msgid "Partly cloudy"
 msgstr "구름 조금"
 
-#: ../bin/indicator-weather.py:569
+#: ../bin/indicator-weather.py:583
 msgid "Clear"
 msgstr "맑음"
 
-#: ../bin/indicator-weather.py:570
+#: ../bin/indicator-weather.py:584
 msgid "Sunny"
 msgstr "화창함"
 
-#: ../bin/indicator-weather.py:571 ../bin/indicator-weather.py:572
+#: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
 msgid "Fair"
 msgstr "맑음"
 
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather.py:587
 msgid "Mixed rain and hail"
 msgstr "우박이 섞인 비"
 
-#: ../bin/indicator-weather.py:574
+#: ../bin/indicator-weather.py:588
 msgid "Hot"
 msgstr "더움"
 
-#: ../bin/indicator-weather.py:575
+#: ../bin/indicator-weather.py:589
 msgid "Isolated thunderstorms"
 msgstr "고립형 뇌우"
 
-#: ../bin/indicator-weather.py:576 ../bin/indicator-weather.py:577
+#: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
 msgid "Scattered thunderstorms"
 msgstr "산발적인 뇌우"
 
-#: ../bin/indicator-weather.py:578
+#: ../bin/indicator-weather.py:592
 msgid "Scattered showers"
 msgstr "산발적인 소나기"
 
-#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:581
+#: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
 msgid "Heavy snow"
 msgstr "대설"
 
-#: ../bin/indicator-weather.py:580
+#: ../bin/indicator-weather.py:594
 msgid "Scattered snow showers"
 msgstr "산발적인 소낙눈"
 
-#: ../bin/indicator-weather.py:583
+#: ../bin/indicator-weather.py:597
 msgid "Thundershowers"
 msgstr "뇌우"
 
-#: ../bin/indicator-weather.py:584
+#: ../bin/indicator-weather.py:598
 msgid "Snow showers"
 msgstr "소낙눈"
 
-#: ../bin/indicator-weather.py:585
+#: ../bin/indicator-weather.py:599
 msgid "Isolated thundershowers"
 msgstr "고립형 뇌우"
 
-#: ../bin/indicator-weather.py:586 ../bin/indicator-weather.py:699
+#: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
+#: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
+#: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
+#: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
 msgid "Unknown condition"
 msgstr "알 수 없는 상태"
 
-#: ../bin/indicator-weather.py:709
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
 msgid "Humidity"
 msgstr "습도"
 
-#: ../bin/indicator-weather.py:728
+#: ../bin/indicator-weather.py:782
 msgid "Pressure"
 msgstr "기압"
 
-#: ../bin/indicator-weather.py:754
+#: ../bin/indicator-weather.py:812
 msgid "Temperature"
 msgstr "온도"
 
-#: ../bin/indicator-weather.py:778 ../bin/indicator-weather.py:779
-#: ../bin/indicator-weather.py:780
+#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
+#: ../bin/indicator-weather.py:838
 msgid "Unknown"
 msgstr ""
 
-#: ../bin/indicator-weather.py:787
+#: ../bin/indicator-weather.py:845
 msgid "Wind"
 msgstr "바람"
 
-#: ../bin/indicator-weather.py:814
+#: ../bin/indicator-weather.py:872
 msgid "Sunrise"
 msgstr "해 뜨는 시간"
 
-#: ../bin/indicator-weather.py:818
+#: ../bin/indicator-weather.py:876
 msgid "Sunset"
 msgstr "해 지는 시간"
 
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:831
+#: ../bin/indicator-weather.py:889
 msgid "N"
 msgstr "북풍"
 
-#: ../bin/indicator-weather.py:833
+#: ../bin/indicator-weather.py:891
 msgid "NE"
 msgstr "북동풍"
 
-#: ../bin/indicator-weather.py:835
+#: ../bin/indicator-weather.py:893
 msgid "E"
 msgstr "동풍"
 
-#: ../bin/indicator-weather.py:837
+#: ../bin/indicator-weather.py:895
 msgid "SE"
 msgstr "남동풍"
 
-#: ../bin/indicator-weather.py:839
+#: ../bin/indicator-weather.py:897
 msgid "S"
 msgstr "남풍"
 
-#: ../bin/indicator-weather.py:841
+#: ../bin/indicator-weather.py:899
 msgid "SW"
 msgstr "남서풍"
 
-#: ../bin/indicator-weather.py:843
+#: ../bin/indicator-weather.py:901
 msgid "W"
 msgstr "서풍"
 
-#: ../bin/indicator-weather.py:845
+#: ../bin/indicator-weather.py:903
 msgid "NW"
 msgstr "북서풍"
 
-#: ../bin/indicator-weather.py:1016
+#: ../bin/indicator-weather.py:1074
 msgid "Set Up Weather..."
 msgstr "날씨 설정..."
 
-#: ../bin/indicator-weather.py:1118
+#: ../bin/indicator-weather.py:1176
 msgid "Forecast"
 msgstr "예보"
 
 #. #Preferences
-#: ../bin/indicator-weather.py:1124
+#: ../bin/indicator-weather.py:1182
 msgid "Preferences..."
 msgstr "기본 설정..."
 
 #. #About
-#: ../bin/indicator-weather.py:1130
+#: ../bin/indicator-weather.py:1188
 msgid "About..."
 msgstr "정보..."
 
-#: ../bin/indicator-weather.py:1231
+#: ../bin/indicator-weather.py:1289
 msgid "Refreshing, please wait"
 msgstr "다시 읽는 중. 기다려 주십시오"
 
-#: ../bin/indicator-weather.py:1233 ../bin/indicator-weather.py:1235
-#: ../bin/indicator-weather.py:1237
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
 msgid "Refresh"
 msgstr "새로 고침"
 
-#: ../bin/indicator-weather.py:1235
+#: ../bin/indicator-weather.py:1293
 msgid "just now"
 msgstr "지금 막"
 
-#: ../bin/indicator-weather.py:1237
+#: ../bin/indicator-weather.py:1295
 #, python-format
 msgid "%d min. ago"
 msgstr "%d분 전"
 
-#: ../bin/indicator-weather.py:1378
+#: ../bin/indicator-weather.py:1436
 msgid "Severe weather alert"
 msgstr "심각한 날씨 경고"
 
-#: ../bin/indicator-weather.py:1396 ../indicator-weather.desktop.in.h:2
+#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
 msgstr "날씨 알리미"
 
-#: ../bin/indicator-weather.py:1408
+#: ../bin/indicator-weather.py:1466
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Ernesto2k https://launchpad.net/~boramism"
 
-#: ../bin/indicator-weather.py:1643
+#: ../bin/indicator-weather.py:1684
 msgid "Weather Forecast for "
 msgstr "날씨 예보 - "
 
-#: ../bin/indicator-weather.py:1694
+#: ../bin/indicator-weather.py:1739
 msgid "High"
 msgstr "최고 기온"
 
-#: ../bin/indicator-weather.py:1696
+#: ../bin/indicator-weather.py:1741
 msgid "Low"
 msgstr "최저 기온"
 
-#: ../bin/indicator-weather.py:1797 ../data/ui/Assistant.ui.h:4
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
 msgstr "위치 이름 :"
 
-#: ../bin/indicator-weather.py:1887
+#: ../bin/indicator-weather.py:1932
 msgid "Another instance of this program is already running"
 msgstr "이 프로그램의 또 다른 인스턴스가 실행 중입니다"
 

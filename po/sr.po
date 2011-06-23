@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-31 02:47-0700\n"
+"POT-Creation-Date: 2011-06-22 02:48-0700\n"
 "PO-Revision-Date: 2011-06-17 16:55+0000\n"
 "Last-Translator: Предраг Љубеновић <Unknown>\n"
 "Language-Team: Serbian <sr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-18 05:45+0000\n"
+"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: sr\n"
 
@@ -114,310 +114,313 @@ msgstr "Јаху"
 msgid "minutes"
 msgstr "минута"
 
-#: ../bin/indicator-weather.py:457
+#: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
 msgstr "Десила се непозната грешка приликом преузимања прогнозе"
 
-#: ../bin/indicator-weather.py:537
+#: ../bin/indicator-weather.py:551
 msgid "Tornado"
 msgstr "Торнадо"
 
-#: ../bin/indicator-weather.py:538
+#: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
 msgstr "Тропска олуја"
 
-#: ../bin/indicator-weather.py:539
+#: ../bin/indicator-weather.py:553
 msgid "Hurricane"
 msgstr "Ураган"
 
-#: ../bin/indicator-weather.py:540
+#: ../bin/indicator-weather.py:554
 msgid "Severe thunderstorms"
 msgstr "Јака олуја"
 
-#: ../bin/indicator-weather.py:541
+#: ../bin/indicator-weather.py:555
 msgid "Thunderstorms"
 msgstr "Олуја"
 
-#: ../bin/indicator-weather.py:542
+#: ../bin/indicator-weather.py:556
 msgid "Mixed rain and snow"
 msgstr "Мешавина кише и снега"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
-#: ../bin/indicator-weather.py:544
+#: ../bin/indicator-weather.py:558
 msgid "Mixed rain and sleet"
 msgstr "Мешавина кише и суснежице"
 
-#: ../bin/indicator-weather.py:545
+#: ../bin/indicator-weather.py:559
 msgid "Mixed snow and sleet"
 msgstr "Суснежица"
 
-#: ../bin/indicator-weather.py:546
+#: ../bin/indicator-weather.py:560
 msgid "Freezing drizzle"
 msgstr "Ледено ромињање"
 
-#: ../bin/indicator-weather.py:547
+#: ../bin/indicator-weather.py:561
 msgid "Drizzle"
 msgstr "Ромињање"
 
-#: ../bin/indicator-weather.py:548
+#: ../bin/indicator-weather.py:562
 msgid "Freezing rain"
 msgstr "Ледена киша"
 
-#: ../bin/indicator-weather.py:549 ../bin/indicator-weather.py:550
+#: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
 msgstr "Пљускови"
 
-#: ../bin/indicator-weather.py:551
+#: ../bin/indicator-weather.py:565
 msgid "Snow flurries"
 msgstr "Снежно ромињање"
 
-#: ../bin/indicator-weather.py:552
+#: ../bin/indicator-weather.py:566
 msgid "Light snow showers"
 msgstr "Блага падавина снега"
 
-#: ../bin/indicator-weather.py:553
+#: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
 msgstr "Јака падавина снега"
 
-#: ../bin/indicator-weather.py:554
+#: ../bin/indicator-weather.py:568
 msgid "Snow"
 msgstr "Снег"
 
-#: ../bin/indicator-weather.py:555
+#: ../bin/indicator-weather.py:569
 msgid "Hail"
 msgstr "Гра̏д"
 
-#: ../bin/indicator-weather.py:556
+#: ../bin/indicator-weather.py:570
 msgid "Sleet"
 msgstr "Суснежица"
 
-#: ../bin/indicator-weather.py:557
+#: ../bin/indicator-weather.py:571
 msgid "Dust"
 msgstr "Прашина"
 
-#: ../bin/indicator-weather.py:558
+#: ../bin/indicator-weather.py:572
 msgid "Foggy"
 msgstr "Магловито"
 
-#: ../bin/indicator-weather.py:559
+#: ../bin/indicator-weather.py:573
 msgid "Haze"
 msgstr "Измаглица"
 
-#: ../bin/indicator-weather.py:560
+#: ../bin/indicator-weather.py:574
 msgid "Smoky"
 msgstr "Задимљено"
 
-#: ../bin/indicator-weather.py:561
+#: ../bin/indicator-weather.py:575
 msgid "Blustery"
 msgstr "Кошава"
 
-#: ../bin/indicator-weather.py:562
+#: ../bin/indicator-weather.py:576
 msgid "Windy"
 msgstr "Ветровито"
 
-#: ../bin/indicator-weather.py:563
+#: ../bin/indicator-weather.py:577
 msgid "Cold"
 msgstr "Хладно"
 
-#: ../bin/indicator-weather.py:564
+#: ../bin/indicator-weather.py:578
 msgid "Cloudy"
 msgstr "Облачно"
 
-#: ../bin/indicator-weather.py:565 ../bin/indicator-weather.py:566
+#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
 msgid "Mostly cloudy"
 msgstr "Претежно облачно"
 
-#: ../bin/indicator-weather.py:567 ../bin/indicator-weather.py:568
-#: ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:596
 msgid "Partly cloudy"
 msgstr "Местимично облачно"
 
-#: ../bin/indicator-weather.py:569
+#: ../bin/indicator-weather.py:583
 msgid "Clear"
 msgstr "Ведро"
 
-#: ../bin/indicator-weather.py:570
+#: ../bin/indicator-weather.py:584
 msgid "Sunny"
 msgstr "Сунчано"
 
-#: ../bin/indicator-weather.py:571 ../bin/indicator-weather.py:572
+#: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
 msgid "Fair"
 msgstr "Лепо"
 
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather.py:587
 msgid "Mixed rain and hail"
 msgstr "Мешавина кише и града"
 
-#: ../bin/indicator-weather.py:574
+#: ../bin/indicator-weather.py:588
 msgid "Hot"
 msgstr "Топло"
 
-#: ../bin/indicator-weather.py:575
+#: ../bin/indicator-weather.py:589
 msgid "Isolated thunderstorms"
 msgstr "Изоловане олује"
 
-#: ../bin/indicator-weather.py:576 ../bin/indicator-weather.py:577
+#: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
 msgid "Scattered thunderstorms"
 msgstr "Местимична олуја"
 
-#: ../bin/indicator-weather.py:578
+#: ../bin/indicator-weather.py:592
 msgid "Scattered showers"
 msgstr "Местимични пљускови"
 
-#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:581
+#: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
 msgid "Heavy snow"
 msgstr "Јак снег"
 
-#: ../bin/indicator-weather.py:580
+#: ../bin/indicator-weather.py:594
 msgid "Scattered snow showers"
 msgstr "Местимични пљускови снега"
 
-#: ../bin/indicator-weather.py:583
+#: ../bin/indicator-weather.py:597
 msgid "Thundershowers"
 msgstr "Олуја праћена грмљавином"
 
-#: ../bin/indicator-weather.py:584
+#: ../bin/indicator-weather.py:598
 msgid "Snow showers"
 msgstr "Снежни пљусак"
 
-#: ../bin/indicator-weather.py:585
+#: ../bin/indicator-weather.py:599
 msgid "Isolated thundershowers"
 msgstr "Меестимичне олује праћене грмњавином"
 
-#: ../bin/indicator-weather.py:586 ../bin/indicator-weather.py:699
+#: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
+#: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
+#: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
+#: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
 msgid "Unknown condition"
 msgstr "Непознато стање"
 
-#: ../bin/indicator-weather.py:709
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
 msgid "Humidity"
 msgstr "Влажност"
 
-#: ../bin/indicator-weather.py:728
+#: ../bin/indicator-weather.py:782
 msgid "Pressure"
 msgstr "Притисак"
 
-#: ../bin/indicator-weather.py:754
+#: ../bin/indicator-weather.py:812
 msgid "Temperature"
 msgstr "Температура"
 
-#: ../bin/indicator-weather.py:778 ../bin/indicator-weather.py:779
-#: ../bin/indicator-weather.py:780
+#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
+#: ../bin/indicator-weather.py:838
 msgid "Unknown"
 msgstr "Непознато"
 
-#: ../bin/indicator-weather.py:787
+#: ../bin/indicator-weather.py:845
 msgid "Wind"
 msgstr "Ветар"
 
-#: ../bin/indicator-weather.py:814
+#: ../bin/indicator-weather.py:872
 msgid "Sunrise"
 msgstr "Сунце излази"
 
-#: ../bin/indicator-weather.py:818
+#: ../bin/indicator-weather.py:876
 msgid "Sunset"
 msgstr "Сунце залази"
 
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:831
+#: ../bin/indicator-weather.py:889
 msgid "N"
 msgstr "С"
 
-#: ../bin/indicator-weather.py:833
+#: ../bin/indicator-weather.py:891
 msgid "NE"
 msgstr "СИ"
 
-#: ../bin/indicator-weather.py:835
+#: ../bin/indicator-weather.py:893
 msgid "E"
 msgstr "И"
 
-#: ../bin/indicator-weather.py:837
+#: ../bin/indicator-weather.py:895
 msgid "SE"
 msgstr "ЈИ"
 
-#: ../bin/indicator-weather.py:839
+#: ../bin/indicator-weather.py:897
 msgid "S"
 msgstr "З"
 
-#: ../bin/indicator-weather.py:841
+#: ../bin/indicator-weather.py:899
 msgid "SW"
 msgstr "ЈЗ"
 
-#: ../bin/indicator-weather.py:843
+#: ../bin/indicator-weather.py:901
 msgid "W"
 msgstr "З"
 
-#: ../bin/indicator-weather.py:845
+#: ../bin/indicator-weather.py:903
 msgid "NW"
 msgstr "СЗ"
 
-#: ../bin/indicator-weather.py:1016
+#: ../bin/indicator-weather.py:1074
 msgid "Set Up Weather..."
 msgstr "Подеси прогнозу..."
 
-#: ../bin/indicator-weather.py:1118
+#: ../bin/indicator-weather.py:1176
 msgid "Forecast"
 msgstr "Прогноза"
 
 #. #Preferences
-#: ../bin/indicator-weather.py:1124
+#: ../bin/indicator-weather.py:1182
 msgid "Preferences..."
 msgstr "Подешавања..."
 
 #. #About
-#: ../bin/indicator-weather.py:1130
+#: ../bin/indicator-weather.py:1188
 msgid "About..."
 msgstr "О програму..."
 
-#: ../bin/indicator-weather.py:1231
+#: ../bin/indicator-weather.py:1289
 msgid "Refreshing, please wait"
 msgstr "Освежавам, молим сачекајте"
 
-#: ../bin/indicator-weather.py:1233 ../bin/indicator-weather.py:1235
-#: ../bin/indicator-weather.py:1237
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
 msgid "Refresh"
 msgstr "Освежи"
 
-#: ../bin/indicator-weather.py:1235
+#: ../bin/indicator-weather.py:1293
 msgid "just now"
 msgstr "Управо"
 
-#: ../bin/indicator-weather.py:1237
+#: ../bin/indicator-weather.py:1295
 #, python-format
 msgid "%d min. ago"
 msgstr "пре %d мин."
 
-#: ../bin/indicator-weather.py:1378
+#: ../bin/indicator-weather.py:1436
 msgid "Severe weather alert"
 msgstr "Упозорење лошег времена"
 
-#: ../bin/indicator-weather.py:1396 ../indicator-weather.desktop.in.h:2
+#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
 msgstr "Временски индикатор"
 
-#: ../bin/indicator-weather.py:1408
+#: ../bin/indicator-weather.py:1466
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Vadim Rutkovsky https://launchpad.net/~roignac\n"
 "  Предраг Љубеновић https://launchpad.net/~predragljubenovic"
 
-#: ../bin/indicator-weather.py:1643
+#: ../bin/indicator-weather.py:1684
 msgid "Weather Forecast for "
 msgstr "Временска прогноза за "
 
-#: ../bin/indicator-weather.py:1694
+#: ../bin/indicator-weather.py:1739
 msgid "High"
 msgstr "Висок"
 
-#: ../bin/indicator-weather.py:1696
+#: ../bin/indicator-weather.py:1741
 msgid "Low"
 msgstr "Низак"
 
-#: ../bin/indicator-weather.py:1797 ../data/ui/Assistant.ui.h:4
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
 msgstr "Ознака:"
 
-#: ../bin/indicator-weather.py:1887
+#: ../bin/indicator-weather.py:1932
 msgid "Another instance of this program is already running"
 msgstr "Друга копија овог програма је већ покренута"
 
