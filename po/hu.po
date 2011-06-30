@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-05-31 21:17+0000\n"
+"PO-Revision-Date: 2011-06-29 12:33+0000\n"
 "Last-Translator: Richard Somlói <ricsipontaz@gmail.com>\n"
 "Language-Team: Hungarian <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
+"X-Launchpad-Export-Date: 2011-06-30 05:18+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: hu\n"
 
@@ -56,7 +56,7 @@ msgstr "Angolszász (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Km per hour (km/h)"
-msgstr ""
+msgstr "Km per óra (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -88,7 +88,7 @@ msgstr "SI (metrikus, °C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show temperature near indicator"
-msgstr ""
+msgstr "Hőmérséklet megjelenítése az indikátor mellett"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
@@ -116,7 +116,7 @@ msgstr "percenként"
 
 #: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
-msgstr ""
+msgstr "Ismeretlen hiba lépett fel az időjárás adatok beszerzése közben"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
@@ -306,7 +306,7 @@ msgstr "Hőmérséklet"
 #: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
 #: ../bin/indicator-weather.py:838
 msgid "Unknown"
-msgstr ""
+msgstr "Ismeretlen"
 
 #: ../bin/indicator-weather.py:845
 msgid "Wind"
