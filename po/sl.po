@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-06-24 06:41+0000\n"
-"Last-Translator: Grega P <Unknown>\n"
+"PO-Revision-Date: 2011-07-08 16:03+0000\n"
+"Last-Translator: Dražen Matešić <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-25 06:18+0000\n"
+"X-Launchpad-Export-Date: 2011-07-09 05:39+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -55,7 +55,7 @@ msgstr "Imperialno (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Km per hour (km/h)"
-msgstr ""
+msgstr "Km na uro (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -87,7 +87,7 @@ msgstr "SI (metrično, °C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show temperature near indicator"
-msgstr ""
+msgstr "Pokaži temperaturo zraven indikatorja"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
@@ -115,7 +115,7 @@ msgstr "minut"
 
 #: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
-msgstr ""
+msgstr "Zgodila se je neznana napaka med prenašanjem vremenskih podatkov"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
