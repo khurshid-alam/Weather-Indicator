@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-06-15 01:03+0000\n"
-"Last-Translator: Vadim Rutkovsky <roignac@gmail.com>\n"
+"PO-Revision-Date: 2011-07-10 22:56+0000\n"
+"Last-Translator: TIℳ☺ <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
+"X-Launchpad-Export-Date: 2011-07-11 05:24+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: de\n"
 
@@ -56,7 +56,7 @@ msgstr "Fahrenheit (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Km per hour (km/h)"
-msgstr ""
+msgstr "Kilometer pro Stunde (km/h)"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -116,7 +116,7 @@ msgstr "Minuten"
 
 #: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
-msgstr ""
+msgstr "Es trat ein unbekannter Fehler beim Sammeln der Wetterdaten auf."
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
@@ -289,7 +289,7 @@ msgstr "Vereinzelte Gewitterschauer"
 #: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
 #: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
 msgid "Unknown condition"
-msgstr ""
+msgstr "Unbekannte Bedingungen"
 
 #: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
 msgid "Humidity"
@@ -306,7 +306,7 @@ msgstr "Temperatur"
 #: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
 #: ../bin/indicator-weather.py:838
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: ../bin/indicator-weather.py:845
 msgid "Wind"
@@ -387,7 +387,7 @@ msgstr "gerade jetzt"
 #: ../bin/indicator-weather.py:1295
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "vor %d Minuten"
 
 #: ../bin/indicator-weather.py:1436
 msgid "Severe weather alert"
@@ -403,6 +403,7 @@ msgstr ""
 "Launchpad Contributions:\n"
 "  Alexander Berndsen https://launchpad.net/~shaky2k-deactivatedaccount\n"
 "  Matthias Loidolt https://launchpad.net/~kedapperdrake\n"
+"  TIℳ☺ https://launchpad.net/~tim.h.s\n"
 "  Vadim Rutkovsky https://launchpad.net/~roignac\n"
 "  gagsibubu https://launchpad.net/~gagsibubu"
 
@@ -460,7 +461,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "Bitte durchsuchen Sie unsere Datenbank nach Ihrem Standort"
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
@@ -543,3 +544,9 @@ msgstr ""
 
 #~ msgid "Please input a location in the combobox below:"
 #~ msgstr "Bitte trage einen Ort in der Kombobox unten ein:"
+
+#~ msgid "Humidex"
+#~ msgstr "Hitzeindex"
+
+#~ msgid "Visibility"
+#~ msgstr "Sicht:"
