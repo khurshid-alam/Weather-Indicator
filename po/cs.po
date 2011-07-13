@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-07-04 11:43+0000\n"
-"Last-Translator: Lukáš Chmela <lukaschmela@gmail.com>\n"
+"PO-Revision-Date: 2011-07-12 18:17+0000\n"
+"Last-Translator: Zbyněk Schwarz <Unknown>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-07-05 05:08+0000\n"
+"X-Launchpad-Export-Date: 2011-07-13 05:15+0000\n"
 "X-Generator: Launchpad (build 13168)\n"
 "Language: cs\n"
 
@@ -349,7 +349,7 @@ msgstr "Vichrno"
 
 #: ../bin/indicator-weather.py:576
 msgid "Windy"
-msgstr ""
+msgstr "Větrno"
 
 #: ../bin/indicator-weather.py:577
 msgid "Cold"
