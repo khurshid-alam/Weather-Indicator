@@ -538,6 +538,7 @@ class Weather:
         "fog"              : ( "weather-fog",        "weather-fog",              False),
         "smoke"            : ( "weather-fog",        "weather-fog",              False),
         "haze"             : ( "weather-fog",        "weather-fog",              False),
+        "mist"             : ( "weather-fog",        "weather-fog",              False),
         "thunderstorm"     : ( "weather-storm",      "weather-storm",            True),
         "chance_of_storm"  : ( "weather-storm",      "weather-storm",            True),
         "thunderstorms"    : ( "weather-storm",      "weather-storm",            True),
