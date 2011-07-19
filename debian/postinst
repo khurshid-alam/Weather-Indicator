@@ -28,13 +28,13 @@ if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
     
     if [ -x /usr/bin/gtk-update-icon-cache-3.0 ]; then
         if ! gtk-update-icon-cache-3.0; then
-            echo "WARNINGL icon cache generation failed"
+            echo "WARNING: icon cache generation failed"
         fi
     fi
     
     if [ -x /usr/bin/gtk-update-icon-cache ]; then
         if ! gtk-update-icon-cache; then
-            echo "WARNINGL icon cache generation failed"
+            echo "WARNING: icon cache generation failed"
         fi
     fi
     
