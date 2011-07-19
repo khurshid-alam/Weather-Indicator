@@ -1714,14 +1714,18 @@ class ExtendedForecast(gtk.Window):
             # Fill in icons
             for i in xrange(1,5):
                 # Get icon name from dictionary in Weather object for Google icons
-                conds = Weather._GoogleConditions.get(icons[i-1])
-                if conds != None:
-                    google_icon = conds[0]
-                else:
-                    log.error("ExtendedForecast: unknown Google weather condition '%s'" % icons[i-1])
-                    log.error(forecast.forecast)
-                    google_icon = 'weather-indicator-unknown'
-                self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
+                try:
+                    conds = Weather._GoogleConditions.get(icons[i-1])
+                    if conds != None:
+                        google_icon = conds[0]
+                    else:
+                        log.error("ExtendedForecast: unknown Google weather condition '%s'" % icons[i-1])
+                        log.error(forecast.forecast)
+                        google_icon = 'weather-indicator-unknown'
+                    self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
+                except IndexError:
+                     log.error("ExtendedForecast: Google didn't return condition for %s days" % i-1)
+                     log.error(forecast.forecast)
 
             # Fill in condition labels
             for i in xrange(1,5):
