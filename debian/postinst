@@ -25,7 +25,19 @@ echo "Fixing incomplete weather icons..."
 if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
     ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
     ln -s /usr/share/icons/gnome/22x22/status/weather-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
-    gtk-update-icon-cache /usr/share/icons/gnome/
+    
+    if [ -x /usr/bin/gtk-update-icon-cache-3.0 ]; then
+        if ! gtk-update-icon-cache-3.0; then
+            echo "WARNINGL icon cache generation failed"
+        fi
+    fi
+    
+    if [ -x /usr/bin/gtk-update-icon-cache ]; then
+        if ! gtk-update-icon-cache; then
+            echo "WARNINGL icon cache generation failed"
+        fi
+    fi
+    
 else
     exit 0
 fi
