@@ -1,0 +1,480 @@
+# Estonian translation for weather-indicator
+# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
+# This file is distributed under the same license as the weather-indicator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: weather-indicator\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2011-06-22 02:48-0700\n"
+"PO-Revision-Date: 2011-07-28 13:58+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Estonian <et@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2011-07-29 05:41+0000\n"
+"X-Generator: Launchpad (build 13405)\n"
+
+#: ../data/ui/PreferencesDialog.ui.h:1
+msgid "<b>Notifications</b>"
+msgstr "<b>Teavitused</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Temperatuuriühik</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Ilmaandmete allikas</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Tuulekiiruse ühik</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:5
+msgid "Beaufort"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:6
+msgid "Enable the Weather Indicator Applet"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "General"
+msgstr "Üldist"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Google"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Imperial (°F)"
+msgstr "Inglise (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:10
+msgid "Km per hour (km/h)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Knots"
+msgstr "Sõlmed"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Locations"
+msgstr "Asukohad"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "Meter per second (m/s)"
+msgstr "Meetrit sekundis (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "Miles per hour (mph)"
+msgstr "Miili tunnis (mph)"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "No notifications"
+msgstr "Ilma teavitusteta"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Kasuta teavitusi vaid tõsiste ilmahoiatuste korral"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "SI (metric, °C)"
+msgstr "SI (meeter, °C)"
+
+#: ../data/ui/PreferencesDialog.ui.h:18
+msgid "Show temperature near indicator"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Units"
+msgstr "Ühikud"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Update every"
+msgstr "Uuendamise intervall"
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Use notifications to give every weather condition change"
+msgstr "Kasuta teavitusi iga ilmastikutingimuse muutuse korral"
+
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Weather Indicator Preferences"
+msgstr "Ilmanäidiku eelistused"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Yahoo!"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "minutes"
+msgstr "minut(it)"
+
+#: ../bin/indicator-weather.py:463
+msgid "Unknown error occurred while picking up weather data"
+msgstr ""
+
+#: ../bin/indicator-weather.py:551
+msgid "Tornado"
+msgstr "Tornaado"
+
+#: ../bin/indicator-weather.py:552
+msgid "Tropical storm"
+msgstr "Troopiline torm"
+
+#: ../bin/indicator-weather.py:553
+msgid "Hurricane"
+msgstr "Orkaan"
+
+#: ../bin/indicator-weather.py:554
+msgid "Severe thunderstorms"
+msgstr "Ränk äikesetorm"
+
+#: ../bin/indicator-weather.py:555
+msgid "Thunderstorms"
+msgstr "Äikesetorm"
+
+#: ../bin/indicator-weather.py:556
+msgid "Mixed rain and snow"
+msgstr "Vihm ja lumi"
+
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
+#: ../bin/indicator-weather.py:558
+msgid "Mixed rain and sleet"
+msgstr "Vihm ja lörts"
+
+#: ../bin/indicator-weather.py:559
+msgid "Mixed snow and sleet"
+msgstr "Lumi ja lörts"
+
+#: ../bin/indicator-weather.py:560
+msgid "Freezing drizzle"
+msgstr "Jäätuv uduvihm"
+
+#: ../bin/indicator-weather.py:561
+msgid "Drizzle"
+msgstr "Uduvihm"
+
+#: ../bin/indicator-weather.py:562
+msgid "Freezing rain"
+msgstr "Jäätuv vihm"
+
+#: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
+msgid "Showers"
+msgstr "Hoovihm"
+
+#: ../bin/indicator-weather.py:565
+msgid "Snow flurries"
+msgstr "Lumeudu"
+
+#: ../bin/indicator-weather.py:566
+msgid "Light snow showers"
+msgstr "Kerged lumehood"
+
+#: ../bin/indicator-weather.py:567
+msgid "Blowing snow"
+msgstr "Tuisk"
+
+#: ../bin/indicator-weather.py:568
+msgid "Snow"
+msgstr "Lumesadu"
+
+#: ../bin/indicator-weather.py:569
+msgid "Hail"
+msgstr "Rahe"
+
+#: ../bin/indicator-weather.py:570
+msgid "Sleet"
+msgstr "Lörts"
+
+#: ../bin/indicator-weather.py:571
+msgid "Dust"
+msgstr "Tolm"
+
+#: ../bin/indicator-weather.py:572
+msgid "Foggy"
+msgstr "Udune"
+
+#: ../bin/indicator-weather.py:573
+msgid "Haze"
+msgstr "Sudu"
+
+#: ../bin/indicator-weather.py:574
+msgid "Smoky"
+msgstr "Suitsune"
+
+#: ../bin/indicator-weather.py:575
+msgid "Blustery"
+msgstr "Tormine"
+
+#: ../bin/indicator-weather.py:576
+msgid "Windy"
+msgstr "Tuuline"
+
+#: ../bin/indicator-weather.py:577
+msgid "Cold"
+msgstr "Külm"
+
+#: ../bin/indicator-weather.py:578
+msgid "Cloudy"
+msgstr "Pilvine"
+
+#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
+msgid "Mostly cloudy"
+msgstr "Peamiselt pilves"
+
+#: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
+#: ../bin/indicator-weather.py:596
+msgid "Partly cloudy"
+msgstr "Osaliselt pilves"
+
+#: ../bin/indicator-weather.py:583
+msgid "Clear"
+msgstr "Selge"
+
+#: ../bin/indicator-weather.py:584
+msgid "Sunny"
+msgstr "Päikseline"
+
+#: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
+msgid "Fair"
+msgstr "Selge"
+
+#: ../bin/indicator-weather.py:587
+msgid "Mixed rain and hail"
+msgstr "Vihm ja rahe"
+
+#: ../bin/indicator-weather.py:588
+msgid "Hot"
+msgstr "Palav"
+
+#: ../bin/indicator-weather.py:589
+msgid "Isolated thunderstorms"
+msgstr "Eraldi äiksetormid"
+
+#: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
+msgid "Scattered thunderstorms"
+msgstr "Pillutatud äiksetormid"
+
+#: ../bin/indicator-weather.py:592
+msgid "Scattered showers"
+msgstr "Pillutatud hoovihmad"
+
+#: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
+msgid "Heavy snow"
+msgstr "Tugev lumesadu"
+
+#: ../bin/indicator-weather.py:594
+msgid "Scattered snow showers"
+msgstr "Pillutatud hootised lumesajud"
+
+#: ../bin/indicator-weather.py:597
+msgid "Thundershowers"
+msgstr "Hootised äikesevihmad"
+
+#: ../bin/indicator-weather.py:598
+msgid "Snow showers"
+msgstr "Hootised lumesajud"
+
+#: ../bin/indicator-weather.py:599
+msgid "Isolated thundershowers"
+msgstr "Eraldi hootsed äikesevihmad"
+
+#: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
+#: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
+#: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
+#: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
+msgid "Unknown condition"
+msgstr "Määratletata seisund"
+
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+msgid "Humidity"
+msgstr "Niiskus"
+
+#: ../bin/indicator-weather.py:782
+msgid "Pressure"
+msgstr ""
+
+#: ../bin/indicator-weather.py:812
+msgid "Temperature"
+msgstr ""
+
+#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
+#: ../bin/indicator-weather.py:838
+msgid "Unknown"
+msgstr ""
+
+#: ../bin/indicator-weather.py:845
+msgid "Wind"
+msgstr "Tuul"
+
+#: ../bin/indicator-weather.py:872
+msgid "Sunrise"
+msgstr "Päikesetõus"
+
+#: ../bin/indicator-weather.py:876
+msgid "Sunset"
+msgstr "Päikeseloojang"
+
+#. Short wind direction - north
+#: ../bin/indicator-weather.py:889
+msgid "N"
+msgstr ""
+
+#: ../bin/indicator-weather.py:891
+msgid "NE"
+msgstr ""
+
+#: ../bin/indicator-weather.py:893
+msgid "E"
+msgstr ""
+
+#: ../bin/indicator-weather.py:895
+msgid "SE"
+msgstr ""
+
+#: ../bin/indicator-weather.py:897
+msgid "S"
+msgstr ""
+
+#: ../bin/indicator-weather.py:899
+msgid "SW"
+msgstr ""
+
+#: ../bin/indicator-weather.py:901
+msgid "W"
+msgstr ""
+
+#: ../bin/indicator-weather.py:903
+msgid "NW"
+msgstr ""
+
+#: ../bin/indicator-weather.py:1074
+msgid "Set Up Weather..."
+msgstr ""
+
+#: ../bin/indicator-weather.py:1176
+msgid "Forecast"
+msgstr ""
+
+#. #Preferences
+#: ../bin/indicator-weather.py:1182
+msgid "Preferences..."
+msgstr "Eelistused..."
+
+#. #About
+#: ../bin/indicator-weather.py:1188
+msgid "About..."
+msgstr "Teave..."
+
+#: ../bin/indicator-weather.py:1289
+msgid "Refreshing, please wait"
+msgstr ""
+
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
+msgid "Refresh"
+msgstr "Värskenda"
+
+#: ../bin/indicator-weather.py:1293
+msgid "just now"
+msgstr "just praegu"
+
+#: ../bin/indicator-weather.py:1295
+#, python-format
+msgid "%d min. ago"
+msgstr "%d min. eest"
+
+#: ../bin/indicator-weather.py:1436
+msgid "Severe weather alert"
+msgstr "Ränga ilma hoiatus"
+
+#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
+msgid "Weather Indicator"
+msgstr ""
+
+#: ../bin/indicator-weather.py:1466
+msgid "translator-credits"
+msgstr ""
+
+#: ../bin/indicator-weather.py:1684
+msgid "Weather Forecast for "
+msgstr "Ilmaennustus asukohale "
+
+#: ../bin/indicator-weather.py:1739
+msgid "High"
+msgstr "Kõrge"
+
+#: ../bin/indicator-weather.py:1741
+msgid "Low"
+msgstr "Madal"
+
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+msgid "Label:"
+msgstr "Pealkiri:"
+
+#: ../bin/indicator-weather.py:1932
+msgid "Another instance of this program is already running"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:1
+msgid "<b>Home</b>"
+msgstr "<b>Kodu</b>"
+
+#: ../data/ui/Assistant.ui.h:2
+msgid "<b>Orange, Texas</b>"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:3
+msgid "Add a location"
+msgstr "Asukoha lisamine"
+
+#: ../data/ui/Assistant.ui.h:5
+msgid "Location:"
+msgstr "Asukoht:"
+
+#: ../data/ui/Assistant.ui.h:6
+msgid "Name the location"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:7
+msgid "Please enter a name for this location:"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:8
+msgid ""
+"Please review the choices below. If anything is not correct, please go back "
+"and select the correct options."
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:9
+msgid "Please search our database for your location:"
+msgstr "Palun, otsi oma asukohta meie andmebaasist:"
+
+#: ../data/ui/Assistant.ui.h:10
+msgid "Review choices"
+msgstr ""
+
+#: ../data/ui/Assistant.ui.h:11
+msgid "Search"
+msgstr "Otsing"
+
+#: ../data/ui/Assistant.ui.h:12
+msgid "Select a location"
+msgstr "Vali asukoht"
+
+#: ../data/ui/ExtendedForecast.ui.h:1
+msgid "Extended Forecast"
+msgstr ""
+
+#: ../indicator-weather.desktop.in.h:1
+msgid ""
+"A weather indicator that displays information for one or multiple places in "
+"the world"
+msgstr ""
+
+#~ msgid "Visibility"
+#~ msgstr "Nähtavus"
