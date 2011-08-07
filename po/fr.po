@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-08-03 15:06+0000\n"
+"PO-Revision-Date: 2011-08-06 16:32+0000\n"
 "Last-Translator: Baptiste Fontaine <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-08-04 05:11+0000\n"
-"X-Generator: Launchpad (build 13573)\n"
+"X-Launchpad-Export-Date: 2011-08-07 05:00+0000\n"
+"X-Generator: Launchpad (build 13613)\n"
 "Language: fr\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
@@ -118,6 +118,8 @@ msgstr "minutes"
 #: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
 msgstr ""
+"Une erreur inconnue est survenue pendant la récupération des données "
+"météorologiques"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
@@ -489,87 +491,8 @@ msgstr ""
 "Un indicateur météo qui affiche les informations pour un ou plusieurs "
 "endroits dans le monde"
 
-#~ msgid "MPH"
-#~ msgstr "Miles par heure"
-
-#~ msgid "MPS"
-#~ msgstr "Miles par seconde"
-
-#~ msgid "Show tips in menu"
-#~ msgstr "Afficher les astuces dans le menu"
-
-#~ msgid "Mostly sunny"
-#~ msgstr "Principalement ensoleillé"
-
-#~ msgid "Clear sky"
-#~ msgstr "Ciel dégagé"
-
-#~ msgid "Partly sunny"
-#~ msgstr "Partiellement ensoleillé"
-
-#~ msgid "Increasing clouds"
-#~ msgstr "Devenant plus nuageux"
-
-#~ msgid "Broken clouds"
-#~ msgstr "Très peu de nuages"
-
-#~ msgid "Scattered clouds"
-#~ msgstr "Nuages disséminés"
-
-#~ msgid "Clearing"
-#~ msgstr "S'éclaircissant"
-
-#~ msgid "Patchy fog"
-#~ msgstr "Nappes de brouillard"
-
-#~ msgid "Fog"
-#~ msgstr "Brouillard"
-
-#~ msgid "Dense fog"
-#~ msgstr "Brouillard dense"
-
-#~ msgid "Few clouds"
-#~ msgstr "Quelques nuages"
-
-#~ msgid "Overcast"
-#~ msgstr "Couvert"
-
-#~ msgid "SI (°C)"
-#~ msgstr "Système international d’unités (°C)"
-
-#~ msgid "knot(s)"
-#~ msgstr "nœud(s)"
-
-#~ msgid "km/h"
-#~ msgstr "km/h"
-
-#~ msgid "m/s"
-#~ msgstr "m/s"
-
-#~ msgid "mph"
-#~ msgstr "mi/h"
-
-#~ msgid "refreshed just now"
-#~ msgstr "Actualisé à l'instant"
-
-#~ msgid "Kilometers per hour (kph)"
-#~ msgstr "Kilomètre par heure (km/h)"
-
-#, python-format
-#~ msgid "last refreshed %s min. ago"
-#~ msgstr "Actualisé il y a %s min."
-
-#~ msgid "last refreshed just now"
-#~ msgstr "dernière actualisation à l'instant"
-
-#~ msgid "Please input a location in the combobox below:"
-#~ msgstr "Saisissez un lieu dans la liste déroulante ci-dessous:"
-
 #~ msgid "Humidex"
 #~ msgstr "Indice d'humidité"
 
 #~ msgid "Visibility"
 #~ msgstr "Visibilité"
-
-#~ msgid "Condition"
-#~ msgstr "État"
