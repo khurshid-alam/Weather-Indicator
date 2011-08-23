@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-08-20 16:02+0000\n"
+"PO-Revision-Date: 2011-08-22 14:12+0000\n"
 "Last-Translator: Nizar Kerkeni <nizarus@nizarus.org>\n"
 "Language-Team: Arabic <ar@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-08-21 04:58+0000\n"
+"X-Launchpad-Export-Date: 2011-08-23 05:47+0000\n"
 "X-Generator: Launchpad (build 13697)\n"
 "Language: ar\n"
 
@@ -32,7 +32,7 @@ msgstr "منخفض"
 
 #: ../bin/indicator-weather.py:1436
 msgid "Severe weather alert"
-msgstr ""
+msgstr "إنذار: طقس قاس"
 
 #: ../bin/indicator-weather.py:1466
 msgid "translator-credits"
@@ -66,36 +66,36 @@ msgstr "إنعاش"
 
 #: ../src/service/indicator_weather_service/menu.py:167
 msgid "Warning..."
-msgstr ""
+msgstr "تحذير..."
 
 #: ../src/service/indicator_weather_service/menu.py:233
 msgid "No data available"
-msgstr ""
+msgstr "لا تتوفر أية بيانات"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr ""
+msgstr "توقعات..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
-msgstr ""
+msgstr "يُحدّث"
 
 #: ../src/service/indicator_weather_service/menu.py:606
 msgid "please wait"
-msgstr ""
+msgstr "يرجى الانتظار"
 
 #: ../bin/indicator-weather.py:1293
 msgid "just now"
-msgstr ""
+msgstr "الآن"
 
 #: ../bin/indicator-weather.py:1295
 #, python-format
 msgid "%d min. ago"
-msgstr ""
+msgstr "منذ %d دقيقة"
 
 #: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr ""
+msgstr "التسمية:"
 
 #: ../src/service/indicator_weather_service/weather.py:221
 msgid "Temperature:"
@@ -103,27 +103,27 @@ msgstr "درجة الحرارة:"
 
 #: ../src/service/indicator_weather_service/weather.py:236
 msgid "Heat index:"
-msgstr ""
+msgstr "مؤشر الحرارة:"
 
 #: ../src/service/indicator_weather_service/weather.py:237
 msgid "Heat index"
-msgstr ""
+msgstr "مؤشر الحرارة"
 
 #: ../src/service/indicator_weather_service/weather.py:238
 msgid "Temperature and humidity"
-msgstr ""
+msgstr "درجة الحرارة والرطوبة"
 
 #: ../src/service/indicator_weather_service/weather.py:246
 msgid "Humidex:"
-msgstr ""
+msgstr "مؤشر الرطوبة:"
 
 #: ../src/service/indicator_weather_service/weather.py:247
 msgid "Humidex"
-msgstr ""
+msgstr "مؤشر الرطوبة"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "درجة الحرارة والرطوبة (كندا)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
@@ -135,7 +135,7 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:258
 msgid "Temperature and wind"
-msgstr ""
+msgstr "درجة الحرارة والرياح"
 
 #: ../src/service/indicator_weather_service/weather.py:266
 msgid "Feels like:"
@@ -171,19 +171,19 @@ msgstr ""
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "درجة الحرارة والرطوبة والرياح (استراليا)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
-msgstr ""
+msgstr "الندى:"
 
 #: ../src/service/indicator_weather_service/weather.py:297
 msgid "Dewpoint"
-msgstr ""
+msgstr "الندى"
 
 #: ../src/service/indicator_weather_service/weather.py:305
 msgid "Humidity:"
-msgstr ""
+msgstr "الرطوبة:"
 
 #: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
 msgid "Humidity"
@@ -200,15 +200,15 @@ msgstr "الرؤية"
 #: ../src/service/indicator_weather_service/weather.py:316
 #: ../src/service/indicator_weather_service/weather.py:338
 msgid "Only from Yahoo!"
-msgstr ""
+msgstr "فقط من ياهو!"
 
 #: ../src/service/indicator_weather_service/weather.py:336
 msgid "Barometer:"
-msgstr ""
+msgstr "مقياس الضغط الجوي:"
 
 #: ../src/service/indicator_weather_service/weather.py:337
 msgid "Barometer"
-msgstr ""
+msgstr "مقياس الضغط الجوي"
 
 #: ../src/service/indicator_weather_service/weather.py:346
 msgid "Wind:"
@@ -260,15 +260,15 @@ msgstr "إعصار"
 
 #: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
-msgstr ""
+msgstr "عاصفة استوائية"
 
 #: ../bin/indicator-weather.py:553
 msgid "Hurricane"
-msgstr ""
+msgstr "إعصار مداري"
 
 #: ../bin/indicator-weather.py:554
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "عواصف رعدية شديدة"
 
 #: ../bin/indicator-weather.py:555
 msgid "Thunderstorms"
@@ -276,16 +276,16 @@ msgstr "عواصف رعدية"
 
 #: ../bin/indicator-weather.py:556
 msgid "Mixed rain and snow"
-msgstr ""
+msgstr "أمطار وثلوج مختلطة"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather.py:558
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "أمطار وصقيع مختلطة"
 
 #: ../bin/indicator-weather.py:559
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "ثلوج وصقيع مختلطة"
 
 #: ../bin/indicator-weather.py:560
 msgid "Freezing drizzle"
@@ -301,19 +301,19 @@ msgstr "مطر مجمِّد"
 
 #: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
-msgstr ""
+msgstr "زخات مطر"
 
 #: ../bin/indicator-weather.py:565
 msgid "Snow flurries"
-msgstr ""
+msgstr "موجات ثلجية"
 
 #: ../bin/indicator-weather.py:566
 msgid "Light snow showers"
-msgstr ""
+msgstr "زخات ثلوج خفيفة"
 
 #: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
-msgstr ""
+msgstr "عاصفة ثلجية"
 
 #: ../bin/indicator-weather.py:568
 msgid "Snow"
@@ -337,7 +337,7 @@ msgstr "ضبابي"
 
 #: ../bin/indicator-weather.py:573
 msgid "Haze"
-msgstr ""
+msgstr "سديم"
 
 #: ../bin/indicator-weather.py:574
 msgid "Smoky"
@@ -390,15 +390,15 @@ msgstr "حار"
 
 #: ../bin/indicator-weather.py:589
 msgid "Isolated thunderstorms"
-msgstr ""
+msgstr "عواصف رعدية معزولة"
 
 #: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "عواصف رعدية متفرقة"
 
 #: ../bin/indicator-weather.py:592
 msgid "Scattered showers"
-msgstr ""
+msgstr "أمطار متفرقة"
 
 #: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
 msgid "Heavy snow"
@@ -406,34 +406,34 @@ msgstr "ثلوج كثيفة"
 
 #: ../bin/indicator-weather.py:594
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "زخات ثلوج متفرقة"
 
 #: ../bin/indicator-weather.py:597
 msgid "Thundershowers"
-msgstr ""
+msgstr "زخات مطر رعدية"
 
 #: ../bin/indicator-weather.py:598
 msgid "Snow showers"
-msgstr ""
+msgstr "زخات ثلوج"
 
 #: ../bin/indicator-weather.py:599
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "زخات مطر رعدية معزولة"
 
 #: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
 #: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
 #: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
 #: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
 msgid "Unknown condition"
-msgstr ""
+msgstr "حالة غير معروفة"
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr ""
+msgstr "أضف موقع"
 
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
-msgstr ""
+msgstr "الرجاء ابحث عن موقعك في قاعدة البيانات لدينا:"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
@@ -445,17 +445,19 @@ msgstr "انتق موقعاً"
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr ""
+msgstr "الرجاء إدخال اسم لهذا الموقع:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr ""
+msgstr "اسم الموقع"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"الرجاء مراجعة الخيارات أدناه. إذا كان أي شيء غير صحيح، الرجاء العودة وتحديد "
+"الخيارات الصحيحة."
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
@@ -471,27 +473,27 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr ""
+msgstr "راجع الخيارات"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr ""
+msgstr "خيارات مؤشر الطقس"
 
 #: ../data/ui/PreferencesDialog.ui:91
 msgid "<b>Indicator</b>"
-msgstr ""
+msgstr "<b>مؤشر</b>"
 
 #: ../data/ui/PreferencesDialog.ui:111
 msgid "Show only weather icon"
-msgstr ""
+msgstr "اعرض أيقونة الطقس فقط"
 
 #: ../data/ui/PreferencesDialog.ui:127
 msgid "Show only temperature"
-msgstr ""
+msgstr "اعرض درجة الحرارة فقط"
 
 #: ../data/ui/PreferencesDialog.ui:143
 msgid "Show weather icon and temperature"
-msgstr ""
+msgstr "اعرض أيقونة الطقس ودرجة الحرارة"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
@@ -499,23 +501,23 @@ msgstr "<b>التنبيهات</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr ""
+msgstr "بدون إشعارات"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr ""
+msgstr "استخدم فقط الإشعارات لإعطاء تنبيه الأحوال الجوية القاسية"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr ""
+msgstr "استخدام الإشعارات لإعطاء كل تغيير في حالة الطقس"
 
 #: ../data/ui/PreferencesDialog.ui:268
 msgid "Apply for all locations"
-msgstr ""
+msgstr "طبِّق لكافة المواقع"
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr ""
+msgstr "<b>مصدر بيانات الطقس</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
@@ -527,7 +529,7 @@ msgstr "ياهوو!"
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr ""
+msgstr "حدّث كل"
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
@@ -539,15 +541,15 @@ msgstr "عـام"
 
 #: ../data/ui/PreferencesDialog.ui:460
 msgid "Show forecast"
-msgstr ""
+msgstr "اعرض التوقعات"
 
 #: ../data/ui/PreferencesDialog.ui:475
 msgid "Show weather for all locations"
-msgstr ""
+msgstr "اعرض الطقس لكافة المواقع"
 
 #: ../data/ui/PreferencesDialog.ui:490
 msgid "Hide irrelevant fields"
-msgstr ""
+msgstr "اخفِ الحقول غير ذات صلة"
 
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
@@ -555,39 +557,39 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
-msgstr ""
+msgstr "قائمة"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr ""
+msgstr "<b>مقياس درجة الحرارة</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr ""
+msgstr "فهرنهايت (°F)"
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (metric, °C)"
-msgstr ""
+msgstr "درجة مئوية (°C)"
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr ""
+msgstr "<b>وحدة سرعة الرياح</b>"
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
-msgstr ""
+msgstr "متر في الثانية (م/ث)"
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr ""
+msgstr "ميلا في الساعة (ميل/س)"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Km per hour (kph)"
-msgstr ""
+msgstr "كلم في الساعة (كلم/س)"
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
-msgstr ""
+msgstr "بيوفورت"
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
@@ -595,8 +597,8 @@ msgstr "عقد"
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr ""
+msgstr "الوحدات"
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr ""
+msgstr "المواقع"

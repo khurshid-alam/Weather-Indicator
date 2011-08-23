@@ -7,116 +7,252 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-06-23 05:59+0000\n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-08-22 13:25+0000\n"
 "Last-Translator: Pasi Tarhonen <Unknown>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-24 05:53+0000\n"
-"X-Generator: Launchpad (build 13168)\n"
+"X-Launchpad-Export-Date: 2011-08-23 05:47+0000\n"
+"X-Generator: Launchpad (build 13697)\n"
 "Language: fi\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Ilmoitukset</b>"
+#: ../bin/indicator-weather.py:1684
+msgid "Weather Forecast for "
+msgstr "Sääennuste sijainnille "
 
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Lämpötilan asteikko</b>"
+#: ../bin/indicator-weather.py:1739
+msgid "High"
+msgstr "Korkein"
 
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Säätietojen lähde</b>"
+#: ../bin/indicator-weather.py:1741
+msgid "Low"
+msgstr "Matalin"
 
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Tuulen nopeuden yksikkö</b>"
+#: ../bin/indicator-weather.py:1436
+msgid "Severe weather alert"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Bofori"
+#: ../bin/indicator-weather.py:1466
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Pasi Tarhonen https://launchpad.net/~pasi-tarhonen"
 
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Aktivoi sääilmaisin -sovellus"
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Yleiset"
+#: ../bin/indicator-weather.py:1074
+msgid "Set Up Weather..."
+msgstr "Aseta sää..."
 
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
+#. #About
+#: ../bin/indicator-weather.py:1188
+msgid "About..."
+msgstr "Tietoja..."
 
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Imperiaalinen (°F)"
+#. #Preferences
+#: ../bin/indicator-weather.py:1182
+msgid "Preferences..."
+msgstr "Asetukset..."
 
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Km per hour (km/h)"
-msgstr "Kilometriä tunnissa"
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
+msgid "Refresh"
+msgstr "Päivitä"
 
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Solmut"
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Varoitus..."
 
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Sijainnit"
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "Tietoja ei saatavilla"
 
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Metriä sekunnissa"
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Sääennustus..."
 
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Mailia tunnissa"
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Päivitetään"
 
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Ei ilmoituksia"
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "odota"
 
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Näytä ilmoitus vain merkittävistä säävaroituksista"
+#: ../bin/indicator-weather.py:1293
+msgid "just now"
+msgstr "juuri nyt"
 
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (metric, °C)"
-msgstr "SI (metrinen, °C)"
+#: ../bin/indicator-weather.py:1295
+#, python-format
+msgid "%d min. ago"
+msgstr "%d minuuttia sitten"
 
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show temperature near indicator"
-msgstr "Näytä lämpötila säätilan ilmaisimen kanssa"
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+msgid "Label:"
+msgstr "Nimike:"
 
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Yksiköt"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Lämpötila:"
 
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Päivitysväli"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Näytä ilmoitus aina sääennusteen muuttuessa"
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr "Sääilmaisimen asetukset"
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Lämpötila ja kosteus"
 
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
-msgstr "minuuttia"
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr ""
 
-#: ../bin/indicator-weather.py:463
-msgid "Unknown error occurred while picking up weather data"
-msgstr "Tuntematon virhe säätietojen haussa"
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "Tuntuu:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr "Kastepiste:"
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr "Kastepiste"
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Ilmankosteus:"
+
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+msgid "Humidity"
+msgstr "Ilmankosteus"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Näkyvyys:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Näkyvyys"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Tuuli:"
+
+#: ../bin/indicator-weather.py:845
+msgid "Wind"
+msgstr "Tuuli"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr "Aurinko"
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "Aurinko nousee:"
+
+#: ../bin/indicator-weather.py:872
+msgid "Sunrise"
+msgstr "Auringonnousu"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "Aurinko laskee:"
+
+#: ../bin/indicator-weather.py:876
+msgid "Sunset"
+msgstr "Auringonlasku"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr ""
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
@@ -177,7 +313,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
-msgstr ""
+msgstr "Lumipyryä"
 
 #: ../bin/indicator-weather.py:568
 msgid "Snow"
@@ -291,178 +427,13 @@ msgstr ""
 msgid "Unknown condition"
 msgstr ""
 
-#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
-msgid "Humidity"
-msgstr "Ilmankosteus"
-
-#: ../bin/indicator-weather.py:782
-msgid "Pressure"
-msgstr "Paine"
-
-#: ../bin/indicator-weather.py:812
-msgid "Temperature"
-msgstr "Lämpötila"
-
-#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
-#: ../bin/indicator-weather.py:838
-msgid "Unknown"
-msgstr "Tuntematon"
-
-#: ../bin/indicator-weather.py:845
-msgid "Wind"
-msgstr "Tuuli"
-
-#: ../bin/indicator-weather.py:872
-msgid "Sunrise"
-msgstr "Auringonnousu"
-
-#: ../bin/indicator-weather.py:876
-msgid "Sunset"
-msgstr "Auringonlasku"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:889
-msgid "N"
-msgstr "Pohjoinen"
-
-#: ../bin/indicator-weather.py:891
-msgid "NE"
-msgstr "Koillinen"
-
-#: ../bin/indicator-weather.py:893
-msgid "E"
-msgstr "Itä"
-
-#: ../bin/indicator-weather.py:895
-msgid "SE"
-msgstr "Kaakko"
-
-#: ../bin/indicator-weather.py:897
-msgid "S"
-msgstr "Etelä"
-
-#: ../bin/indicator-weather.py:899
-msgid "SW"
-msgstr "Lounas"
-
-#: ../bin/indicator-weather.py:901
-msgid "W"
-msgstr "Länsi"
-
-#: ../bin/indicator-weather.py:903
-msgid "NW"
-msgstr "Luode"
-
-#: ../bin/indicator-weather.py:1074
-msgid "Set Up Weather..."
-msgstr "Aseta sää..."
-
-#: ../bin/indicator-weather.py:1176
-msgid "Forecast"
-msgstr "Sääennuste"
-
-#. #Preferences
-#: ../bin/indicator-weather.py:1182
-msgid "Preferences..."
-msgstr "Asetukset..."
-
-#. #About
-#: ../bin/indicator-weather.py:1188
-msgid "About..."
-msgstr "Tietoja..."
-
-#: ../bin/indicator-weather.py:1289
-msgid "Refreshing, please wait"
-msgstr "Päivitetään, odota hetki"
-
-#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
-#: ../bin/indicator-weather.py:1295
-msgid "Refresh"
-msgstr "Päivitä"
-
-#: ../bin/indicator-weather.py:1293
-msgid "just now"
-msgstr "juuri nyt"
-
-#: ../bin/indicator-weather.py:1295
-#, python-format
-msgid "%d min. ago"
-msgstr "%d minuuttia sitten"
-
-#: ../bin/indicator-weather.py:1436
-msgid "Severe weather alert"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Sääilmaisin"
-
-#: ../bin/indicator-weather.py:1466
-msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Jiri Grönroos https://launchpad.net/~jiri-gronroos\n"
-"  Pasi Tarhonen https://launchpad.net/~pasi-tarhonen"
-
-#: ../bin/indicator-weather.py:1684
-msgid "Weather Forecast for "
-msgstr "Sääennuste sijainnille "
-
-#: ../bin/indicator-weather.py:1739
-msgid "High"
-msgstr "Korkein"
-
-#: ../bin/indicator-weather.py:1741
-msgid "Low"
-msgstr "Matalin"
-
-#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
-msgid "Label:"
-msgstr "Nimike:"
-
-#: ../bin/indicator-weather.py:1932
-msgid "Another instance of this program is already running"
-msgstr "Ohjelma on jo käynnissä"
-
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Koti</b>"
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
-
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr "Lisää sijainti"
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Sijainti:"
-
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr "Nimeä sijainti"
-
-#: ../data/ui/Assistant.ui.h:7
-msgid "Please enter a name for this location:"
-msgstr "Anna nimi sijainnille:"
-
-#: ../data/ui/Assistant.ui.h:8
-msgid ""
-"Please review the choices below. If anything is not correct, please go back "
-"and select the correct options."
-msgstr ""
-"Varmista alla olevat valinnat. Jos jokin kohta ei ole oikein, siirry "
-"takaisin ja korjaa valinnat."
-
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
 msgstr "Etsi sijaintisi tietokannastamme"
-
-#: ../data/ui/Assistant.ui.h:10
-msgid "Review choices"
-msgstr "Varmista valinnat"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
@@ -472,47 +443,162 @@ msgstr "Etsi"
 msgid "Select a location"
 msgstr "Valitse sijainti"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Kattava sääennuste"
+#: ../data/ui/Assistant.ui.h:7
+msgid "Please enter a name for this location:"
+msgstr "Anna nimi sijainnille:"
 
-#: ../indicator-weather.desktop.in.h:1
+#: ../data/ui/Assistant.ui.h:6
+msgid "Name the location"
+msgstr "Nimeä sijainti"
+
+#: ../data/ui/Assistant.ui.h:8
 msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
+"Please review the choices below. If anything is not correct, please go back "
+"and select the correct options."
 msgstr ""
-"Sääilmaisin, joka näyttää sääennusteen yhdelle tai useammalle sijainnille"
+"Varmista alla olevat valinnat. Jos jokin kohta ei ole oikein, siirry "
+"takaisin ja korjaa valinnat."
 
-#~ msgid "Show tips in menu"
-#~ msgstr "Näytä vihjeet valikossa"
+#: ../data/ui/Assistant.ui.h:1
+msgid "<b>Home</b>"
+msgstr "<b>Koti</b>"
 
-#~ msgid "mph"
-#~ msgstr "mph"
+#: ../data/ui/Assistant.ui.h:5
+msgid "Location:"
+msgstr "Sijainti:"
 
-#~ msgid "km/h"
-#~ msgstr "km/h"
+#: ../data/ui/Assistant.ui.h:2
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
 
-#~ msgid "m/s"
-#~ msgstr "m/s"
+#: ../data/ui/Assistant.ui.h:10
+msgid "Review choices"
+msgstr "Varmista valinnat"
 
-#~ msgid "refreshed just now"
-#~ msgstr "päivitetty juuri"
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Weather Indicator Preferences"
+msgstr "Sääilmaisimen asetukset"
 
-#, python-format
-#~ msgid "last refreshed %s min. ago"
-#~ msgstr "päivitetty %s minuuttia sitten"
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr ""
 
-#~ msgid "Kilometers per hour (kph)"
-#~ msgstr "Kilometriä per tunti (km/h)"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr "Näytä vain sääsymboli"
 
-#~ msgid "last refreshed just now"
-#~ msgstr "päivitetty juuri"
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr "Näytä vain lämpötila"
 
-#~ msgid "SI (°C)"
-#~ msgstr "SI (°C)"
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr ""
 
-#~ msgid "Please input a location in the combobox below:"
-#~ msgstr "Kirjoita sijaintisi alla olevaan kenttään:"
+#: ../data/ui/PreferencesDialog.ui.h:1
+msgid "<b>Notifications</b>"
+msgstr "<b>Ilmoitukset</b>"
 
-#~ msgid "knot(s)"
-#~ msgstr "solmu(t)"
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "No notifications"
+msgstr "Ei ilmoituksia"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Näytä ilmoitus vain merkittävistä säävaroituksista"
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Use notifications to give every weather condition change"
+msgstr "Näytä ilmoitus aina sääennusteen muuttuessa"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Säätietojen lähde</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Update every"
+msgstr "Päivitysväli"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "minutes"
+msgstr "minuuttia"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "General"
+msgstr "Yleiset"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Lämpötilan asteikko</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Imperial (°F)"
+msgstr "Imperiaalinen (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "SI (metric, °C)"
+msgstr "SI (metrinen, °C)"
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Tuulen nopeuden yksikkö</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "Meter per second (m/s)"
+msgstr "Metriä sekunnissa"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "Miles per hour (mph)"
+msgstr "Mailia tunnissa"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:5
+msgid "Beaufort"
+msgstr "Bofori"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Knots"
+msgstr "Solmut"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Units"
+msgstr "Yksiköt"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Locations"
+msgstr "Sijainnit"
