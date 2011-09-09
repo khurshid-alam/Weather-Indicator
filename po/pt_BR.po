@@ -7,116 +7,256 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-09-07 17:25+0000\n"
-"Last-Translator: Marcos Oliveira da Cruz <marcosoliveiradacruz@gmail.com>\n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-09-08 16:30+0000\n"
+"Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-08 04:50+0000\n"
-"X-Generator: Launchpad (build 13891)\n"
+"X-Launchpad-Export-Date: 2011-09-09 04:47+0000\n"
+"X-Generator: Launchpad (build 13900)\n"
 "Language: pt_BR\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Notificações</b>"
+#: ../bin/indicator-weather.py:1684
+msgid "Weather Forecast for "
+msgstr "Previsão do Tempo para "
 
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Métrica para Temperatura</b>"
+#: ../bin/indicator-weather.py:1739
+msgid "High"
+msgstr "Alta"
 
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Origem Dos Dados Climáticos </b>"
+#: ../bin/indicator-weather.py:1741
+msgid "Low"
+msgstr "Baixa"
 
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Unidade de velocidade do vento</b>"
+#: ../bin/indicator-weather.py:1436
+msgid "Severe weather alert"
+msgstr "Alerta severo de clima"
 
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Beaufort"
+#: ../bin/indicator-weather.py:1466
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  André Gondim https://launchpad.net/~andregondim\n"
+"  Fitoschido https://launchpad.net/~fitoschido\n"
+"  Fábio Ihle https://launchpad.net/~fabioihle\n"
+"  Gabriell Nascimento https://launchpad.net/~gabriellhrn\n"
+"  Marcos Oliveira da Cruz https://launchpad.net/~marcosoliveiradacruz"
 
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Habilitar o Applet Indicador de clima"
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "erro"
 
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Geral"
+#: ../bin/indicator-weather.py:1074
+msgid "Set Up Weather..."
+msgstr "Configurar Clima..."
 
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
+#. #About
+#: ../bin/indicator-weather.py:1188
+msgid "About..."
+msgstr "Sobre..."
 
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Imperial (°F)"
+#. #Preferences
+#: ../bin/indicator-weather.py:1182
+msgid "Preferences..."
+msgstr "Preferencias..."
 
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Km per hour (km/h)"
-msgstr "Km por hora (km/h)"
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
+msgid "Refresh"
+msgstr "Atualizar"
 
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Nós"
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
+msgstr "Aviso..."
 
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Localizações"
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "Nenhum dado disponível"
 
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Metros por segundo (m/s)"
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "Previsão..."
 
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Milhas por hora (m/h)"
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "Atualizando"
 
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Sem notificações"
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
+msgstr "espere, por favor"
 
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Somente usar notificações para informar mudanças severas no clima"
+#: ../bin/indicator-weather.py:1293
+msgid "just now"
+msgstr "há pouco"
 
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (metric, °C)"
-msgstr "SI (Métrico, ºC)"
+#: ../bin/indicator-weather.py:1295
+#, python-format
+msgid "%d min. ago"
+msgstr "%d min. atrás"
 
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show temperature near indicator"
-msgstr "Mostrar a temperatura próxima ao indicador"
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+msgid "Label:"
+msgstr "Legenda"
 
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Unidades"
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "Temperatura:"
 
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Atualizar a cada"
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
+msgstr "Índice de calor:"
 
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Usar notificações para qualquer mudança no clima"
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
+msgstr "Índice de calor"
 
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr "Preferências do Indicador de Clima"
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
+msgstr "Temperatura e umidade"
 
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
+msgstr "Humidex:"
 
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
-msgstr "minutos"
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
+msgstr "Humidex"
 
-#: ../bin/indicator-weather.py:463
-msgid "Unknown error occurred while picking up weather data"
-msgstr "Erro desconhecido ao recuperar dados de clima"
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
+msgstr "Temperatura e umidade (Canada)"
+
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
+msgstr "Temperatura e vento"
+
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "Sensação térmica:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr "Sensação térmica"
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "Humidade:"
+
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+msgid "Humidity"
+msgstr "Umidade"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "Visibilidade:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "Visibilidade"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "Vento:"
+
+#: ../bin/indicator-weather.py:845
+msgid "Wind"
+msgstr "Vento"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr ""
+
+#: ../bin/indicator-weather.py:872
+msgid "Sunrise"
+msgstr "Nascer do sol"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr ""
+
+#: ../bin/indicator-weather.py:876
+msgid "Sunset"
+msgstr "Pôr do sol"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr "Agora:"
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "Hoje:"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
@@ -291,183 +431,13 @@ msgstr "Tempestades Isoladas"
 msgid "Unknown condition"
 msgstr "Condição desconhecida"
 
-#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
-msgid "Humidity"
-msgstr "Umidade"
-
-#: ../bin/indicator-weather.py:782
-msgid "Pressure"
-msgstr "Pressão"
-
-#: ../bin/indicator-weather.py:812
-msgid "Temperature"
-msgstr "Temperatura"
-
-#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
-#: ../bin/indicator-weather.py:838
-msgid "Unknown"
-msgstr "Desconhecido"
-
-#: ../bin/indicator-weather.py:845
-msgid "Wind"
-msgstr "Vento"
-
-#: ../bin/indicator-weather.py:872
-msgid "Sunrise"
-msgstr "Nascer do sol"
-
-#: ../bin/indicator-weather.py:876
-msgid "Sunset"
-msgstr "Pôr do sol"
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:889
-msgid "N"
-msgstr "N"
-
-#: ../bin/indicator-weather.py:891
-msgid "NE"
-msgstr "NE"
-
-#: ../bin/indicator-weather.py:893
-msgid "E"
-msgstr "L"
-
-#: ../bin/indicator-weather.py:895
-msgid "SE"
-msgstr "SE"
-
-#: ../bin/indicator-weather.py:897
-msgid "S"
-msgstr "S"
-
-#: ../bin/indicator-weather.py:899
-msgid "SW"
-msgstr "SO"
-
-#: ../bin/indicator-weather.py:901
-msgid "W"
-msgstr "O"
-
-#: ../bin/indicator-weather.py:903
-msgid "NW"
-msgstr "NO"
-
-#: ../bin/indicator-weather.py:1074
-msgid "Set Up Weather..."
-msgstr "Configurar Clima..."
-
-#: ../bin/indicator-weather.py:1176
-msgid "Forecast"
-msgstr "Previsão"
-
-#. #Preferences
-#: ../bin/indicator-weather.py:1182
-msgid "Preferences..."
-msgstr "Preferencias..."
-
-#. #About
-#: ../bin/indicator-weather.py:1188
-msgid "About..."
-msgstr "Sobre..."
-
-#: ../bin/indicator-weather.py:1289
-msgid "Refreshing, please wait"
-msgstr "Atualizando, aguarde"
-
-#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
-#: ../bin/indicator-weather.py:1295
-msgid "Refresh"
-msgstr "Atualizar"
-
-#: ../bin/indicator-weather.py:1293
-msgid "just now"
-msgstr "há pouco"
-
-#: ../bin/indicator-weather.py:1295
-#, python-format
-msgid "%d min. ago"
-msgstr "%d min. atrás"
-
-#: ../bin/indicator-weather.py:1436
-msgid "Severe weather alert"
-msgstr "Alerta severo de clima"
-
-#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr "Indicador de clima"
-
-#: ../bin/indicator-weather.py:1466
-msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Eric Carvalho https://launchpad.net/~eric-carvalho\n"
-"  Fitoschido https://launchpad.net/~fitoschido\n"
-"  Fábio Ihle https://launchpad.net/~fabioihle\n"
-"  Marcos Oliveira da Cruz https://launchpad.net/~marcosoliveiradacruz\n"
-"  Mauricio Pretto https://launchpad.net/~pretto\n"
-"  Sam Samuels https://launchpad.net/~gemini-sam-samuels\n"
-"  Thiago Scremin Bonelli https://launchpad.net/~thiagobonelli"
-
-#: ../bin/indicator-weather.py:1684
-msgid "Weather Forecast for "
-msgstr "Previsão do Tempo para "
-
-#: ../bin/indicator-weather.py:1739
-msgid "High"
-msgstr "Alta"
-
-#: ../bin/indicator-weather.py:1741
-msgid "Low"
-msgstr "Baixa"
-
-#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
-msgid "Label:"
-msgstr "Legenda"
-
-#: ../bin/indicator-weather.py:1932
-msgid "Another instance of this program is already running"
-msgstr "Outra instância deste programa já está rodando"
-
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Casa</b>"
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
-
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr "Adicionar uma localidade"
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Local:"
-
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr "Nome da Localidade"
-
-#: ../data/ui/Assistant.ui.h:7
-msgid "Please enter a name for this location:"
-msgstr "Por favor digite um nome para essa localidade:"
-
-#: ../data/ui/Assistant.ui.h:8
-msgid ""
-"Please review the choices below. If anything is not correct, please go back "
-"and select the correct options."
-msgstr ""
-"Por favor revise as escolhas abaixo. Se algo estiver errado, por favor volte "
-"e selecione as opções corretas."
-
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
 msgstr "Por favor, procure a sua localização em nosso banco de dados"
-
-#: ../data/ui/Assistant.ui.h:10
-msgid "Review choices"
-msgstr "Revise suas escolhas"
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
@@ -477,17 +447,162 @@ msgstr "Buscar"
 msgid "Select a location"
 msgstr "Selecionar um localidade"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Previsão Detalhada"
+#: ../data/ui/Assistant.ui.h:7
+msgid "Please enter a name for this location:"
+msgstr "Por favor digite um nome para essa localidade:"
 
-#: ../indicator-weather.desktop.in.h:1
+#: ../data/ui/Assistant.ui.h:6
+msgid "Name the location"
+msgstr "Nome da Localidade"
+
+#: ../data/ui/Assistant.ui.h:8
 msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
+"Please review the choices below. If anything is not correct, please go back "
+"and select the correct options."
 msgstr ""
-"Um indicador de clima que exibe informações de um ou de vários lugares no "
-"mundo"
+"Por favor revise as escolhas abaixo. Se algo estiver errado, por favor volte "
+"e selecione as opções corretas."
 
-#~ msgid "Humidex"
-#~ msgstr "Humidex"
+#: ../data/ui/Assistant.ui.h:1
+msgid "<b>Home</b>"
+msgstr "<b>Casa</b>"
+
+#: ../data/ui/Assistant.ui.h:5
+msgid "Location:"
+msgstr "Local:"
+
+#: ../data/ui/Assistant.ui.h:2
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
+
+#: ../data/ui/Assistant.ui.h:10
+msgid "Review choices"
+msgstr "Revise suas escolhas"
+
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Weather Indicator Preferences"
+msgstr "Preferências do Indicador de Clima"
+
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:1
+msgid "<b>Notifications</b>"
+msgstr "<b>Notificações</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "No notifications"
+msgstr "Sem notificações"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Somente usar notificações para informar mudanças severas no clima"
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Use notifications to give every weather condition change"
+msgstr "Usar notificações para qualquer mudança no clima"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Origem Dos Dados Climáticos </b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Update every"
+msgstr "Atualizar a cada"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "minutes"
+msgstr "minutos"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "General"
+msgstr "Geral"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Métrica para Temperatura</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Imperial (°F)"
+msgstr "Imperial (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "SI (metric, °C)"
+msgstr "SI (Métrico, ºC)"
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Unidade de velocidade do vento</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "Meter per second (m/s)"
+msgstr "Metros por segundo (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "Miles per hour (mph)"
+msgstr "Milhas por hora (m/h)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:5
+msgid "Beaufort"
+msgstr "Beaufort"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Knots"
+msgstr "Nós"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Units"
+msgstr "Unidades"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Locations"
+msgstr "Localizações"
