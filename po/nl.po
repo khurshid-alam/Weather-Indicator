@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-08-01 06:42+0000\n"
-"Last-Translator: Huubb <Unknown>\n"
+"PO-Revision-Date: 2011-09-19 08:21+0000\n"
+"Last-Translator: Bernard Decock <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-08-02 05:20+0000\n"
-"X-Generator: Launchpad (build 13552)\n"
+"X-Launchpad-Export-Date: 2011-09-20 05:19+0000\n"
+"X-Generator: Launchpad (build 13980)\n"
 "Language: nl\n"
 
 #: ../bin/indicator-weather.py:1684
@@ -38,21 +38,23 @@ msgstr "Extreme weerswaarschuwing"
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
+"  Bernard Decock https://launchpad.net/~decockbernard\n"
+"  Guus https://launchpad.net/~guus-verbeek\n"
 "  Huubb https://launchpad.net/~huub-van-baal"
 
 #: ../src/service/indicator_weather_service/__init__.py:53
 #: ../src/service/indicator_weather_service/__init__.py:56
 msgid "error"
-msgstr ""
+msgstr "error"
 
 #: ../bin/indicator-weather.py:1074
 msgid "Set Up Weather..."
-msgstr "Stel weer in…"
+msgstr "Stel weergave in"
 
 #. #About
 #: ../bin/indicator-weather.py:1188
 msgid "About..."
-msgstr ""
+msgstr "Over..."
 
 #. #Preferences
 #: ../bin/indicator-weather.py:1182
@@ -123,7 +125,7 @@ msgstr "Luchtvochtigheid index"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
-msgstr ""
+msgstr "Temperatuur en luchtvochtigheid (Canada)"
 
 #: ../src/service/indicator_weather_service/weather.py:256
 msgid "Wind chill:"
@@ -252,11 +254,11 @@ msgstr "Nu"
 
 #: ../src/service/indicator_weather_service/weather.py:1291
 msgid "Today:"
-msgstr ""
+msgstr "Vandaag:"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
-msgstr ""
+msgstr "Tornado"
 
 #: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
@@ -297,7 +299,7 @@ msgstr "Motregen"
 
 #: ../bin/indicator-weather.py:562
 msgid "Freezing rain"
-msgstr "IJskoude regen"
+msgstr "IJzel"
 
 #: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
