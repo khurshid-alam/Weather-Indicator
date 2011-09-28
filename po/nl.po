@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-09-19 08:21+0000\n"
+"PO-Revision-Date: 2011-09-27 12:18+0000\n"
 "Last-Translator: Bernard Decock <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-20 05:19+0000\n"
-"X-Generator: Launchpad (build 13980)\n"
+"X-Launchpad-Export-Date: 2011-09-28 06:03+0000\n"
+"X-Generator: Launchpad (build 14049)\n"
 "Language: nl\n"
 
 #: ../bin/indicator-weather.py:1684
@@ -121,7 +121,7 @@ msgstr "Luchtvochtigheid index"
 
 #: ../src/service/indicator_weather_service/weather.py:247
 msgid "Humidex"
-msgstr "Luchtvochtigheid index"
+msgstr "Canadese hitte index"
 
 #: ../src/service/indicator_weather_service/weather.py:248
 msgid "Temperature and humidity (Canada)"
@@ -347,7 +347,7 @@ msgstr "Rokerig"
 
 #: ../bin/indicator-weather.py:575
 msgid "Blustery"
-msgstr "Heftige"
+msgstr "Windstoten"
 
 #: ../bin/indicator-weather.py:576
 msgid "Windy"

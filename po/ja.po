@@ -7,136 +7,272 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-05-09 09:07+0000\n"
-"Last-Translator: Jo Ogawa <Unknown>\n"
+"POT-Creation-Date: 2011-05-20 02:26-0700\n"
+"PO-Revision-Date: 2011-09-27 15:43+0000\n"
+"Last-Translator: Guybrush88 <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
-"X-Generator: Launchpad (build 13168)\n"
+"X-Launchpad-Export-Date: 2011-09-28 06:03+0000\n"
+"X-Generator: Launchpad (build 14049)\n"
 "Language: ja\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
+#: ../bin/indicator-weather.py:1684
+msgid "Weather Forecast for "
+msgstr "天気予報: "
+
+#: ../bin/indicator-weather.py:1739
+msgid "High"
+msgstr "高品質"
+
+#: ../bin/indicator-weather.py:1741
+msgid "Low"
+msgstr "低い"
+
+#: ../bin/indicator-weather.py:1436
+msgid "Severe weather alert"
+msgstr "悪天候の警告"
+
+#: ../bin/indicator-weather.py:1466
+msgid "translator-credits"
+msgstr ""
+"Launchpad Contributions:\n"
+"  Guybrush88 https://launchpad.net/~guybrush"
+
+#: ../src/service/indicator_weather_service/__init__.py:53
+#: ../src/service/indicator_weather_service/__init__.py:56
+msgid "error"
+msgstr "エラー"
+
+#: ../bin/indicator-weather.py:1074
+msgid "Set Up Weather..."
+msgstr "天気をセットアップ..."
+
+#. #About
+#: ../bin/indicator-weather.py:1188
+msgid "About..."
+msgstr "情報..."
+
+#. #Preferences
+#: ../bin/indicator-weather.py:1182
+msgid "Preferences..."
+msgstr "選択..."
+
+#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather.py:1295
+msgid "Refresh"
+msgstr "更新"
+
+#: ../src/service/indicator_weather_service/menu.py:167
+msgid "Warning..."
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>温度目盛り</b>"
+#: ../src/service/indicator_weather_service/menu.py:233
+msgid "No data available"
+msgstr "データがありません"
 
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
+#: ../src/service/indicator_weather_service/menu.py:340
+msgid "Forecast..."
+msgstr "予報..."
+
+#: ../src/service/indicator_weather_service/menu.py:605
+msgid "Refreshing"
+msgstr "更新中"
+
+#: ../src/service/indicator_weather_service/menu.py:606
+msgid "please wait"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
+#: ../bin/indicator-weather.py:1293
+msgid "just now"
+msgstr "たった今"
+
+#: ../bin/indicator-weather.py:1295
+#, python-format
+msgid "%d min. ago"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
+#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+msgid "Label:"
+msgstr "ラベル:"
+
+#: ../src/service/indicator_weather_service/weather.py:221
+msgid "Temperature:"
+msgstr "温度:"
+
+#: ../src/service/indicator_weather_service/weather.py:236
+msgid "Heat index:"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
+#: ../src/service/indicator_weather_service/weather.py:237
+msgid "Heat index"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
+#: ../src/service/indicator_weather_service/weather.py:238
+msgid "Temperature and humidity"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
+#: ../src/service/indicator_weather_service/weather.py:246
+msgid "Humidex:"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
+#: ../src/service/indicator_weather_service/weather.py:247
+msgid "Humidex"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Km per hour (km/h)"
+#: ../src/service/indicator_weather_service/weather.py:248
+msgid "Temperature and humidity (Canada)"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
+#: ../src/service/indicator_weather_service/weather.py:256
+msgid "Wind chill:"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
+#: ../src/service/indicator_weather_service/weather.py:257
+msgid "Wind chill"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
+#: ../src/service/indicator_weather_service/weather.py:258
+msgid "Temperature and wind"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
+#: ../src/service/indicator_weather_service/weather.py:266
+msgid "Feels like:"
+msgstr "体感温度:"
+
+#: ../src/service/indicator_weather_service/weather.py:267
+msgid "Feels like"
+msgstr "体感温度"
+
+#: ../src/service/indicator_weather_service/weather.py:268
+msgid "Heat index or wind chill"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
+#: ../src/service/indicator_weather_service/weather.py:276
+msgid "Feels like (CA):"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
+#: ../src/service/indicator_weather_service/weather.py:277
+msgid "Feels like (CA)"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (metric, °C)"
+#: ../src/service/indicator_weather_service/weather.py:278
+msgid "Humidex or wind chill (Canada)"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show temperature near indicator"
+#: ../src/service/indicator_weather_service/weather.py:286
+msgid "Feels like (AU):"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
+#: ../src/service/indicator_weather_service/weather.py:287
+msgid "Feels like (AU)"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
+#: ../src/service/indicator_weather_service/weather.py:288
+msgid "Temperature, humidity and wind (Australia)"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
+#: ../src/service/indicator_weather_service/weather.py:296
+msgid "Dewpoint:"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
+#: ../src/service/indicator_weather_service/weather.py:297
+msgid "Dewpoint"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
+#: ../src/service/indicator_weather_service/weather.py:305
+msgid "Humidity:"
+msgstr "湿度:"
+
+#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+msgid "Humidity"
+msgstr "湿度"
+
+#: ../src/service/indicator_weather_service/weather.py:314
+msgid "Visibility:"
+msgstr "可視性:"
+
+#: ../src/service/indicator_weather_service/weather.py:315
+msgid "Visibility"
+msgstr "可視性"
+
+#: ../src/service/indicator_weather_service/weather.py:316
+#: ../src/service/indicator_weather_service/weather.py:338
+msgid "Only from Yahoo!"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "minutes"
+#: ../src/service/indicator_weather_service/weather.py:336
+msgid "Barometer:"
 msgstr ""
 
-#: ../bin/indicator-weather.py:463
-msgid "Unknown error occurred while picking up weather data"
+#: ../src/service/indicator_weather_service/weather.py:337
+msgid "Barometer"
 msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:346
+msgid "Wind:"
+msgstr "風:"
+
+#: ../bin/indicator-weather.py:845
+msgid "Wind"
+msgstr "風"
+
+#: ../src/service/indicator_weather_service/weather.py:365
+msgid "Sun:"
+msgstr "日曜:"
+
+#: ../src/service/indicator_weather_service/weather.py:366
+msgid "Sun"
+msgstr "日曜"
+
+#: ../src/service/indicator_weather_service/weather.py:367
+msgid "Sunrise and sunset"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:375
+msgid "Sunrise:"
+msgstr "日の出:"
+
+#: ../bin/indicator-weather.py:872
+msgid "Sunrise"
+msgstr "日の出"
+
+#: ../src/service/indicator_weather_service/weather.py:383
+msgid "Sunset:"
+msgstr "日の入り:"
+
+#: ../bin/indicator-weather.py:876
+msgid "Sunset"
+msgstr "日の入り"
+
+#: ../src/service/indicator_weather_service/weather.py:1283
+msgid "Now:"
+msgstr ""
+
+#: ../src/service/indicator_weather_service/weather.py:1291
+msgid "Today:"
+msgstr "本日:"
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
-msgstr ""
+msgstr "竜巻"
 
 #: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
-msgstr ""
+msgstr "熱帯性暴風"
 
 #: ../bin/indicator-weather.py:553
 msgid "Hurricane"
-msgstr ""
+msgstr "ハリケーン"
 
 #: ../bin/indicator-weather.py:554
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "激しい雷雨"
 
 #: ../bin/indicator-weather.py:555
 msgid "Thunderstorms"
-msgstr ""
+msgstr "雷雨"
 
 #: ../bin/indicator-weather.py:556
 msgid "Mixed rain and snow"
@@ -145,104 +281,104 @@ msgstr ""
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather.py:558
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "雨混じりの霙"
 
 #: ../bin/indicator-weather.py:559
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "雪混じりの霙"
 
 #: ../bin/indicator-weather.py:560
 msgid "Freezing drizzle"
-msgstr ""
+msgstr "凍った霧雨"
 
 #: ../bin/indicator-weather.py:561
 msgid "Drizzle"
-msgstr ""
+msgstr "霧雨"
 
 #: ../bin/indicator-weather.py:562
 msgid "Freezing rain"
-msgstr ""
+msgstr "凍った雨"
 
 #: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
-msgstr ""
+msgstr "打ちつけるような雨"
 
 #: ../bin/indicator-weather.py:565
 msgid "Snow flurries"
-msgstr ""
+msgstr "にわか雪"
 
 #: ../bin/indicator-weather.py:566
 msgid "Light snow showers"
-msgstr ""
+msgstr "弱いにわか雪"
 
 #: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
-msgstr ""
+msgstr "吹雪"
 
 #: ../bin/indicator-weather.py:568
 msgid "Snow"
-msgstr ""
+msgstr "雪"
 
 #: ../bin/indicator-weather.py:569
 msgid "Hail"
-msgstr ""
+msgstr "ひょう"
 
 #: ../bin/indicator-weather.py:570
 msgid "Sleet"
-msgstr ""
+msgstr "みぞれ"
 
 #: ../bin/indicator-weather.py:571
 msgid "Dust"
-msgstr ""
+msgstr "砂嵐"
 
 #: ../bin/indicator-weather.py:572
 msgid "Foggy"
-msgstr ""
+msgstr "霧"
 
 #: ../bin/indicator-weather.py:573
 msgid "Haze"
-msgstr ""
+msgstr "煙霧"
 
 #: ../bin/indicator-weather.py:574
 msgid "Smoky"
-msgstr ""
+msgstr "もや"
 
 #: ../bin/indicator-weather.py:575
 msgid "Blustery"
-msgstr ""
+msgstr "激しい風"
 
 #: ../bin/indicator-weather.py:576
 msgid "Windy"
-msgstr ""
+msgstr "風"
 
 #: ../bin/indicator-weather.py:577
 msgid "Cold"
-msgstr ""
+msgstr "寒い"
 
 #: ../bin/indicator-weather.py:578
 msgid "Cloudy"
-msgstr ""
+msgstr "曇天"
 
 #: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
 msgid "Mostly cloudy"
-msgstr ""
+msgstr "ほとんど曇り"
 
 #: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
 #: ../bin/indicator-weather.py:596
 msgid "Partly cloudy"
-msgstr ""
+msgstr "ところにより曇り"
 
 #: ../bin/indicator-weather.py:583
 msgid "Clear"
-msgstr ""
+msgstr "通知のクリア"
 
 #: ../bin/indicator-weather.py:584
 msgid "Sunny"
-msgstr ""
+msgstr "晴れ"
 
 #: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
 msgid "Fair"
-msgstr ""
+msgstr "まあまあ"
 
 #: ../bin/indicator-weather.py:587
 msgid "Mixed rain and hail"
@@ -250,7 +386,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:588
 msgid "Hot"
-msgstr ""
+msgstr "最新"
 
 #: ../bin/indicator-weather.py:589
 msgid "Isolated thunderstorms"
@@ -266,7 +402,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
 msgid "Heavy snow"
-msgstr ""
+msgstr "激しい雪"
 
 #: ../bin/indicator-weather.py:594
 msgid "Scattered snow showers"
@@ -278,7 +414,7 @@ msgstr ""
 
 #: ../bin/indicator-weather.py:598
 msgid "Snow showers"
-msgstr ""
+msgstr "打ちつけるような雪"
 
 #: ../bin/indicator-weather.py:599
 msgid "Isolated thundershowers"
@@ -291,161 +427,29 @@ msgstr ""
 msgid "Unknown condition"
 msgstr ""
 
-#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
-msgid "Humidity"
-msgstr ""
-
-#: ../bin/indicator-weather.py:782
-msgid "Pressure"
-msgstr ""
-
-#: ../bin/indicator-weather.py:812
-msgid "Temperature"
-msgstr ""
-
-#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
-#: ../bin/indicator-weather.py:838
-msgid "Unknown"
-msgstr ""
-
-#: ../bin/indicator-weather.py:845
-msgid "Wind"
-msgstr ""
-
-#: ../bin/indicator-weather.py:872
-msgid "Sunrise"
-msgstr ""
-
-#: ../bin/indicator-weather.py:876
-msgid "Sunset"
-msgstr ""
-
-#. Short wind direction - north
-#: ../bin/indicator-weather.py:889
-msgid "N"
-msgstr ""
-
-#: ../bin/indicator-weather.py:891
-msgid "NE"
-msgstr ""
-
-#: ../bin/indicator-weather.py:893
-msgid "E"
-msgstr ""
-
-#: ../bin/indicator-weather.py:895
-msgid "SE"
-msgstr ""
-
-#: ../bin/indicator-weather.py:897
-msgid "S"
-msgstr ""
-
-#: ../bin/indicator-weather.py:899
-msgid "SW"
-msgstr ""
-
-#: ../bin/indicator-weather.py:901
-msgid "W"
-msgstr ""
-
-#: ../bin/indicator-weather.py:903
-msgid "NW"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1074
-msgid "Set Up Weather..."
-msgstr ""
-
-#: ../bin/indicator-weather.py:1176
-msgid "Forecast"
-msgstr ""
-
-#. #Preferences
-#: ../bin/indicator-weather.py:1182
-msgid "Preferences..."
-msgstr ""
-
-#. #About
-#: ../bin/indicator-weather.py:1188
-msgid "About..."
-msgstr ""
-
-#: ../bin/indicator-weather.py:1289
-msgid "Refreshing, please wait"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
-#: ../bin/indicator-weather.py:1295
-msgid "Refresh"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1293
-msgid "just now"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1295
-#, python-format
-msgid "%d min. ago"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1436
-msgid "Severe weather alert"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
-msgid "Weather Indicator"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1466
-msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Jo Ogawa https://launchpad.net/~fagotto"
-
-#: ../bin/indicator-weather.py:1684
-msgid "Weather Forecast for "
-msgstr ""
-
-#: ../bin/indicator-weather.py:1739
-msgid "High"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1741
-msgid "Low"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
-msgid "Label:"
-msgstr ""
-
-#: ../bin/indicator-weather.py:1932
-msgid "Another instance of this program is already running"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr ""
-
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
+#: ../data/ui/Assistant.ui.h:9
+msgid "Please search our database for your location:"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:6
-msgid "Name the location"
-msgstr ""
+#: ../data/ui/Assistant.ui.h:11
+msgid "Search"
+msgstr "検索"
+
+#: ../data/ui/Assistant.ui.h:12
+msgid "Select a location"
+msgstr "場所の選択"
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr ""
+msgstr "この場所の名称を入力してください:"
+
+#: ../data/ui/Assistant.ui.h:6
+msgid "Name the location"
+msgstr "場所の名称"
 
 #: ../data/ui/Assistant.ui.h:8
 msgid ""
@@ -453,28 +457,146 @@ msgid ""
 "and select the correct options."
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:9
-msgid "Please search our database for your location:"
+#: ../data/ui/Assistant.ui.h:1
+msgid "<b>Home</b>"
+msgstr "<b>自宅</b>"
+
+#: ../data/ui/Assistant.ui.h:5
+msgid "Location:"
+msgstr "フォルダー:"
+
+#: ../data/ui/Assistant.ui.h:2
+msgid "<b>Orange, Texas</b>"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:11
-msgid "Search"
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Weather Indicator Preferences"
+msgstr "Weather Indicatorの設定"
+
+#: ../data/ui/PreferencesDialog.ui:91
+msgid "<b>Indicator</b>"
 msgstr ""
 
-#: ../data/ui/Assistant.ui.h:12
-msgid "Select a location"
+#: ../data/ui/PreferencesDialog.ui:111
+msgid "Show only weather icon"
 msgstr ""
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
+#: ../data/ui/PreferencesDialog.ui:127
+msgid "Show only temperature"
 msgstr ""
 
-#: ../indicator-weather.desktop.in.h:1
-msgid ""
-"A weather indicator that displays information for one or multiple places in "
-"the world"
+#: ../data/ui/PreferencesDialog.ui:143
+msgid "Show weather icon and temperature"
 msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:1
+msgid "<b>Notifications</b>"
+msgstr "<b>通知方法</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "No notifications"
+msgstr "通知なし"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "Only use notifications to give severe weather alerts"
+msgstr "厳しい天候の場合のみ警告を通知する"
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Use notifications to give every weather condition change"
+msgstr "すべての気象の変化を通知する"
+
+#: ../data/ui/PreferencesDialog.ui:268
+msgid "Apply for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>気象データのソース</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Update every"
+msgstr "更新間隔:"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "minutes"
+msgstr "分後"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "General"
+msgstr "一般"
+
+#: ../data/ui/PreferencesDialog.ui:460
+msgid "Show forecast"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:475
+msgid "Show weather for all locations"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:490
+msgid "Hide irrelevant fields"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:520
+msgid "Weather report fields to show"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:604
+msgid "Menu"
+msgstr "メニュー"
+
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>温度目盛り</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Imperial (°F)"
+msgstr "インペリアル (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "SI (metric, °C)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>風速の単位</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "Meter per second (m/s)"
+msgstr "メートル毎秒 (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "Miles per hour (mph)"
+msgstr "マイル毎時 (mph)"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Km per hour (kph)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:5
+msgid "Beaufort"
+msgstr "ビューフォート風力階級"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Knots"
+msgstr "ノット"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Units"
+msgstr "ユニット"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Locations"
+msgstr "場所"
