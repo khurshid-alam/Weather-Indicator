@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-09-27 15:02+0000\n"
-"Last-Translator: Guybrush88 <Unknown>\n"
+"PO-Revision-Date: 2011-10-17 06:34+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-28 06:03+0000\n"
-"X-Generator: Launchpad (build 14049)\n"
+"X-Launchpad-Export-Date: 2011-10-18 05:04+0000\n"
+"X-Generator: Launchpad (build 14157)\n"
 "Language: eo\n"
 
 #: ../bin/indicator-weather.py:1684
@@ -437,7 +437,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
-msgstr "Sercxi"
+msgstr "Serĉi"
 
 #: ../data/ui/Assistant.ui.h:12
 msgid "Select a location"
