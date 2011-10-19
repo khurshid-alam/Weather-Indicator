@@ -1,4 +1,4 @@
-# Dutch translation for weather-indicator
+# Turkish translation for weather-indicator
 # Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
 # This file is distributed under the same license as the weather-indicator package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2011.
@@ -6,85 +6,84 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-10-18 12:22+0000\n"
-"Last-Translator: Bernard Decock <Unknown>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"PO-Revision-Date: 2011-10-18 06:19+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2011-10-19 06:08+0000\n"
 "X-Generator: Launchpad (build 14157)\n"
-"Language: nl\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
 msgid "<b>Notifications</b>"
-msgstr "<b>Meldingen</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:2
 msgid "<b>Temperature Scale</b>"
-msgstr "<b>Temperatuurschaal</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:3
 msgid "<b>Weather Data Source</b>"
-msgstr "<b>Weer Data Bron</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:4
 msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Windsnelheid Eenheid</b>"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:5
 msgid "Beaufort"
-msgstr "Beaufort"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
-msgstr "Schakel het Weermeldings Applet in"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:7
 msgid "General"
-msgstr "Algemeen"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:8
 msgid "Google"
-msgstr "Google"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:9
 msgid "Imperial (°F)"
-msgstr "Fahrenheit (°F)"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:10
 msgid "Km per hour (km/h)"
-msgstr "km/u"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:11
 msgid "Knots"
-msgstr "Knopen"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:12
 msgid "Locations"
-msgstr "Locaties"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:13
 msgid "Meter per second (m/s)"
-msgstr "Meter per seconde (m/s)"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:14
 msgid "Miles per hour (mph)"
-msgstr "Mijl per uur (mp/h)"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:15
 msgid "No notifications"
-msgstr "Geen berichten"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr "Gebruik alleen meldingen om voor extreem weer te waarschuwen"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:17
 msgid "SI (metric, °C)"
-msgstr "Celsius (°C)"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:18
 msgid "Show temperature near indicator"
@@ -92,400 +91,393 @@ msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:19
 msgid "Units"
-msgstr "Eenheden"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:20
 msgid "Update every"
-msgstr "Bijwerken elke"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
-msgstr "Gebruik meldingen om elke verandering in het weer te laten zien"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
-msgstr "Weer Indicator Instellingen"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:23
 msgid "Yahoo!"
-msgstr "Yahoo!"
+msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui.h:24
 msgid "minutes"
-msgstr "minuten"
+msgstr ""
 
 #: ../bin/indicator-weather.py:463
 msgid "Unknown error occurred while picking up weather data"
-msgstr "Onbekende fout tijdens het ophalen van de weersgegevens"
+msgstr ""
 
 #: ../bin/indicator-weather.py:551
 msgid "Tornado"
-msgstr "Tornado"
+msgstr "Bora"
 
 #: ../bin/indicator-weather.py:552
 msgid "Tropical storm"
-msgstr "Tropische Storm"
+msgstr "Tropik Fırtına"
 
 #: ../bin/indicator-weather.py:553
 msgid "Hurricane"
-msgstr "Orkaan"
+msgstr "Kasırga"
 
 #: ../bin/indicator-weather.py:554
 msgid "Severe thunderstorms"
-msgstr "Zware onweersbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:555
 msgid "Thunderstorms"
-msgstr "Onweersbuien"
+msgstr "Gök gürültülü"
 
 #: ../bin/indicator-weather.py:556
 msgid "Mixed rain and snow"
-msgstr "Regen en sneeuw"
+msgstr ""
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather.py:558
 msgid "Mixed rain and sleet"
-msgstr "Regen en ijzel"
+msgstr ""
 
 #: ../bin/indicator-weather.py:559
 msgid "Mixed snow and sleet"
-msgstr "Sneeuw en ijzel"
+msgstr ""
 
 #: ../bin/indicator-weather.py:560
 msgid "Freezing drizzle"
-msgstr "Motijzel"
+msgstr "Kırağı"
 
 #: ../bin/indicator-weather.py:561
 msgid "Drizzle"
-msgstr "Motregen"
+msgstr "Çiseleme"
 
 #: ../bin/indicator-weather.py:562
 msgid "Freezing rain"
-msgstr "IJzel"
+msgstr "Dolu"
 
 #: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
 msgid "Showers"
-msgstr "Buien"
+msgstr "Sağanak"
 
 #: ../bin/indicator-weather.py:565
 msgid "Snow flurries"
-msgstr "Sneeuwvlagen"
+msgstr ""
 
 #: ../bin/indicator-weather.py:566
 msgid "Light snow showers"
-msgstr "Lichte sneeuwbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:567
 msgid "Blowing snow"
-msgstr "Stuifsneeuw"
+msgstr ""
 
 #: ../bin/indicator-weather.py:568
 msgid "Snow"
-msgstr "Sneeuw"
+msgstr ""
 
 #: ../bin/indicator-weather.py:569
 msgid "Hail"
-msgstr "Hagel"
+msgstr ""
 
 #: ../bin/indicator-weather.py:570
 msgid "Sleet"
-msgstr "Ijzel"
+msgstr ""
 
 #: ../bin/indicator-weather.py:571
 msgid "Dust"
-msgstr "Stof"
+msgstr ""
 
 #: ../bin/indicator-weather.py:572
 msgid "Foggy"
-msgstr "Mistig"
+msgstr ""
 
 #: ../bin/indicator-weather.py:573
 msgid "Haze"
-msgstr "Mist"
+msgstr ""
 
 #: ../bin/indicator-weather.py:574
 msgid "Smoky"
-msgstr "Rokerig"
+msgstr ""
 
 #: ../bin/indicator-weather.py:575
 msgid "Blustery"
-msgstr "Windstoten"
+msgstr ""
 
 #: ../bin/indicator-weather.py:576
 msgid "Windy"
-msgstr "Winderig"
+msgstr ""
 
 #: ../bin/indicator-weather.py:577
 msgid "Cold"
-msgstr "Koud"
+msgstr ""
 
 #: ../bin/indicator-weather.py:578
 msgid "Cloudy"
-msgstr "Bewolkt"
+msgstr ""
 
 #: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
 msgid "Mostly cloudy"
-msgstr "Overwegend bewolkt"
+msgstr ""
 
 #: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
 #: ../bin/indicator-weather.py:596
 msgid "Partly cloudy"
-msgstr "Gedeeltelijk bewolkt"
+msgstr ""
 
 #: ../bin/indicator-weather.py:583
 msgid "Clear"
-msgstr "Helder"
+msgstr ""
 
 #: ../bin/indicator-weather.py:584
 msgid "Sunny"
-msgstr "Zonnig"
+msgstr ""
 
 #: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
 msgid "Fair"
-msgstr "Schoon"
+msgstr ""
 
 #: ../bin/indicator-weather.py:587
 msgid "Mixed rain and hail"
-msgstr "Regen en hagel"
+msgstr ""
 
 #: ../bin/indicator-weather.py:588
 msgid "Hot"
-msgstr "Heet"
+msgstr ""
 
 #: ../bin/indicator-weather.py:589
 msgid "Isolated thunderstorms"
-msgstr "Lokale onweersbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
 msgid "Scattered thunderstorms"
-msgstr "Verspreide onweersbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:592
 msgid "Scattered showers"
-msgstr "Verspreide buien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
 msgid "Heavy snow"
-msgstr "Zware sneeuwval"
+msgstr ""
 
 #: ../bin/indicator-weather.py:594
 msgid "Scattered snow showers"
-msgstr "Verspreide buien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:597
 msgid "Thundershowers"
-msgstr "Onweersbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:598
 msgid "Snow showers"
-msgstr "Sneeuwbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:599
 msgid "Isolated thundershowers"
-msgstr "Lokale onweersbuien"
+msgstr ""
 
 #: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
 #: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
 #: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
 #: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
 msgid "Unknown condition"
-msgstr "Onbekende omstandigheden"
+msgstr ""
 
 #: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
 msgid "Humidity"
-msgstr "Luchtvochtigheid"
+msgstr "Nem"
 
 #: ../bin/indicator-weather.py:782
 msgid "Pressure"
-msgstr "Luchtdruk"
+msgstr ""
 
 #: ../bin/indicator-weather.py:812
 msgid "Temperature"
-msgstr "Temperatuur"
+msgstr ""
 
 #: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
 #: ../bin/indicator-weather.py:838
 msgid "Unknown"
-msgstr "Onbekend"
+msgstr ""
 
 #: ../bin/indicator-weather.py:845
 msgid "Wind"
-msgstr "Wind"
+msgstr "Rüzgar"
 
 #: ../bin/indicator-weather.py:872
 msgid "Sunrise"
-msgstr "Zonsopkomst"
+msgstr "Gündoğumu"
 
 #: ../bin/indicator-weather.py:876
 msgid "Sunset"
-msgstr "Zonsondergang"
+msgstr "Günbatımı"
 
 #. Short wind direction - north
 #: ../bin/indicator-weather.py:889
 msgid "N"
-msgstr "N"
+msgstr ""
 
 #: ../bin/indicator-weather.py:891
 msgid "NE"
-msgstr "NO"
+msgstr ""
 
 #: ../bin/indicator-weather.py:893
 msgid "E"
-msgstr "Z"
+msgstr ""
 
 #: ../bin/indicator-weather.py:895
 msgid "SE"
-msgstr "ZO"
+msgstr ""
 
 #: ../bin/indicator-weather.py:897
 msgid "S"
-msgstr "Z"
+msgstr ""
 
 #: ../bin/indicator-weather.py:899
 msgid "SW"
-msgstr "ZW"
+msgstr ""
 
 #: ../bin/indicator-weather.py:901
 msgid "W"
-msgstr "W"
+msgstr ""
 
 #: ../bin/indicator-weather.py:903
 msgid "NW"
-msgstr "NW"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1074
 msgid "Set Up Weather..."
-msgstr "Stel weergave in"
+msgstr "Hava Durumunu Ayarla..."
 
 #: ../bin/indicator-weather.py:1176
 msgid "Forecast"
-msgstr "Weersverwachting"
+msgstr ""
 
 #. #Preferences
 #: ../bin/indicator-weather.py:1182
 msgid "Preferences..."
-msgstr "Instellingen..."
+msgstr "Tercihler..."
 
 #. #About
 #: ../bin/indicator-weather.py:1188
 msgid "About..."
-msgstr "Over..."
+msgstr "Hakkında..."
 
 #: ../bin/indicator-weather.py:1289
 msgid "Refreshing, please wait"
-msgstr "Verversen, even geduld"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
 #: ../bin/indicator-weather.py:1295
 msgid "Refresh"
-msgstr "Vernieuwen"
+msgstr "Tazele"
 
 #: ../bin/indicator-weather.py:1293
 msgid "just now"
-msgstr "Onlangs"
+msgstr "şimdi"
 
 #: ../bin/indicator-weather.py:1295
 #, python-format
 msgid "%d min. ago"
-msgstr "%d min. terug"
+msgstr "%d dk. önce"
 
 #: ../bin/indicator-weather.py:1436
 msgid "Severe weather alert"
-msgstr "Extreme weerswaarschuwing"
+msgstr "Şiddetli hava durumu alarmı"
 
 #: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
 msgid "Weather Indicator"
-msgstr "Weer Indicator"
+msgstr ""
 
 #: ../bin/indicator-weather.py:1466
 msgid "translator-credits"
 msgstr ""
-"Launchpad Contributions:\n"
-"  Bernard Decock https://launchpad.net/~decockbernard\n"
-"  Ivo https://launchpad.net/~van-hoi"
 
 #: ../bin/indicator-weather.py:1684
 msgid "Weather Forecast for "
-msgstr "Weersvoorspelling voor "
+msgstr "için Hava Tahmini "
 
 #: ../bin/indicator-weather.py:1739
 msgid "High"
-msgstr "Hoge"
+msgstr "Yüksek"
 
 #: ../bin/indicator-weather.py:1741
 msgid "Low"
-msgstr "Lage"
+msgstr "Alçak"
 
 #: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
 msgid "Label:"
-msgstr "Label:"
+msgstr "Etiket:"
 
 #: ../bin/indicator-weather.py:1932
 msgid "Another instance of this program is already running"
-msgstr "Een ander deel van dit progromma is al bezig"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Thuis</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
-msgstr "Voeg een locatie toe"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
-msgstr "Locatie:"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
-msgstr "Naam van de locatie"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:7
 msgid "Please enter a name for this location:"
-msgstr "Voer een naam in voor deze locatie:"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:8
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
-"Controleer de volgende instellingen. Als iets niet klopt, ga dan terug en "
-"verbeter het."
 
 #: ../data/ui/Assistant.ui.h:9
 msgid "Please search our database for your location:"
-msgstr "Zoek in onze database voor uw locatie"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr "Controleer uw keuzes"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:11
 msgid "Search"
-msgstr "Zoeken"
+msgstr ""
 
 #: ../data/ui/Assistant.ui.h:12
 msgid "Select a location"
-msgstr "Kies een locatie"
+msgstr ""
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
-msgstr "Uitgebreide Weersverwachting"
+msgstr ""
 
 #: ../indicator-weather.desktop.in.h:1
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
 msgstr ""
-"Een weerindicator die informatie weergeeft voor één of meerdere plaatsen op "
-"de wereld"
-
-#~ msgid "Visibility"
-#~ msgstr "Zichtbaarheid"
 
 #~ msgid "Humidex"
-#~ msgstr "Canadese hitte index"
+#~ msgstr "Nem ibresi"
+
+#~ msgid "Visibility"
+#~ msgstr "Görünürlük"
