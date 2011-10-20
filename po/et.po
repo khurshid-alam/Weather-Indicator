@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-10-16 12:05+0000\n"
+"PO-Revision-Date: 2011-10-19 20:14+0000\n"
 "Last-Translator: Jalakas <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-10-17 05:01+0000\n"
-"X-Generator: Launchpad (build 14155)\n"
+"X-Launchpad-Export-Date: 2011-10-20 04:52+0000\n"
+"X-Generator: Launchpad (build 14165)\n"
 
 #: ../bin/indicator-weather.py:1684
 msgid "Weather Forecast for "
@@ -151,11 +151,11 @@ msgstr "Kuumaindeks või tuulekülm"
 
 #: ../src/service/indicator_weather_service/weather.py:276
 msgid "Feels like (CA):"
-msgstr ""
+msgstr "Tundub nagu (CA):"
 
 #: ../src/service/indicator_weather_service/weather.py:277
 msgid "Feels like (CA)"
-msgstr ""
+msgstr "Tundub nagu (CA)"
 
 #: ../src/service/indicator_weather_service/weather.py:278
 msgid "Humidex or wind chill (Canada)"
@@ -163,15 +163,15 @@ msgstr "Niiskusindeks ja tuulekülm (Kanada)"
 
 #: ../src/service/indicator_weather_service/weather.py:286
 msgid "Feels like (AU):"
-msgstr ""
+msgstr "Tundub nagu (AU):"
 
 #: ../src/service/indicator_weather_service/weather.py:287
 msgid "Feels like (AU)"
-msgstr ""
+msgstr "Tundub nagu (AU)"
 
 #: ../src/service/indicator_weather_service/weather.py:288
 msgid "Temperature, humidity and wind (Australia)"
-msgstr ""
+msgstr "Temperatuur, niiskus ja tuul (Austraalia)"
 
 #: ../src/service/indicator_weather_service/weather.py:296
 msgid "Dewpoint:"
@@ -456,6 +456,8 @@ msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Palun kontrolli järgnevaid valikuid. Kui midagi on vale, mine tagasi ja vali "
+"õiged valikud."
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
@@ -467,11 +469,11 @@ msgstr "Asukoht:"
 
 #: ../data/ui/Assistant.ui.h:2
 msgid "<b>Orange, Texas</b>"
-msgstr ""
+msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:10
 msgid "Review choices"
-msgstr ""
+msgstr "Valikute läbivaatamine"
 
 #: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
@@ -551,7 +553,7 @@ msgstr "Asjassepuutumatute väljade peitmine"
 
 #: ../data/ui/PreferencesDialog.ui:520
 msgid "Weather report fields to show"
-msgstr ""
+msgstr "Näita ilmateate väljasid"
 
 #: ../data/ui/PreferencesDialog.ui:604
 msgid "Menu"
