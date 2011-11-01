@@ -123,6 +123,32 @@ class Settings:
         except Exception as e:
             log.debug("Settings: exception occurred while opening settings:\n %s" % str(e))
 
+    # Make sure autostart file is installed. Inspired by GTG.
+    def check_autostart(self):
+        autostart_dir = os.path.join(os.path.expanduser("~"),".config/autostart/")
+        autostart_file = "indicator-weather.desktop"
+        autostart_path = os.path.join(autostart_dir, autostart_file)
+        if not os.path.isfile(autostart_path):
+            #Look for the desktop file
+            desktop_file_path = None
+            desktop_file_directories = ["/usr/share/applications",
+                                        "/usr/local/share/applications"]
+            this_directory = os.path.dirname(os.path.abspath(__file__))
+            for path in desktop_file_directories:
+                fullpath = os.path.normpath(os.path.join(this_directory, path, \
+                                                        autostart_file))
+                if os.path.isfile(fullpath):
+                    desktop_file_path = fullpath
+                    break
+            #If we have found the desktop file, we make a link to in in
+            # autostart_path.
+            if desktop_file_path:
+                if not os.path.exists(autostart_dir):
+                    os.mkdir(autostart_dir)
+                if os.path.isdir(autostart_dir):
+                    log.debug("Installing autostart file.")
+                    os.symlink(desktop_file_path, autostart_path)
+
     # Get a value of the setting
     def get_value(self, setting, return_id = False):
         log.debug("Settings: getting value for %s" % setting)
@@ -969,6 +995,7 @@ class indicator_weather(threading.Thread):
 
         log.debug("Indicator: reading settings")
         self.settings = Settings()
+        self.settings.check_autostart()
         self.settings.prepare_settings_store()      
         self.rate  = self.settings.get_value("refresh_rate")
         self.unit  = self.settings.get_value("unit")
