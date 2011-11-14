@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-20 02:26-0700\n"
-"PO-Revision-Date: 2011-09-12 18:04+0000\n"
-"Last-Translator: Henrik Graßhoff <Unknown>\n"
+"PO-Revision-Date: 2011-11-13 20:33+0000\n"
+"Last-Translator: Alexander Berndsen <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-13 05:01+0000\n"
-"X-Generator: Launchpad (build 13910)\n"
+"X-Launchpad-Export-Date: 2011-11-14 05:30+0000\n"
+"X-Generator: Launchpad (build 14277)\n"
 "Language: de\n"
 
 #: ../bin/indicator-weather.py:1684
@@ -39,7 +39,8 @@ msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Henrik Graßhoff https://launchpad.net/~henrik-grasshoff\n"
-"  TIℳ☺ https://launchpad.net/~tim.h.s\n"
+"  TIℳ㋡ https://launchpad.net/~tim.h.s\n"
+"  Till Lorentzen https://launchpad.net/~tilllor\n"
 "  Vadim Rutkovsky https://launchpad.net/~roignac\n"
 "  axoin https://launchpad.net/~axoin"
 
@@ -77,7 +78,7 @@ msgstr "Keine Daten verfügbar"
 
 #: ../src/service/indicator_weather_service/menu.py:340
 msgid "Forecast..."
-msgstr "Wettervorhersage …"
+msgstr "Wettervorhersage..."
 
 #: ../src/service/indicator_weather_service/menu.py:605
 msgid "Refreshing"
@@ -464,7 +465,7 @@ msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
 msgid "<b>Home</b>"
-msgstr "<b>Home</b>"
+msgstr "<b>Wohnort</b>"
 
 #: ../data/ui/Assistant.ui.h:5
 msgid "Location:"
@@ -508,7 +509,7 @@ msgstr "Keine Benachrichtigungen"
 
 #: ../data/ui/PreferencesDialog.ui.h:16
 msgid "Only use notifications to give severe weather alerts"
-msgstr "Benachrichtigungen für Unwetterwarnungen anzeigen"
+msgstr "Benachrichtigungen nur verwenden, um Unwetterwarnungen anzuzeigen"
 
 #: ../data/ui/PreferencesDialog.ui.h:21
 msgid "Use notifications to give every weather condition change"
