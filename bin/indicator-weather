@@ -860,9 +860,7 @@ class Weather:
                 wind_info = self.__report['current_conditions']['wind_condition'].split(' ')
                 wind_speed = wind_info[3]
             else:
-                wind_direction = _("Unknown")
-                wind_info = _("Unknown")
-                wind_speed = _("Unknown")
+                return _("Unknown")
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             # Create a similar to Google wind_info structure from Yahoo data
