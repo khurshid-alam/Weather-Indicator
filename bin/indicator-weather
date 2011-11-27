@@ -864,10 +864,10 @@ class Weather:
 
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             # Create a similar to Google wind_info structure from Yahoo data
-            wind_direction = self.__localized_report['wind']['direction']
+            wind_direction = "%s (%s˚)" % (self.get_wind_direction(self.__localized_report['wind']['direction']), self.__localized_report['wind']['direction'])
             wind_speed = self.__localized_report['wind']['speed']
             wind_units = self.__localized_report['units']['speed']
-            localized_wind_info = [_("Wind") + ":", self.get_wind_direction(wind_direction), ',', wind_speed, wind_units] 
+            localized_wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units] 
 
         # Parse Wind_direction - convert to selected scale
         if (self._wind_unit == WindUnits.MPH):
@@ -890,7 +890,8 @@ class Weather:
         localized_wind_info[len(localized_wind_info)-1] = _unit
         localized_wind_info[len(localized_wind_info)-2] = \
             NumberFormatter.format_float(_value, 1)
-        return ' '.join(localized_wind_info)
+        return "%s %s %s %s" % (localized_wind_info[0], localized_wind_info[1], \
+            localized_wind_info[2], localized_wind_info[3])
 
     # Get sunrise label
     def get_sunrise_label(self):
