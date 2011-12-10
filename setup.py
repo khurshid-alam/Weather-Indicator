@@ -3,6 +3,7 @@
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
+# Copyright (C) 2011 Vadim Rutkovsky roignac@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -20,7 +21,6 @@
 
 import os, sys
 try:
-    from gi.repository import Gio
     import DistUtilsExtra.auto
 except ImportError:
     print >> sys.stderr, 'To build indicator-weather you need https://launchpad.net/python-distutils-extra'
