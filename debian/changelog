@@ -1,3 +1,8 @@
+indicator-weather (11.11.27~oneiric2) oneiric; urgency=low
+  * Don't write too much debug info in the log (LP: #917253)
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Wed, 18 Jan 2012 10:03:20 +0300
+
 indicator-weather (11.11.27~oneiric1) oneiric; urgency=low
 
   * Bugfix version for Cloudy 9

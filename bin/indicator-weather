@@ -1286,11 +1286,9 @@ class indicator_weather(threading.Thread):
         if hasattr(self, "rate_id"):
             gobject.source_remove(self.rate_id)
         if rate_override:
-            log.debug("Indicator: scheduling update in %s mins" % rate_override)
             self.rate_id = gobject.timeout_add(
                 int(rate_override) * 60000, self.update_weather)
         else:
-            log.debug("Indicator: scheduling update in %s mins" % self.rate)
             self.rate_id = gobject.timeout_add(
                 int(self.rate) * 60000, self.update_weather)
 
@@ -1298,7 +1296,6 @@ class indicator_weather(threading.Thread):
     def schedule_refresh_label_update(self):
         if hasattr(self, "refresh_id"):
             gobject.source_remove(self.refresh_id)
-        log.debug("Indicator: scheduling refresh label update in 1 min")
         self.refresh_id = gobject.timeout_add(60000, self.update_refresh_label)
 
     # Update 'Refresh' label with time since last successful data refresh
@@ -1320,7 +1317,6 @@ class indicator_weather(threading.Thread):
             refresh_label="%s (%s)" % (_("Refresh"), _("just now"))
         else:
             refresh_label = "%s (%s)" % (_("Refresh"), _("%d min. ago") % self.refreshed_minutes_ago)
-        log.debug("Indicator: setting refresh label to '%s'" % refresh_label)
         self.refresh_show.set_label(refresh_label)
 
     # Load weather data from cache and display its values
