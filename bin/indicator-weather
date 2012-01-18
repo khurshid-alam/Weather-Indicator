@@ -4,16 +4,16 @@
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
 # Copyright (C) 2011 Vadim Rutkovsky roignac@gmail.com
-# This program is free software: you can redistribute it and/or modify it 
-# under the terms of the GNU General Public License version 3, as published 
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
-# 
-# This program is distributed in the hope that it will be useful, but 
-# WITHOUT ANY WARRANTY; without even the implied warranties of 
-# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR 
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranties of
+# MERCHANTABILITY, SATISFACTORY QUALITY, or FITNESS FOR A PARTICULAR
 # PURPOSE.  See the GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License along 
+#
+# You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
 
@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "11.05.31 'Cloudy 8'"
+VERSION = "11.11.27 'Cloudy 9'"
 
 from indicator_weather.helpers import *
 
@@ -170,7 +170,7 @@ class Settings:
 
     # Set a setting value
     def set_value(self, setting, value):
-        
+
         value = '' if value is None else value
         value = str(value) if type(value) is types.ListType else value
         log.debug("Settings: setting '%s'='%s'" % (setting, value))
@@ -212,7 +212,7 @@ class Settings:
 
     # Save weather info in cache for specific location
     def save_weather(self, weather, location_code):
-              
+
         record = {
             "label"    : weather.get_temperature(needs_rounding=True),
             "condition": weather.get_condition_label(),
@@ -269,7 +269,7 @@ class Settings:
             self.db.set_string(self.LOCATIONS_KEY, locations_string)
         except:
             pass
-            
+
 class MetricSystem:
     """ Class with available metric systems units """
     SI = 1
@@ -335,7 +335,7 @@ class Location:
             lat = self.convert_coordinate_for_google(geonames_details[2])
             lon = self.convert_coordinate_for_google(geonames_details[3])
             self.location_details['google id'] = ",,,%s,%s" % (lat, lon)
-        
+
         except Exception, e:
             log.error(e)
 
@@ -459,7 +459,7 @@ class Forecast:
     def convert_coordinate_for_google(self, value):
        value = float(value) * 1e6
        return int(round(value))
-       
+
     # Get and store forecast data. For now using Google only
     def prepare_forecast_data(self):
         self.daysofweek = []
@@ -642,7 +642,7 @@ class Weather:
             self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
             # Get data in original locale for condition name
             self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
-            
+
             if 'current_conditions' not in self.__report.keys():
                 log.error("Weather: could not get Google weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
@@ -652,7 +652,7 @@ class Weather:
                 log.error("Weather: could not get Google weather condition from localized report")
                 log.error("Weather: got data '%s'" % str(self.__localized_report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
-            
+
             if 'icon' in self.__report['current_conditions'].keys():
                 icon_path = self.__report['current_conditions']['icon']
                 if '/ig/images/weather/' in icon_path:
@@ -665,7 +665,7 @@ class Weather:
                 log.error("Weather: could not get weather icon from report")
                 log.error("Weather: got data '%s'" % str(self.__report['current_conditions']))
                 icon_name = ""
-                
+
             self.__current_condition = self._GoogleConditions.get(icon_name)
             if self.__current_condition == None:
                 log.error("ExtendedForecast: unknown Google weather condition '%s'" % icon_name)
@@ -679,17 +679,17 @@ class Weather:
                 log.error("Weather: could not get Yahoo weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
-                
+
             elif 'code' in self.__report['condition'].keys():
                 icon_name = self.__report['condition']['code']
                 self.__current_condition = self._YahooConditions.get(icon_name)
-                
+
             else:
                 icon_name = ""
                 log.error("Weather: could not get icon name from Yahoo report")
                 log.error("Weather: got data '%s'" % str(self.__report['condition']))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
-                
+
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
         #Prepare sunrise/sunset data
         self.get_sun_data()
@@ -719,7 +719,7 @@ class Weather:
         except urllib2.URLError:
             log.error("Weather: error reaching url '%s'" % url)
             return
-        
+
         # Grab sunrise/sunset from earthtools.org
         url = 'http://www.earthtools.org/sun/%s/%s/%s/%s/99/%s' % \
             (self.__lat, self.__lon, localtime.day, localtime.month, dst)
@@ -867,7 +867,7 @@ class Weather:
             wind_direction = "%s (%s˚)" % (self.get_wind_direction(self.__localized_report['wind']['direction']), self.__localized_report['wind']['direction'])
             wind_speed = self.__localized_report['wind']['speed']
             wind_units = self.__localized_report['units']['speed']
-            localized_wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units] 
+            localized_wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
 
         # Parse Wind_direction - convert to selected scale
         if (self._wind_unit == WindUnits.MPH):
@@ -909,7 +909,7 @@ class Weather:
             degrees = int(degrees)
         except ValueError:
             return ''
-    
+
         if degrees < 23 or degrees >= 338:
             #Short wind direction - north
             return _('N')
@@ -995,7 +995,7 @@ class indicator_weather(threading.Thread):
         log.debug("Indicator: reading settings")
         self.settings = Settings()
         self.settings.check_autostart()
-        self.settings.prepare_settings_store()      
+        self.settings.prepare_settings_store()
         self.rate  = self.settings.get_value("refresh_rate")
         self.unit  = self.settings.get_value("unit")
         self.notif = self.settings.get_value("notif")
@@ -1117,43 +1117,43 @@ class indicator_weather(threading.Thread):
     def menu_normal(self):
         log.debug("Indicator: menu_normal: filling in a menu for found places")
         self.menu = gtk.Menu()
-            
+
     ##City
         self.city_show = gtk.MenuItem()
         self.city_show.set_sensitive(True)
         self.menu.append(self.city_show)
         self.city_show.show()
-        
+
     ##Condition
         self.cond_show = gtk.MenuItem()
         self.cond_show.set_sensitive(True)
         self.cond_show.show()
         self.menu.append(self.cond_show)
-        
-    ##Temperature        
+
+    ##Temperature
         self.temp_show = gtk.MenuItem()
         self.temp_show.set_sensitive(True)
         self.temp_show.show()
         self.menu.append(self.temp_show)
 
-    ##Humidex        
+    ##Humidex
         self.humidex_show = gtk.MenuItem()
         self.humidex_show.set_sensitive(True)
         self.humidex_show.show()
         self.menu.append(self.humidex_show)
-        
+
     ##Humidity
         self.humid_show = gtk.MenuItem()
         self.humid_show.set_sensitive(True)
         self.humid_show.show()
         self.menu.append(self.humid_show)
-        
+
     ##Wind
         self.wind_show = gtk.MenuItem()
         self.wind_show.set_sensitive(True)
         self.wind_show.show()
         self.menu.append(self.wind_show)
-                
+
     ##Sunrise
         self.sunrise_show = gtk.MenuItem()
         self.sunrise_show.set_sensitive(True)
@@ -1165,7 +1165,7 @@ class indicator_weather(threading.Thread):
         self.sunset_show.set_sensitive(True)
         self.sunset_show.show()
         self.menu.append(self.sunset_show)
-        
+
     ##Cities
         if len(self.places) != 1:
             ##Breaker
@@ -1188,7 +1188,7 @@ class indicator_weather(threading.Thread):
                 loco.connect("toggled", self.on_city_changed)
                 loco.show()
                 self.menu.append(loco)
-        
+
     ##Breaker
         breaker = gtk.SeparatorMenuItem()
         breaker.show()
@@ -1199,19 +1199,19 @@ class indicator_weather(threading.Thread):
         self.refresh_show.connect("activate", self.update_weather)
         self.refresh_show.show()
         self.menu.append(self.refresh_show)
-        
+
         ext_show = gtk.MenuItem(_("Forecast"))
         ext_show.connect("activate", self.extforecast)
         ext_show.show()
         self.menu.append(ext_show)
 
-    ##Preferences      
+    ##Preferences
         prefs_show = gtk.MenuItem(_("Preferences..."))
         prefs_show.connect("activate", self.prefs)
         prefs_show.show()
         self.menu.append(prefs_show)
 
-    ##About      
+    ##About
         about_show = gtk.MenuItem(_("About..."))
         about_show.connect("activate", self.about)
         about_show.show()
@@ -1350,7 +1350,7 @@ class indicator_weather(threading.Thread):
                 self.sunset_show.set_label(cached_weather['sunset'])
                 self.update_label(cached_weather['label'])
                 self.winder.set_status(appindicator.STATUS_ATTENTION)
-                self.winder.set_status(appindicator.STATUS_ACTIVE)           
+                self.winder.set_status(appindicator.STATUS_ACTIVE)
 
         except Exception, e:
             log.error(e)
@@ -1360,7 +1360,7 @@ class indicator_weather(threading.Thread):
 
     # Get fresh weather data
     def get_new_weather_data(self, notif = True):
-        
+
         # get weather and catch any exception
         weather = None
         try:
@@ -1380,7 +1380,7 @@ class indicator_weather(threading.Thread):
             log.debug("Indicator: updateWeather: waiting for 'Cacher' thread to terminate")
             self.menu_update_lock.acquire(True)
             self.menu_update_lock.release()
-                
+
             if weather is None:
                 # remove the "Refreshing" status
                 self.set_refresh_label()
@@ -1446,15 +1446,15 @@ class indicator_weather(threading.Thread):
 
     # Get current weather for selected location
     def get_weather(self):
-        log.debug("Indicator: getWeather for location '%s'" % self.location_details['full name'])  
+        log.debug("Indicator: getWeather for location '%s'" % self.location_details['full name'])
         self.current_location = Location(self.metric_system, self.wind_unit, self.location_details)
-        log.debug("Indicator: getWeather: updating weather report")  
+        log.debug("Indicator: getWeather: updating weather report")
         self.current_location.update_weather_data(self.weather_source)
         return self.current_location.weather
 
     # Show notification to user
     def notify(self,conditon,icon,severe=False):
-        log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, self.condition, icon))  
+        log.debug("Indicator: Notify on weather condition, severe=%s, condition=%s, icon=%s" % (severe, self.condition, icon))
         if severe:
 			n = pynotify.Notification (_("Severe weather alert"),
                 self.condition,
@@ -1472,7 +1472,7 @@ class indicator_weather(threading.Thread):
             self.prefswindow.show()
 
     def about(self, widget):
-        log.debug("Indicator: open About dialog")  
+        log.debug("Indicator: open About dialog")
         self.aboutdialog = gtk.AboutDialog()
         self.aboutdialog.set_name(_("Weather Indicator"))
         self.aboutdialog.set_version(VERSION)
@@ -1495,9 +1495,9 @@ class indicator_weather(threading.Thread):
         self.aboutdialog.show()
 
     def about_close(self, widget, event=None):
-        log.debug("Indicator: closing About dialog")  
+        log.debug("Indicator: closing About dialog")
         self.aboutdialog.destroy()
-    
+
     # Open Extended forecast window
     def extforecast(self, widget):
         log.debug("Indicator: open Forecast")
@@ -1547,10 +1547,10 @@ class PreferencesDialog(gtk.Dialog):
                     newplace.append(place[1])
                     newplace.append(place[0])
                     newplace.append(wi.settings.get_location_details(place[0]))
-            
+
                     self.builder.get_object('citieslist').append(newplace)
                     self.builder.get_object('ok_button').set_sensitive(True)
-            
+
         self.builder.connect_signals(self)
 
     # 'Remove' clicked - remove location from list
@@ -1643,7 +1643,7 @@ class PreferencesDialog(gtk.Dialog):
             wi.rate = int(self.builder.get_object('rate').get_value())
             log.debug("Preferences: Rate changed to '%s'" % wi.rate)
             wi.schedule_weather_update()
-            
+
         # Get places from location list
         newplaces = list()
         item = self.builder.get_object('citieslist').get_iter_first()
@@ -1676,14 +1676,14 @@ class PreferencesDialog(gtk.Dialog):
 
         if need_to_update_indicator:
             wi.update_label(wi.previous_label_value)
-        
+
         self.destroy()
 
     # 'Cancel' click - forget all changes
     def cancel(self, widget, data=None):
         log.debug("Preferences: Cancelling")
         self.destroy()
-        
+
 class ExtendedForecast(gtk.Window):
     """ Class for forecast window """
     __gtype_name__ = "ExtendedForecast"
@@ -1756,7 +1756,7 @@ class ExtendedForecast(gtk.Window):
                 else:
                     condition = _("Unknown condition")
                 self.builder.get_object('day%scond' % str(i)).set_label(condition)
-                
+
             # Fill in High and Low temperatures
             if wi.metric_system == MetricSystem.SI:
                 tempunit = '°C'
@@ -1785,7 +1785,7 @@ class Assistant(gtk.Assistant):
         log.debug("Assistant: creating new Assistance instance")
         builder = get_builder('Assistant')
         new_object = builder.get_object("assistant")
-        new_object.finish_initializing(builder)  
+        new_object.finish_initializing(builder)
         return new_object
 
     # Finish UI initialization - prepare combobox
@@ -1869,7 +1869,7 @@ class Assistant(gtk.Assistant):
             self.builder.get_object("lbl3").set_label(_('Label:'))
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)
             self.builder.get_object("placelbl").set_label('<b>%s</b>' % self.place_selected[0])
-            
+
         return self.assistant.get_current_page() + 1
 
     # 'Cancel' clicked
@@ -1918,7 +1918,7 @@ class SingleInstance(object):
                 shutil.copy(temp_path, pidPath)
                 os.unlink(temp_path)
             except Exception as e:
-                log.error("SingleInstance: exception while renaming '%s' to '%s':\n %s" % (temp_path, pidPath, str(e)))  
+                log.error("SingleInstance: exception while renaming '%s' to '%s':\n %s" % (temp_path, pidPath, str(e)))
 
     def is_already_running(self):
         return self.lasterror
@@ -1962,7 +1962,7 @@ if __name__ == "__main__":
     ProxyMonitor.monitor_proxy(log)
     # Use date-time format as in indicator-datetime
     TimeFormatter.monitor_indicator_datetime(log)
-        
+
     # not running, safe to continue...
     gtk.gdk.threads_init()
     gtk.gdk.threads_enter()
