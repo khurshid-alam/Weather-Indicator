@@ -869,27 +869,36 @@ class Weather:
             wind_units = self.__localized_report['units']['speed']
             localized_wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
 
+
+        try:
+            _value = float(wind_speed)
+        except ValueError as e:
+            log.error("Could not parse '%s' as wind speed." % str(wind_speed))
+            _value = -1.0
+            
         # Parse Wind_direction - convert to selected scale
         if (self._wind_unit == WindUnits.MPH):
-            _value = float(wind_speed)
             _unit  = __("mph", "mph", _value)
         if (self._wind_unit == WindUnits.MPS):
-            _value = float(wind_speed) * 0.44704
+            _value *= 0.44704
             _unit  = __("m/s", "m/s", _value)
         if (self._wind_unit == WindUnits.BEAUFORT):
-            _value = self.get_beaufort_from_mph(float(wind_speed))
+            if _value >= 0.0:
+                _value = self.get_beaufort_from_mph(_value)
             _unit  = ""
         if (self._wind_unit == WindUnits.KPH):
-            _value = float(wind_speed) * 1.609344
+            _value *= 1.609344
             _unit  = __("km/h", "km/h", _value)
         if (self._wind_unit == WindUnits.KNOTS):
-            _value = float(wind_speed) * 0.868976241900648
+            _value *= 0.868976241900648
             _unit  = __("knot", "knots", _value)
-
+               
         # Join wind_info data in a label
         localized_wind_info[len(localized_wind_info)-1] = _unit
         localized_wind_info[len(localized_wind_info)-2] = \
             NumberFormatter.format_float(_value, 1)
+        if _value < 0.0:
+            localized_wind_info[1:] = ["", "N\A", ""]
         return "%s %s %s %s" % (localized_wind_info[0], localized_wind_info[1], \
             localized_wind_info[2], localized_wind_info[3])
 
@@ -1035,7 +1044,7 @@ class indicator_weather(threading.Thread):
         # Wind units
         if self.wind in (False, None):
             default_value = 'mph'
-            log.debug("Indicator: could not parse notif, setting to %s" % default_value)
+            log.debug("Indicator: could not parse wind, setting to %s" % default_value)
             self.settings.set_value("wind", default_value)
             self.wind = default_value
         self.wind_unit = self.wind_systems[self.wind][1]
