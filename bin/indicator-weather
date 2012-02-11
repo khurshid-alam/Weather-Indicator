@@ -560,6 +560,7 @@ class Weather:
         "heavysnow"        : ( "weather-snow",       "weather-snow",             False),
         "icy"              : ( "weather-snow",       "weather-snow",             False),
         "snowflurries"     : ( "weather-snow",       "weather-snow",             False),
+        "flurries"         : ( "weather-snow",       "weather-snow",             False),
         "dust"             : ( "weather-fog",        "weather-fog",              False),
         "fog"              : ( "weather-fog",        "weather-fog",              False),
         "smoke"            : ( "weather-fog",        "weather-fog",              False),
