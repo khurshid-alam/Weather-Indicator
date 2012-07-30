@@ -245,6 +245,8 @@ class TimeFormatter:
     @staticmethod
     def format_time(t):
         """ do the format """
+        if not t:
+            return "Unknown"
         return t.strftime(TimeFormatter.format)
 
     @staticmethod
