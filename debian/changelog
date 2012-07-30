@@ -1,3 +1,8 @@
+indicator-weather (12.07.30~precise1) precise; urgency=low
+  * Skip sunset and sunrise check as Earthtools.org is down (LP: #964365)
+
+ -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 30 Jul 2012 07:01:51 +0300
+
 indicator-weather (11.11.28~precise2) precise; urgency=low
   * Don't write too much debug info in the log (LP: #917253)
 
