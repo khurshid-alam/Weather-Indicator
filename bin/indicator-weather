@@ -4,6 +4,7 @@
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
 # Copyright (C) 2011 Vadim Rutkovsky roignac@gmail.com
+# Copyright (C) 2013 Joshua Tasker jtasker@gmail.com
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
@@ -55,7 +56,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "12.07.30 'Cloudy 10'"
+VERSION = "13.03.08 'Cloudy 11'"
 
 from indicator_weather.helpers import *
 
@@ -364,7 +365,7 @@ class Location:
             s=f.read()
             null = None
             yahoo_woeid_result = eval(s)
-            if (yahoo_woeid_result['ResultSet']['Error'] != 0) and  (yahoo_woeid_result['ResultSet']['Results'] != None):
+            if (yahoo_woeid_result['ResultSet']['Error'] != '0') and (yahoo_woeid_result['ResultSet']['Results'] != None):
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
                 return
             else:
@@ -400,7 +401,7 @@ class Location:
         except Exception, e:
             log.error(e)
 
-    # Return lcoation code and location details
+    # Return location code and location details
     def export_location_details(self):
         return (self.location_code, self.location_details)
 
@@ -448,38 +449,36 @@ class Location:
 class Forecast:
     """ Class to get forecast information """
 
-    # Initialize a class with metric system, wind units, location and current user locale
-    def __init__ (self, units, lat, lon, locale):
+    # Initialize a class with metric system, wind units, location code and current user locale
+    def __init__ (self, units, location_id, locale):
         self.metric_system = units
-        self.lat = self.convert_coordinate_for_google(lat)
-        self.lon = self.convert_coordinate_for_google(lon)
+        self.location_id = location_id
         self.locale = locale
 
-    # Convert coordinate for google
-    def convert_coordinate_for_google(self, value):
-       value = float(value) * 1e6
-       return int(round(value))
-
-    # Get and store forecast data. For now using Google only
+    # Get and store forecast data. Now using Yahoo only
     def prepare_forecast_data(self):
         self.daysofweek = []
         self.icons = []
         self.conditions = []
         self.error_message = None
         try:
-            # Generate a fake location by current coordinates
-            location_name = ",,,%s,%s" % (self.lat, self.lon)
-            self.forecast = pywapi.get_weather_from_google (location_name, hl = self.locale)
-            self.unitsystem = self.forecast['forecast_information']['unit_system']
+            # Check units, default to imperial
+            if self.metric_system == MetricSystem.SI:
+                self.unitsystem = 'c'
+            elif self.metric_system == MetricSystem.IMPERIAL:
+                self.unitsystem = 'f'
+            else:
+                self.unitsystem = 'f'
+            
+            self.forecast = pywapi.get_weather_from_yahoo (self.location_id, self.unitsystem)
 
             for forecast in self.forecast['forecasts']:
-                self.daysofweek.append(forecast["day_of_week"])
-                forecast_icon = str(forecast["icon"])
-                if "/ig/images/weather/" in forecast_icon:
-                    self.icons.append(forecast_icon.split("/ig/images/weather/")[-1].split(".gif")[0])
-                elif "http://g0.gstatic.com/images/icons/onebox" in forecast_icon:
-                    self.icons.append(forecast_icon.split("http://g0.gstatic.com/images/icons/onebox/weather_")[-1].split("-40.gif")[0])
-                self.conditions.append(forecast["condition"])
+                self.daysofweek.append(forecast["day"])
+
+                # Yahoo forecast icon URL is "http://l.yimg.com/a/i/us/we/52/<code>.gif"
+                self.icons.append(forecast["code"])
+                self.conditions.append(forecast["text"])
+                
             self.error_message = None
 
         except urllib2.URLError:
@@ -493,27 +492,11 @@ class Forecast:
         self.highdata = []
         self.lowdata = []
 
-        if not hasattr(self, 'unitsystem'):
-            return None
-
-        if ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.SI)) or ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.IMPERIAL)):
-            #correct scale selected
-            for forecast in self.forecast['forecasts']:
+        # Since we are now using Yahoo, forecast will always be in correct units
+        for forecast in self.forecast['forecasts']:
                 self.highdata.append(forecast["high"])
                 self.lowdata.append(forecast["low"])
-
-        elif ((self.unitsystem == 'SI') and (self.metric_system == MetricSystem.IMPERIAL)):
-            #convert from SI to imperial
-            for forecast in self.forecast['forecasts']:
-                self.highdata.append(int(((int(forecast["high"])*9)/5)+32))
-                self.lowdata.append(int(((int(forecast["low"])*9)/5)+32))
-
-        elif ((self.unitsystem == 'US') and (self.metric_system == MetricSystem.SI)):
-            #convert from imperial to SI
-            for forecast in self.forecast['forecasts']:
-                self.highdata.append(int((((int(forecast["high"]))-32)*5)/9))
-                self.lowdata.append(int((((int(forecast["low"]))-32)*5)/9))
-
+                
         return (self.highdata, self.lowdata)
 
     # Parse a list of days of week with forecast data
@@ -530,7 +513,7 @@ class Forecast:
 
 class Weather:
     """
-    Data object to parse weather data with unit convertion
+    Data object to parse weather data with unit conversion
     """
 
     #Available conditions by google icon
@@ -1714,9 +1697,9 @@ class ExtendedForecast(gtk.Window):
 
         # Get forecast data using Forecast object
         log.debug("ExtendedForecast: chosen place: %s (code %s)" % (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
-        self.builder.get_object('extended_forecast').set_title("%s %s" % (_('Weather Forecast for '), wi.places[wi.placechosen][1]))
+        self.builder.get_object('extended_forecast').set_title("%s %s" % (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
-        forecast = Forecast(wi.metric_system, wi.current_location.location_details['latitude'], wi.current_location.location_details['longitude'], locale_name)
+        forecast = Forecast(wi.metric_system, wi.current_location.location_details['yahoo id'], locale_name)
         forecast.prepare_forecast_data()
         if forecast.error_message != None:
             #Error occurred while getting forecast data
@@ -1745,18 +1728,18 @@ class ExtendedForecast(gtk.Window):
 
             # Fill in icons
             for i in xrange(1,5):
-                # Get icon name from dictionary in Weather object for Google icons
+                # Get icon name from dictionary in Weather object for Yahoo condition codes
                 try:
-                    conds = Weather._GoogleConditions.get(icons[i-1])
+                    conds = Weather._YahooConditions.get(icons[i-1])
                     if conds != None:
-                        google_icon = conds[0]
+                        yahoo_icon = conds[0]
                     else:
-                        log.error("ExtendedForecast: unknown Google weather condition '%s'" % icons[i-1])
+                        log.error("ExtendedForecast: unknown Yahoo weather condition code '%s'" % icons[i-1])
                         log.error(forecast.forecast)
-                        google_icon = 'weather-indicator-unknown'
-                    self.builder.get_object('day%simage' % str(i)).set_from_icon_name(google_icon,gtk.ICON_SIZE_BUTTON)
+                        yahoo_icon = 'weather-indicator-unknown'
+                    self.builder.get_object('day%simage' % str(i)).set_from_icon_name(yahoo_icon,gtk.ICON_SIZE_BUTTON)
                 except IndexError:
-                     log.error("ExtendedForecast: Google didn't return condition for %s days" % i-1)
+                     log.error("ExtendedForecast: Yahoo didn't return condition for %s days" % i-1)
                      log.error(forecast.forecast)
 
             # Fill in condition labels
