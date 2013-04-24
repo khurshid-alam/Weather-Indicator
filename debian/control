@@ -1,26 +1,34 @@
 Source: indicator-weather
 Section: python
 Priority: extra
-Build-Depends: cdbs (>= 0.4.90-1~),
- debhelper (>= 6),
- python (>= 2.6.6-3~),
- gobject-introspection,
- python-distutils-extra (>= 2.10)
-Maintainer: Vadim Rutkovsky <roignac@gmail.com>
-Standards-Version: 3.8.3
+Build-Depends: debhelper (>= 7.0.50~),
+               gobject-introspection,
+               python (>= 2.6.6-3~),
+               python-distutils-extra (>= 2.10)
+X-Python-Version: >= 2.6
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Standards-Version: 3.9.3
+Homepage: https://launchpad.net/weather-indicator
 
 Package: indicator-weather
 Architecture: all
-Depends: ${misc:Depends},
- ${python:Depends},
- libglib2.0-bin,
- python-appindicator,
- python-notify,
- python-gobject,
- python-gtk2,
- python-gconf,
- python-pywapi
+Depends: gir1.2-glib-2.0,
+         gnome-icon-theme,
+         libglib2.0-bin,
+         libgtk2.0-bin,
+         python-appindicator,
+         python-gconf,
+         python-gobject,
+         python-gtk2,
+         python-notify,
+         python-pywapi (>= 0.3),
+         xdg-utils,
+         ${misc:Depends},
+         ${python:Depends}
 Recommends: python-apport
-Description: A weather indicator for Ubuntu's Indicator Applet
- A weather indicator that displays information for one or multiple places
- in the world
+Description: indicator that displays weather information
+ Indicator-Weather displays information for one or multiple places
+ in the world. Current weather status is displayed directly on your
+ panel and detailed forecasts are no more than a click away.
+ . 
+ It is implemented using the Indicator Applet API.

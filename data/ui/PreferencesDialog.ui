@@ -216,10 +216,10 @@
                             <child>
                               <object class="GtkRadioButton" id="google">
                                 <property name="label" translatable="yes">Google</property>
-                                <property name="visible">True</property>
+                                <property name="visible">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
-                                <property name="active">True</property>
+                                <property name="active">False</property>
                                 <property name="draw_indicator">True</property>
                               </object>
                               <packing>
@@ -234,6 +234,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="active">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">google</property>
                               </object>

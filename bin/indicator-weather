@@ -56,7 +56,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.03.08 'Cloudy 11'"
+VERSION = "12.07.30 'Cloudy 10'"
 
 from indicator_weather.helpers import *
 
@@ -357,19 +357,32 @@ class Location:
                 return
 
             # Get YAHOO WOEID by english name of location
-            baseurl = 'http://where.yahooapis.com/geocode'
-            params = {'location': displayed_city_name, 'appid': 'mOawLd4s', 'flags': 'J'}
+
+            ## Intended for shutdown Nov 17 2012, finally disabled Feb 28 2013
+            ## baseurl = 'http://where.yahooapis.com/geocode'
+            ## params = {'location': displayed_city_name, 'appid': 'mOawLd4s', 'flags': 'J'}
+            ## url = '?'.join((baseurl, urlencode(params)))
+
+            ## Replacement is to use YQL tables to directly query Yahoo's database, e.g.                        
+            ## http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20geo.placefinder%20where%20text%3D%22New%20York%2C%20New%20York%2C%20United%20States%22
+            baseurl = 'http://query.yahooapis.com/v1/public/yql'
+            params = {'q': 'select woeid from geo.placefinder where text=\"%s\"' % displayed_city_name, 'format': 'json'}
             url = '?'.join((baseurl, urlencode(params)))
             log.debug("Location: Get Yahoo WOEID, url %s" % url)
             f = urllib2.urlopen(url)
             s=f.read()
             null = None
             yahoo_woeid_result = eval(s)
-            if (yahoo_woeid_result['ResultSet']['Error'] != '0') and (yahoo_woeid_result['ResultSet']['Results'] != None):
+#            if (yahoo_woeid_result['ResultSet']['Error'] != '0') and (yahoo_woeid_result['ResultSet']['Results'] != None):
+#                log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
+#                return
+#            else:
+#                woeid = yahoo_woeid_result['ResultSet']['Results'][0]['woeid']
+            if (yahoo_woeid_result['query']['results']['Result'] == None):
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % str(yahoo_woeid_result))
                 return
             else:
-                woeid = yahoo_woeid_result['ResultSet']['Results'][0]['woeid']
+                woeid = yahoo_woeid_result['query']['results']['Result']['woeid']
                 self.location_code = woeid
                 log.debug("Location: woeid is %s" % woeid)
 

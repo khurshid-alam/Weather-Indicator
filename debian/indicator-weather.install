@@ -1,1 +1,2 @@
+AUTHORS /usr/share/doc/indicator-weather
 debian/source_indicator-weather.py usr/share/apport/package-hooks
