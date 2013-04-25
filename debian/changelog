@@ -1,3 +1,9 @@
+indicator-weather (12.07.30-0ubuntu1.1-ppa2.2) quantal; urgency=low
+
+  * One-line fix for outdated data sources
+
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 24 Apr 2013 20:39:42 +0500
+
 indicator-weather (12.07.30-0ubuntu1.1-ppa2.1) quantal; urgency=low
 
   * Updated package dependency on pywapi (>= 0.3)
