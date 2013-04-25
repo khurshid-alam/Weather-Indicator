@@ -425,7 +425,8 @@ class Location:
         loc_ids = {}
 
         SOURCES = {
-            WeatherDataSource.GOOGLE : ("google id", "Google"),
+            #WeatherDataSource.GOOGLE : ("google id", "Google"),
+            WeatherDataSource.GOOGLE : (None, "Google"),
             WeatherDataSource.YAHOO : ("yahoo id", "Yahoo"),
         }
 
@@ -633,40 +634,40 @@ class Weather:
         self.__lat = lat
         self.__lon = lon
 
-        # Get data from Google
-        if self.__weather_datasource == WeatherDataSource.GOOGLE:
-            # Get data in english locale, then - switch back
-            self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
-            # Get data in original locale for condition name
-            self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
+        ### Get data from Google
+        ##if self.__weather_datasource == WeatherDataSource.GOOGLE:            
+        ##    # Get data in english locale, then - switch back
+        ##    self.__report = pywapi.get_weather_from_google (location_id, hl = 'en')
+        ##    # Get data in original locale for condition name
+        ##    self.__localized_report = pywapi.get_weather_from_google (location_id, hl = locale_name)
 
-            if 'current_conditions' not in self.__report.keys():
-                log.error("Weather: could not get Google weather condition from report")
-                log.error("Weather: got data '%s'" % str(self.__report))
-                self.__current_condition = (False, False, False, _("Unknown condition"))
+        ##    if 'current_conditions' not in self.__report.keys():
+        ##        log.error("Weather: could not get Google weather condition from report")
+        ##        log.error("Weather: got data '%s'" % str(self.__report))
+        ##        self.__current_condition = (False, False, False, _("Unknown condition"))
 
-            if 'current_conditions' not in self.__localized_report.keys():
-                log.error("Weather: could not get Google weather condition from localized report")
-                log.error("Weather: got data '%s'" % str(self.__localized_report))
-                self.__current_condition = (False, False, False, _("Unknown condition"))
+        ##    if 'current_conditions' not in self.__localized_report.keys():
+        ##        log.error("Weather: could not get Google weather condition from localized report")
+        ##        log.error("Weather: got data '%s'" % str(self.__localized_report))
+        ##        self.__current_condition = (False, False, False, _("Unknown condition"))
 
-            if 'icon' in self.__report['current_conditions'].keys():
-                icon_path = self.__report['current_conditions']['icon']
-                if '/ig/images/weather/' in icon_path:
-                    icon_name = icon_path.replace('/ig/images/weather/', '').replace('.gif', '')
-                elif 'http://g0.gstatic.com/images/icons/onebox' in icon_path:
-                    icon_name = icon_path.replace('http://g0.gstatic.com/images/icons/onebox/weather_', '').replace('-40.gif', '')
-                else:
-                    icon_name = icon_path
-            else:
-                log.error("Weather: could not get weather icon from report")
-                log.error("Weather: got data '%s'" % str(self.__report['current_conditions']))
-                icon_name = ""
+        ##    if 'icon' in self.__report['current_conditions'].keys():
+        ##        icon_path = self.__report['current_conditions']['icon']
+        ##        if '/ig/images/weather/' in icon_path:
+        ##            icon_name = icon_path.replace('/ig/images/weather/', '').replace('.gif', '')
+        ##        elif 'http://g0.gstatic.com/images/icons/onebox' in icon_path:
+        ##            icon_name = icon_path.replace('http://g0.gstatic.com/images/icons/onebox/weather_', '').replace('-40.gif', '')
+        ##        else:
+        ##            icon_name = icon_path
+        ##    else:
+        ##        log.error("Weather: could not get weather icon from report")
+        ##        log.error("Weather: got data '%s'" % str(self.__report['current_conditions']))
+        ##        icon_name = ""
 
-            self.__current_condition = self._GoogleConditions.get(icon_name)
-            if self.__current_condition == None:
-                log.error("ExtendedForecast: unknown Google weather condition '%s'" % icon_name)
-                self.__current_condition = (False, False, False, _("Unknown condition"))
+        ##    self.__current_condition = self._GoogleConditions.get(icon_name)
+        ##    if self.__current_condition == None:
+        ##        log.error("ExtendedForecast: unknown Google weather condition '%s'" % icon_name)
+        ##        self.__current_condition = (False, False, False, _("Unknown condition"))
 
         # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
@@ -972,7 +973,7 @@ class indicator_weather(threading.Thread):
     metric_systems = { 'S': ('si',       MetricSystem.SI),
                        'I': ('imperial', MetricSystem.IMPERIAL)}
 
-    weather_sources = { 'G': ('google', WeatherDataSource.GOOGLE),
+    weather_sources = { 'G': ('google', None), #WeatherDataSource.GOOGLE),
                         'Y': ('yahoo',  WeatherDataSource.YAHOO)}
 
     notifications = {'N': 'nonotif',
