@@ -476,13 +476,14 @@ class Forecast:
         self.conditions = []
         self.error_message = None
         try:
+            log.debug("Forecast: units set to %s" % self.metric_system)
             # Check units, default to imperial
             if self.metric_system == MetricSystem.SI:
-                self.unitsystem = 'c'
+                self.unitsystem = 'metric'
             elif self.metric_system == MetricSystem.IMPERIAL:
-                self.unitsystem = 'f'
+                self.unitsystem = 'imperial'
             else:
-                self.unitsystem = 'f'
+                self.unitsystem = 'imperial'
             
             self.forecast = pywapi.get_weather_from_yahoo (self.location_id, self.unitsystem)
 
