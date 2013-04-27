@@ -1,3 +1,9 @@
+indicator-weather (12.07.30-0ubuntu1.1-ppa2.3) quantal; urgency=low
+
+  * Fix units in Forecast when metric is selected
+
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 27 Apr 2013 18:33:26 +0500
+
 indicator-weather (12.07.30-0ubuntu1.1-ppa2.2) quantal; urgency=low
 
   * One-line fix for outdated data sources
