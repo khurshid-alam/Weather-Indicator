@@ -675,6 +675,7 @@ class Weather:
             self.__report = pywapi.get_weather_from_yahoo (location_id, 'imperial')
             self.__localized_report = self.__report
             if 'condition' not in self.__report.keys():
+                icon_name = ""
                 log.error("Weather: could not get Yahoo weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
@@ -1549,7 +1550,7 @@ class PreferencesDialog(gtk.Dialog):
         log.debug("Preferences: Loading places")
         if wi.places != None:
             for place in wi.places:
-                if len(place)>1:
+                if len(place)>1 and place[0] is not None:
                     log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
                     newplace = list()
                     newplace.append(place[1])
