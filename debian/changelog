@@ -1,3 +1,14 @@
+indicator-weather (13.05.17-0ubuntu0-ppa1) quantal; urgency=low
+
+  * Ported to GTK3 and GObject from PyGTK
+  * Rewrite threading code to avoid dbus-related crashes (LP: #743541)
+  * Added "feels like" temperature (humidex/heat index/wind chill)
+  * New "Conditions" tab in Preferences dialog to choose temperature
+    formulas and toggle display of some condition information
+  * Bumped version number to reflect massive changes
+
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 18 May 2013 12:59:03 +0500
+
 indicator-weather (12.07.30-0ubuntu1.1-ppa2.4) quantal; urgency=low
 
   * Don't crash if Yahoo doesn't return conditions

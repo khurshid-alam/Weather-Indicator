@@ -6,6 +6,21 @@
       <summary>Display icon/label in the indicator</summary>
       <description>0 - display icon only, 1 - display label only, 2 - display both icon and text</description>
     </key>
+    <key type="b" name="relative-display">
+      <default>false</default>
+      <summary>Display relative temperature</summary>
+      <description>Display relative temperature</description>
+    </key>
+    <key type="b" name="wind-display">
+      <default>true</default>
+      <summary>Display wind speed and direction</summary>
+      <description>Display wind speed and direction</description>
+    </key>
+    <key type="b" name="suntimes-display">
+      <default>true</default>
+      <summary>Display sunrise and sunset times</summary>
+      <description>Display sunrise and sunset times</description>
+    </key>
     <key type="s" name="notifications">
       <default>'N'</default>
       <summary>Notifications</summary>
@@ -35,6 +50,16 @@
       <default>'mph'</default>
       <summary>wind unit</summary>
       <description>wind unit</description>
+    </key>
+    <key type="s" name="heat-estimate">
+      <default>'humidex'</default>
+      <summary>heat estimate formula</summary>
+      <description>heat estimate formula</description>
+    </key>
+    <key type="s" name="chill-estimate">
+      <default>'windchill'</default>
+      <summary>chill estimate formula</summary>
+      <description>chill estimate formula</description>
     </key>
     <key type="b" name="show-forecast">
       <default>true</default>

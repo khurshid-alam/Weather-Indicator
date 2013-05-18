@@ -6,6 +6,8 @@ Source: https://launchpad.net/weather-indicator/+download
 Files: *
 Copyright: 2010, Mehdi Rejraji <mehd36@gmail.com>
            2010, Sebastian MacDonald <Sebas310@gmail.com>
+           2011, Vadim Rutkovsky <roignac@gmail.com>
+           2013, Joshua Tasker <jtasker@gmail.com>
 License: GPL-3
 
 Files: debian/*

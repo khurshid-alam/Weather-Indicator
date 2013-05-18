@@ -28,7 +28,7 @@ __all__ = [
 
 # Where your project will look for your data (for instance, images and ui
 # files). By default, this is ../data, relative your trunk layout
-__indicator_weather_data_directory__ = '../data'
+__indicator_weather_data_directory__ = '/usr/share/indicator-weather'
 __license__ = 'GPL-3'
 
 import os
@@ -62,7 +62,7 @@ def get_data_path():
     # Get pathname absolute or relative.
     path = os.path.join(
         os.path.dirname(__file__), __indicator_weather_data_directory__)
-
+    
     abs_data_path = os.path.abspath(path)
     if not os.path.exists(abs_data_path):
         raise project_path_not_found

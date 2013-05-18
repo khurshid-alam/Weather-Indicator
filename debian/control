@@ -13,15 +13,14 @@ Homepage: https://launchpad.net/weather-indicator
 Package: indicator-weather
 Architecture: all
 Depends: gir1.2-glib-2.0,
+         gir1.2-gtk-3.0,
+         gir1.2-appindicator3-0.1
          gnome-icon-theme,
          libglib2.0-bin,
-         libgtk2.0-bin,
-         python-appindicator,
+         libgtk-3-bin,
          python-gconf,
-         python-gobject,
-         python-gtk2,
-         python-notify,
-         python-pywapi (>= 0.3),
+         python-gi,
+         python-pywapi (>= 0.3.1),
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}

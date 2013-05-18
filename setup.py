@@ -4,6 +4,7 @@
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
 # Copyright (C) 2011 Vadim Rutkovsky roignac@gmail.com
+# Copyright (C) 2013 Joshua Tasker jtasker@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -85,10 +86,10 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='indicator-weather',
-    version='11.05.31',
+    version='13.05.17',
     license='GPL-3',
-    author='Vadim Rutkovsky | Sebastian MacDonald | Mehdi Rejraji',
-    author_email='roignac@gmail.com',
+    author='Joshua Tasker | Vadim Rutkovsky | Sebastian MacDonald | Mehdi Rejraji',
+    author_email='jtasker@gmail.com, roignac@gmail.com',
     description="A weather indicator for Ubuntu's Indicator Applet",
     long_description='A weather indicator that displays information for one or multiple places in the world',
     url='https://launchpad.net/weather-indicator',
