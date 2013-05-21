@@ -1,3 +1,9 @@
+indicator-weather (13.05.17-0ubuntu0-ppa1.1) quantal; urgency=low
+
+  * Corrected missing comma in debian/control file
+
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 20 May 2013 19:06:43 +0500
+
 indicator-weather (13.05.17-0ubuntu0-ppa1) quantal; urgency=low
 
   * Ported to GTK3 and GObject from PyGTK
