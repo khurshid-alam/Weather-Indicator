@@ -1,3 +1,10 @@
+indicator-weather (13.05.22-0ubuntu0-ppa1) quantal; urgency=low
+
+  * Fix for 4-day Forecast display (LP: #1182324)
+  * 'OK' button in Preferences Dialog is now more responsive
+
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 22 May 2013 00:32:54 +0500
+
 indicator-weather (13.05.17-0ubuntu0-ppa1.1) quantal; urgency=low
 
   * Corrected missing comma in debian/control file
