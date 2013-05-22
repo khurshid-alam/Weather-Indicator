@@ -31,10 +31,10 @@ try:
 except ImportError:
     DCONF_SCHEMAS = []
 
-import gconf
+from gi.repository import GConf
 import traceback
 import os
-import gtk
+from gi.repository import Gtk
 import urllib2
 import locale
 import re
@@ -47,7 +47,7 @@ from gettext import gettext as _
 gettext.textdomain('indicator-weather')
 
 def get_builder(builder_file_name):
-    """Return a fully-instantiated gtk.Builder instance from specified ui
+    """Return a fully-instantiated Gtk.Builder instance from specified ui
     file
 
     :param builder_file_name: The name of the builder file, without extension.
@@ -58,7 +58,7 @@ def get_builder(builder_file_name):
     if not os.path.exists(ui_filename):
         ui_filename = None
 
-    builder = gtk.Builder()
+    builder = Gtk.Builder()
     builder.set_translation_domain('indicator-weather')
     builder.add_from_file(ui_filename)
     return builder
@@ -101,10 +101,10 @@ class ProxyMonitor:
                 proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
             else:
                 # load gconf settings
-                client = gconf.client_get_default()
-                client.add_dir("/system/http_proxy", gconf.CLIENT_PRELOAD_ONELEVEL)
+                client = GConf.Client.get_default()
+                client.add_dir("/system/http_proxy", GConf.ClientPreloadType.PRELOAD_ONELEVEL)
                 ProxyMonitor.gconf_proxy_changed(client)
-                client.notify_add("/system/http_proxy", ProxyMonitor.gconf_proxy_changed)
+                client.notify_add("/system/http_proxy", ProxyMonitor.gconf_proxy_changed, None)
 
         except Exception, e:
             log.error("ProxyMonitor: %s" % e)
@@ -113,7 +113,7 @@ class ProxyMonitor:
     @staticmethod
     def dconf_proxy_changed(settings, changed_key=None):
         """
-        Loads dconf hhtp proxy settings
+        Loads dconf http proxy settings
         """
         try:
             ProxyMonitor.log.debug("ProxyMonitor: loading dconf settings")
@@ -135,7 +135,7 @@ class ProxyMonitor:
     @staticmethod
     def gconf_proxy_changed(client, cnxn_id=None, entry=None, data=None):
         """
-        Loads gconf hhtp proxy settings
+        Loads gconf http proxy settings
         """
         try:
             ProxyMonitor.log.debug("ProxyMonitor: loading gconf settings")

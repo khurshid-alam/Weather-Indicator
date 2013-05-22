@@ -1,19 +1,18 @@
 #!/bin/sh
-	
+
+set -e
+
 #DEBHELPER#
+
 echo "Installing indicator-specific icons..."
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon.png weather-indicator
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_unknown_condition.png weather-indicator-unknown
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_connection_error.png weather-indicator-error
 
-#installing dconf schema
-echo "Installing indicator dconf schema..."
-cp /usr/share/indicator-weather/indicator-weather.gschema.xml /usr/share/glib-2.0/schemas
-glib-compile-schemas /usr/share/glib-2.0/schemas
-
 #quick fix for incomplete icon themes
 echo "Fixing incomplete weather icons..."
-if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
+if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ] && \
+    [ !  -L "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
     ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
     ln -s /usr/share/icons/gnome/22x22/status/weather-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
     
