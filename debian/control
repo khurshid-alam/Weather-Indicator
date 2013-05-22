@@ -20,7 +20,7 @@ Depends: gir1.2-glib-2.0,
          libgtk-3-bin,
          python-gconf,
          python-gi,
-         python-pywapi (>= 0.3.22
+         python-pywapi (>= 0.3.2
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}
