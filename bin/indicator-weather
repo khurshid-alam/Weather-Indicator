@@ -53,7 +53,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.05.26 'Rainy'"
+VERSION = "13.05.17 'Rainy'"
 
 from indicator_weather.helpers import *
 
