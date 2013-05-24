@@ -18,9 +18,9 @@ Depends: gir1.2-glib-2.0,
          gnome-icon-theme,
          libglib2.0-bin,
          libgtk-3-bin,
-         python-gconf,
+         gir1.2-gconf-2.0,
          python-gi,
-         python-pywapi (>= 0.3.2
+         python-pywapi (>= 0.3.2),
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}

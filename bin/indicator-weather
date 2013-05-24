@@ -53,7 +53,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.05.17 'Rainy'"
+VERSION = "13.05.25 'Rainy 2'"
 
 from indicator_weather.helpers import *
 
@@ -456,7 +456,7 @@ class Location:
                 return
     
             # Get Weather.com Location ID by English name of location
-            locid_result = pywapi.get_location_ids(displayed_city_name)            
+            locid_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)            
             if locid_result.has_key('error'):
                 log.error("Location: Weather.com locid return error. Full response:\n %s" % locid_result['error'])
                 return
@@ -496,21 +496,21 @@ class Location:
             valid_source = source
             log.debug(("Location: default weather source '%s' " +
                        "chosen for '%s'") % (SOURCES[valid_source][1],
-                                             self.location_details['label']))
+                       self.location_details['label']))
 
         # try with the first alternative
         elif len(loc_ids.keys()):
             valid_source = loc_ids.keys()[0]
+            log.debug(("Location: non default weather source '%s' " +
+                       "chosen for '%s'") % (SOURCES[valid_source][1],
+                       self.location_details['label']))
 
         if valid_source is None:
             log.error(("Location: no valid weather source can be " +
                        "chosen for '%s'") % (
-                           self.location_details['label']))
+                       self.location_details['label']))
             self.weather = None
         else:
-            log.debug(("Location: non default weather source '%s' " +
-                       "chosen for '%s'") % (SOURCES[valid_source][1],
-                                             self.location_details['label']))
             self.weather = Weather(
                 self.location_details[loc_ids[valid_source]],
                 valid_source, self.metric_system, self.wind_unit,
@@ -1071,9 +1071,10 @@ class Weather:
           T_a is the air temperature °F
           V is the wind speed in mph
 
-        Windchill temperature is defined only for temperatures at or
-        below 10 °C (50 °F) and wind speeds above 4.8 kilometres per
-        hour (3.0 mph).
+        Windchill temperature is defined only for temperatures above
+        -45 °C (-50 °F) and below 10 °C (50 °F) and wind speeds
+        above 4.8 km/h (3.0 mph). Bright sunshine may increase the
+        wind chill temperature by 6 to 10 °C (10 to 18 °F). 
 
         """
         #TODO: Update with NOAA data
@@ -1089,25 +1090,28 @@ class Weather:
                       "Yahoo, checking temp and humidity")
             T_a = float(self.__report['condition']['temp'])
             V = float(self.__report['wind']['speed'])
-            
+            if T_a <= -50 or T_a >= 50 or V <= 3.0:
+                return (_value, "")
+                
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
             log.debug("Weather: get_wind_chill: weather_datasource is "
                       "Weather.com, checking temp and humidity")
             T_a = float(self.__report['current_conditions']['temperature'])
             wind_speed = self.__report['current_conditions']['wind']['speed']
             V = (0.0 if wind_speed == 'calm' else float(wind_speed))
+            if T_a <= -45 or T_a >= 10 or V <= 4.8:
+                return (_value, "")
         
-        # move below to pywapi
         if units == 'metric':
             _value = 13.12 + 0.6215 * T_a - 11.37 * pow(V, 0.16) + 0.3965 * T_a * pow(V, 0.16)
             return (int(round(_value)), u"°C")
         elif units == 'imperial':
             _value = 35.74 + 0.6215 * T_a - 35.75 * pow(V, 0.16) + 0.4275 * T_a * pow(V, 0.16)
             return (int(round(_value)), u"°F")
-            
+
         if _value is None:
             return (_value, "")
-        
+                    
     def get_apparent_temp(self):
         """ Calculate Australian apparent temperature and get text string for label
 
@@ -1316,6 +1320,8 @@ class indicator_weather(threading.Thread):
         self.chill = self.settings.get_value("chill")
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
+#TODO: HANDLE UNICODE ON LINE BELOW PROPERLY!!!
+        log.debug("self.places = %s" % str(self.settings.get_value("places")))      #DEBUG
         self.places = str(self.settings.get_value("places"))
         self.show_label = self.settings.get_value("show_label")
         self.show_relative = self.settings.get_value("show_relative")
@@ -1355,7 +1361,7 @@ class indicator_weather(threading.Thread):
             self.settings.set_value("notif", default_value)
             self.notif = default_value
         Notify.init("weather-indicator")    
-
+        
         # Wind units
         if self.wind in (False, None):
             default_value = 'mph'
@@ -1738,7 +1744,9 @@ class indicator_weather(threading.Thread):
             self.previous_condition = cached_weather['condition']
             self.cond_show.set_label(cached_weather['condition'])
             self.temp_show.set_label(cached_weather['temper'])
-            if (self.show_relative and cached_weather['feelslike'] != None):
+            # workaround for old cached data without 'feelslike' entry
+            if (self.show_relative and cached_weather.has_key('feelslike') and
+                                       cached_weather['feelslike'] != None):
                 self.relative_show.set_visible(True)
                 self.relative_show.set_label(cached_weather['feelslike'])
             else:
@@ -1793,19 +1801,18 @@ class indicator_weather(threading.Thread):
                 return
             
             # Fill in menu with data
-            log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
             self.condition = weather.get_condition_label()
             self.icon = weather.get_icon_name()
-            log.debug("Indicator: fill in menu with params: " \
-                      "city='%s', temp='%s', humid='%s', " \
-                      "wind='%s', sunrise='%s', sunset='%s', " \
-                      "puretemp=%s" % (self.places[self.placechosen][1],
-                                       weather.get_temperature_label(),
-                                       weather.get_humidity_label(),
-                                       weather.get_wind_label(),
-                                       weather.get_sunrise_label(),
-                                       weather.get_sunset_label(),
-                                       weather.get_temperature_string()))
+            log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
+            log.debug(
+                u"Indicator: fill in menu with params: " \
+                u"city='%s', temp='%s', humid='%s', wind='%s', " \
+                u"sunrise='%s', sunset='%s', puretemp=%s" % 
+                (unicode(self.places[self.placechosen][1].decode('utf-8')),
+                weather.get_temperature_label(), weather.get_humidity_label(),
+                weather.get_wind_label(), weather.get_sunrise_label(),
+                weather.get_sunset_label(), weather.get_temperature_string())
+                )
             self.menu_normal()
             self.update_refresh_label(0)
             self.city_show.set_label(self.places[self.placechosen][1])
@@ -1845,16 +1852,18 @@ class indicator_weather(threading.Thread):
             self.update_label(weather.get_temperature_string())
     
             # Notify user, if notifications are enabled
-            if self.condition != self.previous_condition and self.notif == 'U':
-                # Weather condition has changed
-                log.debug("Indicator: updateWeather: weather has changed, notify")
-                self.notify(self.condition, self.icon)
-            if self.notif == 'S' and weather.condition_is_severe():
-                # Severe weather condition notification
-                log.debug("Indicator: updateWeather: severe condition notification")
-                self.notify(self.condition, self.icon, severe=True)
-            # Save the current condition to track changes for notifications
-            self.previous_condition = self.condition
+            if self.condition != self.previous_condition:
+                if weather.condition_is_severe() and \
+                   (self.notif == 'O' or self.notif == 'A') :
+                    # Severe weather condition notification
+                    log.debug("Indicator: updateWeather: severe condition notification")
+                    self.notify(self.condition, self.icon, severe=True)
+                elif self.notif == 'A':
+                    # Weather condition has changed
+                    log.debug("Indicator: updateWeather: weather has changed, notify")
+                    self.notify(self.condition, self.icon)
+                # Save the current condition to track changes for notifications
+                self.previous_condition = self.condition
         except Exception, e:
             log.error(e)
             log.debug(traceback.format_exc(e))
@@ -1900,17 +1909,17 @@ class indicator_weather(threading.Thread):
         self.current_location.update_weather_data(self.weather_source)
         return self.current_location.weather
 
-    def notify(self,condition,icon,severe=False):
+    def notify(self, condition, icon, severe=False):
         """ Show notification to user according to preferences """
         log.debug("Indicator: Notify on weather condition, severe=%s, "
                   "condition=%s, icon=%s" % (severe, condition, icon))
         if severe:
-            n = Notify.Notification (_("Severe weather alert"),
+            n = Notify.Notification.new(_("Severe weather alert"),
                                        condition,
                                        icon)
         else:
-            n = Notify.Notification (condition, "", icon)
-        n.show ()
+            n = Notify.Notification.new(condition, "", icon)
+        n.show()
 
     def prefs(self, widget):
         """ Menu callback to open Preferences dialog """
@@ -2045,8 +2054,6 @@ class PreferencesDialog(Gtk.Dialog):
 
     def ok(self, widget, data=None):
         """ 'OK' clicked - save settings """
-        #TODO: rewrite this - for better response to user clicks,
-        #   it should first copy values to a queue, then destroy the window
         log.debug("Preferences: Saving settings")
         need_to_update_weather = False
         need_to_update_indicator = False
@@ -2072,7 +2079,7 @@ class PreferencesDialog(Gtk.Dialog):
         new_show_wind = self.builder.get_object('show_wind').get_active()
         if (wi.show_wind != new_show_wind):
             wi.show_wind = new_show_wind
-            wi.settings.set_value("show_relative", new_show_wind)
+            wi.settings.set_value("show_wind", new_show_wind)
             need_to_update_weather = True
             log.debug("PreferencesDialog: Show Wind Data changed to %s" % wi.show_wind)
         

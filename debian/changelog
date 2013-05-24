@@ -1,19 +1,31 @@
-indicator-weather (13.05.17-quantal2) quantal; urgency=low
+indicator-weather (13.05.25~quantal1) quantal; urgency=low
+
+  * Notifications for weather conditions work again (LP: #1044249)
+  * Unicode characters in place names now decoded correctly (LP: #793050)
+  * Better handling of cached data lacking a "feelslike" entry
+  * Fixed "show_wind" toggle not saving state of show/hide setting
+  * Don't calculate Wind Chill when temperature/windspeed is out of range
+  * debian/control: update gconf dependency to gir1.2-gconf-2.0 (LP: #1182790)
+
+ -- Joshua Tasker <jtasker@gmail.com>  Thu, 23 May 2013 21:55:07 -0400
+
+indicator-weather (13.05.17~quantal2) quantal; urgency=low
 
   * Fix for 4-day Forecast display (LP: #1182324)
   * 'OK' button in Preferences Dialog is now more responsive
 
- -- Joshua Tasker <jtasker@gmail.com>  Wed, 22 May 2013 00:32:54 +0500
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 22 May 2013 00:32:54 -0400
 
 indicator-weather (13.05.17~quantal1) quantal; urgency=low
 
   * Ported to GTK3 and GObject from PyGTK
   * Rewrite threading code to avoid dbus-related crashes (LP: #743541)
   * Added "feels like" temperature (humidex/heat index/wind chill)
-  * New "Conditions" tab in Preferences dialog, choose temperature formulas, toggle display of conditions
+  * New "Conditions" tab in Preferences dialog: choose formulas for
+    relative temperatures, toggle display of some weather conditions
   * Bumped version number to reflect massive changes
 
- -- Joshua Tasker <jtasker@gmail.com>  Sat, 18 May 2013 12:59:03 +0500
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 18 May 2013 12:59:03 -0400
 
 indicator-weather (12.07.30~quantal2) quantal; urgency=low
 
@@ -22,7 +34,7 @@ indicator-weather (12.07.30~quantal2) quantal; urgency=low
   * Fix units in Forecast when metric is selected
   * One-line fix for outdated data sources
 
- -- Joshua Tasker <jtasker@gmail.com>  Sat, 04 May 2013 01:20:38 +0500
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 04 May 2013 01:20:38 -0400
 
 indicator-weather (12.07.30~quantal1) quantal; urgency=low
 
@@ -31,7 +43,7 @@ indicator-weather (12.07.30~quantal1) quantal; urgency=low
   * Bump dependency for python-pywapi to 0.3
   * Hide Google radio button on Preferences UI
 
- -- Joshua Tasker <jtasker@gmail.com>  Tue, 09 Apr 2013 02:27:04 +0500
+ -- Joshua Tasker <jtasker@gmail.com>  Tue, 09 Apr 2013 02:27:04 -0400
 
 indicator-weather (12.07.30~precise1) precise; urgency=low
   * Skip sunset and sunrise check as Earthtools.org is down (LP: #964365)
