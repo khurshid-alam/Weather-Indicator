@@ -46,6 +46,13 @@ import gettext
 from gettext import gettext as _
 gettext.textdomain('indicator-weather')
 
+def utf8(var):
+    """Converts a string to utf8. Accepts unicode or str as input"""
+    try:
+        return unicode(var, 'utf-8')
+    except TypeError:
+        return var
+
 def get_builder(builder_file_name):
     """Return a fully-instantiated Gtk.Builder instance from specified ui
     file
@@ -65,7 +72,7 @@ def get_builder(builder_file_name):
 
 def monitor_upower(sleep_handler, resume_handler, log):
     """
-    Attemts to connect to UPower interface
+    Attempts to connect to UPower interface
     """
     # http://upower.freedesktop.org/docs/UPower.html
     try:

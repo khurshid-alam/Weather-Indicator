@@ -39,6 +39,8 @@ import logging, logging.handlers
 import pywapi
 import Queue
 
+from indicator_weather.helpers import utf8
+
 import gettext
 from gettext import gettext as _
 from gettext import ngettext as __
@@ -893,7 +895,7 @@ class Weather:
                (self.__metric_system == UnitSystem.IMPERIAL and
                     self.__report['units']['temperature' ] == u"F")):
                 _value = self.__report['current_conditions']['temperature']
-                _unit = u"°%s" % self.__report['units']['temperature']
+                _unit = u"°%s" % utf8(self.__report['units']['temperature'])
         if (self.__weather_datasource == WeatherDataSource.YAHOO and
             'temp' in self.__report['condition'].keys() and
             'temperature' in self.__report['units'].keys()):
@@ -902,7 +904,7 @@ class Weather:
                (self.__metric_system == UnitSystem.IMPERIAL and
                     self.__report['units']['temperature'] == u"F")):
                 _value = self.__report['condition']['temp']
-                _unit = u"°%s" % self.__report['units']['temperature']                
+                _unit = u"°%s" % utf8(self.__report['units']['temperature'])
 ##        # round the value if required
 ##        if needs_rounding and _value != "---":
 ##            _value = NumberFormatter.format_float(locale.atof(_value), 0)
@@ -1320,7 +1322,7 @@ class indicator_weather(threading.Thread):
         self.chill = self.settings.get_value("chill")
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
-        self.places = str(self.settings.get_value("places"))
+        self.places = utf8(self.settings.get_value("places"))
         self.show_label = self.settings.get_value("show_label")
         self.show_relative = self.settings.get_value("show_relative")
         self.show_wind = self.settings.get_value("show_wind")
@@ -1806,10 +1808,11 @@ class indicator_weather(threading.Thread):
                 u"Indicator: fill in menu with params: " \
                 u"city='%s', temp='%s', humid='%s', wind='%s', " \
                 u"sunrise='%s', sunset='%s', puretemp=%s" % 
-                (unicode(self.places[self.placechosen][1].decode('utf-8')),
+                (utf8(self.places[self.placechosen][1]),
                 weather.get_temperature_label(), weather.get_humidity_label(),
                 weather.get_wind_label(), weather.get_sunrise_label(),
-                weather.get_sunset_label(), weather.get_temperature_string())
+                weather.get_sunset_label(),
+                utf8(weather.get_temperature_string()))
                 )
             self.menu_normal()
             self.update_refresh_label(0)
@@ -2035,7 +2038,7 @@ class PreferencesDialog(Gtk.Dialog):
             if newplaces != wi.places:                
                 wi.places = newplaces
                 log.debug("Preferences: update settings object")
-                wi.settings.set_value("places", str(wi.places))
+                wi.settings.set_value("places", utf8(wi.places))
            
             model.remove(iter)
             wi.places_changed = True
@@ -2186,8 +2189,8 @@ class PreferencesDialog(Gtk.Dialog):
 ##        if newplaces != wi.places:
 ##            wi.places = newplaces
         if wi.places_changed:
-            log.debug("Preferences: Places changed to '%s'" % str(wi.places))
-            wi.settings.set_value("places", str(wi.places))
+            log.debug("Preferences: Places changed to '%s'" % utf8(wi.places))
+            wi.settings.set_value("places", utf8(wi.places))
             if (type(wi.place) != None) and (wi.place in wi.places):
                 wi.placechosen = wi.places.index(wi.place)
             else:

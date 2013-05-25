@@ -1,3 +1,9 @@
+indicator-weather (13.05.25~quantal2) quantal; urgency=low
+
+  * Fix handling of Unicode characters again (LP: #1183688)
+
+ -- Joshua Tasker <jtasker@gmail.com>  Sat, 25 May 2013 14:17:01 -0400
+
 indicator-weather (13.05.25~quantal1) quantal; urgency=low
 
   * Notifications for weather conditions work again (LP: #1044249)
