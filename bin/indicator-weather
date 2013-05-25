@@ -918,7 +918,7 @@ class Weather:
 
     def get_temperature_label(self):
         """ Get text string for current temperature label """
-        return "%s: %s" % (_("Temperature"), self.get_temperature_string())
+        return u"%s: %s" % (_("Temperature"), self.get_temperature_string())
 
     def get_relative_string(self):
         """ Get relative temperature with units value - doesn't include 'Feels Like' string """        
@@ -1320,8 +1320,6 @@ class indicator_weather(threading.Thread):
         self.chill = self.settings.get_value("chill")
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
-#TODO: HANDLE UNICODE ON LINE BELOW PROPERLY!!!
-        log.debug("self.places = %s" % str(self.settings.get_value("places")))      #DEBUG
         self.places = str(self.settings.get_value("places"))
         self.show_label = self.settings.get_value("show_label")
         self.show_relative = self.settings.get_value("show_relative")
@@ -1465,7 +1463,7 @@ class indicator_weather(threading.Thread):
     def update_label(self, label):
         """ Set the label of the indicator """
         if (hasattr(self.winder, 'set_label')):
-            log.debug("Indicator: update_label: setting label to '%s'" % label)
+            log.debug(u"Indicator: update_label: setting label to '%s'" % label)
             self.previous_label_value = label
             self.status_update_lock.acquire(True)
             self.winder.set_label(label, self.label_guide) if self.show_label else self.winder.set_label(" ", " ")
@@ -1803,7 +1801,7 @@ class indicator_weather(threading.Thread):
             # Fill in menu with data
             self.condition = weather.get_condition_label()
             self.icon = weather.get_icon_name()
-            log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
+            log.debug(u"Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
             log.debug(
                 u"Indicator: fill in menu with params: " \
                 u"city='%s', temp='%s', humid='%s', wind='%s', " \
