@@ -1,3 +1,9 @@
+indicator-weather (13.05.25~quantal3) quantal; urgency=low
+
+  * Actually fix handling of Unicode characters in Sunset/Sunrise strings 
+
+ -- Joshua Tasker <jtasker@gmail.com>  Sun, 26 May 2013 15:29:55 -0400
+
 indicator-weather (13.05.25~quantal2) quantal; urgency=low
 
   * Fix handling of Unicode characters again (LP: #1183688)

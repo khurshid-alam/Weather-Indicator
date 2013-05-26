@@ -404,7 +404,7 @@ class Location:
 
             # Get YAHOO WOEID by english name of location
             woeid_result = pywapi.get_woeid_from_yahoo(displayed_city_name)            
-            if woeid_result.has_key('error'):
+            if 'error' in woeid_result:
                 log.error("Location: Yahoo woeid return error. Full response:\n %s" % woeid_result['error'])
                 return
             else:
@@ -459,7 +459,7 @@ class Location:
     
             # Get Weather.com Location ID by English name of location
             locid_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)            
-            if locid_result.has_key('error'):
+            if 'error' in locid_result:
                 log.error("Location: Weather.com locid return error. Full response:\n %s" % locid_result['error'])
                 return
             else:
@@ -895,7 +895,7 @@ class Weather:
                (self.__metric_system == UnitSystem.IMPERIAL and
                     self.__report['units']['temperature' ] == u"F")):
                 _value = self.__report['current_conditions']['temperature']
-                _unit = u"°%s" % utf8(self.__report['units']['temperature'])
+                _unit = u"°%s" % self.__report['units']['temperature']
         if (self.__weather_datasource == WeatherDataSource.YAHOO and
             'temp' in self.__report['condition'].keys() and
             'temperature' in self.__report['units'].keys()):
@@ -904,7 +904,7 @@ class Weather:
                (self.__metric_system == UnitSystem.IMPERIAL and
                     self.__report['units']['temperature'] == u"F")):
                 _value = self.__report['condition']['temp']
-                _unit = u"°%s" % utf8(self.__report['units']['temperature'])
+                _unit = u"°%s" % self.__report['units']['temperature']
 ##        # round the value if required
 ##        if needs_rounding and _value != "---":
 ##            _value = NumberFormatter.format_float(locale.atof(_value), 0)
@@ -1254,11 +1254,11 @@ class Weather:
 
     def get_sunrise_label(self):
         """ Get text string for sunrise time """
-        return "%s: %s" % (_("Sunrise"), TimeFormatter.format_time(self.__sunrise_t))
+        return "%s: %s" % (utf8(_("Sunrise")), TimeFormatter.format_time(self.__sunrise_t))
 
     def get_sunset_label(self):
         """ Get text string for sunset time """
-        return "%s: %s" % (_("Sunset"), TimeFormatter.format_time(self.__sunset_t))
+        return "%s: %s" % (utf8(_("Sunset")), TimeFormatter.format_time(self.__sunset_t))
 
 
 class indicator_weather(threading.Thread):
@@ -1745,7 +1745,7 @@ class indicator_weather(threading.Thread):
             self.cond_show.set_label(cached_weather['condition'])
             self.temp_show.set_label(cached_weather['temper'])
             # workaround for old cached data without 'feelslike' entry
-            if (self.show_relative and cached_weather.has_key('feelslike') and
+            if (self.show_relative and 'feelslike' in cached_weather and
                                        cached_weather['feelslike'] != None):
                 self.relative_show.set_visible(True)
                 self.relative_show.set_label(cached_weather['feelslike'])
@@ -1812,7 +1812,7 @@ class indicator_weather(threading.Thread):
                 weather.get_temperature_label(), weather.get_humidity_label(),
                 weather.get_wind_label(), weather.get_sunrise_label(),
                 weather.get_sunset_label(),
-                utf8(weather.get_temperature_string()))
+                weather.get_temperature_string())
                 )
             self.menu_normal()
             self.update_refresh_label(0)
@@ -1890,13 +1890,13 @@ class indicator_weather(threading.Thread):
         # Update the menu with the cached weather
         cache_thread.join()
         cached_weather = self.queue.get()
-        if cached_weather is not None and cached_weather.has_key('cached_weather'):
+        if cached_weather is not None and 'cached_weather' in cached_weather:
             self.show_cached_weather(cached_weather['cached_weather'])        
 
         # Update the menu with the new weather
         fetcher_thread.join()
         weather = self.queue.get()
-        if weather is not None and weather.has_key('weather'):
+        if weather is not None and 'weather' in weather:
             self.show_new_weather_data(weather['weather'])
 
     def get_weather(self):
