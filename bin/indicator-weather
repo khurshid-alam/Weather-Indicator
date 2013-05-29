@@ -1717,7 +1717,7 @@ class indicator_weather(threading.Thread):
     def get_cached_weather(self, queue):
         """ Load weather data from cache and put it onto the queue """
         try:
-            log.debug("Indicator: show_cached_weather: setting "
+            log.debug("Indicator: get_cached_weather: setting "
                       "previous_condition to None")
             self.previous_condition = None
             cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
@@ -2258,7 +2258,7 @@ class ExtendedForecast(Gtk.Window):
                             locale_name)
         forecast.prepare_forecast_data()
         if forecast.error_message != None:
-            #Error occurred while getting forecast data
+            # Error occurred while getting forecast data
             self.builder.get_object('connection_error').set_text("%s" %
                                                     forecast.error_message)
             self.builder.get_object('connection_error').set_visible(True)
@@ -2407,6 +2407,7 @@ class Assistant(Gtk.Assistant):
 
     def on_select_city(self, entry):
         """ A city is selected from suggested list """
+        log.debug("Assistant: on_select city")      #DEBUG
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
             self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
@@ -2431,8 +2432,27 @@ class Assistant(Gtk.Assistant):
                 # Set a short city name as default label
                 self.builder.get_object("entrylbl").set_text(self.place_selected[4])
             else:
-                log.error("Assistant: Page %s: City with code %s was NOT "
-                          "found" % (current_page, self.place_selected[0]))
+                # Error occurred while getting location data
+                log.error("Assistant: Page %s: City %s with code %s was NOT "
+                          "found" % (current_page, self.place_selected[0],
+                                     self.place_selected[1]))
+                log.debug("Assistant: Creating Error dialog")       #DEBUG
+                md = Gtk.MessageDialog(
+                    self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                    Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                    "%s '%s'" % (_("Could not find location id for"),
+                               (self.place_selected[0])))
+                md.format_secondary_text(
+                    "Unknown error occurred while picking up location data. "
+                    "Please try again later.")
+                md.run()
+                log.debug("Assistant: Error dialog closed")     #DEBUG
+                self.location_entry.set_text('')
+                self.place_selected = None
+                self.location = None
+                self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
+                md.destroy()
+                
                 return 3
         elif self.assistant.get_current_page() == 1:
             # Confirmation page
@@ -2445,6 +2465,8 @@ class Assistant(Gtk.Assistant):
                           "lbl to short name - %s" % 
                           (current_page, self.place_selected[4]))
                 lbl = self.place_selected[4]
+                self.builder.get_object("entrylbl").set_text(lbl)
+            # Update summary page
             self.location.location_details['label'] = lbl
             self.builder.get_object("lbl3").set_label(_('Label:'))
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)

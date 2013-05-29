@@ -2,6 +2,7 @@ indicator-weather (13.05.26) quantal; urgency=low
 
   * Don't crash when expected cache data cannot be found (LP: #1184802)
   * New versioning scheme, now conforms to semver.org guidelines
+  * Error handling for unable to connect when adding cities (LP: #1185187)
 
  -- Joshua Tasker <jtasker@gmail.com>  Tue, 28 May 2013 19:58:32 -0400
 
