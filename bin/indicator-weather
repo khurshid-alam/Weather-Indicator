@@ -458,9 +458,14 @@ class Location:
                 return
     
             # Get Weather.com Location ID by English name of location
-            locid_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)            
+            locid_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)
             if 'error' in locid_result:
                 log.error("Location: Weather.com locid return error. Full response:\n %s" % locid_result['error'])
+                return
+            elif locid_result['count'] == 0:
+                # no matches returned
+                log.debug("Location: Weather.com returned 0 results "
+                          "for %s" % displayed_city_name)
                 return
             else:
                 # only look at the the first locid result
@@ -1728,6 +1733,12 @@ class indicator_weather(threading.Thread):
 
     def show_cached_weather(self, cached_weather):
         """ Update the indicator icon, label and menu with cached weather data """
+        if cached_weather is None:
+            # No cached weather exists
+            log.debug("Indicator: show_cached_weather: no cached data exists "
+                      "for %s" % self.location_details[0])
+            return
+        
         try:
             self.menu_normal()
             self.set_refresh_label(True)
