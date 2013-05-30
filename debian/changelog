@@ -1,11 +1,13 @@
 indicator-weather (13.05.26) quantal; urgency=low
 
+  * Update .pot file with latest strings for translation
+  * Fix Unicode encoding issues for translated strings (LP: #1184962)
   * Use setup.py to install and remove autostart file (LP: #1026575)
   * Don't crash when expected cache data cannot be found (LP: #1184802)
   * New versioning scheme, now conforms to semver.org guidelines
   * Error handling for unable to connect when adding cities (LP: #1185187)
 
- -- Joshua Tasker <jtasker@gmail.com>  Tue, 28 May 2013 19:58:32 -0400
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 29 May 2013 22:51:39 -0400
 
 indicator-weather (13.05.25~quantal3) quantal; urgency=low
 

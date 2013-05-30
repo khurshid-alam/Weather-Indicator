@@ -149,33 +149,6 @@ class Settings:
             log.debug("Settings: exception occurred while "
                       "opening settings:\n %s" % str(e))
 
-##    def check_autostart(self):
-##        """ Make sure autostart file is installed. Inspired by GTG. """
-##        autostart_dir = os.path.join(os.path.expanduser("~"),
-##                                     ".config/autostart/")
-##        autostart_file = "indicator-weather.desktop"
-##        autostart_path = os.path.join(autostart_dir, autostart_file)
-##        if not os.path.isfile(autostart_path):
-##            #Look for the desktop file
-##            desktop_file_path = None
-##            desktop_file_directories = ["/usr/share/applications",
-##                                        "/usr/local/share/applications"]
-##            this_directory = os.path.dirname(os.path.abspath(__file__))
-##            for path in desktop_file_directories:
-##                fullpath = os.path.normpath(os.path.join(this_directory, path,
-##                                                         autostart_file))
-##                if os.path.isfile(fullpath):
-##                    desktop_file_path = fullpath
-##                    break
-##            # If we have found the desktop file, we make a link to in in
-##            # autostart_path.
-##            if desktop_file_path:
-##                if not os.path.exists(autostart_dir):
-##                    os.mkdir(autostart_dir)
-##                if os.path.isdir(autostart_dir):
-##                    log.debug("Installing autostart file.")
-##                    os.symlink(desktop_file_path, autostart_path)
-
     def get_value(self, setting, return_id = False):
         """ Get a value of the specified setting """
         log.debug("Settings: getting value for %s" % setting)
@@ -194,7 +167,6 @@ class Settings:
         except:
             log.debug("Settings: can't find value for %s" % setting)
             return None
-
     
     def set_value(self, setting, value):
         """ Set a value for the specified setting """
@@ -570,7 +542,7 @@ class Forecast:
             log.error("Forecast: error reading forecast for %s" % self.location_id)
         except KeyError:
             log.error("Forecast: returned empty forecast for %s" % self.location_id)
-            self.error_message = _('Unknown error occurred while picking up weather data')
+            self.error_message = utf8(_('Unknown error occurred while picking up weather data'))
 
     def get_forecast_data(self):
         """ Parse high and low values for forecast data """
@@ -842,20 +814,20 @@ class Weather:
     def get_condition_label(self):
         """ Get text of current condition """
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            condition = self.__report['current_conditions']['text']
+            condition = utf8(self.__report['current_conditions']['text'])
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            condition = self.__current_condition[3]
+            condition = utf8(self.__current_condition[3])
         return condition
 
     def get_humidity_label(self):
         """ Get text string for current humidity """
-        humidity = "%s: ---%%" % (_("Humidity"))
+        humidity = "%s: ---%%" % utf8(_("Humidity"))
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
            and 'humidity' in self.__report['current_conditions']:
-            humidity = "%s: %s%%" % (_("Humidity"), self.__report['current_conditions']['humidity'])
+            humidity = "%s: %s%%" % (utf8(_("Humidity")), self.__report['current_conditions']['humidity'])
         if self.__weather_datasource == WeatherDataSource.YAHOO \
            and 'humidity' in self.__report['atmosphere']:
-            humidity = "%s: %s%%" % (_("Humidity"), self.__report['atmosphere']['humidity'])
+            humidity = "%s: %s%%" % (utf8(_("Humidity")), self.__report['atmosphere']['humidity'])
         return humidity
 
     def get_dew_point_label(self):
@@ -869,7 +841,7 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
             _value = self.__report['current_conditions']['dewpoint']
             _unit = self.__report['units']['temperature']
-        return u"%s: %s °%s" % (_("Dewpoint"), _value, _unit)
+        return u"%s: %s °%s" % (utf8(_("Dewpoint")), _value, _unit)
 
     def get_pressure_label(self):
         """ Get text string for current air pressure """
@@ -885,7 +857,7 @@ class Weather:
            and 'pressure' in self.__report['units'].keys():
             _value = self.__report['atmosphere']['pressure']
             _unit = self.__report['units']['pressure']
-        return "%s: %s %s" % (_("Pressure"), _value, _unit)
+        return "%s: %s %s" % (utf8(_("Pressure")), _value, _unit)
 
 ##    def get_temperature(self, needs_rounding = False):
     def get_temperature(self):
@@ -925,7 +897,7 @@ class Weather:
 
     def get_temperature_label(self):
         """ Get text string for current temperature label """
-        return u"%s: %s" % (_("Temperature"), self.get_temperature_string())
+        return u"%s: %s" % (utf8(_("Temperature")), self.get_temperature_string())
 
     def get_relative_string(self):
         """ Get relative temperature with units value - doesn't include 'Feels Like' string """        
@@ -948,7 +920,7 @@ class Weather:
 
     def get_relative_label(self):
         """ Get text string for relative temperature ("feels like") label """
-        return "%s: %s" % (_("Feels Like"), self.get_relative_string())
+        return "%s: %s" % (utf8(_("Feels Like")), self.get_relative_string())
     
     def get_humidex(self):
         """ Calculate humidex and get value and units
@@ -1194,14 +1166,13 @@ class Weather:
             wind_units = self.__report['units']['speed']
             if wind_speed == "calm":
                 wind_speed = 0
-                ##wind_direction = wind_direction.replace("CALM","Calm")
-            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
+            wind_info = [utf8(_("Wind")) + ":", wind_direction, wind_speed, wind_units]
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             # Create a wind_info structure from Yahoo data
             wind_direction = u"%s (%s°)" % (_(pywapi.get_wind_direction(self.__report['wind']['direction'])), self.__report['wind']['direction'])
             wind_speed = self.__report['wind']['speed']
             wind_units = self.__report['units']['speed']
-            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
+            wind_info = [utf8(_("Wind")) + ":", wind_direction, wind_speed, wind_units]
 
         try:
             _value = float(wind_speed)
@@ -1251,9 +1222,9 @@ class Weather:
         wind_info[len(wind_info)-2] = \
             NumberFormatter.format_float(_value, 1)
         if _value < 0.0:
-            wind_info[1:] = ["", "N\A", ""]
+            wind_info[1:] = ["", utf8(_("N\A")), ""]
         if _value == 0.0:
-            wind_info[1:] = [_("Calm"), "", ""]
+            wind_info[1:] = [utf8(_("Calm")), "", ""]
         return "%s %s %s %s" % (wind_info[0], wind_info[1], \
                                 wind_info[2], wind_info[3])
 
@@ -1709,9 +1680,9 @@ class indicator_weather(threading.Thread):
         elif self.refreshed_minutes_ago < 0:
             refresh_label=_("Refresh")
         elif self.refreshed_minutes_ago == 0:
-            refresh_label="%s (%s)" % (_("Refresh"), _("just now"))
+            refresh_label="%s (%s)" % (utf8(_("Refresh")), utf8(_("just now")))
         else:
-            refresh_label = "%s (%s)" % (_("Refresh"), _("%d min. ago") % self.refreshed_minutes_ago)
+            refresh_label = "%s (%s)" % (utf8(_("Refresh")), utf8(_("%d min. ago") % self.refreshed_minutes_ago))
         self.refresh_show.set_label(refresh_label)
 
     def get_cached_weather(self, queue):
@@ -2186,19 +2157,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Rate changed to '%s'" % wi.rate)
             wi.schedule_weather_update()
 
-        # Get places from location list
-##        newplaces = list()
-##        item = self.builder.get_object('citieslist').get_iter_first()
-##        while (item != None):
-##            newplace = list()
-##            newplace.append(self.builder.get_object('citieslist').get_value (item, 1))
-##            newplace.append(self.builder.get_object('citieslist').get_value (item, 0))
-##            newplaces.append(newplace)
-##            item = self.builder.get_object('citieslist').iter_next(item)
-
         # If places have changed - update weather data
-##        if newplaces != wi.places:
-##            wi.places = newplaces
         if wi.places_changed:
             log.debug("Preferences: Places changed to '%s'" % utf8(wi.places))
             wi.settings.set_value("places", utf8(wi.places))
@@ -2210,13 +2169,10 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
             wi.location_details = eval(wi.settings.get_location_details(wi.place[0]))
-##            wi.menu_normal()
-##            wi.set_refresh_label()
             need_to_update_weather = True
             wi.places_changed = False
 
         if need_to_update_weather:
-####            wi.update_weather(False)
             wi.schedule_weather_update(0.003)
 
         if need_to_update_indicator:
@@ -2325,10 +2281,10 @@ class ExtendedForecast(Gtk.Window):
             else:
                 tempunit = u"°F"
             for i in xrange(1,5):
-                label = "%s: %s%s" % (_('High'), highdata[i],tempunit)
+                label = "%s: %s%s" % (utf8(_('High')), highdata[i],tempunit)
                 self.builder.get_object('day%stemphigh' % 
                                         str(i)).set_label(label)
-                label = "%s: %s%s" % (_('Low'), lowdata[i],tempunit)
+                label = "%s: %s%s" % (utf8(_('Low')), lowdata[i],tempunit)
                 self.builder.get_object('day%stemplow' % 
                                         str(i)).set_label(label)
 
