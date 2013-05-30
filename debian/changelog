@@ -1,5 +1,6 @@
 indicator-weather (13.05.26) quantal; urgency=low
 
+  * Use setup.py to install and remove autostart file (LP: #1026575)
   * Don't crash when expected cache data cannot be found (LP: #1184802)
   * New versioning scheme, now conforms to semver.org guidelines
   * Error handling for unable to connect when adding cities (LP: #1185187)

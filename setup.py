@@ -54,10 +54,26 @@ def update_data_path(prefix, oldvalue=None):
         sys.exit(1)
     return oldvalue
 
-
 def update_desktop_file(datadir):
     try:
         fin = file('indicator-weather.desktop.in', 'r')
+        fout = file(fin.name + '.new', 'w')
+
+        for line in fin:            
+            if 'Icon=' in line:
+                line = "Icon=%s\n" % (datadir + 'media/icon.png')
+            fout.write(line)
+        fout.flush()
+        fout.close()
+        fin.close()
+        os.rename(fout.name, fin.name)
+    except (OSError, IOError), e:
+        print ("ERROR: Can't find indicator-weather.desktop.in")
+        sys.exit(1)
+
+def update_autostart_file(datadir):
+    try:
+        fin = file('autostart/indicator-weather.desktop.in', 'r')
         fout = file(fin.name + '.new', 'w')
 
         for line in fin:            
@@ -77,6 +93,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
     def run(self):
         previous_value = update_data_path(self.prefix + '/share/indicator-weather/')
         update_desktop_file(self.prefix + '/share/indicator-weather/')
+        update_autostart_file(self.prefix + '/share/indicator-weather/')
         DistUtilsExtra.auto.install_auto.run(self)
         update_data_path(self.prefix, previous_value)
         
@@ -86,7 +103,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='indicator-weather',
-    version='13.05.17',
+    version='13.05.26',
     license='GPL-3',
     author='Joshua Tasker | Vadim Rutkovsky | Sebastian MacDonald | Mehdi Rejraji',
     author_email='jtasker@gmail.com, roignac@gmail.com',
