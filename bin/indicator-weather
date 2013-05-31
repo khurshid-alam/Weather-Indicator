@@ -374,12 +374,9 @@ class Location:
             json_response = handler.read().decode(charset).encode('utf-8')
         else:
             json_response = handler.read()
-        log.debug("Location: parsing json response") #DEBUG
         city = json.loads(json_response)
         handler.close()
 
-        log.debug(repr(city))       #DEBUG
-        log.debug("Location: assembling location name") #DEBUG
         if 'adminName1' in city:
             displayed_city_name = u', '.join((city['name'], city['adminName1'], city['countryName']))
         elif 'name' in city:
@@ -390,9 +387,7 @@ class Location:
         log.debug("Location name is %s" % displayed_city_name)
 
         # Get YAHOO WOEID by english name of location
-        log.debug("Location: getting woeid via pywapi")     #DEBUG
         woeid_result = pywapi.get_woeid_from_yahoo(displayed_city_name)
-        log.debug("Location: woeid_result is %s" % woeid_result)    #DEBUG
         if 'error' in woeid_result:
             log.error("Location: Yahoo woeid return error. Full response:\n %s" % woeid_result['error'])
             return
@@ -458,14 +453,9 @@ class Location:
             json_response = handler.read().decode(charset).encode('utf-8')
         else:
             json_response = handler.read()
-        log.debug("Location: raw json response:")    #DEBUG
-        log.debug(repr(json_response))      #DEBUG
         city = json.loads(json_response)
         handler.close()
 
-        log.debug("Location: parsed json response:")    #DEBUG
-        log.debug(repr(city))       #DEBUG
-        log.debug("Location: assembling location name") #DEBUG
         if 'adminName1' in city:
             displayed_city_name = ', '.join((city['name'], city['adminName1'], city['countryName']))
         elif 'name' in city:
@@ -473,11 +463,8 @@ class Location:
         else:
             log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
             return
-        log.debug(repr(displayed_city_name))        #DEBUG
-        log.debug(displayed_city_name)  #DEBUG
 
         # Get Weather.com Location ID by English name of location
-        log.debug("Location: getting loc_id via pywapi")     #DEBUG
         loc_id_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)
         if 'error' in loc_id_result:
             log.error("Location: Weather.com location id return error. Full response:\n %s" % loc_id_result['error'])
@@ -505,22 +492,15 @@ class Location:
         valid_source = None
         loc_ids = {}
 
-        log.debug("Location: update_weather_data: source=%s" % source)  #DEBUG
         SOURCES = {
             WeatherDataSource.WEATHER_COM : ("weather-com id", "Weather.com"),
             WeatherDataSource.YAHOO : ("yahoo id", "Yahoo")
         }
 
-        log.debug("Location: update_weather_data: "
-                  "self.location_details=%s" % self.location_details)   #DEBUG
-
         # gather existing source keys
         for source_id in SOURCES:
             if SOURCES[source_id][0] in self.location_details:
                 loc_ids[source_id] = SOURCES[source_id][0]
-
-        log.debug("Location: update_weather_data: after "
-                  "gathering, loc_id=%s" % loc_ids) #DEBUG
 
         # try with the default source
         if source in loc_ids:
@@ -742,8 +722,6 @@ class Weather:
                 
         # Get data from Weather.com
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            log.debug("Weather: calling pywapi.get_weather_from_weather_com("
-                "%s, %s)" % (location_id, unit_system)) #DEBUG
             self.__report = pywapi.get_weather_from_weather_com(
                                                     location_id, unit_system)
             ##self.__localized_report = self.__report
@@ -2417,12 +2395,9 @@ class Assistant(Gtk.Assistant):
                 json_response = handler.read().decode(charset).encode('utf-8')
             else:
                 json_response = handler.read()
-            log.debug("Assistant: parsing json response") #DEBUG
             cities = json.loads(json_response)
             handler.close()
 
-            log.debug(repr(cities))       #DEBUG
-            log.debug("Assistant: assembling location names") #DEBUG
             for city in cities['geonames']:
                 # Create a full city name, consisting of city name,
                 # administrative areas names and country name
@@ -2450,7 +2425,6 @@ class Assistant(Gtk.Assistant):
 
     def on_select_city(self, entry):
         """ A city is selected from suggested list """
-        log.debug("Assistant: entered on_select city")      #DEBUG
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
             self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
@@ -2479,7 +2453,6 @@ class Assistant(Gtk.Assistant):
                 log.error("Assistant: Page %s: City %s with code %s was NOT "
                           "found" % (current_page, self.place_selected[0],
                                      self.place_selected[1]))
-                log.debug("Assistant: Creating Error dialog")       #DEBUG
                 md = Gtk.MessageDialog(
                     self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
                     Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
@@ -2489,7 +2462,6 @@ class Assistant(Gtk.Assistant):
                     "Unknown error occurred while picking up location data. "
                     "Please try again later.")
                 md.run()
-                log.debug("Assistant: Error dialog closed")     #DEBUG
                 self.location_entry.set_text('')
                 self.place_selected = None
                 self.location = None
@@ -2525,9 +2497,7 @@ class Assistant(Gtk.Assistant):
 
     def on_apply(self,widget):
         """ 'Apply' clicked - save location details, add an entry in a location list """
-        log.debug(self.location.location_details['label'])  #DEBUG
         (location_code, location_details) = self.location.export_location_details()
-        log.debug(location_code)        #DEBUG
         log.debug("Assistant: Apply: adding location ('%s', '%s')" %
                   (self.location.location_details['label'].decode('utf-8'), location_code))
         newplace = list()

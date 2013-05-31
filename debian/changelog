@@ -1,6 +1,7 @@
 indicator-weather (13.05.27) quantal; urgency=low
 
-  * Use simplejson to parse GeoNames and YQL replies, thanks Sabin Iacob
+  * Use json to parse GeoNames and YQL replies, thanks Sabin Iacob
+  * Complete rewrite of Unicode handling, should fix all Unicode issues 
 
  -- Joshua Tasker <jtasker@gmail.com>  Thu, 30 May 2013 01:04:05 -0400
 
