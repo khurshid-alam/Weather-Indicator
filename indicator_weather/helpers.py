@@ -43,15 +43,7 @@ from dbus.mainloop.glib import DBusGMainLoop
 from indicator_weather.indicator_weatherconfig import get_data_file
 
 import gettext
-from gettext import gettext as _
-gettext.textdomain('indicator-weather')
-
-def utf8(var):
-    """Converts a string to utf8. Accepts unicode or str as input"""
-    try:
-        return unicode(var, 'utf-8')
-    except TypeError:
-        return var
+_ = gettext.translation('indicator-weather').ugettext
 
 def get_builder(builder_file_name):
     """Return a fully-instantiated Gtk.Builder instance from specified ui

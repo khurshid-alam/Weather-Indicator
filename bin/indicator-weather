@@ -29,7 +29,6 @@ import re
 import locale
 from xml.dom.minidom import parseString
 import datetime
-#import dbus
 import time
 import traceback
 import types
@@ -38,13 +37,11 @@ import commands, threading
 import logging, logging.handlers
 import pywapi
 import Queue
-
-from indicator_weather.helpers import utf8
+import json
 
 import gettext
-from gettext import gettext as _
-from gettext import ngettext as __
-gettext.textdomain('indicator-weather')
+_ = gettext.translation('indicator-weather').ugettext
+__ = gettext.translation('indicator-weather').ungettext
 
 # Add project root directory (enable symlink, and trunk execution).
 PROJECT_ROOT_DIRECTORY = os.path.abspath(
@@ -55,12 +52,13 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.05.26 'Rainy 3'"
+VERSION = "13.05.27 'Rainy 4'"
 
 from indicator_weather.helpers import *
 
 INFO_TYPE            = 'type'
 INFO_SETTING         = 'setting'
+
 
 class Settings:
     """ Class to read/write settings """
@@ -202,7 +200,7 @@ class Settings:
             cached_weather_string = self.db.get_string(self.WEATHER_KEY)
             cached_weather = {} if cached_weather_string == ''\
                 else eval(cached_weather_string)
-            if location_code in cached_weather.keys():
+            if location_code in cached_weather:
                 return str(cached_weather[location_code])
             else:
                 log.debug(\
@@ -251,7 +249,7 @@ class Settings:
             locations_string = self.db.get_string(self.LOCATIONS_KEY)
             locations = {} if locations_string == ''\
                 else eval(locations_string)
-            if location_code in locations.keys():
+            if location_code in locations:
                 return str(locations[location_code])
             else:
                 log.debug(
@@ -363,93 +361,140 @@ class Location:
         baseurl = 'http://api.geonames.org/getJSON'
         params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
         url = '?'.join((baseurl, urlencode(params)))
-        log.debug("Location: Get GeoNames location details, url %s" % url)
         try:
-            city = eval(urllib2.urlopen(url).read())
-            if 'adminName1' in city:
-                displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
-            elif 'name' in city:
-                displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
-            else:
-                log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
-                return
-
-            # Get YAHOO WOEID by english name of location
-            woeid_result = pywapi.get_woeid_from_yahoo(displayed_city_name)            
-            if 'error' in woeid_result:
-                log.error("Location: Yahoo woeid return error. Full response:\n %s" % woeid_result['error'])
-                return
-            else:
-                # only look at the the first woeid result
-                woeid = woeid_result[0][0]
-                self.location_code = woeid
-                log.debug("Location: woeid is %s" % woeid)
-
-                # Get old Yahoo id by woeid
-                url = 'http://weather.yahooapis.com/forecastrss?w=%s' % woeid
-                log.debug("Location: Get Yahoo RSS ID, url %s" % url)
-                f = urllib2.urlopen(url)
-                s=f.read()
-                parsed = parseString(s)
-                #TODO: Add a try-catch for empty guid_value
-                guid = parsed.getElementsByTagName("guid")
-                if len(guid) > 0:
-                    guid_value = guid[0].firstChild.nodeValue
-                    p = re.compile('([^_]*)_')
-                    m = p.match(guid_value)
-                    if m:
-                        self.location_details['yahoo id'] = m.group(1)
-                        log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
-                    else:
-                        log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
-                        return
-                else:
-                    log.error("Location: Can't guid in yahoo RSS response. Full response:\n %s" % s)
-                    return
-
+            log.debug("Location: Get GeoNames location details, url %s" % url)
+            handler = urllib2.urlopen(url)
         except urllib2.URLError:
             log.error("Location: error reaching url '%s'" % url)
+        content_type = handler.info().dict['content-type']
+        charset = re.search('charset\=(.*)',content_type).group(1)
+        if not charset:
+            charset = 'utf-8'
+        if charset.lower() != 'utf-8':
+            json_response = handler.read().decode(charset).encode('utf-8')
+        else:
+            json_response = handler.read()
+        log.debug("Location: parsing json response") #DEBUG
+        city = json.loads(json_response)
+        handler.close()
 
-        except Exception, e:
-            log.error(e)
+        log.debug(repr(city))       #DEBUG
+        log.debug("Location: assembling location name") #DEBUG
+        if 'adminName1' in city:
+            displayed_city_name = u', '.join((city['name'], city['adminName1'], city['countryName']))
+        elif 'name' in city:
+            displayed_city_name = u', '.join((city['name'], city['countryName']))
+        else:
+            log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], unicode(city)))
+            return
+        log.debug("Location name is %s" % displayed_city_name)
+
+        # Get YAHOO WOEID by english name of location
+        log.debug("Location: getting woeid via pywapi")     #DEBUG
+        woeid_result = pywapi.get_woeid_from_yahoo(displayed_city_name)
+        log.debug("Location: woeid_result is %s" % woeid_result)    #DEBUG
+        if 'error' in woeid_result:
+            log.error("Location: Yahoo woeid return error. Full response:\n %s" % woeid_result['error'])
+            return
+        else:
+            # only look at the the first woeid result
+            woeid = woeid_result[0][0]
+            self.location_code = woeid
+            log.debug("Location: woeid is %s" % woeid)
+
+        # Get old Yahoo id by woeid
+        url = 'http://weather.yahooapis.com/forecastrss?w=%s' % woeid
+        try:
+            log.debug("Location: Get Yahoo RSS ID, url %s" % url)
+            handler = urllib2.urlopen(url)
+        except urllib2.URLError:
+            log.error("Location: error reaching url '%s'" % url)
+            return
+        content_type = handler.info().dict['content-type']
+        charset = re.search('charset\=(.*)',content_type).group(1)
+        if not charset:
+            charset = 'utf-8'
+        if charset.lower() != 'utf-8':
+            xml_response = handler.read().decode(charset).encode('utf-8')
+        else:
+            xml_response = handler.read()
+        dom = parseString(xml_response)
+        handler.close()
+
+        try:
+            guid_value = dom.getElementsByTagName('guid')[0].firstChild.nodeValue
+        except (AttributeError, IndexError):
+            log.error("Location: Can't find guid in yahoo RSS response. Full response:\n %s" % s)
+            dom.unlink()
+            return
+        p = re.compile('([^_]*)_')
+        m = p.match(guid_value)
+        try:
+            self.location_details['yahoo id'] = m.group(1)
+            log.debug("Location: yahoo id is %s" % self.location_details['yahoo id'])
+        except AttributeError:
+            log.error("Location: Can't find yahoo id via woeid. Full response:\n %s" % guid_value)
+
+        dom.unlink()
+
+        # except Exception, e:
+        #     log.error(e)
 
     def prepare_location_for_weather_com(self, geonames_details):
         """ Get location details in English for Weather.com """
         baseurl = 'http://api.geonames.org/getJSON'
         params = {'geonameId': geonames_details[1], 'username': 'indicatorweather'}
         url = '?'.join((baseurl, urlencode(params)))
-        log.debug("Location: Get GeoNames location details, url %s" % url)
         try:
-            city = eval(urllib2.urlopen(url).read())
-            if 'adminName1' in city:
-                displayed_city_name = "%s, %s, %s" % (city['name'], city['adminName1'], city['countryName'])
-            elif 'name' in city:
-                displayed_city_name = "%s, %s" % (city['name'], city['countryName'])
-            else:
-                log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
-                return
-    
-            # Get Weather.com Location ID by English name of location
-            locid_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)
-            if 'error' in locid_result:
-                log.error("Location: Weather.com locid return error. Full response:\n %s" % locid_result['error'])
-                return
-            elif locid_result['count'] == 0:
-                # no matches returned
-                log.debug("Location: Weather.com returned 0 results "
-                          "for %s" % displayed_city_name)
-                return
-            else:
-                # only look at the the first locid result
-                locid = locid_result[0][0]
-                self.location_details['weather-com id'] = locid
-                log.debug("Location: locid is %s" % locid)
-    
+            log.debug("Location: Get GeoNames location details, url %s" % url)
+            handler = urllib2.urlopen(url)
         except urllib2.URLError:
             log.error("Location: error reaching url '%s'" % url)
+        content_type = handler.info().dict['content-type']
+        charset = re.search('charset\=(.*)' ,content_type).group(1)
+        if not charset:
+            charset = 'utf-8'
+        if charset.lower() != 'utf-8':
+            json_response = handler.read().decode(charset).encode('utf-8')
+        else:
+            json_response = handler.read()
+        log.debug("Location: raw json response:")    #DEBUG
+        log.debug(repr(json_response))      #DEBUG
+        city = json.loads(json_response)
+        handler.close()
+
+        log.debug("Location: parsed json response:")    #DEBUG
+        log.debug(repr(city))       #DEBUG
+        log.debug("Location: assembling location name") #DEBUG
+        if 'adminName1' in city:
+            displayed_city_name = ', '.join((city['name'], city['adminName1'], city['countryName']))
+        elif 'name' in city:
+            displayed_city_name = ', '.join((city['name'], city['countryName']))
+        else:
+            log.error("Location: Cannot find GeoNames info for code %s Full Response:\n %s" % (geonames_details[1], str(city)))
+            return
+        log.debug(repr(displayed_city_name))        #DEBUG
+        log.debug(displayed_city_name)  #DEBUG
+
+        # Get Weather.com Location ID by English name of location
+        log.debug("Location: getting loc_id via pywapi")     #DEBUG
+        loc_id_result = pywapi.get_loc_id_from_weather_com(displayed_city_name)
+        if 'error' in loc_id_result:
+            log.error("Location: Weather.com location id return error. Full response:\n %s" % loc_id_result['error'])
+            return
+        elif loc_id_result['count'] == 0:
+            # no matches returned
+            log.debug("Location: Weather.com returned 0 results "
+                      "for %s" % displayed_city_name)
+            return
+        else:
+            # only look at the the first location id result
+            loc_id = loc_id_result[0][0]
+            self.location_details['weather-com id'] = loc_id
+            log.debug("Location: location id is %s" % loc_id)
     
-        except Exception, e:
-            log.error(e)
+        # except Exception, e:
+        #     log.error(e)
 
     def export_location_details(self):
         """ Return location code and location details """
@@ -460,15 +505,22 @@ class Location:
         valid_source = None
         loc_ids = {}
 
+        log.debug("Location: update_weather_data: source=%s" % source)  #DEBUG
         SOURCES = {
             WeatherDataSource.WEATHER_COM : ("weather-com id", "Weather.com"),
             WeatherDataSource.YAHOO : ("yahoo id", "Yahoo")
         }
 
+        log.debug("Location: update_weather_data: "
+                  "self.location_details=%s" % self.location_details)   #DEBUG
+
         # gather existing source keys
-        for source_id in SOURCES.keys():
+        for source_id in SOURCES:
             if SOURCES[source_id][0] in self.location_details:
                 loc_ids[source_id] = SOURCES[source_id][0]
+
+        log.debug("Location: update_weather_data: after "
+                  "gathering, loc_id=%s" % loc_ids) #DEBUG
 
         # try with the default source
         if source in loc_ids:
@@ -478,7 +530,7 @@ class Location:
                        self.location_details['label']))
 
         # try with the first alternative
-        elif len(loc_ids.keys()):
+        elif len(loc_ids):
             valid_source = loc_ids.keys()[0]
             log.debug(("Location: non default weather source '%s' " +
                        "chosen for '%s'") % (SOURCES[valid_source][1],
@@ -542,7 +594,7 @@ class Forecast:
             log.error("Forecast: error reading forecast for %s" % self.location_id)
         except KeyError:
             log.error("Forecast: returned empty forecast for %s" % self.location_id)
-            self.error_message = utf8(_('Unknown error occurred while picking up weather data'))
+            self.error_message = _('Unknown error occurred while picking up weather data')
 
     def get_forecast_data(self):
         """ Parse high and low values for forecast data """
@@ -690,19 +742,21 @@ class Weather:
                 
         # Get data from Weather.com
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
+            log.debug("Weather: calling pywapi.get_weather_from_weather_com("
+                "%s, %s)" % (location_id, unit_system)) #DEBUG
             self.__report = pywapi.get_weather_from_weather_com(
                                                     location_id, unit_system)
             ##self.__localized_report = self.__report
             log.debug("Weather: checking Weather.com report for "
                       "weather condition and icon name")
-            if 'current_conditions' not in self.__report.keys():
+            if 'current_conditions' not in self.__report:
                 icon_name = ""
                 log.error("Weather: could not get Weather.com "
                           "weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
 
-            elif 'icon' in self.__report['current_conditions'].keys():
+            elif 'icon' in self.__report['current_conditions']:
                 icon_name = self.__report['current_conditions']['icon']
                 self.__current_condition = self._WeathercomConditions.get(icon_name)
 
@@ -718,13 +772,13 @@ class Weather:
             ##self.__localized_report = self.__report
             log.debug("Weather: checking Yahoo report for "
                       "weather condition and icon name")
-            if 'condition' not in self.__report.keys():
+            if 'condition' not in self.__report:
                 icon_name = ""
                 log.error("Weather: could not get Yahoo weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 self.__current_condition = (False, False, False, _("Unknown condition"))
 
-            elif 'code' in self.__report['condition'].keys():
+            elif 'code' in self.__report['condition']:
                 icon_name = self.__report['condition']['code']
                 self.__current_condition = self._YahooConditions.get(icon_name)
 
@@ -732,7 +786,7 @@ class Weather:
                 icon_name = ""
                 log.error("Weather: could not get icon name from Yahoo report")
                 log.error("Weather: got data '%s'" % str(self.__report['condition']))
-                self.__current_condition = (False, False, False, utf8(_("Unknown condition")))
+                self.__current_condition = (False, False, False, _("Unknown condition"))
 
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
         #Prepare sunrise/sunset data
@@ -814,20 +868,20 @@ class Weather:
     def get_condition_label(self):
         """ Get text of current condition """
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            condition = utf8(self.__report['current_conditions']['text'])
+            condition = self.__report['current_conditions']['text']
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            condition = utf8(self.__current_condition[3])
+            condition = self.__current_condition[3]
         return condition
 
     def get_humidity_label(self):
         """ Get text string for current humidity """
-        humidity = "%s: ---%%" % utf8(_("Humidity"))
+        humidity = "%s: ---%%" % _("Humidity")
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
            and 'humidity' in self.__report['current_conditions']:
-            humidity = "%s: %s%%" % (utf8(_("Humidity")), self.__report['current_conditions']['humidity'])
+            humidity = "%s: %s%%" % (_("Humidity"), self.__report['current_conditions']['humidity'])
         if self.__weather_datasource == WeatherDataSource.YAHOO \
            and 'humidity' in self.__report['atmosphere']:
-            humidity = "%s: %s%%" % (utf8(_("Humidity")), self.__report['atmosphere']['humidity'])
+            humidity = "%s: %s%%" % (_("Humidity"), self.__report['atmosphere']['humidity'])
         return humidity
 
     def get_dew_point_label(self):
@@ -841,23 +895,23 @@ class Weather:
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
             _value = self.__report['current_conditions']['dewpoint']
             _unit = self.__report['units']['temperature']
-        return u"%s: %s °%s" % (utf8(_("Dewpoint")), _value, _unit)
+        return u"%s: %s °%s" % (_("Dewpoint"), _value, _unit)
 
     def get_pressure_label(self):
         """ Get text string for current air pressure """
         _value = "---"
         _unit = ""
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
-           and 'barometer' in self.__report['current_conditions'].keys() \
-           and 'pressure' in self.__report['units'].keys():
+           and 'barometer' in self.__report['current_conditions'] \
+           and 'pressure' in self.__report['units']:
             _value = self.__report['current_conditions']['barometer']['reading']
             _unit = self.__report['units']['pressure']
         if self.__weather_datasource == WeatherDataSource.YAHOO \
-           and 'pressure' in self.__report['atmosphere'].keys() \
-           and 'pressure' in self.__report['units'].keys():
+           and 'pressure' in self.__report['atmosphere'] \
+           and 'pressure' in self.__report['units']:
             _value = self.__report['atmosphere']['pressure']
             _unit = self.__report['units']['pressure']
-        return "%s: %s %s" % (utf8(_("Pressure")), _value, _unit)
+        return "%s: %s %s" % (_("Pressure"), _value, _unit)
 
 ##    def get_temperature(self, needs_rounding = False):
     def get_temperature(self):
@@ -865,8 +919,8 @@ class Weather:
         _value = None
         _unit = ""
         if (self.__weather_datasource == WeatherDataSource.WEATHER_COM and
-            'temperature' in self.__report['current_conditions'].keys() and
-            'temperature' in self.__report['units'].keys()):
+            'temperature' in self.__report['current_conditions'] and
+            'temperature' in self.__report['units']):
             if ((self.__metric_system == UnitSystem.SI and
                     self.__report['units']['temperature'] == u"C") or
                (self.__metric_system == UnitSystem.IMPERIAL and
@@ -874,8 +928,8 @@ class Weather:
                 _value = self.__report['current_conditions']['temperature']
                 _unit = u"°%s" % self.__report['units']['temperature']
         if (self.__weather_datasource == WeatherDataSource.YAHOO and
-            'temp' in self.__report['condition'].keys() and
-            'temperature' in self.__report['units'].keys()):
+            'temp' in self.__report['condition'] and
+            'temperature' in self.__report['units']):
             if ((self.__metric_system == UnitSystem.SI and
                     self.__report['units']['temperature'] == u"C") or
                (self.__metric_system == UnitSystem.IMPERIAL and
@@ -889,15 +943,15 @@ class Weather:
 
     def get_temperature_string(self):
         """ Get temperature with units value - doesn't include 'Temperature' string """
-        (_value, _unit) = self.get_temperature()
+        _value, _unit = self.get_temperature()
         if _value is None:
             _value = "---"
             _unit = ""
-        return (u"%s %s" % (_value, _unit))
+        return "%s %s" % (_value, _unit)
 
     def get_temperature_label(self):
         """ Get text string for current temperature label """
-        return u"%s: %s" % (utf8(_("Temperature")), self.get_temperature_string())
+        return u"%s: %s" % (_("Temperature"), self.get_temperature_string())
 
     def get_relative_string(self):
         """ Get relative temperature with units value - doesn't include 'Feels Like' string """        
@@ -920,7 +974,7 @@ class Weather:
 
     def get_relative_label(self):
         """ Get text string for relative temperature ("feels like") label """
-        return "%s: %s" % (utf8(_("Feels Like")), self.get_relative_string())
+        return "%s: %s" % (_("Feels Like"), self.get_relative_string())
     
     def get_humidex(self):
         """ Calculate humidex and get value and units
@@ -1166,13 +1220,13 @@ class Weather:
             wind_units = self.__report['units']['speed']
             if wind_speed == "calm":
                 wind_speed = 0
-            wind_info = [utf8(_("Wind")) + ":", wind_direction, wind_speed, wind_units]
+            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
         if self.__weather_datasource == WeatherDataSource.YAHOO:
             # Create a wind_info structure from Yahoo data
             wind_direction = u"%s (%s°)" % (_(pywapi.get_wind_direction(self.__report['wind']['direction'])), self.__report['wind']['direction'])
             wind_speed = self.__report['wind']['speed']
             wind_units = self.__report['units']['speed']
-            wind_info = [utf8(_("Wind")) + ":", wind_direction, wind_speed, wind_units]
+            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
 
         try:
             _value = float(wind_speed)
@@ -1222,19 +1276,19 @@ class Weather:
         wind_info[len(wind_info)-2] = \
             NumberFormatter.format_float(_value, 1)
         if _value < 0.0:
-            wind_info[1:] = ["", utf8(_("N\A")), ""]
+            wind_info[1:] = ["", _("N\A"), ""]
         if _value == 0.0:
-            wind_info[1:] = [utf8(_("Calm")), "", ""]
+            wind_info[1:] = [_("Calm"), "", ""]
         return "%s %s %s %s" % (wind_info[0], wind_info[1], \
                                 wind_info[2], wind_info[3])
 
     def get_sunrise_label(self):
         """ Get text string for sunrise time """
-        return "%s: %s" % (utf8(_("Sunrise")), TimeFormatter.format_time(self.__sunrise_t))
+        return "%s: %s" % (_("Sunrise"), TimeFormatter.format_time(self.__sunrise_t))
 
     def get_sunset_label(self):
         """ Get text string for sunset time """
-        return "%s: %s" % (utf8(_("Sunset")), TimeFormatter.format_time(self.__sunset_t))
+        return "%s: %s" % (_("Sunset"), TimeFormatter.format_time(self.__sunset_t))
 
 
 class indicator_weather(threading.Thread):
@@ -1272,7 +1326,7 @@ class indicator_weather(threading.Thread):
         self.main_icon = os.path.join
         self.winder = AppIndicator.Indicator.new("indicator-weather", "weather-indicator", AppIndicator.IndicatorCategory.OTHER)
         
-        self.queue = Queue.Queue()
+        self.queue = Queue.PriorityQueue()
         
         self.menu_update_lock = threading.Lock()
         self.status_update_lock = threading.Lock()
@@ -1298,7 +1352,7 @@ class indicator_weather(threading.Thread):
         self.chill = self.settings.get_value("chill")
         self.source = self.settings.get_value("data_source")
         self.placechosen = self.settings.get_value("placechosen")
-        self.places = utf8(self.settings.get_value("places"))
+        self.places = self.settings.get_value("places")
         self.show_label = self.settings.get_value("show_label")
         self.show_relative = self.settings.get_value("show_relative")
         self.show_wind = self.settings.get_value("show_wind")
@@ -1680,13 +1734,15 @@ class indicator_weather(threading.Thread):
         elif self.refreshed_minutes_ago < 0:
             refresh_label=_("Refresh")
         elif self.refreshed_minutes_ago == 0:
-            refresh_label="%s (%s)" % (utf8(_("Refresh")), utf8(_("just now")))
+            refresh_label="%s (%s)" % (_("Refresh"), _("just now"))
         else:
-            refresh_label = "%s (%s)" % (utf8(_("Refresh")), utf8(_("%d min. ago") % self.refreshed_minutes_ago))
+            refresh_label = "%s (%s)" % (_("Refresh"), _("%d min. ago") % self.refreshed_minutes_ago)
         self.refresh_show.set_label(refresh_label)
 
     def get_cached_weather(self, queue):
         """ Load weather data from cache and put it onto the queue """
+        # get cached weather and catch any exception
+        cached_weather = None
         try:
             log.debug("Indicator: get_cached_weather: setting "
                       "previous_condition to None")
@@ -1696,12 +1752,13 @@ class indicator_weather(threading.Thread):
                 cached_weather = eval(cached_weather)
                 log.debug("Indicator: loading weather from cache "
                           "for %s" % self.places[self.placechosen])
-            # Put the cached weather onto to the Queue
-            queue.put({'cached_weather': cached_weather})
         except Exception, e:
+            cached_Weather = None
             log.error(e)
             log.debug(traceback.format_exc(e))
-
+        # Put the cached weather onto to the Queue
+        queue.put((1, cached_weather))
+        
     def show_cached_weather(self, cached_weather):
         """ Update the indicator icon, label and menu with cached weather data """
         if cached_weather is None:
@@ -1768,7 +1825,7 @@ class indicator_weather(threading.Thread):
             log.error(e)
             log.debug(traceback.format_exc(e))
         # Put the new weather data onto the Queue
-        queue.put({'weather': weather})
+        queue.put((10,weather))
 
     def show_new_weather_data(self, weather):
         """ Update the indicator icon, label and menu with new weather data """
@@ -1785,12 +1842,12 @@ class indicator_weather(threading.Thread):
             # Fill in menu with data
             self.condition = weather.get_condition_label()
             self.icon = weather.get_icon_name()
-            log.debug(u"Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
+            log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
             log.debug(
-                u"Indicator: fill in menu with params: " \
-                u"city='%s', temp='%s', humid='%s', wind='%s', " \
-                u"sunrise='%s', sunset='%s', puretemp=%s" % 
-                (utf8(self.places[self.placechosen][1]),
+                "Indicator: fill in menu with params: " \
+                "city='%s', temp='%s', humid='%s', wind='%s', " \
+                "sunrise='%s', sunset='%s', puretemp=%s" % 
+                (self.places[self.placechosen][1].decode('utf-8'),
                 weather.get_temperature_label(), weather.get_humidity_label(),
                 weather.get_wind_label(), weather.get_sunrise_label(),
                 weather.get_sunset_label(),
@@ -1871,15 +1928,21 @@ class indicator_weather(threading.Thread):
 
         # Update the menu with the cached weather
         cache_thread.join()
-        cached_weather = self.queue.get()
-        if cached_weather is not None and 'cached_weather' in cached_weather:
-            self.show_cached_weather(cached_weather['cached_weather'])        
+        try:
+            num, cached_weather = self.queue.get()
+            if cached_weather is not None:
+                self.show_cached_weather(cached_weather)
+        except Queue.Empty:
+            pass
 
         # Update the menu with the new weather
         fetcher_thread.join()
-        weather = self.queue.get()
-        if weather is not None and 'weather' in weather:
-            self.show_new_weather_data(weather['weather'])
+        try:
+            num, weather = self.queue.get()
+            if weather is not None:
+                self.show_new_weather_data(weather)
+        except Queue.Empty:
+            pass
 
     def get_weather(self):
         """ Get current weather for selected location """
@@ -1915,8 +1978,10 @@ class indicator_weather(threading.Thread):
         """ Menu callback to open About dialog """
         log.debug("Indicator: open About dialog")
         self.aboutdialog = Gtk.AboutDialog()
-        self.aboutdialog.set_name(_("Weather Indicator"))
+        self.aboutdialog.set_program_name(_("Weather Indicator"))
         self.aboutdialog.set_version(VERSION)
+        #self.aboutdialog.set_title(_("About Weather Indicator"))
+        self.aboutdialog.set_title("")
 
         ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY,
                                   "share/doc/indicator-weather/AUTHORS"), "r")
@@ -1929,6 +1994,7 @@ class indicator_weather(threading.Thread):
         ifile.close()
 
         self.aboutdialog.set_website("https://launchpad.net/weather-indicator")
+        self.aboutdialog.set_website_label(_("Homepage"))
         self.aboutdialog.set_translator_credits(_("translator-credits"))
         logo_path = os.path.join(PROJECT_ROOT_DIRECTORY,
                                  "share/indicator-weather/media/icon.png")
@@ -2020,7 +2086,7 @@ class PreferencesDialog(Gtk.Dialog):
             if newplaces != wi.places:                
                 wi.places = newplaces
                 log.debug("Preferences: update settings object")
-                wi.settings.set_value("places", utf8(wi.places))
+                wi.settings.set_value("places", wi.places)
            
             model.remove(iter)
             wi.places_changed = True
@@ -2075,7 +2141,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("PreferencesDialog: Show Sunrise/Sunset Times changed to %s" % wi.show_suntimes)
         
         # Metric systems
-        for k in wi.metric_systems.keys():
+        for k in wi.metric_systems:
             if self.builder.get_object(wi.metric_systems[k][0]).get_active():
                 new_unit = k
                 new_metric_system = wi.metric_systems[k][1]
@@ -2088,7 +2154,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Unit changed to '%s'" % wi.unit)
 
         # Notifications
-        for k in wi.notifications.keys():
+        for k in wi.notifications:
             if self.builder.get_object(wi.notifications[k]).get_active():
                 new_notification  = k
 
@@ -2099,7 +2165,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Notifications changed to '%s'" % wi.notif)
 
         # Wind Units
-        for k in wi.wind_systems.keys():
+        for k in wi.wind_systems:
             if self.builder.get_object(wi.wind_systems[k][0]).get_active():
                 new_wind_unit   = k
                 new_wind_system = wi.wind_systems[k][1]
@@ -2112,7 +2178,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Wind Unit changed to '%s'" % wi.wind)
 
         # Heat estimate formula
-        for k in wi.heat_estimates.keys():
+        for k in wi.heat_estimates:
             if self.builder.get_object(wi.heat_estimates[k][0]).get_active():
                 new_heat_index = k
                 new_heat_estimate = wi.heat_estimates[k][1]
@@ -2125,7 +2191,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Heat Estimate changed to '%s'" % wi.heat)
 
         # Chill estimate formula
-        for k in wi.chill_estimates.keys():
+        for k in wi.chill_estimates:
             if self.builder.get_object(wi.chill_estimates[k][0]).get_active():
                 new_chill_index = k
                 new_chill_estimate = wi.chill_estimates[k][1]
@@ -2138,7 +2204,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Chill Estimate changed to '%s'" % wi.chill)
 
         # Weather source
-        for k in wi.weather_sources.keys():
+        for k in wi.weather_sources:
             if self.builder.get_object(wi.weather_sources[k][0]).get_active():
                 new_source   = k
                 new_weather_source = wi.weather_sources[k][1]
@@ -2159,8 +2225,8 @@ class PreferencesDialog(Gtk.Dialog):
 
         # If places have changed - update weather data
         if wi.places_changed:
-            log.debug("Preferences: Places changed to '%s'" % utf8(wi.places))
-            wi.settings.set_value("places", utf8(wi.places))
+            log.debug("Preferences: Places changed to '%s'" % wi.places)
+            wi.settings.set_value("places", wi.places)
             if (type(wi.place) != None) and (wi.place in wi.places):
                 wi.placechosen = wi.places.index(wi.place)
             else:
@@ -2207,7 +2273,7 @@ class ExtendedForecast(Gtk.Window):
         log.debug("ExtendedForecast: chosen place: %s (code %s)" %
                   (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
         self.builder.get_object('extended_forecast').set_title("%s %s" %
-                    (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
+                    (_('Weather Forecast for'), wi.places[wi.placechosen][1].decode('utf-8')))
         log.debug("ExtendedForecast: getting forecast data")
         forecast = Forecast(wi.metric_system,
                             wi.current_location.location_details['yahoo id'],
@@ -2281,10 +2347,10 @@ class ExtendedForecast(Gtk.Window):
             else:
                 tempunit = u"°F"
             for i in xrange(1,5):
-                label = "%s: %s%s" % (utf8(_('High')), highdata[i],tempunit)
+                label = "%s: %s%s" % (_('High'), highdata[i],tempunit)
                 self.builder.get_object('day%stemphigh' % 
                                         str(i)).set_label(label)
-                label = "%s: %s%s" % (utf8(_('Low')), lowdata[i],tempunit)
+                label = "%s: %s%s" % (_('Low'), lowdata[i],tempunit)
                 self.builder.get_object('day%stemplow' % 
                                         str(i)).set_label(label)
 
@@ -2337,33 +2403,54 @@ class Assistant(Gtk.Assistant):
             # Clear up exising suggestions
             self.store.clear()
             # Get suggested city names from GeoNames DB in native locale
-            new_text = urllib.quote(new_text)
-            url = 'http://api.geonames.org/searchJSON?q=%s&featureClass=P&maxRows=10&lang=%s&username=indicatorweather' % (new_text, locale_name)
-            cities = eval(urllib2.urlopen(url).read())
+            baseurl = 'http://api.geonames.org/searchJSON'
+            params = {'q': new_text, 'featureClass': 'P', 'maxRows': '10',
+                      'lang': locale_name, 'username': 'indicatorweather'}
+            url = '?'.join((baseurl, urlencode(params)))
+            log.debug("Assistant: Search Geonames location details, url %s" % url)
+            handler = urllib2.urlopen(url)
+            content_type = handler.info().dict['content-type']
+            charset = re.search('charset\=(.*)' ,content_type).group(1)
+            if not charset:
+                charset = 'utf-8'
+            if charset.lower() != 'utf-8':
+                json_response = handler.read().decode(charset).encode('utf-8')
+            else:
+                json_response = handler.read()
+            log.debug("Assistant: parsing json response") #DEBUG
+            cities = json.loads(json_response)
+            handler.close()
+
+            log.debug(repr(cities))       #DEBUG
+            log.debug("Assistant: assembling location names") #DEBUG
             for city in cities['geonames']:
-                # Create a full city name, consisting of city name, administrative areas names and country name
+                # Create a full city name, consisting of city name,
+                # administrative areas names and country name
                 if 'adminName2' in city:
-                    displayed_city_name = "%s, %s, %s, %s" % (
-                        city['name'], city['adminName1'],
-                        city['adminName1'], city['countryName']
+                    displayed_city_name = ', '.join(
+                        (city['name'], city['adminName1'],
+                        city['adminName1'], city['countryName'])
                         )
                 elif 'adminName1' in city:
-                    displayed_city_name = "%s, %s, %s" % (
-                        city['name'], city['adminName1'], city['countryName']
+                    displayed_city_name = ', '.join(
+                        (city['name'], city['adminName1'], city['countryName'])
                         )
                 else:
-                    displayed_city_name = "%s, %s" % (city['name'], 
-                                                      city['countryName'])
-                self.store.append([displayed_city_name,
-                                   str(city['geonameId']), str(city['lat']),
-                                   str(city['lng']), str(city['name'])])
+                    displayed_city_name = ', '.join((city['name'], 
+                                                    city['countryName']))
+                self.store.append(
+                    [displayed_city_name, unicode(city['geonameId']),
+                    unicode(city['lat']), unicode(city['lng']),
+                    unicode(city['name'])]
+                    )
                 self.location_input_combo.popup()
+
         except urllib2.URLError:
             log.error("Assistant: error reaching url '%s'" % url)
 
     def on_select_city(self, entry):
         """ A city is selected from suggested list """
-        log.debug("Assistant: on_select city")      #DEBUG
+        log.debug("Assistant: entered on_select city")      #DEBUG
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
             self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
@@ -2397,7 +2484,7 @@ class Assistant(Gtk.Assistant):
                     self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
                     Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
                     "%s '%s'" % (_("Could not find location id for"),
-                               (self.place_selected[0])))
+                               self.place_selected[0]))
                 md.format_secondary_text(
                     "Unknown error occurred while picking up location data. "
                     "Please try again later.")
@@ -2438,9 +2525,11 @@ class Assistant(Gtk.Assistant):
 
     def on_apply(self,widget):
         """ 'Apply' clicked - save location details, add an entry in a location list """
+        log.debug(self.location.location_details['label'])  #DEBUG
         (location_code, location_details) = self.location.export_location_details()
+        log.debug(location_code)        #DEBUG
         log.debug("Assistant: Apply: adding location ('%s', '%s')" %
-                  (self.location.location_details['label'], location_code))
+                  (self.location.location_details['label'].decode('utf-8'), location_code))
         newplace = list()
         newplace.append(self.location.location_details['label'])
         newplace.append(str(location_code))

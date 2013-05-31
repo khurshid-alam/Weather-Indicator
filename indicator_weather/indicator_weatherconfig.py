@@ -2,6 +2,7 @@
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
+# Copyright (C) 2013 Joshua Tasker jtasker@gmail.com
 # This program is free software: you can redistribute it and/or modify it 
 # under the terms of the GNU General Public License version 3, as published 
 # by the Free Software Foundation.
@@ -34,8 +35,7 @@ __license__ = 'GPL-3'
 import os
 
 import gettext
-from gettext import gettext as _
-gettext.textdomain('indicator-weather')
+_ = gettext.translation('indicator-weather').ugettext
 
 class project_path_not_found(Exception):
     """Raised when we can't find the project directory."""

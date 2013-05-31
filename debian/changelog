@@ -1,3 +1,9 @@
+indicator-weather (13.05.27) quantal; urgency=low
+
+  * Use simplejson to parse GeoNames and YQL replies, thanks Sabin Iacob
+
+ -- Joshua Tasker <jtasker@gmail.com>  Thu, 30 May 2013 01:04:05 -0400
+
 indicator-weather (13.05.26) quantal; urgency=low
 
   * Update .pot file with latest strings for translation
