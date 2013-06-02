@@ -1796,12 +1796,12 @@ class indicator_weather(threading.Thread):
         weather = None
         try:
             weather = self.get_weather()
-        except urllib2.URLError, e:
+        except IOError, e:
             weather = None
             log.error("Indicator: networking error: %s" % e)
         except Exception, e:
             weather = None
-            log.error(': '.join(sys.exc_info[:1], e))
+            log.error(e)
             log.debug(traceback.format_exc(e))
         # Put the new weather data onto the Queue
         queue.put((10,weather))
