@@ -4,7 +4,10 @@ Priority: extra
 Build-Depends: debhelper (>= 7.0.50~),
                gobject-introspection,
                python (>= 2.6.6-3~),
-               python-distutils-extra (>= 2.10)
+               python-distutils-extra (>= 2.10),
+               python-dbus,
+               python-apport,
+               python-pywapi
 X-Python-Version: >= 2.6
 Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Standards-Version: 3.9.3
@@ -21,7 +24,7 @@ Depends: gir1.2-glib-2.0,
          libgtk-3-bin,
          python-dbus,
          python-gi,
-         python-pywapi (>= 0.3.3),
+         python-pywapi (>= 0.3.2),
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}
