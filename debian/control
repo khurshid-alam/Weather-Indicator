@@ -21,7 +21,7 @@ Depends: gir1.2-glib-2.0,
          libgtk-3-bin,
          python-dbus,
          python-gi,
-         python-pywapi (>= 0.3.2),
+         python-pywapi (>= 0.3.3),
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}

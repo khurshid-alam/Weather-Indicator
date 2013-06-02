@@ -845,11 +845,12 @@ class Weather:
 
     def get_condition_label(self):
         """ Get text of current condition """
-        if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            condition = self.__report['current_conditions']['text']
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            condition = self.__current_condition[3]
-        return condition
+        if self.__current_condition != None:
+            log.debug("Weather: got condition '%s'" % self.__current_condition[3])
+            return self.__current_condition[3]
+        else:
+            log.error("Weather: condition is not set while condition severity check")
+            return (_("Unknown condition")) 
 
     def get_humidity_label(self):
         """ Get text string for current humidity """
@@ -1800,7 +1801,7 @@ class indicator_weather(threading.Thread):
             log.error("Indicator: networking error: %s" % e)
         except Exception, e:
             weather = None
-            log.error(e)
+            log.error(': '.join(sys.exc_info[:1], e))
             log.debug(traceback.format_exc(e))
         # Put the new weather data onto the Queue
         queue.put((10,weather))
