@@ -85,7 +85,7 @@ def update_autostart_file(datadir):
         fin.close()
         os.rename(fout.name, fin.name)
     except (OSError, IOError), e:
-        print ("ERROR: Can't find indicator-weather.desktop.in")
+        print ("ERROR: Can't find autostart/indicator-weather.desktop.in")
         sys.exit(1)
 
 
@@ -103,7 +103,7 @@ class InstallAndUpdateDataDirectory(DistUtilsExtra.auto.install_auto):
 
 DistUtilsExtra.auto.setup(
     name='indicator-weather',
-    version='13.05.26',
+    version='13.05.27',
     license='GPL-3',
     author='Joshua Tasker | Vadim Rutkovsky | Sebastian MacDonald | Mehdi Rejraji',
     author_email='jtasker@gmail.com, roignac@gmail.com',
