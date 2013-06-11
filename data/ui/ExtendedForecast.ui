@@ -12,14 +12,15 @@
     <property name="icon">../media/icon.png</property>
     <signal name="destroy" handler="on_destroy" swapped="no"/>
     <child>
-      <object class="GtkVBox" id="mainvbox">
+      <object class="GtkBox" id="mainvbox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="connection_error">
             <property name="can_focus">False</property>
             <property name="ypad">10</property>
-            <property name="label">&lt;big&gt;Forecast information cannot be fetched. Connection cannot be established.&lt;/big&gt;</property>
+            <property name="label" translatable="yes">&lt;big&gt;Forecast information cannot be fetched. Connection cannot be established.&lt;/big&gt;</property>
             <property name="use_markup">True</property>
           </object>
           <packing>
@@ -29,30 +30,31 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkBox" id="hbox1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="spacing">5</property>
             <property name="homogeneous">True</property>
             <child>
-              <object class="GtkHBox" id="hbox2">
+              <object class="GtkBox" id="day1hbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkAlignment" id="alignment3">
+                  <object class="GtkAlignment" id="day1alignment">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkVBox" id="day1vbox">
+                      <object class="GtkBox" id="day1vbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkLabel" id="day1lbl">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">10</property>
-                            <property name="label">&lt;big&gt;Today (fri.)&lt;/big&gt;</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Today&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -79,11 +81,12 @@
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label">Partially cloudy</property>
+                            <property name="label" translatable="yes">Partly cloudy</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="width_chars">15</property>
+                            <property name="max_width_chars">15</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -92,9 +95,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="vbox1">
+                          <object class="GtkBox" id="day1tempvbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkLabel" id="day1temphigh">
@@ -156,24 +160,25 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHBox" id="hbox3">
+              <object class="GtkBox" id="day2hbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkAlignment" id="alignment2">
+                  <object class="GtkAlignment" id="day2alignment">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkVBox" id="day2vbox">
+                      <object class="GtkBox" id="day2vbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkLabel" id="day2lbl">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">10</property>
-                            <property name="label">&lt;big&gt;Tomorrow (sat.)&lt;/big&gt;</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Tomorrow&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -200,11 +205,12 @@
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label">Couverture nuageuse partielle</property>
+                            <property name="label" translatable="yes">Cloudy</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="width_chars">15</property>
+                            <property name="max_width_chars">15</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -213,9 +219,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="vbox2">
+                          <object class="GtkBox" id="day2tempvbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkLabel" id="day2temphigh">
@@ -277,24 +284,25 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHBox" id="hbox4">
+              <object class="GtkBox" id="day3hbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkAlignment" id="alignment4">
+                  <object class="GtkAlignment" id="day3alignment">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkVBox" id="day3vbox">
+                      <object class="GtkBox" id="day3vbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkLabel" id="day3lbl">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">10</property>
-                            <property name="label">&lt;big&gt;Sunday&lt;/big&gt;</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Sunday&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -321,11 +329,12 @@
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label">Fogs</property>
+                            <property name="label" translatable="yes">Foggy</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="width_chars">15</property>
+                            <property name="max_width_chars">15</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -334,9 +343,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="vbox3">
+                          <object class="GtkBox" id="day3tempvbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkLabel" id="day3temphigh">
                                 <property name="visible">True</property>
@@ -396,23 +406,24 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHBox" id="hbox5">
+              <object class="GtkBox" id="day4hbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <object class="GtkAlignment" id="alignment5">
+                  <object class="GtkAlignment" id="day4alignment">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkVBox" id="day4vbox">
+                      <object class="GtkBox" id="day4vbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkLabel" id="day4lbl">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">10</property>
-                            <property name="label">&lt;big&gt;Monday&lt;/big&gt;</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Monday&lt;/big&gt;</property>
                             <property name="use_markup">True</property>
                           </object>
                           <packing>
@@ -439,11 +450,12 @@
                             <property name="height_request">80</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label">Clear</property>
+                            <property name="label" translatable="yes">Clear</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="wrap_mode">word-char</property>
                             <property name="width_chars">15</property>
+                            <property name="max_width_chars">15</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -452,9 +464,10 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="vbox4">
+                          <object class="GtkBox" id="day4tempvbox">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkLabel" id="day4temphigh">
                                 <property name="visible">True</property>
@@ -495,11 +508,132 @@
                     <property name="position">0</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkVSeparator" id="vseparator4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="day5hbox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <child>
+                  <object class="GtkAlignment" id="day5alignment">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkBox" id="day5vbox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel" id="day5lbl">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="ypad">10</property>
+                            <property name="label" translatable="yes">&lt;big&gt;Tuesday&lt;/big&gt;</property>
+                            <property name="use_markup">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkImage" id="day5image">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="pixel_size">50</property>
+                            <property name="icon_name">weather-clear</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="day5cond">
+                            <property name="height_request">80</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Sunny</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="wrap_mode">word-char</property>
+                            <property name="width_chars">15</property>
+                            <property name="max_width_chars">15</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="day5tempvbox">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel" id="day5temphigh">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label">High : 28°C</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="day5templow">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label">Low : 16°C</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
@@ -521,12 +655,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkAlignment" id="alignment1">
+          <object class="GtkAlignment" id="closealignment">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="xalign">1</property>
             <child>
-              <object class="GtkVButtonBox" id="hbuttonbox1">
+              <object class="GtkVButtonBox" id="closehbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>

@@ -4,6 +4,22 @@ set -e
 
 #DEBHELPER#
 
+# convert saved strings from str(dict()) to json
+echo "Updating location database to new format..."
+lvar=$(gsettings get apps.indicators.weather locations)
+lnew=$(echo $lprev | sed "s/{u'/{\"/g" | sed "s/\[\[u'/\[\[\"/g" | sed "s/'\]\]/\"\]\]/g"| sed "s/'\], \[u'/\"\], \[\"/g"| sed "s/', u'/\", \"/g"| sed "s/': {/\": {/g"| sed "s/': u'/\": \"/g"| sed "s/', u'/\", \"/g"| sed "s/\\\x/\\\\u00/g"| sed "s/\\\'/'/g")
+gsettings set apps.indicators.weather locations $lnew
+
+echo "Updating cached weather to new format..."
+wvar=$(gsettings get apps.indicators.weather weather)
+wnew=$(echo $wvar | sed "s/{u'/{\"/g" | sed "s/\[\[u'/\[\[\"/g" | sed "s/'\]\]/\"\]\]/g"| sed "s/'\], \[u'/\"\], \[\"/g"| sed "s/', u'/\", \"/g"| sed "s/': {/\": {/g"| sed "s/': u'/\": \"/g"| sed "s/', u'/\", \"/g"| sed "s/\\\x/\\\\u00/g"| sed "s/\\\'/'/g")
+gsettings set apps.indicators.weather weather $wnew
+
+echo "Updating saved places to new format..."
+pvar=$(gsettings get apps.indicators.weather places)
+pnew=$(echo $var | sed "s/{u'/{\"/g" | sed "s/\[\[u'/\[\[\"/g" | sed "s/'\]\]/\"\]\]/g"| sed "s/'\], \[u'/\"\], \[\"/g"| sed "s/', u'/\", \"/g"| sed "s/': {/\": {/g"| sed "s/': u'/\": \"/g"| sed "s/', u'/\", \"/g"| sed "s/\\\x/\\\\u00/g"| sed "s/\\\'/'/g")
+gsettings set apps.indicators.weather places $pnew
+
 echo "Installing indicator-specific icons..."
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon.png weather-indicator
 xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indicator-weather/media/icon_unknown_condition.png weather-indicator-unknown

@@ -26,10 +26,12 @@ Depends: gir1.2-glib-2.0,
          python-dbus,
          python-gi,
          python-pywapi (>= 0.3.2),
+         python-tz,
          xdg-utils,
          ${misc:Depends},
          ${python:Depends}
-Recommends: python-apport
+Recommends: python-apport,
+            python-unidecode
 Description: indicator that displays weather information
  Indicator-Weather displays information for one or multiple places
  in the world. Current weather status is displayed directly on your

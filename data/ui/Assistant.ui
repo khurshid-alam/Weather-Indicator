@@ -14,11 +14,12 @@
     <signal name="apply" handler="on_apply" swapped="no"/>
     <signal name="cancel" handler="on_cancel" swapped="no"/>
     <child>
-      <object class="GtkVBox" id="placeinput">
+      <object class="GtkBox" id="placeinput">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">12</property>
         <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="lblplaceinput">
             <property name="visible">True</property>
@@ -37,11 +38,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="city_input_vbox">
+          <object class="GtkBox" id="city_input_vbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">12</property>
             <property name="spacing">6</property>
+            <property name="orientation">horizontal</property>
             <child>
               <object class="GtkComboBox" id="combolocations">
                 <property name="visible">True</property>
@@ -88,11 +90,12 @@
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="label">
+      <object class="GtkBox" id="label">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">12</property>
         <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="lblwould">
             <property name="visible">True</property>
@@ -124,10 +127,11 @@
       </packing>
     </child>
     <child>
-      <object class="GtkVBox" id="review">
+      <object class="GtkBox" id="review">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">12</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel" id="lblreview">
             <property name="visible">True</property>
@@ -150,14 +154,16 @@
             <property name="can_focus">False</property>
             <property name="left_padding">12</property>
             <child>
-              <object class="GtkVBox" id="vbox1">
+              <object class="GtkBox" id="vbox1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkHBox" id="revlabel">
+                  <object class="GtkBox" id="revlabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">5</property>
+                    <property name="orientation">horizontal</property>
                     <child>
                       <object class="GtkArrow" id="arrow3">
                         <property name="visible">True</property>
@@ -206,10 +212,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHBox" id="revplace">
+                  <object class="GtkBox" id="revplace">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">5</property>
+                    <property name="orientation">horizontal</property>
                     <child>
                       <object class="GtkArrow" id="arrow2">
                         <property name="visible">True</property>

@@ -1,3 +1,13 @@
+indicator-weather (13.05.28) quantal; urgency=low
+
+  * Sunrise/sunset data from met.no instead of earthtools.org (LP: #1037475)
+  * Daylight saving time observed for location as appropriate (LP: #1073111)
+  * Forecast window shows 5 days starting with current day (LP: #1188276)
+  * Replace potentially unsafe use of eval() with json format
+  * Locations listed in submenu under currently-selected location
+
+ -- Joshua Tasker <jtasker@gmail.com>  Mon, 10 Jun 2013 22:19:17 -0400
+
 indicator-weather (13.05.27) quantal; urgency=low
 
   * Use json to parse GeoNames and YQL replies, thanks Sabin Iacob
