@@ -1,3 +1,9 @@
+indicator-weather (13.05.28.1) quantal; urgency=low
+
+  * debian/postinst: missing quotes around variables 
+
+ -- Joshua Tasker <jtasker@gmail.com>  Tue, 11 Jun 2013 06:59:13 -0400
+
 indicator-weather (13.05.28) quantal; urgency=low
 
   * Sunrise/sunset data from met.no instead of earthtools.org (LP: #1037475)
