@@ -1,3 +1,9 @@
+indicator-weather (13.05.29) quantal; urgency=low
+
+  * Replace most string comparisons with integer comparisons (LP: #1190255)
+
+ -- Joshua Tasker <jtasker@gmail.com>  Thu, 13 Jun 2013 07:03:48 -0400
+
 indicator-weather (13.05.28.1) quantal; urgency=low
 
   * debian/postinst: missing quotes around variables 

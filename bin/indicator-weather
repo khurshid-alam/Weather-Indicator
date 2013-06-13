@@ -204,8 +204,11 @@ class Settings:
             if cached_weather_string == '':
                 cached_weather = {}
             else:
-                cached_weather = json.loads(cached_weather_string)
-
+                try:
+                    cached_weather = json.loads(cached_weather_string)
+                except ValueError:
+                    # gsettings value in old format
+                    cached_weather = eval(cached_weather_string,{"__builtins__":None},{"null":None})
             if location_code in cached_weather:
                 return cached_weather[location_code]
             else:
@@ -239,7 +242,11 @@ class Settings:
             if cached_weather_string == '':
                 cached_weather = {}
             else:
-                cached_weather = json.loads(cached_weather_string)
+                try:
+                    cached_weather = json.loads(cached_weather_string)
+                except ValueError:
+                    # gsettings value in old format
+                    cached_weather = eval(cached_weather_string,{"__builtins__":None},{"null":None})
             # add the record to the cache and write cache data
             cached_weather[location_code] = record
             cached_weather_string = json.dumps(cached_weather)
@@ -258,7 +265,11 @@ class Settings:
             if locations_string == '':
                 locations = {}
             else:
-                locations = json.loads(locations_string)
+                try:
+                    locations = json.loads(locations_string)
+                except ValueError:
+                    # gsettings value in old format
+                    locations = eval(locations_string,{"__builtins__":None},{"null":None})
             if location_code in locations:
                 return locations[location_code]
             else:
@@ -281,7 +292,11 @@ class Settings:
             if locations_string == '':
                 locations = {}
             else:
-                locations = json.loads(locations_string)
+                try:
+                    locations = json.loads(locations_string)
+                except ValueError:
+                    # gsettings value in old format
+                    locations = eval(locations_string,{"__builtins__":None},{"null":None})
             # add the location details to the list and write list data
             locations[location_code] = location_details
             locations_string = json.dumps(locations)
@@ -411,7 +426,7 @@ class Location:
         else:
             log.error("Location: Cannot find GeoNames info for code %s. "
                       "Full Response:\n %s" % (geonames_details[1],
-                                               unicode(city)))
+                                               str(city)))
             return
         log.debug("Location name is %s" % displayed_city_name)
 
@@ -492,17 +507,18 @@ class Location:
         city = json.loads(json_response)
         handler.close()
 
-        if 'adminName1' in city:
-            displayed_city_name = ', '.join((city['name'],
-                                             city['adminName1'],
-                                             city['countryName']))
-        elif 'name' in city:
+        # if 'adminName1' in city:
+        #     displayed_city_name = ', '.join((city['name'],
+        #                                      city['adminName1'],
+        #                                      city['countryName']))
+        # elif 'name' in city:
+        if 'name' in city:
             displayed_city_name = ', '.join((city['name'],
                                              city['countryName']))
         else:
             log.error("Location: Cannot find GeoNames info for code %s. "
                       "Full Response:\n %s" % (geonames_details[1],
-                                               str(city)))
+                                               unicode(city)))
             return
 
         # Get Weather.com Location ID by English name of location
@@ -919,7 +935,7 @@ class Weather:
         if charset.lower() != 'utf-8':
             xml_response = handler.read().decode(charset).encode('utf-8')
         else:
-            xml_response = handler.read().decode()
+            xml_response = handler.read()
         dom = parseString(xml_response)
         handler.close()
         sun_data = dom.getElementsByTagName('sun')[0]
@@ -1582,7 +1598,12 @@ class indicator_weather(threading.Thread):
             self.menu_noplace()
             self.menu_update_lock.release()
         else:
-            self.places = json.loads(self.places)
+            # FIXME: is below try/except block even necessary?
+            try:
+                self.places = json.loads(self.places)
+            except ValueError:
+                # gsettings value in old format
+                self.places = eval(self.places,{"__builtins__":None},{"null":None})
 
             if self.placechosen >= len(self.places):
                 self.placechosen = 0
@@ -1713,7 +1734,7 @@ class indicator_weather(threading.Thread):
             loco1 = Gtk.RadioMenuItem.new_with_label([], self.places[0][1])
             if self.placechosen == 0:
                 loco1.set_active(True)
-            loco1.connect("toggled", self.on_city_changed)
+            loco1.connect("toggled", self.on_city_changed, self.places[0][0])
             loco1.show()
             locations_menu.append(loco1)
             group = loco1.get_group()
@@ -1723,7 +1744,7 @@ class indicator_weather(threading.Thread):
                 loco = Gtk.RadioMenuItem.new_with_label(group, place[1])
                 if self.places.index(place) == self.placechosen:
                     loco.set_active(True)
-                loco.connect("toggled", self.on_city_changed)
+                loco.connect("toggled", self.on_city_changed, place[0])
                 loco.show()
                 locations_menu.append(loco)
                 group = loco.get_group()
@@ -1766,11 +1787,11 @@ class indicator_weather(threading.Thread):
         self.update_label(" ")
                 
 
-    def on_city_changed(self,widget):
+    def on_city_changed(self, widget, woeid):
         """ Another city has been selected from radiobutton """
         if widget.get_active():
             for place in self.places:
-                if (place[1] == widget.get_label().decode('utf-8')):
+                if (place[0] == woeid):
                     log.debug("Indicator: new location selected: %s" % self.places.index(place))
                     self.placechosen = self.places.index(place)
                     break
@@ -1970,12 +1991,13 @@ class indicator_weather(threading.Thread):
             self.condition = weather.get_condition_label()
             self.icon = weather.get_icon_name()
             log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
+            log.debug(repr(self.places[self.placechosen][1]))    #DEBUG
             log.debug(
                 "Indicator: fill in menu with params: " \
-                "city='%s', temp='%s', humid='%s', wind='%s', " \
-                "sunrise='%s', sunset='%s', puretemp=%s" % 
-                # (self.places[self.placechosen][1].decode('utf-8'),
-                (self.places[self.placechosen][1],
+                "city='blah', temp='%s', humid='%s', wind='%s', " \
+                "sunrise='%s', sunset='%s', puretemp=%s" % (
+                #self.places[self.placechosen][1].decode('utf-8'),
+                #self.places[self.placechosen][1],
                 weather.get_temperature_label(), weather.get_humidity_label(),
                 weather.get_wind_label(), weather.get_sunrise_label(),
                 weather.get_sunset_label(),
@@ -2209,6 +2231,10 @@ class PreferencesDialog(Gtk.Dialog):
                       (model[iter][0], model[iter][1]))
             newplaces = []
             for place in wi.places:
+                log.debug("**********************************************") #DEBUG
+                log.debug("place[1], model[iter][0]")   #DEBUG
+                log.debug(repr(place[1]))       #DEBUG
+                log.debug(repr(model[iter][0]))     #DEBUG
                 if place[1] != model[iter][0] and \
                    place[0] != model[iter][1]:
                     newplaces.append(place) 
@@ -2356,8 +2382,10 @@ class PreferencesDialog(Gtk.Dialog):
         if wi.places_changed:
             log.debug("Preferences: Places changed to '%s'" % wi.places)
             wi.settings.set_value("places", wi.places)
-            if (type(wi.place) != None) and (wi.place in wi.places):
-                wi.placechosen = wi.places.index(wi.place)
+            if (type(wi.place) != None):
+                for i in xrange(len(wi.places)):
+                    if wi.places[i][0] == wi.place[0]:
+                        wi.placechosen = i
             else:
                 wi.placechosen = 0
                 wi.place = wi.places[0]
@@ -2402,8 +2430,10 @@ class ExtendedForecast(Gtk.Window):
         # Get forecast data using Forecast object
         log.debug("ExtendedForecast: chosen place: %s (code %s)" %
                   (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
+        # self.builder.get_object('extended_forecast').set_title("%s %s" %
+        #             (_('Weather Forecast for'), wi.places[wi.placechosen][1].decode('utf-8')))
         self.builder.get_object('extended_forecast').set_title("%s %s" %
-                    (_('Weather Forecast for'), wi.places[wi.placechosen][1].decode('utf-8')))
+                    (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
         forecast = Forecast(wi.metric_system,
                             wi.current_location.location_details['yahoo id'],
@@ -2540,14 +2570,17 @@ class Assistant(Gtk.Assistant):
             log.debug("Assistant: Search Geonames location details, url %s" % url)
             handler = urllib2.urlopen(url)
             content_type = handler.info().dict['content-type']
+            log.debug("content_type=%s" % content_type) #DEBUG
             try:
-                charset = re.search('charset\=(.*)' ,content_type).group(1)
+                charset = re.search('charset\=(.*)', content_type).group(1)
             except AttributeError:
                 charset = 'utf-8'
             if charset.lower() != 'utf-8':
                 json_response = handler.read().decode(charset).encode('utf-8')
             else:
                 json_response = handler.read()
+            log.debug(json_response)    #DEBUG
+            log.debug(repr(json_response))  #DEBUG
             cities = json.loads(json_response)
             handler.close()
 
@@ -2555,19 +2588,19 @@ class Assistant(Gtk.Assistant):
                 # Create a full city name, consisting of city name,
                 # administrative areas names and country name
                 if 'adminName2' in city:
-                    displayed_city_name = ', '.join(
+                    displayed_city_name = u', '.join(
                         (city['name'], city['adminName1'],
                         city['adminName1'], city['countryName'])
                         )
                 elif 'adminName1' in city:
-                    displayed_city_name = ', '.join(
+                    displayed_city_name = u', '.join(
                         (city['name'], city['adminName1'], city['countryName'])
                         )
                 else:
-                    displayed_city_name = ', '.join((city['name'], 
+                    displayed_city_name = u', '.join((city['name'], 
                                                     city['countryName']))
                 self.store.append(
-                    [displayed_city_name, unicode(city['geonameId']),
+                    [displayed_city_name.encode('utf-8'), unicode(city['geonameId']),
                     unicode(city['lat']), unicode(city['lng']),
                     unicode(city['name'])]
                     )
@@ -2597,13 +2630,17 @@ class Assistant(Gtk.Assistant):
             self.location = Location(wi.metric_system, wi.wind_unit,
                                      wi.heat_index, wi.chill_index)
             if self.location.prepare_location(self.place_selected):
-                log.debug("Assistant: Page %s: City %s found" % 
-                          (current_page, self.place_selected[0]))
+                log.debug(current_page)
+                log.debug(repr(current_page)) 
+                log.debug(self.place_selected[0])
+                log.debug(repr(self.place_selected[0]))
+                log.debug(u"Assistant: Page %s: City %s found" % (
+                          current_page, self.place_selected[0].decode('utf-8')))
                 # Set a short city name as default label
                 self.builder.get_object("entrylbl").set_text(self.place_selected[4])
             else:
                 # Error occurred while getting location data
-                log.error("Assistant: Page %s: City %s with code %s was NOT "
+                log.error("Assistant: Page %s: Location with code %s was NOT "
                           "found" % (current_page, self.place_selected[0],
                                      self.place_selected[1]))
                 md = Gtk.MessageDialog(
@@ -2635,7 +2672,7 @@ class Assistant(Gtk.Assistant):
                 lbl = self.place_selected[4]
                 self.builder.get_object("entrylbl").set_text(lbl)
             # Update summary page
-            self.location.location_details['label'] = lbl
+            self.location.location_details['label'] = lbl.decode('utf-8')
             self.builder.get_object("lbl3").set_label(_('Label:'))
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)
             self.builder.get_object("placelbl").set_label(
@@ -2651,8 +2688,10 @@ class Assistant(Gtk.Assistant):
     def on_apply(self,widget):
         """ 'Apply' clicked - save location details, add an entry in a location list """
         (location_code, location_details) = self.location.export_location_details()
-        log.debug("Assistant: Apply: adding location ('%s', '%s')" %
-                  (self.location.location_details['label'].decode('utf-8'), location_code))
+        # log.debug("Assistant: Apply: adding location ('%s', '%s')" %
+        #           (self.location.location_details['label'].decode('utf-8'), location_code))
+        log.debug(u"Assistant: Apply: adding location ('%s', '%s')" %
+                  (self.location.location_details['label'], location_code))
         newplace = list()
         newplace.append(self.location.location_details['label'])
         newplace.append(str(location_code))
