@@ -7,470 +7,485 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2011-06-22 02:48-0700\n"
+"POT-Creation-Date: 2013-05-29 22:09-0400\n"
 "PO-Revision-Date: 2011-09-11 07:11+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Faroese <fo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-09-12 05:16+0000\n"
-"X-Generator: Launchpad (build 13900)\n"
+"X-Launchpad-Export-Date: 2013-05-31 06:01+0000\n"
+"X-Generator: Launchpad (build 16660)\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Fráboðanir</b>"
+msgid "Weather Indicator Preferences"
+msgstr "Ásetingar fyri Veður Vísitól"
 
 #: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Beaufort"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
 msgid "Enable the Weather Indicator Applet"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Alment"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Km per hour (km/h)"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Knob"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Metur um sekundið (m/s)"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Míl um tíman (mph)"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Ongar fráboðanir"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (metric, °C)"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:18
+#: ../data/ui/PreferencesDialog.ui.h:3
 msgid "Show temperature near indicator"
 msgstr ""
 
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:20
+#: ../data/ui/PreferencesDialog.ui.h:4
 msgid "Update every"
 msgstr "Dagfør hvønn"
 
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Weather Indicator Preferences"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
-
-#: ../data/ui/PreferencesDialog.ui.h:24
+#: ../data/ui/PreferencesDialog.ui.h:5
 msgid "minutes"
 msgstr "minutt"
 
-#: ../bin/indicator-weather.py:463
+#: ../data/ui/PreferencesDialog.ui.h:6
+msgid "<b>Notifications</b>"
+msgstr "<b>Fráboðanir</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "No notifications"
+msgstr "Ongar fráboðanir"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Nýt bert kunngerðir fyri at geva álvarsligar veður ávaringar"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Use notifications to give every weather condition change"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:10
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Verður Dátu Kelda</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "General"
+msgstr "Alment"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Hita Stigi</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "Imperial (°F)"
+msgstr "Heimsveldi (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "SI (metric, °C)"
+msgstr "SI (metralag, °C)"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Vind Ferð Eind</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:18
+msgid "Meter per second (m/s)"
+msgstr "Metur um sekundið (m/s)"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Miles per hour (mph)"
+msgstr "Míl um tíman (mph)"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Kilometers per hour (km/h)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Beaufort"
+msgstr "Beaufort"
+
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Knots"
+msgstr "Knob"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Units"
+msgstr "Eindir"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "Locations"
+msgstr "Støð"
+
+#: ../bin/indicator-weather.py:573
 msgid "Unknown error occurred while picking up weather data"
 msgstr ""
 
-#: ../bin/indicator-weather.py:551
+#: ../bin/indicator-weather:645
 msgid "Tornado"
 msgstr "Melduródn"
 
-#: ../bin/indicator-weather.py:552
+#: ../bin/indicator-weather:646
 msgid "Tropical storm"
 msgstr "Tropiskur stormur"
 
-#: ../bin/indicator-weather.py:553
+#: ../bin/indicator-weather:647
 msgid "Hurricane"
-msgstr ""
+msgstr "Ódn"
 
-#: ../bin/indicator-weather.py:554
+#: ../bin/indicator-weather:648
 msgid "Severe thunderstorms"
-msgstr ""
+msgstr "Álvarsamt toruveður"
 
-#: ../bin/indicator-weather.py:555
+#: ../bin/indicator-weather:649
 msgid "Thunderstorms"
-msgstr ""
+msgstr "Toruveður"
 
-#: ../bin/indicator-weather.py:556
+#: ../bin/indicator-weather:650
 msgid "Mixed rain and snow"
-msgstr ""
+msgstr "Vátakavi"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
-#: ../bin/indicator-weather.py:558
+#: ../bin/indicator-weather.py:652
 msgid "Mixed rain and sleet"
-msgstr ""
+msgstr "Kavaslettingur"
 
-#: ../bin/indicator-weather.py:559
+#: ../bin/indicator-weather:653
 msgid "Mixed snow and sleet"
-msgstr ""
+msgstr "Vátakavi"
 
-#: ../bin/indicator-weather.py:560
+#: ../bin/indicator-weather:654
 msgid "Freezing drizzle"
-msgstr ""
+msgstr "Frystandi sirm"
 
-#: ../bin/indicator-weather.py:561
+#: ../bin/indicator-weather:655
 msgid "Drizzle"
 msgstr "Sirm"
 
-#: ../bin/indicator-weather.py:562
+#: ../bin/indicator-weather:656
 msgid "Freezing rain"
-msgstr ""
+msgstr "Frystandi regn"
 
-#: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
+#: ../bin/indicator-weather:657 ../bin/indicator-weather:658
 msgid "Showers"
 msgstr "Ælaveður"
 
-#: ../bin/indicator-weather.py:565
+#: ../bin/indicator-weather:659
 msgid "Snow flurries"
 msgstr ""
 
-#: ../bin/indicator-weather.py:566
+#: ../bin/indicator-weather:660
 msgid "Light snow showers"
-msgstr ""
+msgstr "Kavaælingur"
 
-#: ../bin/indicator-weather.py:567
+#: ../bin/indicator-weather:661
 msgid "Blowing snow"
 msgstr ""
 
-#: ../bin/indicator-weather.py:568
+#: ../bin/indicator-weather:662
 msgid "Snow"
 msgstr "Kavi"
 
-#: ../bin/indicator-weather.py:569
+#: ../bin/indicator-weather:663
 msgid "Hail"
 msgstr "Heglingur"
 
-#: ../bin/indicator-weather.py:570
+#: ../bin/indicator-weather:664
 msgid "Sleet"
 msgstr "Vátakavi"
 
-#: ../bin/indicator-weather.py:571
+#: ../bin/indicator-weather:665
 msgid "Dust"
-msgstr ""
+msgstr "Dustskýggj"
 
-#: ../bin/indicator-weather.py:572
+#: ../bin/indicator-weather:666
 msgid "Foggy"
 msgstr "Mjørki"
 
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather:667
 msgid "Haze"
-msgstr ""
+msgstr "Mjørki"
 
-#: ../bin/indicator-weather.py:574
+#: ../bin/indicator-weather:668
 msgid "Smoky"
-msgstr ""
+msgstr "Rúkandi"
 
-#: ../bin/indicator-weather.py:575
+#: ../bin/indicator-weather:669
 msgid "Blustery"
-msgstr ""
+msgstr "Blásandi"
 
-#: ../bin/indicator-weather.py:576
+#: ../bin/indicator-weather:670
 msgid "Windy"
-msgstr ""
+msgstr "Vindur"
 
-#: ../bin/indicator-weather.py:577
+#: ../bin/indicator-weather:671
 msgid "Cold"
 msgstr "Kalt"
 
-#: ../bin/indicator-weather.py:578
+#: ../bin/indicator-weather:672
 msgid "Cloudy"
-msgstr ""
+msgstr "Skýggjut"
 
-#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
+#: ../bin/indicator-weather:673 ../bin/indicator-weather:674
 msgid "Mostly cloudy"
-msgstr ""
+msgstr "Skýggja fyri tað mesta"
 
-#: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
-#: ../bin/indicator-weather.py:596
+#: ../bin/indicator-weather:675 ../bin/indicator-weather:676
+#: ../bin/indicator-weather:690
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Partvíst skýggja"
 
-#: ../bin/indicator-weather.py:583
+#: ../bin/indicator-weather:677
 msgid "Clear"
-msgstr ""
+msgstr "Klárt"
 
-#: ../bin/indicator-weather.py:584
+#: ../bin/indicator-weather:678
 msgid "Sunny"
-msgstr ""
+msgstr "Sólríkt"
 
-#: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
+#: ../bin/indicator-weather:679 ../bin/indicator-weather:680
 msgid "Fair"
-msgstr ""
+msgstr "Rímiligt"
 
-#: ../bin/indicator-weather.py:587
+#: ../bin/indicator-weather:681
 msgid "Mixed rain and hail"
-msgstr ""
+msgstr "Blanda regn og heglingur"
 
-#: ../bin/indicator-weather.py:588
+#: ../bin/indicator-weather:682
 msgid "Hot"
 msgstr "Heitt"
 
-#: ../bin/indicator-weather.py:589
+#: ../bin/indicator-weather:683
 msgid "Isolated thunderstorms"
-msgstr ""
+msgstr "Avbyrgt toruveður"
 
-#: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
+#: ../bin/indicator-weather:684 ../bin/indicator-weather:685
 msgid "Scattered thunderstorms"
-msgstr ""
+msgstr "Spjatt toruveður"
 
-#: ../bin/indicator-weather.py:592
+#: ../bin/indicator-weather:686
 msgid "Scattered showers"
-msgstr ""
+msgstr "Spjadd æl"
 
-#: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
+#: ../bin/indicator-weather:687 ../bin/indicator-weather:689
 msgid "Heavy snow"
-msgstr ""
+msgstr "Nógvur kavi"
 
-#: ../bin/indicator-weather.py:594
+#: ../bin/indicator-weather:688
 msgid "Scattered snow showers"
-msgstr ""
+msgstr "Spjadd kavaæl"
 
-#: ../bin/indicator-weather.py:597
+#: ../bin/indicator-weather:691
 msgid "Thundershowers"
-msgstr ""
+msgstr "Toruæl"
 
-#: ../bin/indicator-weather.py:598
+#: ../bin/indicator-weather:692
 msgid "Snow showers"
-msgstr ""
+msgstr "Kavaæl"
 
-#: ../bin/indicator-weather.py:599
+#: ../bin/indicator-weather:693
 msgid "Isolated thundershowers"
-msgstr ""
+msgstr "Frábyrgt toruæl"
 
-#: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
-#: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
-#: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
-#: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
+#: ../bin/indicator-weather:694 ../bin/indicator-weather:731
+#: ../bin/indicator-weather:741 ../bin/indicator-weather:753
+#: ../bin/indicator-weather:763 ../bin/indicator-weather:2318
 msgid "Unknown condition"
-msgstr ""
+msgstr "Ókend fortreyt"
 
-#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+#: ../bin/indicator-weather:852 ../bin/indicator-weather:855
+#: ../bin/indicator-weather:858
 msgid "Humidity"
-msgstr ""
+msgstr "Luftvæta"
 
-#: ../bin/indicator-weather.py:782
+#: ../bin/indicator-weather:872
+msgid "Dewpoint"
+msgstr "Døggmark"
+
+#: ../bin/indicator-weather:888
 msgid "Pressure"
 msgstr ""
 
-#: ../bin/indicator-weather.py:812
+#: ../bin/indicator-weather:928
 msgid "Temperature"
+msgstr "Hiti"
+
+#: ../bin/indicator-weather:951
+msgid "Feels Like"
 msgstr ""
 
-#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
-#: ../bin/indicator-weather.py:838
-msgid "Unknown"
-msgstr ""
-
-#: ../bin/indicator-weather.py:845
+#: ../bin/indicator-weather:1198 ../bin/indicator-weather:1204
 msgid "Wind"
 msgstr "Vindur"
 
-#: ../bin/indicator-weather.py:872
-msgid "Sunrise"
+#: ../bin/indicator-weather:1256
+msgid "Calm"
 msgstr ""
 
-#: ../bin/indicator-weather.py:876
+#: ../bin/indicator-weather:1262
+msgid "Sunrise"
+msgstr "Sólarris"
+
+#: ../bin/indicator-weather:1266
 msgid "Sunset"
-msgstr ""
+msgstr "Sólsetur"
 
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:889
+#: ../bin/indicator-weather.py:925
 msgid "N"
 msgstr ""
 
-#: ../bin/indicator-weather.py:891
+#: ../bin/indicator-weather.py:927
 msgid "NE"
 msgstr ""
 
-#: ../bin/indicator-weather.py:893
+#: ../bin/indicator-weather.py:929
 msgid "E"
 msgstr ""
 
-#: ../bin/indicator-weather.py:895
+#: ../bin/indicator-weather.py:931
 msgid "SE"
 msgstr ""
 
-#: ../bin/indicator-weather.py:897
+#: ../bin/indicator-weather.py:933
 msgid "S"
 msgstr ""
 
-#: ../bin/indicator-weather.py:899
+#: ../bin/indicator-weather.py:935
 msgid "SW"
 msgstr ""
 
-#: ../bin/indicator-weather.py:901
+#: ../bin/indicator-weather.py:937
 msgid "W"
 msgstr ""
 
-#: ../bin/indicator-weather.py:903
+#: ../bin/indicator-weather.py:939
 msgid "NW"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1074
+#: ../bin/indicator-weather.py:1486
 msgid "Set Up Weather..."
 msgstr "Set Veður Upp..."
 
-#: ../bin/indicator-weather.py:1176
+#: ../bin/indicator-weather:1593
 msgid "Forecast"
 msgstr ""
 
-#. #Preferences
-#: ../bin/indicator-weather.py:1182
+#: ../bin/indicator-weather:1599
 msgid "Preferences..."
 msgstr "Sertokkar"
 
-#. #About
-#: ../bin/indicator-weather.py:1188
+#: ../bin/indicator-weather:1605
 msgid "About..."
 msgstr "Um..."
 
-#: ../bin/indicator-weather.py:1289
+#: ../bin/indicator-weather:1708
 msgid "Refreshing, please wait"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
-#: ../bin/indicator-weather.py:1295
+#: ../bin/indicator-weather:1710 ../bin/indicator-weather:1712
+#: ../bin/indicator-weather:1714
 msgid "Refresh"
 msgstr "Endurnýggja"
 
-#: ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather:1712
 msgid "just now"
 msgstr "Júst nú"
 
-#: ../bin/indicator-weather.py:1295
+#: ../bin/indicator-weather:1714
 #, python-format
 msgid "%d min. ago"
 msgstr "%d min. síðani"
 
-#: ../bin/indicator-weather.py:1436
+#: ../bin/indicator-weather:1929
 msgid "Severe weather alert"
 msgstr "Álvarsom veður ávaring"
 
-#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
+#: ../bin/indicator-weather:1947
 msgid "Weather Indicator"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1466
+#: ../bin/indicator-weather:1961
 msgid "translator-credits"
 msgstr ""
+"Launchpad Contributions:\n"
+"  Gunleif Joensen https://launchpad.net/~gunleif\n"
+"  Jonhard Sørensen https://launchpad.net/~jonhardsorensen\n"
+"  Magnus Olsen https://launchpad.net/~mucilago-8"
 
-#: ../bin/indicator-weather.py:1684
-msgid "Weather Forecast for "
+#: ../bin/indicator-weather:2254
+msgid "Weather Forecast for"
 msgstr ""
 
-#: ../bin/indicator-weather.py:1739
+#: ../bin/indicator-weather:2328
 msgid "High"
 msgstr "Høgt"
 
-#: ../bin/indicator-weather.py:1741
+#: ../bin/indicator-weather:2331
 msgid "Low"
 msgstr "Lágt"
 
-#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+#: ../bin/indicator-weather:2443
+msgid "Could not find location id for"
+msgstr ""
+
+#: ../bin/indicator-weather:2471 ../data/ui/Assistant.ui.h:8
 msgid "Label:"
 msgstr "Spjaldur:"
 
-#: ../bin/indicator-weather.py:1932
+#: ../bin/indicator-weather:2581
 msgid "Another instance of this program is already running"
 msgstr ""
 
 #: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr ""
-
-#: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr "Legg eitt stað til"
 
+#: ../data/ui/Assistant.ui.h:2
+msgid "Please search our database for your location:"
+msgstr "Vinarliga leita í okkara dátustovni, eftir tínum staði:"
+
+#: ../data/ui/Assistant.ui.h:3
+msgid "Search"
+msgstr "Leita"
+
+#: ../data/ui/Assistant.ui.h:4
+msgid "Select a location"
+msgstr "Vel eitt stað"
+
 #: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr ""
+msgid "Please enter a name for this location:"
+msgstr "Vinarliga skriva navnið á hesum stað:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
 msgstr "Navngev staðið"
 
 #: ../data/ui/Assistant.ui.h:7
-msgid "Please enter a name for this location:"
-msgstr "Vinarliga skriva navnið á hesum stað:"
-
-#: ../data/ui/Assistant.ui.h:8
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
 msgstr ""
+"Vinarliga eftirkanna valini niðriundir. Um okkurt ikki er rætt, vinarliga "
+"far aftur og vel røttu møguleikarnar."
 
 #: ../data/ui/Assistant.ui.h:9
-msgid "Please search our database for your location:"
-msgstr "Vinarliga leita í okkara dátustovni, eftir tínum staði:"
+msgid "<b>Home</b>"
+msgstr "<b>Heim</b>"
 
 #: ../data/ui/Assistant.ui.h:10
-msgid "Review choices"
-msgstr ""
+msgid "Location:"
+msgstr "Stað:"
 
 #: ../data/ui/Assistant.ui.h:11
-msgid "Search"
-msgstr "Leita"
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:12
-msgid "Select a location"
-msgstr "Vel eitt stað"
+msgid "Review choices"
+msgstr "Kanna val"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
 msgstr ""
 
-#: ../indicator-weather.desktop.in.h:1
+#: ../indicator-weather.desktop.in.h:2
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
@@ -478,3 +493,9 @@ msgstr ""
 
 #~ msgid "Visibility"
 #~ msgstr "Sýni"
+
+#~ msgid "Weather Forecast for "
+#~ msgstr "Veðurlíkindi fyri "
+
+#~ msgid "Humidex"
+#~ msgstr "Humidex"

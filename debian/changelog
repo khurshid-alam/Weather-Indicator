@@ -5,6 +5,7 @@ indicator-weather (13.05.29) quantal; urgency=low
   * Automatically convert settings format to json when loading (LP: #1189916)
   * debian/postinst: revert changes, user must update dconf data (LP: #1189830)
   * Import latest translation files from Launchpad, thanks Launchpad Translators 
+  * DST status and timezone ID are now refreshed on location change
 
  -- Joshua Tasker <jtasker@gmail.com>  Thu, 13 Jun 2013 07:03:48 -0400
 

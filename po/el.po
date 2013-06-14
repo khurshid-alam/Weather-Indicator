@@ -7,448 +7,460 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 02:48-0700\n"
-"PO-Revision-Date: 2011-05-19 00:22+0000\n"
-"Last-Translator: Renji NsK <Unknown>\n"
+"POT-Creation-Date: 2013-05-29 22:09-0400\n"
+"PO-Revision-Date: 2013-05-24 10:23+0000\n"
+"Last-Translator: Joshua Tasker <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-06-23 05:53+0000\n"
-"X-Generator: Launchpad (build 13168)\n"
+"X-Launchpad-Export-Date: 2013-05-31 06:01+0000\n"
+"X-Generator: Launchpad (build 16660)\n"
 "Language: el\n"
 
 #: ../data/ui/PreferencesDialog.ui.h:1
-msgid "<b>Notifications</b>"
-msgstr "<b>Ειδοποιήσεις</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Κλίμακα θερμοκρασίας</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Πηγή δεδομένων καιρού</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Μονάδα ταχύτητας ανέμου</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "Beaufort"
-msgstr "Μποφόρ"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "Enable the Weather Indicator Applet"
-msgstr "Ενεργοποίηση του Δείκτη Καιρού"
-
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "General"
-msgstr "Γενικά"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Google"
-msgstr "Google"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Imperial (°F)"
-msgstr "Αγγλοσαξωνικό σύστημα (°F)"
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "Km per hour (km/h)"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Knots"
-msgstr "Κόμβοι"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Locations"
-msgstr "Τοποθεσίες"
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "Meter per second (m/s)"
-msgstr "Μέτρα ανά δευτερόλεπτο (μ/δ)"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "Miles per hour (mph)"
-msgstr "Μίλια ανά ώρα (μ/ω)"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "No notifications"
-msgstr "Όχι ειδοποιήσεις"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Ειδοποιήσεις μόνο για αντίξοες καιρικές συνθήκες"
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "SI (metric, °C)"
-msgstr "Διεθνές Σύστημα Μονάδων (μετρικό, °C)"
-
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Show temperature near indicator"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Units"
-msgstr "Μονάδες"
-
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Update every"
-msgstr "Ενημέρωση κάθε"
-
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Use notifications to give every weather condition change"
-msgstr "Ειδοποιήσεις για κάθε αλλαγή του καιρού"
-
-#: ../data/ui/PreferencesDialog.ui.h:22
 msgid "Weather Indicator Preferences"
 msgstr "Προτιμήσεις Δείκτη Καιρού"
 
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Yahoo!"
-msgstr "Yahoo!"
+#: ../data/ui/PreferencesDialog.ui.h:2
+msgid "Enable the Weather Indicator Applet"
+msgstr "Ενεργοποίηση του Δείκτη Καιρού"
 
-#: ../data/ui/PreferencesDialog.ui.h:24
+#: ../data/ui/PreferencesDialog.ui.h:3
+msgid "Show temperature near indicator"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:4
+msgid "Update every"
+msgstr "Ενημέρωση κάθε"
+
+#: ../data/ui/PreferencesDialog.ui.h:5
 msgid "minutes"
 msgstr "λεπτά"
 
-#: ../bin/indicator-weather.py:463
+#: ../data/ui/PreferencesDialog.ui.h:6
+msgid "<b>Notifications</b>"
+msgstr "<b>Ειδοποιήσεις</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:7
+msgid "No notifications"
+msgstr "Όχι ειδοποιήσεις"
+
+#: ../data/ui/PreferencesDialog.ui.h:8
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Ειδοποιήσεις μόνο για αντίξοες καιρικές συνθήκες"
+
+#: ../data/ui/PreferencesDialog.ui.h:9
+msgid "Use notifications to give every weather condition change"
+msgstr "Ειδοποιήσεις για κάθε αλλαγή του καιρού"
+
+#: ../data/ui/PreferencesDialog.ui.h:10
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Πηγή δεδομένων καιρού</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:11
+msgid "Google"
+msgstr "Google"
+
+#: ../data/ui/PreferencesDialog.ui.h:12
+msgid "Yahoo!"
+msgstr "Yahoo!"
+
+#: ../data/ui/PreferencesDialog.ui.h:13
+msgid "General"
+msgstr "Γενικά"
+
+#: ../data/ui/PreferencesDialog.ui.h:14
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Κλίμακα θερμοκρασίας</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:15
+msgid "Imperial (°F)"
+msgstr "Αγγλοσαξωνικό σύστημα (°F)"
+
+#: ../data/ui/PreferencesDialog.ui.h:16
+msgid "SI (metric, °C)"
+msgstr "Διεθνές Σύστημα Μονάδων (μετρικό, °C)"
+
+#: ../data/ui/PreferencesDialog.ui.h:17
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Μονάδα ταχύτητας ανέμου</b>"
+
+#: ../data/ui/PreferencesDialog.ui.h:18
+msgid "Meter per second (m/s)"
+msgstr "Μέτρα ανά δευτερόλεπτο (μ/δ)"
+
+#: ../data/ui/PreferencesDialog.ui.h:19
+msgid "Miles per hour (mph)"
+msgstr "Μίλια ανά ώρα (μ/ω)"
+
+#: ../data/ui/PreferencesDialog.ui.h:20
+msgid "Kilometers per hour (km/h)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui.h:21
+msgid "Beaufort"
+msgstr "Μποφόρ"
+
+#: ../data/ui/PreferencesDialog.ui.h:22
+msgid "Knots"
+msgstr "Κόμβοι"
+
+#: ../data/ui/PreferencesDialog.ui.h:23
+msgid "Units"
+msgstr "Μονάδες"
+
+#: ../data/ui/PreferencesDialog.ui.h:24
+msgid "Locations"
+msgstr "Τοποθεσίες"
+
+#: ../bin/indicator-weather.py:573
 msgid "Unknown error occurred while picking up weather data"
 msgstr ""
 
-#: ../bin/indicator-weather.py:551
+#: ../bin/indicator-weather:645
 msgid "Tornado"
 msgstr "Ανεμοστρόβιλος"
 
-#: ../bin/indicator-weather.py:552
+#: ../bin/indicator-weather:646
 msgid "Tropical storm"
 msgstr "Τροπική καταιγίδα"
 
-#: ../bin/indicator-weather.py:553
+#: ../bin/indicator-weather:647
 msgid "Hurricane"
 msgstr "Θύελλα"
 
-#: ../bin/indicator-weather.py:554
+#: ../bin/indicator-weather:648
 msgid "Severe thunderstorms"
 msgstr "Σφοδρές καταιγίδες"
 
-#: ../bin/indicator-weather.py:555
+#: ../bin/indicator-weather:649
 msgid "Thunderstorms"
 msgstr "Καταιγίδες"
 
-#: ../bin/indicator-weather.py:556
+#: ../bin/indicator-weather:650
 msgid "Mixed rain and snow"
 msgstr "Μικτή βροχή και χιόνι"
 
 #. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
-#: ../bin/indicator-weather.py:558
+#: ../bin/indicator-weather.py:652
 msgid "Mixed rain and sleet"
 msgstr "Μικτή βροχή και χιονόνερο"
 
-#: ../bin/indicator-weather.py:559
+#: ../bin/indicator-weather:653
 msgid "Mixed snow and sleet"
 msgstr "Μικτό χιόνι και χιονόνερο"
 
-#: ../bin/indicator-weather.py:560
+#: ../bin/indicator-weather:654
 msgid "Freezing drizzle"
 msgstr "Παγωμένο ψιχάλισμα"
 
-#: ../bin/indicator-weather.py:561
+#: ../bin/indicator-weather:655
 msgid "Drizzle"
 msgstr "Ψιχάλισμα"
 
-#: ../bin/indicator-weather.py:562
+#: ../bin/indicator-weather:656
 msgid "Freezing rain"
 msgstr "Παγωμένη βροχή"
 
-#: ../bin/indicator-weather.py:563 ../bin/indicator-weather.py:564
+#: ../bin/indicator-weather:657 ../bin/indicator-weather:658
 msgid "Showers"
 msgstr "Μπόρα"
 
-#: ../bin/indicator-weather.py:565
+#: ../bin/indicator-weather:659
 msgid "Snow flurries"
 msgstr "Πιθανές Χιονοπτώσεις"
 
-#: ../bin/indicator-weather.py:566
+#: ../bin/indicator-weather:660
 msgid "Light snow showers"
 msgstr "Ελαφρά χιονόπτωση"
 
-#: ../bin/indicator-weather.py:567
+#: ../bin/indicator-weather:661
 msgid "Blowing snow"
 msgstr "Δυνατή χιονόπτωση"
 
-#: ../bin/indicator-weather.py:568
+#: ../bin/indicator-weather:662
 msgid "Snow"
 msgstr "Χιονόπτωση"
 
-#: ../bin/indicator-weather.py:569
+#: ../bin/indicator-weather:663
 msgid "Hail"
 msgstr "Χαλάζι"
 
-#: ../bin/indicator-weather.py:570
+#: ../bin/indicator-weather:664
 msgid "Sleet"
 msgstr "Χιονόνερο"
 
-#: ../bin/indicator-weather.py:571
+#: ../bin/indicator-weather:665
 msgid "Dust"
 msgstr "Σκόνη"
 
-#: ../bin/indicator-weather.py:572
+#: ../bin/indicator-weather:666
 msgid "Foggy"
 msgstr "Ομιχλώδης"
 
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather:667
 msgid "Haze"
 msgstr "Καταχνιά"
 
-#: ../bin/indicator-weather.py:574
+#: ../bin/indicator-weather:668
 msgid "Smoky"
-msgstr ""
+msgstr "Ομιχλώδες"
 
-#: ../bin/indicator-weather.py:575
+#: ../bin/indicator-weather:669
 msgid "Blustery"
-msgstr ""
+msgstr "θορυβώδης"
 
-#: ../bin/indicator-weather.py:576
+#: ../bin/indicator-weather:670
 msgid "Windy"
 msgstr "Aνεμώδης"
 
-#: ../bin/indicator-weather.py:577
+#: ../bin/indicator-weather:671
 msgid "Cold"
 msgstr "Ψυχρός"
 
-#: ../bin/indicator-weather.py:578
+#: ../bin/indicator-weather:672
 msgid "Cloudy"
 msgstr "Συννεφιά"
 
-#: ../bin/indicator-weather.py:579 ../bin/indicator-weather.py:580
+#: ../bin/indicator-weather:673 ../bin/indicator-weather:674
 msgid "Mostly cloudy"
 msgstr "Κυρίως συννεφιά"
 
-#: ../bin/indicator-weather.py:581 ../bin/indicator-weather.py:582
-#: ../bin/indicator-weather.py:596
+#: ../bin/indicator-weather:675 ../bin/indicator-weather:676
+#: ../bin/indicator-weather:690
 msgid "Partly cloudy"
 msgstr "Μερική συννεφιά"
 
-#: ../bin/indicator-weather.py:583
+#: ../bin/indicator-weather:677
 msgid "Clear"
 msgstr "Καθαρός"
 
-#: ../bin/indicator-weather.py:584
+#: ../bin/indicator-weather:678
 msgid "Sunny"
 msgstr "Λιακάδα"
 
-#: ../bin/indicator-weather.py:585 ../bin/indicator-weather.py:586
+#: ../bin/indicator-weather:679 ../bin/indicator-weather:680
 msgid "Fair"
 msgstr "Αίθριος"
 
-#: ../bin/indicator-weather.py:587
+#: ../bin/indicator-weather:681
 msgid "Mixed rain and hail"
 msgstr "Μικτή βροχή και χαλάζι"
 
-#: ../bin/indicator-weather.py:588
+#: ../bin/indicator-weather:682
 msgid "Hot"
 msgstr "Ζεστός"
 
-#: ../bin/indicator-weather.py:589
+#: ../bin/indicator-weather:683
 msgid "Isolated thunderstorms"
 msgstr "Τοπικές καταιγίδες"
 
-#: ../bin/indicator-weather.py:590 ../bin/indicator-weather.py:591
+#: ../bin/indicator-weather:684 ../bin/indicator-weather:685
 msgid "Scattered thunderstorms"
 msgstr "Διάσπαρτες καταιγίδες"
 
-#: ../bin/indicator-weather.py:592
+#: ../bin/indicator-weather:686
 msgid "Scattered showers"
 msgstr "Διάσπαρτες βροχοπτώσεις"
 
-#: ../bin/indicator-weather.py:593 ../bin/indicator-weather.py:595
+#: ../bin/indicator-weather:687 ../bin/indicator-weather:689
 msgid "Heavy snow"
 msgstr "Έντονη χιονόπτωση"
 
-#: ../bin/indicator-weather.py:594
+#: ../bin/indicator-weather:688
 msgid "Scattered snow showers"
 msgstr "Διάσπαρτες μπόρες χιονιού"
 
-#: ../bin/indicator-weather.py:597
+#: ../bin/indicator-weather:691
 msgid "Thundershowers"
 msgstr "Καταιγίδες"
 
-#: ../bin/indicator-weather.py:598
+#: ../bin/indicator-weather:692
 msgid "Snow showers"
 msgstr "Μπόρες χιονιού"
 
-#: ../bin/indicator-weather.py:599
+#: ../bin/indicator-weather:693
 msgid "Isolated thundershowers"
 msgstr "Τοπικές καταιγίδες"
 
-#: ../bin/indicator-weather.py:600 ../bin/indicator-weather.py:622
-#: ../bin/indicator-weather.py:627 ../bin/indicator-weather.py:645
-#: ../bin/indicator-weather.py:654 ../bin/indicator-weather.py:664
-#: ../bin/indicator-weather.py:748 ../bin/indicator-weather.py:1730
+#: ../bin/indicator-weather:694 ../bin/indicator-weather:731
+#: ../bin/indicator-weather:741 ../bin/indicator-weather:753
+#: ../bin/indicator-weather:763 ../bin/indicator-weather:2318
 msgid "Unknown condition"
-msgstr ""
+msgstr "Άγνωστες συνθήκες"
 
-#: ../bin/indicator-weather.py:755 ../bin/indicator-weather.py:761
+#: ../bin/indicator-weather:852 ../bin/indicator-weather:855
+#: ../bin/indicator-weather:858
 msgid "Humidity"
 msgstr "Υγρασία"
 
-#: ../bin/indicator-weather.py:782
+#: ../bin/indicator-weather:872
+msgid "Dewpoint"
+msgstr "Σημείο δρόσου"
+
+#: ../bin/indicator-weather:888
 msgid "Pressure"
 msgstr "Πίεση"
 
-#: ../bin/indicator-weather.py:812
+#: ../bin/indicator-weather:928
 msgid "Temperature"
 msgstr "Θερμοκρασία"
 
-#: ../bin/indicator-weather.py:836 ../bin/indicator-weather.py:837
-#: ../bin/indicator-weather.py:838
-msgid "Unknown"
+#: ../bin/indicator-weather:951
+msgid "Feels Like"
 msgstr ""
 
-#: ../bin/indicator-weather.py:845
+#: ../bin/indicator-weather:1198 ../bin/indicator-weather:1204
 msgid "Wind"
 msgstr "Άνεμος"
 
-#: ../bin/indicator-weather.py:872
+#: ../bin/indicator-weather:1256
+msgid "Calm"
+msgstr ""
+
+#: ../bin/indicator-weather:1262
 msgid "Sunrise"
 msgstr "Ανατολή"
 
-#: ../bin/indicator-weather.py:876
+#: ../bin/indicator-weather:1266
 msgid "Sunset"
 msgstr "Δύση"
 
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:889
+#: ../bin/indicator-weather.py:925
 msgid "N"
 msgstr "Β"
 
-#: ../bin/indicator-weather.py:891
+#: ../bin/indicator-weather.py:927
 msgid "NE"
 msgstr "ΒΑ"
 
-#: ../bin/indicator-weather.py:893
+#: ../bin/indicator-weather.py:929
 msgid "E"
 msgstr "Α"
 
-#: ../bin/indicator-weather.py:895
+#: ../bin/indicator-weather.py:931
 msgid "SE"
 msgstr "ΝΑ"
 
-#: ../bin/indicator-weather.py:897
+#: ../bin/indicator-weather.py:933
 msgid "S"
 msgstr "Ν"
 
-#: ../bin/indicator-weather.py:899
+#: ../bin/indicator-weather.py:935
 msgid "SW"
 msgstr "ΝΔ"
 
-#: ../bin/indicator-weather.py:901
+#: ../bin/indicator-weather.py:937
 msgid "W"
 msgstr "Δ"
 
-#: ../bin/indicator-weather.py:903
+#: ../bin/indicator-weather.py:939
 msgid "NW"
 msgstr "ΒΔ"
 
-#: ../bin/indicator-weather.py:1074
+#: ../bin/indicator-weather.py:1486
 msgid "Set Up Weather..."
 msgstr "Ρυθμίσεις καιρού..."
 
-#: ../bin/indicator-weather.py:1176
+#: ../bin/indicator-weather:1593
 msgid "Forecast"
 msgstr "Πρόγνωση"
 
-#. #Preferences
-#: ../bin/indicator-weather.py:1182
+#: ../bin/indicator-weather:1599
 msgid "Preferences..."
 msgstr "Προτιμήσεις…"
 
-#. #About
-#: ../bin/indicator-weather.py:1188
+#: ../bin/indicator-weather:1605
 msgid "About..."
 msgstr "Περί..."
 
-#: ../bin/indicator-weather.py:1289
+#: ../bin/indicator-weather:1708
 msgid "Refreshing, please wait"
 msgstr "Ανανέωση, παρακαλώ περιμένετε"
 
-#: ../bin/indicator-weather.py:1291 ../bin/indicator-weather.py:1293
-#: ../bin/indicator-weather.py:1295
+#: ../bin/indicator-weather:1710 ../bin/indicator-weather:1712
+#: ../bin/indicator-weather:1714
 msgid "Refresh"
 msgstr "Ανανέωση"
 
-#: ../bin/indicator-weather.py:1293
+#: ../bin/indicator-weather:1712
 msgid "just now"
 msgstr "τώρα"
 
-#: ../bin/indicator-weather.py:1295
+#: ../bin/indicator-weather:1714
 #, python-format
 msgid "%d min. ago"
 msgstr "πρίν %d λεπτά"
 
-#: ../bin/indicator-weather.py:1436
+#: ../bin/indicator-weather:1929
 msgid "Severe weather alert"
 msgstr "Προειδοποίηση κακοκαιρίας"
 
-#: ../bin/indicator-weather.py:1454 ../indicator-weather.desktop.in.h:2
+#: ../bin/indicator-weather:1947
 msgid "Weather Indicator"
 msgstr "Δείκτης Καιρού"
 
-#: ../bin/indicator-weather.py:1466
+#: ../bin/indicator-weather:1961
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
+"  Dimitrios Ntoulas https://launchpad.net/~ntoulasd\n"
 "  Panagiotis Skintzos https://launchpad.net/~ph7\n"
-"  Renji NsK https://launchpad.net/~redarmy-2505"
+"  Renji NsK https://launchpad.net/~redarmy-2505\n"
+"  Vadim Rutkovsky https://launchpad.net/~roignac\n"
+"  tzem https://launchpad.net/~athmakrigiannis"
 
-#: ../bin/indicator-weather.py:1684
-msgid "Weather Forecast for "
-msgstr "Πρόγνωση καιρού για "
+#: ../bin/indicator-weather:2254
+msgid "Weather Forecast for"
+msgstr ""
 
-#: ../bin/indicator-weather.py:1739
+#: ../bin/indicator-weather:2328
 msgid "High"
 msgstr "Υψηλή"
 
-#: ../bin/indicator-weather.py:1741
+#: ../bin/indicator-weather:2331
 msgid "Low"
 msgstr "Χαμηλή"
 
-#: ../bin/indicator-weather.py:1842 ../data/ui/Assistant.ui.h:4
+#: ../bin/indicator-weather:2443
+msgid "Could not find location id for"
+msgstr ""
+
+#: ../bin/indicator-weather:2471 ../data/ui/Assistant.ui.h:8
 msgid "Label:"
 msgstr "Ετικέτα:"
 
-#: ../bin/indicator-weather.py:1932
+#: ../bin/indicator-weather:2581
 msgid "Another instance of this program is already running"
 msgstr "Το πρόγραμμα αυτό εκτελείται ήδη"
 
 #: ../data/ui/Assistant.ui.h:1
-msgid "<b>Home</b>"
-msgstr "<b>Οικία</b>"
-
-#: ../data/ui/Assistant.ui.h:2
-msgid "<b>Orange, Texas</b>"
-msgstr "<b>Orange, Texas</b>"
-
-#: ../data/ui/Assistant.ui.h:3
 msgid "Add a location"
 msgstr "Προσθήκη τοποθεσίας"
 
+#: ../data/ui/Assistant.ui.h:2
+msgid "Please search our database for your location:"
+msgstr "Παρακαλούμε αναζητήστε στη βάση δεδομένων μας για την τοποθεσία σας:"
+
+#: ../data/ui/Assistant.ui.h:3
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: ../data/ui/Assistant.ui.h:4
+msgid "Select a location"
+msgstr "Επιλογή τοποθεσίας"
+
 #: ../data/ui/Assistant.ui.h:5
-msgid "Location:"
-msgstr "Τοποθεσία:"
+msgid "Please enter a name for this location:"
+msgstr "Παρακαλώ εισάγετε ένα όνομα για αυτήν την τοποθεσία:"
 
 #: ../data/ui/Assistant.ui.h:6
 msgid "Name the location"
 msgstr "Ονομασία τοποθεσίας"
 
 #: ../data/ui/Assistant.ui.h:7
-msgid "Please enter a name for this location:"
-msgstr "Παρακαλώ εισάγετε ένα όνομα για αυτήν την τοποθεσία:"
-
-#: ../data/ui/Assistant.ui.h:8
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -457,26 +469,26 @@ msgstr ""
 "πίσω και επιλέξτε τις σωστές επιλογές."
 
 #: ../data/ui/Assistant.ui.h:9
-msgid "Please search our database for your location:"
-msgstr "Παρακαλούμε αναζητήστε στη βάση δεδομένων μας για την τοποθεσία σας:"
+msgid "<b>Home</b>"
+msgstr "<b>Οικία</b>"
 
 #: ../data/ui/Assistant.ui.h:10
-msgid "Review choices"
-msgstr "Επανεξέταση επιλογών"
+msgid "Location:"
+msgstr "Τοποθεσία:"
 
 #: ../data/ui/Assistant.ui.h:11
-msgid "Search"
-msgstr "Αναζήτηση"
+msgid "<b>Orange, Texas</b>"
+msgstr "<b>Orange, Texas</b>"
 
 #: ../data/ui/Assistant.ui.h:12
-msgid "Select a location"
-msgstr "Επιλογή τοποθεσίας"
+msgid "Review choices"
+msgstr "Επανεξέταση επιλογών"
 
 #: ../data/ui/ExtendedForecast.ui.h:1
 msgid "Extended Forecast"
 msgstr "Εκτεταμένη πρόγνωση"
 
-#: ../indicator-weather.desktop.in.h:1
+#: ../indicator-weather.desktop.in.h:2
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"
@@ -484,39 +496,8 @@ msgstr ""
 "Ένας δείκτης καιρού που εμφανίζει πληροφορίες για ένα ή πολλά σημεία του "
 "κόσμου"
 
-#~ msgid "mph"
-#~ msgstr "μ/ω"
-
-#~ msgid "km/h"
-#~ msgstr "χλμ/ω"
-
-#~ msgid "m/s"
-#~ msgstr "μ/δ"
-
-#~ msgid "Kilometers per hour (kph)"
-#~ msgstr "Χιλιόμετρα ανά ώρα (χ/ω)"
-
-#~ msgid "SI (°C)"
-#~ msgstr "Διεθνές σύστημα μονάδων (°C)"
-
-#~ msgid "Please input a location in the combobox below:"
-#~ msgstr "Παρακαλώ εισάγετε μια τοποθεσία στο παρακάτω πεδίο:"
-
-#~ msgid "refreshed just now"
-#~ msgstr "ανανεώθηκε μόλις τώρα"
-
-#, python-format
-#~ msgid "last refreshed %s min. ago"
-#~ msgstr "τελευταία ανανέωση πριν %s λεπτά"
-
-#~ msgid "last refreshed just now"
-#~ msgstr "Ανανεώθηκε μόλις τώρα"
-
-#~ msgid "Show tips in menu"
-#~ msgstr "Εμφάνιση συμβουλών στο μενού"
-
-#~ msgid "knot(s)"
-#~ msgstr "κόμβος;κόμβοι"
+#~ msgid "Weather Forecast for "
+#~ msgstr "Πρόγνωση καιρού για "
 
 #~ msgid "Visibility"
 #~ msgstr "Ορατότητα"
