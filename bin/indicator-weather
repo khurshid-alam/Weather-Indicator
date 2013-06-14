@@ -1842,8 +1842,10 @@ class indicator_weather(threading.Thread):
             ##    self.location_details = json.loads(self.location_details)
             self.settings.set_value("placechosen", self.placechosen)
             # refresh timezone data on location change (for dst)
-            self.prepare_time_zone(self.location_details['latitude'],
-                                   self.location_details['longitude'])
+            self.current_location.prepare_time_zone(
+                self.location_details['latitude'],
+                self.location_details['longitude']
+            )
             self.update_weather(False)
 
     def on_system_sleep(self):
@@ -2028,7 +2030,7 @@ class indicator_weather(threading.Thread):
             log.debug("Indicator: updateWeather: got condition '%s', icon '%s'" % (self.condition, self.icon))
             log.debug(
                 "Indicator: fill in menu with params: " \
-                "citycode='blah', temp='%s', humid='%s', wind='%s', " \
+                "citycode='%s', temp='%s', humid='%s', wind='%s', " \
                 "sunrise='%s', sunset='%s', puretemp=%s" % (
                 self.places[self.placechosen][0],
                 weather.get_temperature_label(), weather.get_humidity_label(),
