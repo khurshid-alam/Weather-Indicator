@@ -1,6 +1,10 @@
 indicator-weather (13.05.29) quantal; urgency=low
 
+  * Show error message and refuse to run if pywapi is outdated (LP: #1190540)
   * Replace most string comparisons with integer comparisons (LP: #1190255)
+  * Automatically convert settings format to json when loading (LP: #1189916)
+  * debian/postinst: revert changes, user must update dconf data (LP: #1189830)
+  * Import latest translation files from Launchpad, thanks Launchpad Translators 
 
  -- Joshua Tasker <jtasker@gmail.com>  Thu, 13 Jun 2013 07:03:48 -0400
 

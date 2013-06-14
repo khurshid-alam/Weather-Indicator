@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.05.28 'Rainy 5'"
+VERSION = "13.05.29 'Rainy 6'"
 
 from indicator_weather.helpers import *
 
@@ -1462,6 +1462,23 @@ class indicator_weather(threading.Thread):
         self.places_changed = False
         monitor_upower(self.on_system_sleep, self.on_system_resume, log)
 
+        # pywapi is too old, user must upgrade
+        if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.2':
+            md = Gtk.MessageDialog(
+                    None, Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                    Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                    "%s" % (_("Weather Indicator requires a newer version of pywapi"))
+            )
+            md.format_secondary_text(
+                _("The minimum version required is 0.3.2, which is newer than "
+                "the installed version.\nPlease upgrade pywapi then restart "
+                "Weather Indicator.\n\nVisit https://launchpad.net/python-weather-api "
+                "for more information.")
+            )
+            md.run()
+            md.destroy()
+            quit()
+
         log.debug("Indicator: reading settings")
         self.settings = Settings()
         self.settings.prepare_settings_store()
@@ -2782,7 +2799,11 @@ if __name__ == "__main__":
     log.info("-" * 50)
     log.info("Started Weather Indicator from %s" % PROJECT_ROOT_DIRECTORY)
     log.info("Weather Indicator version %s" % VERSION)
-    log.info("Python Weather API version %s" % pywapi.__version__)
+    try:
+        log.info("Python Weather API version %s" % pywapi.__version__)
+    except AttributeError:
+        log.info("Python Weather API version is outdated, "
+                 "Weather Indicator will not function correctly.")
 
     # Single instance stuff for weather indicator
     myapp = SingleInstance("/tmp/indicator-weather-%d.pid" % os.getuid())
