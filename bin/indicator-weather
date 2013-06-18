@@ -2270,8 +2270,9 @@ class PreferencesDialog(Gtk.Dialog):
                       (model[iter][0], model[iter][1]))
             newplaces = []
             for place in wi.places:
-                if place[1] != model[iter][0] and \
-                   place[0] != model[iter][1]:
+                # if place[1] != model[iter][0] and \
+                #    place[0] != model[iter][1]:
+                if place[0] != model[iter][1]:
                     newplaces.append(place) 
             if newplaces != wi.places:                
                 wi.places = newplaces
@@ -2417,16 +2418,14 @@ class PreferencesDialog(Gtk.Dialog):
         if wi.places_changed:
             log.debug("Preferences: Places changed to '%s'" % wi.places)
             wi.settings.set_value("places", wi.places)
+            wi.placechosen = 0
             if (type(wi.place) != None):
                 for i in xrange(len(wi.places)):
                     if wi.places[i][0] == wi.place[0]:
                         wi.placechosen = i
-            else:
-                wi.placechosen = 0
-                wi.place = wi.places[0]
+            wi.place = wi.places[0]
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
-            #wi.location_details = eval(wi.settings.get_location_details(wi.place[0]))
             wi.location_details = wi.settings.get_location_details(wi.place[0])
             need_to_update_weather = True
             wi.places_changed = False
