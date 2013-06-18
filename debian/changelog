@@ -3,11 +3,13 @@ indicator-weather (13.05.29) quantal; urgency=low
   * Show error message and refuse to run if pywapi is outdated (LP: #1190540)
   * Replace most string comparisons with integer comparisons (LP: #1190255)
   * Automatically convert settings format to json when loading (LP: #1189916)
-  * debian/postinst: revert changes, user must update dconf data (LP: #1189830)
+  * debian/postinst: revert changes, dpkg cannot update dconf data (LP: #1189830)
   * Import latest translation files from Launchpad, thanks Launchpad Translators 
   * DST status and timezone ID are now refreshed on location change
+  * debian/control: update dependency versions for distutils-extra, pywapi
+  * Show error message if user tries to add unsupported or invalid location
 
- -- Joshua Tasker <jtasker@gmail.com>  Thu, 13 Jun 2013 07:03:48 -0400
+ -- Joshua Tasker <jtasker@gmail.com>  Tue, 18 Jun 2013 01:07:57 -0400
 
 indicator-weather (13.05.28.1) quantal; urgency=low
 

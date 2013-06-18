@@ -368,18 +368,14 @@ class Location:
         if not hasattr(self, 'location_code') or \
            'latitude' not in self.location_details or \
            'longitude' not in self.location_details:
-            return False
+            return (False, 'location_id')
 
         # check that we have at least one supported data source
-        if 'google id' not in self.location_details and \
-           'yahoo id' not in self.location_details and \
+        if 'yahoo id' not in self.location_details and \
            'weather-com id' not in self.location_details:
-            log.error(("Location '%s'" %
-                       self.location_details['full name'])) + \
-                "is not supported by current data sources"
-            return False
+            return (False, 'data_source')
 
-        return True
+        return (True, None)
 
     def prepare_location_for_google(self, geonames_details):
         """ Format latitude and longitude for Google needs """
@@ -601,7 +597,7 @@ class Location:
             if tz_info['dstOffset'] != 0:
                 self.location_details['dst'] = True
             else:
-                self.location_details['dst'] - False
+                self.location_details['dst'] = False
 
     def export_location_details(self):
         """ Return location code and location details """
@@ -636,16 +632,19 @@ class Location:
                        "chosen for '%s'") % (SOURCES[valid_source][1],
                        self.location_details['label']))
 
+        # update timezone/dst data
+        if ('dst' not in self.location_details or 
+            'timezone id' not in self.location_details):
+            self.prepare_time_zone(self.location_details['latitude'],
+                                   self.location_details['longitude'])
+
+        # need at least one valid source
         if valid_source is None:
             log.error(("Location: no valid weather source can be " +
                        "chosen for '%s'") % (
                        self.location_details['label']))
             self.weather = None
         else:
-            if ('dst' not in self.location_details or 
-                'timezone id' not in self.location_details):
-                self.prepare_time_zone(self.location_details['latitude'],
-                                       self.location_details['longitude'])
             self.weather = Weather(
                 self.location_details[loc_ids[valid_source]],
                 valid_source, self.metric_system, self.wind_unit,
@@ -654,6 +653,8 @@ class Location:
                 self.location_details['longitude'],
                 timezone(self.location_details['timezone id']),
                 self.location_details['dst'])
+
+
 
 
 class Forecast:
@@ -1479,14 +1480,14 @@ class indicator_weather(threading.Thread):
         monitor_upower(self.on_system_sleep, self.on_system_resume, log)
 
         # pywapi is too old, user must upgrade
-        if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.2':
+        if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.3':
             md = Gtk.MessageDialog(
                     None, Gtk.DialogFlags.DESTROY_WITH_PARENT,
                     Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
                     "%s" % (_("Weather Indicator requires a newer version of pywapi"))
             )
             md.format_secondary_text(
-                _("The minimum version required is 0.3.2, which is newer than "
+                _("The minimum version required is 0.3.3, which is newer than "
                 "the installed version.\nPlease upgrade pywapi then restart "
                 "Weather Indicator.\n\nVisit https://launchpad.net/python-weather-api "
                 "for more information.")
@@ -1632,6 +1633,7 @@ class indicator_weather(threading.Thread):
             self.menu_update_lock.release()
         else:
             # FIXME: is below try/except block even necessary?
+            # json.loads() will parse both old and new self.places data? 
             try:
                 self.places = json.loads(self.places)
             except ValueError:
@@ -1648,9 +1650,11 @@ class indicator_weather(threading.Thread):
                 self.menu_noplace()
                 self.menu_update_lock.release()
             else:
-##                self.menu_normal()
+                #self.menu_normal()
                 self.menu_update_lock.release()
                 self.update_weather()
+                #self.schedule_weather_update(0.003)
+
 
     def update_label(self, label):
         """ Set the label of the indicator """
@@ -2128,7 +2132,7 @@ class indicator_weather(threading.Thread):
                 self.show_new_weather_data(weather)
         except Queue.Empty:
             pass
-
+    
     def get_weather(self):
         """ Get current weather for selected location """
         log.debug("Indicator: getWeather for location '%s'" %
@@ -2461,8 +2465,6 @@ class ExtendedForecast(Gtk.Window):
         # Get forecast data using Forecast object
         log.debug("ExtendedForecast: chosen place: %s (code %s)" %
                   (wi.places[wi.placechosen][1], wi.places[wi.placechosen][0]))
-        # self.builder.get_object('extended_forecast').set_title("%s %s" %
-        #             (_('Weather Forecast for'), wi.places[wi.placechosen][1].decode('utf-8')))
         self.builder.get_object('extended_forecast').set_title("%s %s" %
                     (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
@@ -2657,35 +2659,41 @@ class Assistant(Gtk.Assistant):
                       (current_page, self.place_selected[1]))
             self.location = Location(wi.metric_system, wi.wind_unit,
                                      wi.heat_index, wi.chill_index)
-            if self.location.prepare_location(self.place_selected):
-                log.debug(current_page)
-                log.debug(repr(current_page)) 
-                log.debug(self.place_selected[0])
-                log.debug(repr(self.place_selected[0]))
+            (result, error_type) = self.location.prepare_location(self.place_selected)
+            if result:
                 log.debug(u"Assistant: Page %s: City %s found" % (
                           current_page, self.place_selected[0].decode('utf-8')))
                 # Set a short city name as default label
                 self.builder.get_object("entrylbl").set_text(self.place_selected[4])
             else:
-                # Error occurred while getting location data
-                log.error("Assistant: Page %s: Location with code %s was NOT "
-                          "found" % (current_page, self.place_selected[0],
-                                     self.place_selected[1]))
+                if error_type == 'location_id':
+                    # Error occurred while getting location data
+                    log.error("Assistant: Page %s: Location with code %s was NOT found" %
+                              (current_page, self.place_selected[1]))
+                    err_title = "%s '%s'" % (_("Could not find location id for"),
+                               self.place_selected[0].decode('utf-8'))
+                    err_text = "Unknown error occurred while picking up location data. " + \
+                               "Please try again later."
+                elif error_type == 'data_source':
+                    # No valid data sources for chosen location
+                    log.error("Assistant: Page %s: Location '%s' is not supported by current data sources" %
+                              (current_page, self.location.location_details['full name']))
+                    err_title = "%s '%s'" % (_("No data for location"),
+                               self.place_selected[0].decode('utf-8'))
+                    err_text = "The current weather data sources do not support the chosen location. " + \
+                               "Please select another location."
+                # Show error dialog
                 md = Gtk.MessageDialog(
                     self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                    Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
-                    "%s '%s'" % (_("Could not find location id for"),
-                               self.place_selected[0]))
-                md.format_secondary_text(
-                    "Unknown error occurred while picking up location data. "
-                    "Please try again later.")
+                    Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, err_title
+                    )
+                md.format_secondary_text(err_text)
                 md.run()
                 self.location_entry.set_text('')
                 self.place_selected = None
                 self.location = None
                 self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
                 md.destroy()
-                
                 return 3
         elif self.assistant.get_current_page() == 1:
             # Confirmation page
@@ -2732,7 +2740,7 @@ class Assistant(Gtk.Assistant):
         while (item != None):
             newplace = list()
             newplace.append(wi.prefswindow.builder.get_object('citieslist').get_value(item, 1))
-            newplace.append(wi.prefswindow.builder.get_object('citieslist').get_value(item, 0))
+            newplace.append(wi.prefswindow.builder.get_object('citieslist').get_value(item, 0).decode('utf-8'))
             newplaces.append(newplace)
             item = wi.prefswindow.builder.get_object('citieslist').iter_next(item)
         wi.places = newplaces
