@@ -1,3 +1,11 @@
+indicator-weather (13.06.01) quantal; urgency=low
+
+  * Don't crash when receiving unknown weather condition
+  * debian/control: new dependency on gnome-icon-theme-full
+  * debian/postinst: create valid symlinks and update correct icon cache
+
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 10 Jul 2013 02:39:51 -0400
+
 indicator-weather (13.05.29) quantal; urgency=low
 
   * Show error message and refuse to run if pywapi is outdated (LP: #1190540)

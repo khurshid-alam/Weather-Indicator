@@ -13,21 +13,31 @@ xdg-icon-resource install --theme hicolor --novendor --size 22 /usr/share/indica
 echo "Fixing incomplete weather icons..."
 if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ] && \
     [ !  -L "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ]; then
-    ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
-    ln -s /usr/share/icons/gnome/22x22/status/weather-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
-    
-    if [ -x /usr/bin/gtk-update-icon-cache-3.0 ]; then
-        if ! gtk-update-icon-cache-3.0; then
-            echo "WARNING: icon cache generation failed"
+
+    #check for gnome-icon-theme-full icons
+    if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-few-clouds.png" ] && \
+        [ ! -e "/usr/share/icons/gnome/22x22/status/weather-few-clouds-night.png" ]; then
+        echo "WARNING: missing default icons for cloudy conditions"
+    else
+        #create symlinks and update icon cache
+        ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
+        ln -s /usr/share/icons/gnome/22x22/status/weather-few-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
+
+        if [ -x /usr/bin/gtk-update-icon-cache-3.0 ]; then
+            gtk-update-icon-cache-3.0 -q /usr/share/icons/gnome
+            if [ $? != 0 ] ; then 
+                echo "WARNING: icon cache generation failed"
+            fi
+        fi
+
+        if [ -x /usr/bin/gtk-update-icon-cache ]; then
+            gtk-update-icon-cache -q /usr/share/icons/gnome
+            if [ $? != 0 ] ; then
+                echo "WARNING: icon cache generation failed"
+            fi
         fi
     fi
-    
-    if [ -x /usr/bin/gtk-update-icon-cache ]; then
-        if ! gtk-update-icon-cache; then
-            echo "WARNING: icon cache generation failed"
-        fi
-    fi
-    
+
 else
     exit 0
 fi
