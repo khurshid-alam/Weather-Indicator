@@ -547,25 +547,26 @@ class Location:
         try:
             log.debug("Location: Get utc datetime, url %s" % url)
             handler = urllib2.urlopen(url)
+            content_type = handler.info().dict['content-type']
+            try:
+                charset = re.search('charset\=(.*)',content_type).group(1)
+            except AttributeError:
+                charset = 'utf-8'
+            if charset.lower() != 'utf-8':
+                xml_response = handler.read().decode(charset).encode('utf-8')
+            else:
+                xml_response = handler.read()
+            dom = parseString(xml_response)
+            handler.close()
+            utctime = dom.getElementsByTagName("utctime")[0].firstChild.nodeValue
+            utctime = datetime.datetime.strptime(utctime, '%Y-%m-%d %H:%M:%S')
         except urllib2.URLError:
             log.error("Location: error reaching url '%s'" % url)
-            return
-
-        content_type = handler.info().dict['content-type']
-        try:
-            charset = re.search('charset\=(.*)',content_type).group(1)
-        except AttributeError:
-            charset = 'utf-8'
-        if charset.lower() != 'utf-8':
-            xml_response = handler.read().decode(charset).encode('utf-8')
-        else:
-            xml_response = handler.read()
-        dom = parseString(xml_response)
-        handler.close()
-        utctime = dom.getElementsByTagName("utctime")[0].firstChild.nodeValue
-        utctime = datetime.datetime.strptime(utctime, '%Y-%m-%d %H:%M:%S')
-        timestamp = calendar.timegm(utctime.timetuple())
+            # fallback to getting UTC time from system time (less accurate)
+            utctime = datetime.datetime.utcnow()
         # Grab timezone id and dst status from Google
+        tz_info = None
+        timestamp = calendar.timegm(utctime.timetuple())
         baseurl = 'https://maps.googleapis.com/maps/api/timezone/json'
         params = {'location': '%s,%s' % (lat, lon),
                   'timestamp': timestamp, 'sensor': 'false'}
@@ -573,28 +574,36 @@ class Location:
         try:
             log.debug("Location: Get location timezone details, url %s" % url)
             handler = urllib2.urlopen(url)
+            content_type = handler.info().dict['content-type']
+            try:
+                charset = re.search('charset\=(.*)', content_type).group(1)
+            except AttributeError:
+                charset = 'utf-8'
+            if charset.lower() != 'utf-8':
+                json_response = handler.read().decode(charset).encode('utf-8')
+            else:
+                json_response = handler.read()
+            tz_info = json.loads(json_response)
+            handler.close()
+            if tz_info['status'] == 'OK':
+                self.location_details['timezone id'] = tz_info['timeZoneId']
+                if tz_info['dstOffset'] != 0:
+                    self.location_details['dst'] = True
+                else:
+                    self.location_details['dst'] = False
+            else:
+                log.error("Location: Google Time Zone API "
+                          "returned status %s" % tz_info['status'])
+                tz_info = None
         except urllib2.URLError:
             log.error("Location: error reaching url '%s'" % url)
-            return
-
-        content_type = handler.info().dict['content-type']
-        try:
-            charset = re.search('charset\=(.*)', content_type).group(1)
-        except AttributeError:
-            charset = 'utf-8'
-        if charset.lower() != 'utf-8':
-            json_response = handler.read().decode(charset).encode('utf-8')
-        else:
-            json_response = handler.read()
-        tz_info = json.loads(json_response)
-        handler.close()
-
-        if tz_info['status'] != 'OK':
-            log.error("Location: Google Time Zone API "
-                      "returned status %s" % tz_info['status'])
-        else:
-            self.location_details['timezone id'] = tz_info['timeZoneId']
-            if tz_info['dstOffset'] != 0:
+        # fallback to getting timezone/dst from system (less accurate)
+        # note: reading /etc/timezone will only work on debian/ubuntu
+        if tz_info is None:
+            with open('/etc/timezone', 'r') as f:
+                tz_id = f.readline().strip()
+                self.location_details['timezone id'] = tz_id
+            if time.localtime().tm_isdst == 1:
                 self.location_details['dst'] = True
             else:
                 self.location_details['dst'] = False
@@ -645,16 +654,20 @@ class Location:
                        self.location_details['label']))
             self.weather = None
         else:
-            self.weather = Weather(
-                self.location_details[loc_ids[valid_source]],
-                valid_source, self.metric_system, self.wind_unit,
-                self.heat_index, self.chill_index,
-                self.location_details['latitude'],
-                self.location_details['longitude'],
-                timezone(self.location_details['timezone id']),
-                self.location_details['dst'])
-
-
+            try:
+                self.weather = Weather(
+                    self.location_details[loc_ids[valid_source]],
+                    valid_source, self.metric_system, self.wind_unit,
+                    self.heat_index, self.chill_index,
+                    self.location_details['latitude'],
+                    self.location_details['longitude'],
+                    timezone(self.location_details['timezone id']),
+                    self.location_details['dst'])
+            except IOError as e:
+                self.weather = None
+                log.error(("Location: error picking up weather data "
+                           "for '%s'") % (
+                            self.location_details['label']))
 
 
 class Forecast:
@@ -829,7 +842,8 @@ class Weather:
         '46': ("weather-snow",                "weather-snow",             False, _("Snow showers")),
         '47': ("weather-storm",               "weather-storm",            True,  _("Isolated thundershowers")),
         #'3200': (False,                     False,                      False, _("Unknown condition"))
-        '3200': ("weather-indicator-unknown", "weather-indicator-unknown", False, _("Unknown condition"))
+        '3200': ("weather-indicator-unknown", "weather-indicator-unknown", False, _("Unknown condition")),
+        '9999': ("weather-indicator-error", "weather-indicator-error", False, _("Network connection unavailable"))
     }
 
     # Available conditions by Weather.com condition code; same as Yahoo
@@ -861,24 +875,25 @@ class Weather:
             self.__report = pywapi.get_weather_from_weather_com(
                                                     location_id, unit_system)
             ##self.__localized_report = self.__report
-            log.debug("Weather: checking Weather.com report for weather condition and icon name")
-            if 'current_conditions' not in self.__report:
+            log.debug("Weather: checking Weather.com report for "
+                      "weather condition and icon name")
+            if 'error' in self.__report:
+                icon_name = '9999'
+                log.error("Weather: error occurred while getting Weather.com report")
+                log.error("Weather: pywapi error status: '%s'" % self.__report['error'])
+            elif 'current_conditions' not in self.__report:
                 icon_name = '3200'
                 log.error("Weather: could not get Weather.com weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 ##self.__current_condition = (False, False, False, _("Unknown condition"))
-                self.__current_condition = self._WeathercomConditions.get(icon_name)
-
             elif 'icon' in self.__report['current_conditions']:
                 icon_name = self.__report['current_conditions']['icon']
-                self.__current_condition = self._WeathercomConditions.get(icon_name)
-
             else:
                 icon_name = '3200'
                 log.error("Weather: could not get icon name from Weather.com report")
                 log.error("Weather: got data '%s'" % str(self.__report['current_conditions']))
                 ##self.__current_condition = (False, False, False, _("Unknown condition"))
-                self.__current_condition = self._WeathercomConditions.get(icon_name)
+            self.__current_condition = self._WeathercomConditions.get(icon_name)
 
         # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
@@ -886,23 +901,23 @@ class Weather:
             ##self.__localized_report = self.__report
             log.debug("Weather: checking Yahoo report for "
                       "weather condition and icon name")
-            if 'condition' not in self.__report:
+            if 'error' in self.__report:
+                icon_name = '9999'
+                log.error("Weather: error occurred while getting Yahoo report")
+                log.error("Weather: pywapi error status: '%s'" % self.__report['error'])
+            elif 'condition' not in self.__report:
                 icon_name = '3200'
                 log.error("Weather: could not get Yahoo weather condition from report")
                 log.error("Weather: got data '%s'" % str(self.__report))
                 ##self.__current_condition = (False, False, False, _("Unknown condition"))
-                self.__current_condition = self._YahooConditions.get(icon_name)
-
             elif 'code' in self.__report['condition']:
                 icon_name = self.__report['condition']['code']
-                self.__current_condition = self._YahooConditions.get(icon_name)
-
             else:
                 icon_name = '3200'
                 log.error("Weather: could not get icon name from Yahoo report")
                 log.error("Weather: got data '%s'" % str(self.__report['condition']))
                 ##self.__current_condition = (False, False, False, _("Unknown condition"))
-                self.__current_condition = self._YahooConditions.get(icon_name)
+            self.__current_condition = self._YahooConditions.get(icon_name)
 
         log.debug("Weather: current condition: '%s', '%s'" % (icon_name, str(self.__current_condition)))
         #Prepare sunrise/sunset data
@@ -1015,16 +1030,18 @@ class Weather:
             log.debug("Weather: got condition '%s'" % self.__current_condition[3])
             return self.__current_condition[3]
         else:
-            log.error("Weather: no condition set while checking condition severity")
+            log.error("Weather: no condition set while getting condition label")
             return (_("Unknown condition"))
 
     def get_humidity_label(self):
         """ Get text string for current humidity """
         humidity = "%s: ---%%" % _("Humidity")
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
+           and 'current_conditions' in self.__report \
            and 'humidity' in self.__report['current_conditions']:
             humidity = "%s: %s%%" % (_("Humidity"), self.__report['current_conditions']['humidity'])
         if self.__weather_datasource == WeatherDataSource.YAHOO \
+           and 'atmosphere' in self.__report \
            and 'humidity' in self.__report['atmosphere']:
             humidity = "%s: %s%%" % (_("Humidity"), self.__report['atmosphere']['humidity'])
         return humidity
@@ -1261,7 +1278,9 @@ class Weather:
         #TODO: Update with NOAA data
         _value = None
 
-        if self.__report['units']['temperature'] == "C":
+        if 'units' not in self.__report:
+            return (_value, "")
+        elif self.__report['units']['temperature'] == "C":
             units = 'metric'
         elif self.__report['units']['temperature'] == "F":     # else here?
             units = 'imperial'
@@ -1360,7 +1379,11 @@ class Weather:
 
     def get_wind_label(self):
         """ Get text string for current wind speed and direction """
-        if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
+        wind_direction = "---"
+        wind_speed = ""
+        wind_units = ""
+        if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
+           and 'current_conditions' in self.__report:
             # Create a wind_info structure from Weather.com data
             wind_direction = u"%s (%s°)" % (_(self.__report['current_conditions']['wind']['text']),
                                             self.__report['current_conditions']['wind']['direction'])
@@ -1368,17 +1391,17 @@ class Weather:
             wind_units = self.__report['units']['speed']
             if wind_speed == "calm":
                 wind_speed = 0
-            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
+        if self.__weather_datasource == WeatherDataSource.YAHOO \
+           and 'wind' in self.__report:
             # Create a wind_info structure from Yahoo data
             wind_direction = u"%s (%s°)" % (_(pywapi.get_wind_direction(self.__report['wind']['direction'])), self.__report['wind']['direction'])
             wind_speed = self.__report['wind']['speed']
             wind_units = _(self.__report['units']['speed'])
-            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
+        wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
 
         try:
             _value = float(wind_speed)
-        except ValueError as e:
+        except ValueError as ex:
             log.error("Could not parse '%s' as wind speed." % str(wind_speed))
             _value = -1.0
 
@@ -1418,11 +1441,11 @@ class Weather:
         else:
             log.error("Could not parse '%s' as wind units." % wind_units)
             _value = -1.0
+            _unit = ""
 
         # Join wind_info data in a label
         wind_info[len(wind_info)-1] = _unit
-        wind_info[len(wind_info)-2] = \
-            NumberFormatter.format_float(_value, 1)
+        wind_info[len(wind_info)-2] = NumberFormatter.format_float(_value, 1)
         if _value < 0.0:
             wind_info[1:] = ["", _("N/A"), ""]
         if _value == 0.0:
@@ -2014,7 +2037,7 @@ class indicator_weather(threading.Thread):
         weather = None
         try:
             weather = self.get_weather()
-        except IOError, e:
+        except IOError as e:
             weather = None
             log.error("Indicator: networking error: %s" % e)
         except Exception as e:
@@ -2127,8 +2150,7 @@ class indicator_weather(threading.Thread):
         cache_thread.join()
         try:
             num, cached_weather = self.queue.get()
-            if cached_weather is not None:
-                self.show_cached_weather(cached_weather)
+            self.show_cached_weather(cached_weather)
         except Queue.Empty:
             pass
 
@@ -2136,8 +2158,7 @@ class indicator_weather(threading.Thread):
         fetcher_thread.join()
         try:
             num, weather = self.queue.get()
-            if weather is not None:
-                self.show_new_weather_data(weather)
+            self.show_new_weather_data(weather)
         except Queue.Empty:
             pass
 

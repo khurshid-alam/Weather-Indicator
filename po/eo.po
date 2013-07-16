@@ -7,402 +7,328 @@ msgid ""
 msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-29 22:09-0400\n"
-"PO-Revision-Date: 2013-05-24 10:24+0000\n"
+"POT-Creation-Date: 2013-06-13 22:48-0400\n"
+"PO-Revision-Date: 2013-06-14 04:06+0000\n"
 "Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-31 06:01+0000\n"
-"X-Generator: Launchpad (build 16660)\n"
+"X-Launchpad-Export-Date: 2013-06-15 05:26+0000\n"
+"X-Generator: Launchpad (build 16667)\n"
 "Language: eo\n"
 
-#: ../data/ui/PreferencesDialog.ui.h:1
-msgid "Weather Indicator Preferences"
-msgstr "Agordoj de la veter-indikilo"
-
-#: ../data/ui/PreferencesDialog.ui.h:2
-msgid "Enable the Weather Indicator Applet"
-msgstr "Ŝalti la veter-informan aplikaĵeton"
-
-#: ../data/ui/PreferencesDialog.ui.h:3
-msgid "Show temperature near indicator"
-msgstr "Montri la temperaturon proksime de la indikilo"
-
-#: ../data/ui/PreferencesDialog.ui.h:4
-msgid "Update every"
-msgstr "Aktualigi ĉiun"
-
-#: ../data/ui/PreferencesDialog.ui.h:5
-msgid "minutes"
-msgstr "minutoj"
-
-#: ../data/ui/PreferencesDialog.ui.h:6
-msgid "<b>Notifications</b>"
-msgstr "<b>Atentigoj</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:7
-msgid "No notifications"
-msgstr "Sen sciigoj"
-
-#: ../data/ui/PreferencesDialog.ui.h:8
-msgid "Only use notifications to give severe weather alerts"
-msgstr "Uzi la sciigojn nur por averti pri malbonaj fortaj verterkondiĉoj"
-
-#: ../data/ui/PreferencesDialog.ui.h:9
-msgid "Use notifications to give every weather condition change"
-msgstr "Uzi sciigojn por informi pri ĉia ajn veterkondiĉo"
-
-#: ../data/ui/PreferencesDialog.ui.h:10
-msgid "<b>Weather Data Source</b>"
-msgstr "<b>Datumfonto pri la vetero</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:11
-msgid "Google"
-msgstr "Guglo"
-
-#: ../data/ui/PreferencesDialog.ui.h:12
-msgid "Yahoo!"
-msgstr "Jahuo"
-
-#: ../data/ui/PreferencesDialog.ui.h:13
-msgid "General"
-msgstr "Ĝenerala"
-
-#: ../data/ui/PreferencesDialog.ui.h:14
-msgid "<b>Temperature Scale</b>"
-msgstr "<b>Temperatur-skalo</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:15
-msgid "Imperial (°F)"
-msgstr "Farenhejta (°F)"
-
-#: ../data/ui/PreferencesDialog.ui.h:16
-msgid "SI (metric, °C)"
-msgstr "Celsia (°C)"
-
-#: ../data/ui/PreferencesDialog.ui.h:17
-msgid "<b>Wind Speed Unit</b>"
-msgstr "<b>Unuo de rapido de la vento</b>"
-
-#: ../data/ui/PreferencesDialog.ui.h:18
-msgid "Meter per second (m/s)"
-msgstr "Metroj sekunde (m/s)"
-
-#: ../data/ui/PreferencesDialog.ui.h:19
-msgid "Miles per hour (mph)"
-msgstr "Mejloj hore (mph)"
-
-#: ../data/ui/PreferencesDialog.ui.h:20
-msgid "Kilometers per hour (km/h)"
-msgstr ""
-
-#: ../data/ui/PreferencesDialog.ui.h:21
-msgid "Beaufort"
-msgstr "Beaufort"
-
-#: ../data/ui/PreferencesDialog.ui.h:22
-msgid "Knots"
-msgstr "Nodoj"
-
-#: ../data/ui/PreferencesDialog.ui.h:23
-msgid "Units"
-msgstr "Unitoj"
-
-#: ../data/ui/PreferencesDialog.ui.h:24
-msgid "Locations"
-msgstr "Lokoj"
-
-#: ../bin/indicator-weather.py:573
+#: ../bin/indicator-weather:694
 msgid "Unknown error occurred while picking up weather data"
 msgstr "Nekonata eraro ĉe akiro de la datumoj pir la vetero"
 
-#: ../bin/indicator-weather:645
+#: ../bin/indicator-weather:766
 msgid "Tornado"
 msgstr "Tornado"
 
-#: ../bin/indicator-weather:646
+#: ../bin/indicator-weather:767
 msgid "Tropical storm"
 msgstr "Tropika ŝtormo"
 
-#: ../bin/indicator-weather:647
+#: ../bin/indicator-weather:768
 msgid "Hurricane"
 msgstr "Uragano"
 
-#: ../bin/indicator-weather:648
+#: ../bin/indicator-weather:769
 msgid "Severe thunderstorms"
 msgstr "Fortaj trondroŝtormoj"
 
-#: ../bin/indicator-weather:649
+#: ../bin/indicator-weather:770
 msgid "Thunderstorms"
 msgstr "Tondroŝtormoj"
 
-#: ../bin/indicator-weather:650
+#: ../bin/indicator-weather:771
 msgid "Mixed rain and snow"
 msgstr "Pluvo kaj neĝo"
 
-#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
-#: ../bin/indicator-weather.py:652
+#: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "Pluvo kaj glacipluvo"
 
-#: ../bin/indicator-weather:653
+#: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "Neĝo kaj glacipluvo"
 
-#: ../bin/indicator-weather:654
+#: ../bin/indicator-weather:775
 msgid "Freezing drizzle"
 msgstr "Frosta pluveto"
 
-#: ../bin/indicator-weather:655
+#: ../bin/indicator-weather:776
 msgid "Drizzle"
 msgstr "Pluveto"
 
-#: ../bin/indicator-weather:656
+#: ../bin/indicator-weather:777
 msgid "Freezing rain"
 msgstr "Frosta pluvo"
 
-#: ../bin/indicator-weather:657 ../bin/indicator-weather:658
+#: ../bin/indicator-weather:778 ../bin/indicator-weather:779
 msgid "Showers"
 msgstr "Ekpluvegoj"
 
-#: ../bin/indicator-weather:659
+#: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "Neĝo-puŝoj"
 
-#: ../bin/indicator-weather:660
+#: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "Ekpluvegoj malabunde neĝaj"
 
-#: ../bin/indicator-weather:661
+#: ../bin/indicator-weather:782
 msgid "Blowing snow"
 msgstr "Neĝovento"
 
-#: ../bin/indicator-weather:662
+#: ../bin/indicator-weather:783
 msgid "Snow"
 msgstr "Neĝo"
 
-#: ../bin/indicator-weather:663
+#: ../bin/indicator-weather:784
 msgid "Hail"
 msgstr "Hajlo"
 
-#: ../bin/indicator-weather:664
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
+#: ../bin/indicator-weather:785
 msgid "Sleet"
 msgstr "Glacipluvo"
 
-#: ../bin/indicator-weather:665
+#: ../bin/indicator-weather:786
 msgid "Dust"
 msgstr "Nebulo"
 
-#: ../bin/indicator-weather:666
+#: ../bin/indicator-weather:787 ../data/ui/ExtendedForecast.ui:332
 msgid "Foggy"
 msgstr "Nebuleto"
 
-#: ../bin/indicator-weather:667
+#: ../bin/indicator-weather:788
 msgid "Haze"
 msgstr "Brumo"
 
-#: ../bin/indicator-weather:668
+#: ../bin/indicator-weather:789
 msgid "Smoky"
 msgstr "Brumo"
 
-#: ../bin/indicator-weather:669
+#: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "Ŝtorma"
 
-#: ../bin/indicator-weather:670
+#: ../bin/indicator-weather:791
 msgid "Windy"
 msgstr "Venta"
 
-#: ../bin/indicator-weather:671
+#: ../bin/indicator-weather:792
 msgid "Cold"
 msgstr "Malvarma"
 
-#: ../bin/indicator-weather:672
+#: ../bin/indicator-weather:793 ../data/ui/ExtendedForecast.ui:208
 msgid "Cloudy"
 msgstr "Nuba"
 
-#: ../bin/indicator-weather:673 ../bin/indicator-weather:674
+#: ../bin/indicator-weather:794 ../bin/indicator-weather:795
 msgid "Mostly cloudy"
 msgstr "Grandparte nuba"
 
-#: ../bin/indicator-weather:675 ../bin/indicator-weather:676
-#: ../bin/indicator-weather:690
+#: ../bin/indicator-weather:796 ../bin/indicator-weather:797
+#: ../bin/indicator-weather:811 ../data/ui/ExtendedForecast.ui:84
 msgid "Partly cloudy"
 msgstr "Parte nuba"
 
-#: ../bin/indicator-weather:677
+#: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "Sennuba"
 
-#: ../bin/indicator-weather:678
+#: ../bin/indicator-weather:799 ../data/ui/ExtendedForecast.ui:574
 msgid "Sunny"
 msgstr "Suna"
 
-#: ../bin/indicator-weather:679 ../bin/indicator-weather:680
+#: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "Bela"
 
-#: ../bin/indicator-weather:681
+#: ../bin/indicator-weather:802
 msgid "Mixed rain and hail"
 msgstr "Pluvo kaj glacipluvo"
 
-#: ../bin/indicator-weather:682
+#: ../bin/indicator-weather:803
 msgid "Hot"
 msgstr "Varma"
 
-#: ../bin/indicator-weather:683
+#: ../bin/indicator-weather:804
 msgid "Isolated thunderstorms"
 msgstr "Izolitaj tondroŝtormoj"
 
-#: ../bin/indicator-weather:684 ../bin/indicator-weather:685
+#: ../bin/indicator-weather:805 ../bin/indicator-weather:806
 msgid "Scattered thunderstorms"
 msgstr "Disaj tondroŝtormoj"
 
-#: ../bin/indicator-weather:686
+#: ../bin/indicator-weather:807
 msgid "Scattered showers"
 msgstr "Disaj pluvoj"
 
-#: ../bin/indicator-weather:687 ../bin/indicator-weather:689
+#: ../bin/indicator-weather:808 ../bin/indicator-weather:810
 msgid "Heavy snow"
 msgstr "Neĝo grandkvante"
 
-#: ../bin/indicator-weather:688
+#: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "Disaj neĝadoj"
 
-#: ../bin/indicator-weather:691
+#: ../bin/indicator-weather:812
 msgid "Thundershowers"
 msgstr "Tondroŝtormoj"
 
-#: ../bin/indicator-weather:692
+#: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "Neĝpluvoj"
 
-#: ../bin/indicator-weather:693
+#: ../bin/indicator-weather:814
 msgid "Isolated thundershowers"
 msgstr "Izolitaj tondroŝtormoj"
 
-#: ../bin/indicator-weather:694 ../bin/indicator-weather:731
-#: ../bin/indicator-weather:741 ../bin/indicator-weather:753
-#: ../bin/indicator-weather:763 ../bin/indicator-weather:2318
+#: ../bin/indicator-weather:815 ../bin/indicator-weather:851
+#: ../bin/indicator-weather:861 ../bin/indicator-weather:873
+#: ../bin/indicator-weather:883 ../bin/indicator-weather:997
+#: ../bin/indicator-weather:2517
 msgid "Unknown condition"
 msgstr "Nekonataj veterkondiĉoj"
 
-#: ../bin/indicator-weather:852 ../bin/indicator-weather:855
-#: ../bin/indicator-weather:858
+#: ../bin/indicator-weather:1001 ../bin/indicator-weather:1004
+#: ../bin/indicator-weather:1007
 msgid "Humidity"
 msgstr "Humido"
 
-#: ../bin/indicator-weather:872
+#: ../bin/indicator-weather:1021
 msgid "Dewpoint"
 msgstr "Rosopunkto"
 
-#: ../bin/indicator-weather:888
+#: ../bin/indicator-weather:1037
 msgid "Pressure"
 msgstr "Premo"
 
-#: ../bin/indicator-weather:928
+#: ../bin/indicator-weather:1077
 msgid "Temperature"
 msgstr "Temperaturo"
 
-#: ../bin/indicator-weather:951
+#: ../bin/indicator-weather:1100
 msgid "Feels Like"
 msgstr ""
 
-#: ../bin/indicator-weather:1198 ../bin/indicator-weather:1204
+#: ../bin/indicator-weather:1346 ../bin/indicator-weather:1352
 msgid "Wind"
 msgstr "Vento"
 
-#: ../bin/indicator-weather:1256
+#: ../bin/indicator-weather:1402
+msgid "N/A"
+msgstr ""
+
+#: ../bin/indicator-weather:1404
 msgid "Calm"
 msgstr ""
 
-#: ../bin/indicator-weather:1262
+#: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "Sunleviĝo"
 
-#: ../bin/indicator-weather:1266
+#: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "Sunsubiro"
 
+#: ../bin/indicator-weather:1470
+msgid "Weather Indicator requires a newer version of pywapi"
+msgstr ""
+
+#. You may translate 'Python Weather API' in place of 'pywapi'.
+#: ../bin/indicator-weather:1473
+msgid ""
+"The minimum version required is 0.3.2, which is newer than the installed "
+"version.\n"
+"Please upgrade pywapi then restart Weather Indicator.\n"
+"\n"
+"Visit https://launchpad.net/python-weather-api for more information."
+msgstr ""
+
 #. Short wind direction - north
-#: ../bin/indicator-weather.py:925
 msgid "N"
 msgstr "N"
 
-#: ../bin/indicator-weather.py:927
+#. Short wind direction - northeast
 msgid "NE"
 msgstr "NOr"
 
-#: ../bin/indicator-weather.py:929
+#. Short wind direction - east
 msgid "E"
 msgstr "Or"
 
-#: ../bin/indicator-weather.py:931
+#. Short wind direction - southeast
 msgid "SE"
 msgstr "SOr"
 
-#: ../bin/indicator-weather.py:933
+#. Short wind direction - south
 msgid "S"
 msgstr "S"
 
-#: ../bin/indicator-weather.py:935
+#. Short wind direction - southwest
 msgid "SW"
 msgstr "SOk"
 
-#: ../bin/indicator-weather.py:937
+#. Short wind direction - west
 msgid "W"
 msgstr "Ok"
 
-#: ../bin/indicator-weather.py:939
+#. Short wind direction - northwest
 msgid "NW"
 msgstr "NOk"
 
-#: ../bin/indicator-weather.py:1486
+#: ../bin/indicator-weather:1655
 msgid "Set Up Weather..."
 msgstr "Agordi la veteron..."
 
-#: ../bin/indicator-weather:1593
+#: ../bin/indicator-weather:1780
 msgid "Forecast"
 msgstr "Prognozo"
 
-#: ../bin/indicator-weather:1599
+#: ../bin/indicator-weather:1786
 msgid "Preferences..."
 msgstr "Agordoj..."
 
-#: ../bin/indicator-weather:1605
+#: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "Pri..."
 
-#: ../bin/indicator-weather:1708
+#: ../bin/indicator-weather:1896
 msgid "Refreshing, please wait"
 msgstr "Aktualigado, bonvolu atendi"
 
-#: ../bin/indicator-weather:1710 ../bin/indicator-weather:1712
-#: ../bin/indicator-weather:1714
+#: ../bin/indicator-weather:1898 ../bin/indicator-weather:1900
+#: ../bin/indicator-weather:1902
 msgid "Refresh"
 msgstr "Aktualigi"
 
-#: ../bin/indicator-weather:1712
+#: ../bin/indicator-weather:1900
 msgid "just now"
 msgstr "Ĝuste nun"
 
-#: ../bin/indicator-weather:1714
+#: ../bin/indicator-weather:1902
 #, python-format
 msgid "%d min. ago"
 msgstr "Antaŭ %d min."
 
-#: ../bin/indicator-weather:1929
+#: ../bin/indicator-weather:2130
 msgid "Severe weather alert"
 msgstr "Alarmo de malbona vetero"
 
-#: ../bin/indicator-weather:1947
+#: ../bin/indicator-weather:2148
 msgid "Weather Indicator"
 msgstr "Veter-indikilo"
 
-#: ../bin/indicator-weather:1961
+#: ../bin/indicator-weather:2164
+msgid "Homepage"
+msgstr ""
+
+#: ../bin/indicator-weather:2165
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
@@ -410,55 +336,97 @@ msgstr ""
 "  Manuel https://launchpad.net/~elektrolupo\n"
 "  Michael Moroni https://launchpad.net/~airon90"
 
-#: ../bin/indicator-weather:2254
+#: ../bin/indicator-weather:2453
 msgid "Weather Forecast for"
 msgstr ""
 
-#: ../bin/indicator-weather:2328
+#: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "Alta"
 
-#: ../bin/indicator-weather:2331
+#: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "Malalta"
 
-#: ../bin/indicator-weather:2443
+#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
 msgstr ""
 
-#: ../bin/indicator-weather:2471 ../data/ui/Assistant.ui.h:8
+#: ../bin/indicator-weather:2693 ../data/ui/Assistant.ui:184
 msgid "Label:"
 msgstr "Etikedo:"
 
-#: ../bin/indicator-weather:2581
+#: ../bin/indicator-weather:2813
 msgid "Another instance of this program is already running"
 msgstr "Alia dinamika ekzemplero de tiu ĉi programo estas jam lanĉita"
 
-#: ../data/ui/Assistant.ui.h:1
+#: ../data/ui/ExtendedForecast.ui:9
+msgid "Extended Forecast"
+msgstr "Etendita prognozo"
+
+#: ../data/ui/ExtendedForecast.ui:23
+msgid ""
+"Forecast information cannot be fetched. Connection cannot be established."
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui:57
+msgid "Today"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui:181
+msgid "Tomorrow"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui:305
+msgid "Sunday"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui:426
+msgid "Monday"
+msgstr ""
+
+#: ../data/ui/ExtendedForecast.ui:547
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+#: ../data/ui/Assistant.ui:9
 msgid "Add a location"
 msgstr "Aldoni lokon"
 
-#: ../data/ui/Assistant.ui.h:2
+#: ../data/ui/Assistant.ui:30
 msgid "Please search our database for your location:"
 msgstr "Bonvolu serĉu vian lokon en nia datumbazon:"
 
-#: ../data/ui/Assistant.ui.h:3
+#: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "Serĉi"
 
-#: ../data/ui/Assistant.ui.h:4
+#: ../data/ui/Assistant.ui:89
 msgid "Select a location"
 msgstr "Elekti lokon"
 
-#: ../data/ui/Assistant.ui.h:5
+#: ../data/ui/Assistant.ui:104
 msgid "Please enter a name for this location:"
 msgstr "Bonvolu tajpi la nomon de tiu ĉi lokon:"
 
-#: ../data/ui/Assistant.ui.h:6
+#: ../data/ui/Assistant.ui:126
 msgid "Name the location"
 msgstr "Nomo de la loko"
 
-#: ../data/ui/Assistant.ui.h:7
+#: ../data/ui/Assistant.ui:141
 msgid ""
 "Please review the choices below. If anything is not correct, please go back "
 "and select the correct options."
@@ -466,27 +434,170 @@ msgstr ""
 "Bonvolu kontroli la subajn elektojn. Se io ne ĝustas, bonvolu iru reen kaj "
 "elektu la ĝustajn opciojn."
 
-#: ../data/ui/Assistant.ui.h:9
+#: ../data/ui/Assistant.ui:198
 msgid "<b>Home</b>"
 msgstr "<b>Hejmo</b>"
 
-#: ../data/ui/Assistant.ui.h:10
+#: ../data/ui/Assistant.ui:237
 msgid "Location:"
 msgstr "Loko:"
 
-#: ../data/ui/Assistant.ui.h:11
+#. This string does not need to be translated. It is a default string for
+#. the GtkBuilder definition, and is overwritten by the current location.
+#: ../data/ui/Assistant.ui:251
 msgid "<b>Orange, Texas</b>"
 msgstr "<b>Orange, Texas</b>"
 
-#: ../data/ui/Assistant.ui.h:12
+#: ../data/ui/Assistant.ui:282
 msgid "Review choices"
 msgstr "Kontrolu opciojn"
 
-#: ../data/ui/ExtendedForecast.ui.h:1
-msgid "Extended Forecast"
-msgstr "Etendita prognozo"
+#: ../data/ui/PreferencesDialog.ui:24
+msgid "Weather Indicator Preferences"
+msgstr "Agordoj de la veter-indikilo"
 
-#: ../indicator-weather.desktop.in.h:2
+#: ../data/ui/PreferencesDialog.ui:99
+msgid "Enable the Weather Indicator Applet"
+msgstr "Ŝalti la veter-informan aplikaĵeton"
+
+#: ../data/ui/PreferencesDialog.ui:114
+msgid "Show temperature near indicator"
+msgstr "Montri la temperaturon proksime de la indikilo"
+
+#: ../data/ui/PreferencesDialog.ui:137
+msgid "Update every"
+msgstr "Aktualigi ĉiun"
+
+#: ../data/ui/PreferencesDialog.ui:165
+msgid "minutes"
+msgstr "minutoj"
+
+#: ../data/ui/PreferencesDialog.ui:198
+msgid "<b>Notifications</b>"
+msgstr "<b>Atentigoj</b>"
+
+#: ../data/ui/PreferencesDialog.ui:220
+msgid "No notifications"
+msgstr "Sen sciigoj"
+
+#: ../data/ui/PreferencesDialog.ui:236
+msgid "Only use notifications to give severe weather alerts"
+msgstr "Uzi la sciigojn nur por averti pri malbonaj fortaj verterkondiĉoj"
+
+#: ../data/ui/PreferencesDialog.ui:252
+msgid "Use notifications to give every weather condition change"
+msgstr "Uzi sciigojn por informi pri ĉia ajn veterkondiĉo"
+
+#: ../data/ui/PreferencesDialog.ui:281
+msgid "<b>Weather Data Source</b>"
+msgstr "<b>Datumfonto pri la vetero</b>"
+
+#: ../data/ui/PreferencesDialog.ui:303
+msgid "Yahoo!"
+msgstr "Jahuo"
+
+#: ../data/ui/PreferencesDialog.ui:318
+msgid "Weather.com"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:355
+msgid "General"
+msgstr "Ĝenerala"
+
+#: ../data/ui/PreferencesDialog.ui:379
+msgid "<b>Weather Conditions</b>"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:401
+msgid "Relative temperature (\"Feels like\")"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:416
+msgid "Wind speed and direction"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:432
+msgid "Sunrise and sunset times"
+msgstr ""
+
+#. Formula to use for calculating 'feels like' temperature for hot weather.
+#: ../data/ui/PreferencesDialog.ui:473
+msgid "<b>Relative Heat Formula</b>"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:495
+msgid "Heat Index (US)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:511
+msgid "Humidex (Canada)"
+msgstr ""
+
+#. Formula to use for calculating 'feels like' temperature for cold weather.
+#: ../data/ui/PreferencesDialog.ui:552
+msgid "<b>Wind Chill Formula</b>"
+msgstr ""
+
+#. The Joint Action Group for temperature Indices (JAG/TI) is chaired by the
+#. U.S. National Weather Service. Its goal is to internationally upgrade and
+#. standardize the index for temperature extremes (e.g., Wind Chill Index).
+#: ../data/ui/PreferencesDialog.ui:574
+msgid "JAG/TI Wind Chill Index (US/UK/Canada)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:590
+msgid "Apparent Temperature (Australia)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:629
+msgid "Conditions"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:654
+msgid "<b>Temperature Scale</b>"
+msgstr "<b>Temperatur-skalo</b>"
+
+#: ../data/ui/PreferencesDialog.ui:676
+msgid "Imperial (°F)"
+msgstr "Farenhejta (°F)"
+
+#: ../data/ui/PreferencesDialog.ui:692
+msgid "SI (metric, °C)"
+msgstr "Celsia (°C)"
+
+#: ../data/ui/PreferencesDialog.ui:733
+msgid "<b>Wind Speed Unit</b>"
+msgstr "<b>Unuo de rapido de la vento</b>"
+
+#: ../data/ui/PreferencesDialog.ui:755
+msgid "Meters per second (m/s)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:771
+msgid "Miles per hour (mph)"
+msgstr "Mejloj hore (mph)"
+
+#: ../data/ui/PreferencesDialog.ui:787
+msgid "Kilometers per hour (km/h)"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:803
+msgid "Beaufort number"
+msgstr ""
+
+#: ../data/ui/PreferencesDialog.ui:819
+msgid "Knots"
+msgstr "Nodoj"
+
+#: ../data/ui/PreferencesDialog.ui:858
+msgid "Units"
+msgstr "Unitoj"
+
+#: ../data/ui/PreferencesDialog.ui:963
+msgid "Locations"
+msgstr "Lokoj"
+
+#: ../indicator-weather.desktop.in:2
 msgid ""
 "A weather indicator that displays information for one or multiple places in "
 "the world"

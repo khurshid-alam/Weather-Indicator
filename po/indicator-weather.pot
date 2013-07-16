@@ -46,10 +46,12 @@ msgid "Mixed rain and snow"
 msgstr ""
 
 #: ../bin/indicator-weather:773
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 msgid "Mixed rain and sleet"
 msgstr ""
 
 #: ../bin/indicator-weather:774
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 msgid "Mixed snow and sleet"
 msgstr ""
 
@@ -70,10 +72,17 @@ msgid "Showers"
 msgstr ""
 
 #: ../bin/indicator-weather:780
+#. A flurry is defined as a light snow shower, lasting for 
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 msgid "Snow flurries"
 msgstr ""
 
 #: ../bin/indicator-weather:781
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 msgid "Light snow showers"
 msgstr ""
 
@@ -111,6 +120,7 @@ msgid "Smoky"
 msgstr ""
 
 #: ../bin/indicator-weather:790
+#. Same as "Breezy" or "Light Winds"
 msgid "Blustery"
 msgstr ""
 
@@ -136,6 +146,7 @@ msgid "Partly cloudy"
 msgstr ""
 
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
+#. A near- or total absence of clouds
 msgid "Clear"
 msgstr ""
 
@@ -144,6 +155,7 @@ msgid "Sunny"
 msgstr ""
 
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
+#. Used to describe pleasant weather conditions
 msgid "Fair"
 msgstr ""
 
@@ -172,6 +184,10 @@ msgid "Heavy snow"
 msgstr ""
 
 #: ../bin/indicator-weather:809
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 msgid "Scattered snow showers"
 msgstr ""
 
@@ -180,6 +196,10 @@ msgid "Thundershowers"
 msgstr ""
 
 #: ../bin/indicator-weather:813
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 msgid "Snow showers"
 msgstr ""
 
@@ -220,22 +240,33 @@ msgid "Wind"
 msgstr ""
 
 #: ../bin/indicator-weather:1402
+#. Abbreviation for "Not Applicable"
 msgid "N/A"
 msgstr ""
 
 #: ../bin/indicator-weather:1404
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 msgid "Calm"
 msgstr ""
 
 #: ../bin/indicator-weather:1410
+#. Sunrise or sun up is the instant at which the upper edge 
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 msgid "Sunrise"
 msgstr ""
 
 #: ../bin/indicator-weather:1414
+#. Sunset or sundown is the daily disappearance of the Sun 
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 msgid "Sunset"
 msgstr ""
 
 #: ../bin/indicator-weather:1470
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 msgid "Weather Indicator requires a newer version of pywapi"
 msgstr ""
 
@@ -294,6 +325,7 @@ msgid "Preferences..."
 msgstr ""
 
 #: ../bin/indicator-weather:1792
+#. Menu item to open the "About Weather Indicator" dialog
 msgid "About..."
 msgstr ""
 
@@ -336,15 +368,18 @@ msgid "Weather Forecast for"
 msgstr ""
 
 #: ../bin/indicator-weather:2527
+#. The highest temperature for a particular day.
 msgid "High"
 msgstr ""
 
 #: ../bin/indicator-weather:2530
+#. The lowest temperature for a particular day.
 msgid "Low"
 msgstr ""
 
 #: ../bin/indicator-weather:2666
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 msgid "Could not find location id for"
 msgstr ""
 
@@ -407,6 +442,7 @@ msgid "Please search our database for your location:"
 msgstr ""
 
 #: ../data/ui/Assistant.ui:68
+#. Verb form of the word, the button text for finding a location
 msgid "Search"
 msgstr ""
 
@@ -487,10 +523,12 @@ msgid "<b>Weather Data Source</b>"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:303
+#. Data source name, does not need to be translated
 msgid "Yahoo!"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:318
+#. Data source name, does not need to be translated
 msgid "Weather.com"
 msgstr ""
 
@@ -544,6 +582,7 @@ msgid "Apparent Temperature (Australia)"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:629
+#. Weather conditions
 msgid "Conditions"
 msgstr ""
 
@@ -576,6 +615,7 @@ msgid "Kilometers per hour (km/h)"
 msgstr ""
 
 #: ../data/ui/PreferencesDialog.ui:803
+#. Alternate wind speed scale
 msgid "Beaufort number"
 msgstr ""
 

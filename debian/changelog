@@ -1,5 +1,8 @@
 indicator-weather (13.06.01) quantal; urgency=low
 
+  * Show error condition/icon when weather data sources are unreachable
+  * Fallback to /etc/timezone when Google Time Zone API is down
+  * Fallback to using system time when earthtools.org is down (LP: #1198331)
   * Don't crash when receiving unknown weather condition
   * debian/control: new dependency on gnome-icon-theme-full
   * debian/postinst: create valid symlinks and update correct icon cache
