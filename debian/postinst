@@ -20,7 +20,8 @@ if [ ! -e "/usr/share/icons/gnome/22x22/status/weather-clouds.png" ] || \
         echo "WARNING: missing default icons for cloudy conditions"
     else
         #create symlinks and update icon cache
-        rm -f /usr/share/icons/gnome/22x22/status/weather-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
+        rm -f /usr/share/icons/gnome/22x22/status/weather-clouds.png
+        rm -f /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
         ln -s weather-few-clouds.png /usr/share/icons/gnome/22x22/status/weather-clouds.png
         ln -s weather-few-clouds-night.png /usr/share/icons/gnome/22x22/status/weather-clouds-night.png
 
