@@ -189,17 +189,17 @@ class ProxyMonitor:
         if 'host' not in proxy_info:
             ProxyMonitor.log.debug("ProxyMonitor: using direct connection")
             proxy_support = urllib2.ProxyHandler({})
-
-        elif 'user' not in proxy_info:
-            ProxyMonitor.log.debug("ProxyMonitor: using simple proxy: " + \
-                "%(host)s:%(port)d" % proxy_info)
-            proxy_support = urllib2.ProxyHandler({
-                'http': "http://%(host)s:%(port)d" % proxy_info})
         else:
-            ProxyMonitor.log.debug("ProxyMonitor: using proxy with auth: " + \
-                "%(user)s@%(host)s:%(port)d" % proxy_info)
-            proxy_support = urllib2.ProxyHandler({
-                'http': "http://%(user)s:%(pass)s@%(host)s:%(port)d" % proxy_info})
+            if 'user' not in proxy_info:
+                ProxyMonitor.log.debug("ProxyMonitor: using simple proxy: " + \
+                    "%(host)s:%(port)d" % proxy_info)
+                proxy_url = "http://%(host)s:%(port)d" % proxy_info
+            else:
+                ProxyMonitor.log.debug("ProxyMonitor: using proxy with auth: " + \
+                    "%(user)s@%(host)s:%(port)d" % proxy_info)
+                proxy_url = "http://%(user)s:%(pass)s@%(host)s:%(port)d" % proxy_info
+            proxy_support = urllib2.ProxyHandler({'http': proxy_url, 
+    					      'https': proxy_url})
 
         # install new urllib2 opener
         opener = urllib2.build_opener(proxy_support, urllib2.HTTPHandler)

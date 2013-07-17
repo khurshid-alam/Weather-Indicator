@@ -1,5 +1,6 @@
 indicator-weather (13.06.01) quantal; urgency=low
 
+  * Proxy now used for https URLs, thanks István Váradi (LP: #1191669)
   * Workaround for empty or malformed 'places' setting (LP: #1191096)
   * Fix for Unicode handling in TimeFormatter class (LP: #1196269)
   * Show error condition/icon when weather data sources are unreachable
