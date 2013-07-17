@@ -1455,11 +1455,11 @@ class Weather:
 
     def get_sunrise_label(self):
         """ Get text string for sunrise time """
-        return "%s: %s" % (_("Sunrise"), TimeFormatter.format_time(self.__sunrise_t))
+        return u"%s: %s" % (_("Sunrise"), TimeFormatter.format_time(self.__sunrise_t))
 
     def get_sunset_label(self):
         """ Get text string for sunset time """
-        return "%s: %s" % (_("Sunset"), TimeFormatter.format_time(self.__sunset_t))
+        return u"%s: %s" % (_("Sunset"), TimeFormatter.format_time(self.__sunset_t))
 
 class indicator_weather(threading.Thread):
     """ Indicator class """
@@ -1984,7 +1984,7 @@ class indicator_weather(threading.Thread):
         if cached_weather is None:
             # No cached weather exists
             log.debug("Indicator: show_cached_weather: no cached data exists "
-                      "for %s" % self.location_details[0])
+                      "for %s" % self.places[self.placechosen][0])  # self.location_details['label'])
             return
 
         try:
@@ -2450,7 +2450,7 @@ class PreferencesDialog(Gtk.Dialog):
             wi.placechosen = 0
             if (type(wi.place) != None):
                 for i in xrange(len(wi.places)):
-                    if wi.places[i][0] == wi.place[0]:
+                    if wi.places[i] is not None and wi.places[i][0] == wi.place[0]:
                         wi.placechosen = i
             wi.place = wi.places[0]
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
@@ -2838,7 +2838,7 @@ if __name__ == "__main__":
     log_handler.setFormatter(log_formatter)
     log.addHandler(log_handler)
 
-    log.info("-" * 50)
+    log.info("-" * 72)
     log.info("Started Weather Indicator from %s" % PROJECT_ROOT_DIRECTORY)
     log.info("Weather Indicator version %s" % VERSION)
     try:
@@ -2865,11 +2865,13 @@ if __name__ == "__main__":
     global locale_name
     locale_name = locale.getlocale()[0]
     if locale_name is not None:
+        log.info("Locale set to '%s'" % locale_name)
         locale_name = locale_name.split('_')[0]
     else:
+        log.info("Locale undefined, using C Locale")
         locale.setlocale(locale.LC_ALL, 'C') # use default (C) locale
         locale_name = "en"
-
+    
     # init GLib/GObject
     GObject.threads_init()
 

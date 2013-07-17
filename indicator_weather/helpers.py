@@ -246,13 +246,13 @@ class TimeFormatter:
     def format_time(t):
         """ do the format """
         if not t:
-            return "Unknown"
-        return t.strftime(TimeFormatter.format)
+            return u"Unknown"
+        return t.strftime(TimeFormatter.format.encode('utf-8')).decode('utf-8')
 
     @staticmethod
     def calc_format(timeformat_settings, changed_key=None):
         """ settings init or changed """
-        TimeFormatter.log.debug("Time Formatter: time format changed")
+        TimeFormatter.log.debug("TimeFormatter: time format changed")
         time_format = timeformat_settings.get_enum("time-format")
 
         if time_format == TimeFormatter.SETTINGS_TIME_24_HOUR:
