@@ -1298,7 +1298,7 @@ class Weather:
                       "Weather.com, checking temp and humidity")
             T_a = float(self.__report['current_conditions']['temperature'])
             wind_speed = self.__report['current_conditions']['wind']['speed']
-            V = (0.0 if wind_speed == 'calm' else float(wind_speed))
+            V = (0.0 if wind_speed in ['calm','N/A'] else float(wind_speed))
             if T_a <= -45 or T_a >= 10 or V <= 4.8:
                 return (_value, "")
 
