@@ -3,6 +3,7 @@
 ### BEGIN LICENSE
 # Copyright (C) 2010 Sebastian MacDonald Sebas310@gmail.com
 # Copyright (C) 2010 Mehdi Rejraji mehd36@gmail.com
+# Copyright (C) 2013 Joshua Tasker jtasker@gmail.com
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License version 3, as published
 # by the Free Software Foundation.
@@ -20,7 +21,6 @@
 
 __all__ = [
     'get_builder',
-    'monitor_upower',
     'ProxyMonitor',
     'TimeFormatter',
     'NumberFormatter',
@@ -30,17 +30,16 @@ try:
     # this has to be called only once, otherwise we get segfaults
     DCONF_SCHEMAS = Gio.Settings.list_schemas()
 except ImportError:
+    # shouldn't we just fail entirely here?
     DCONF_SCHEMAS = []
 
 from gi.repository import GConf
+from gi.repository import Gtk
 import traceback
 import os
-from gi.repository import Gtk
 import urllib2
 import locale
 import re
-import dbus
-from dbus.mainloop.glib import DBusGMainLoop
 from indicator_weather.indicator_weatherconfig import get_data_file
 
 import gettext
@@ -63,27 +62,6 @@ def get_builder(builder_file_name):
     builder.add_from_file(ui_filename)
     return builder
 
-def monitor_upower(sleep_handler, resume_handler, log):
-    """
-    Attempts to connect to UPower interface
-    """
-    # http://upower.freedesktop.org/docs/UPower.html
-    try:
-        DBusGMainLoop(set_as_default=True)
-        bus = dbus.SystemBus()
-        if not bus.name_has_owner("org.freedesktop.UPower"):
-            log.info("UPower service is missing, cannot monitor power events")
-            return
-
-        proxy = dbus.SystemBus().get_object("org.freedesktop.UPower",
-                                            "/org/freedesktop/UPower")
-        iface = dbus.Interface(proxy, "org.freedesktop.UPower")
-        iface.connect_to_signal("Sleeping", sleep_handler)
-        iface.connect_to_signal("Resuming", resume_handler)
-        log.info("Monitoring UPower interface")
-
-    except Exception, e:
-        log.error("UPower error: %s" % e)
 
 class ProxyMonitor:
     """ Class to monitor proxy settings """
@@ -92,9 +70,8 @@ class ProxyMonitor:
     def monitor_proxy(log):
         ProxyMonitor.log = log
         try:
-            # disable dconf settings for now
-            # because they do not seem to be in effect
-            if False and "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
+            # GConf is deprecated; leaving it here for legacy systems
+            if "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
                 # load dconf settings
                 proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
                 ProxyMonitor.dconf_proxy_changed(proxy_settings)
@@ -118,13 +95,15 @@ class ProxyMonitor:
         try:
             ProxyMonitor.log.debug("ProxyMonitor: loading dconf settings")
             proxy_info = {}
-            # Taken from http://forum.compiz.org/viewtopic.php?t=9480
-            if settings.get_boolean("enabled"):
-                proxy_info['host'] = settings.get_string("host")
-                proxy_info['port'] = settings.get_int("port")
-                if settings.get_boolean("use-authentication"):
-                    proxy_info['user'] = settings.get_string("authentication-user")
-                    proxy_info['pass'] = settings.get_string("authentication-password")
+            # Was taken from http://forum.compiz.org/viewtopic.php?t=9480 
+            # Now we ignore the 'enabled' key, as per Gnome bug 648237:
+            #     https://bugzilla.gnome.org/show_bug.cgi?id=648237
+            #if settings.get_boolean("enabled"):
+            proxy_info['host'] = settings.get_string("host")
+            proxy_info['port'] = settings.get_int("port")
+            if settings.get_boolean("use-authentication"):
+                proxy_info['user'] = settings.get_string("authentication-user")
+                proxy_info['pass'] = settings.get_string("authentication-password")
 
             ProxyMonitor.install_proxy_handler(proxy_info)
 

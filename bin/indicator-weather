@@ -1358,7 +1358,10 @@ class Weather:
                       "Weather.com, checking temp and humidity")
             T_a = float(self.__report['current_conditions']['temperature'])
             rh = float(self.__report['current_conditions']['humidity'])
-            ws = float(self.__report['current_conditions']['wind']['speed'])
+            ws = self.__report['current_conditions']['wind']['speed']
+            if ws == 'calm':
+                ws = 0
+            ws = float(ws)
 
         # calculated in °C, so need to convert from °F
         if units == 'imperial':
@@ -1508,7 +1511,10 @@ class indicator_weather(threading.Thread):
 
         self.refreshed_minutes_ago = -1
         self.places_changed = False
-        monitor_upower(self.on_system_sleep, self.on_system_resume, log)
+
+        # monitor suspend/resume over DBus
+        self._dbus_conn = None
+        self.monitor_upower()
 
         # pywapi is too old, user must upgrade
         if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.3':
@@ -1883,7 +1889,45 @@ class indicator_weather(threading.Thread):
             )
             self.update_weather(False)
 
-    def on_system_sleep(self):
+    def monitor_upower(self): #, sleep_handler, resume_handler, log):
+        """
+        Attempts to connect to UPower interface
+        """
+        # http://upower.freedesktop.org/docs/UPower.html
+        try:
+            # python-dbus is deprecated, migrated to GDBus
+            # http://lazka.github.io/pgi-docs/api/Gio_2.0/classes/DBusConnection.html
+            
+            # set up the DBus connection
+            self._dbus_conn = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
+            # TODO: Check for existence of 'org.freedesktop.UPower' interface?
+
+            # set up signals
+            sub_id = self._dbus_conn.signal_subscribe(None,
+                                        "org.freedesktop.UPower",
+                                        "Sleeping",
+                                        None,
+                                        None,
+                                        0,
+                                        self.on_system_sleep,
+                                        None)   # user_data
+            #log.debug("Subscribed to 'Sleeping' UPower signal with id %s" % sub_id)
+            sub_id = self._dbus_conn.signal_subscribe(None,
+                                        "org.freedesktop.UPower",
+                                        "Resuming",
+                                        None,
+                                        None,
+                                        0,
+                                        self.on_system_resume,
+                                        None)   # user_data
+            #log.debug("Subscribed to 'Resuming' UPower signal with id %s" % sub_id)
+            log.info("Monitoring UPower interface")
+
+        except Exception, e:
+            log.error("UPower error: %s" % e)
+    
+    def on_system_sleep(self, connection, sender_name, object_path,
+                        interface_name, signal_name, parameters, user_data):
         """Callback from UPower that system suspends/hibernates
 
         """
@@ -1896,7 +1940,8 @@ class indicator_weather(threading.Thread):
         if hasattr(self, "rate_id"):
             GObject.source_remove(self.rate_id)
 
-    def on_system_resume(self):
+    def on_system_resume(self, connection, sender_name, object_path,
+                        interface_name, signal_name, parameters, user_data):
         """Callback from UPower that system resumes
 
         """
@@ -2050,7 +2095,7 @@ class indicator_weather(threading.Thread):
     def show_new_weather_data(self, weather):
         """ Update the indicator icon, label and menu with new weather data """
         try:
-            if weather is None:
+            if weather is None or weather.get_icon_name() in [False, 'weather-indicator-error']:
                 # remove the "Refreshing" status
                 self.set_refresh_label()
                 # No data returned - leave cached data to be displayed
