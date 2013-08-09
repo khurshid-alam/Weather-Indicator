@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-06-15 05:26+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-07-18 06:23+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 "Language: ko\n"
 
 #: ../bin/indicator-weather:694
@@ -46,10 +46,12 @@ msgstr "뇌우"
 msgid "Mixed rain and snow"
 msgstr "비가 섞인 눈"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "진눈깨비가 섞인 비"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "진눈깨비가 섞인 눈"
@@ -70,10 +72,17 @@ msgstr "얼어붙는 비"
 msgid "Showers"
 msgstr "소나기"
 
+#. A flurry is defined as a light snow shower, lasting for
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 #: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "눈발 흩날림"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "소낙눈 조금"
@@ -111,6 +120,7 @@ msgstr "아지랑이"
 msgid "Smoky"
 msgstr "연기"
 
+#. Same as "Breezy" or "Light Winds"
 #: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "거센 바람"
@@ -136,6 +146,7 @@ msgstr "구름 많음"
 msgid "Partly cloudy"
 msgstr "구름 조금"
 
+#. A near- or total absence of clouds
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "맑음"
@@ -144,6 +155,7 @@ msgstr "맑음"
 msgid "Sunny"
 msgstr "화창함"
 
+#. Used to describe pleasant weather conditions
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "맑음"
@@ -172,6 +184,10 @@ msgstr "산발적인 소나기"
 msgid "Heavy snow"
 msgstr "대설"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "산발적인 소낙눈"
@@ -180,6 +196,10 @@ msgstr "산발적인 소낙눈"
 msgid "Thundershowers"
 msgstr "뇌우"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "소낙눈"
@@ -220,22 +240,33 @@ msgstr ""
 msgid "Wind"
 msgstr "바람"
 
+#. Abbreviation for "Not Applicable"
 #: ../bin/indicator-weather:1402
 msgid "N/A"
 msgstr ""
 
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 #: ../bin/indicator-weather:1404
 msgid "Calm"
 msgstr ""
 
+#. Sunrise or sun up is the instant at which the upper edge
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 #: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "해 뜨는 시간"
 
+#. Sunset or sundown is the daily disappearance of the Sun
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 #: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "해 지는 시간"
 
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1470
 msgid "Weather Indicator requires a newer version of pywapi"
 msgstr ""
@@ -294,6 +325,7 @@ msgstr "예보"
 msgid "Preferences..."
 msgstr "기본 설정..."
 
+#. Menu item to open the "About Weather Indicator" dialog
 #: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "정보..."
@@ -338,15 +370,18 @@ msgstr ""
 msgid "Weather Forecast for"
 msgstr ""
 
+#. The highest temperature for a particular day.
 #: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "최고 기온"
 
+#. The lowest temperature for a particular day.
 #: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "최저 기온"
 
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 #: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
 msgstr ""
@@ -408,6 +443,7 @@ msgstr "위치 추가"
 msgid "Please search our database for your location:"
 msgstr "데이터 베이스에서 위치를 검색하십시오:"
 
+#. Verb form of the word, the button text for finding a location
 #: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "검색"
@@ -488,10 +524,12 @@ msgstr "날씨가 바뀌면 항상 알려주기"
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>날씨 정보를 가져올 곳</b>"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:303
 msgid "Yahoo!"
 msgstr "야후!"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:318
 msgid "Weather.com"
 msgstr ""
@@ -545,6 +583,7 @@ msgstr ""
 msgid "Apparent Temperature (Australia)"
 msgstr ""
 
+#. Weather conditions
 #: ../data/ui/PreferencesDialog.ui:629
 msgid "Conditions"
 msgstr ""
@@ -577,6 +616,7 @@ msgstr "마일/시 (mph)"
 msgid "Kilometers per hour (km/h)"
 msgstr ""
 
+#. Alternate wind speed scale
 #: ../data/ui/PreferencesDialog.ui:803
 msgid "Beaufort number"
 msgstr ""

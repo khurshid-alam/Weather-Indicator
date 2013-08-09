@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-06-15 05:27+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-07-18 06:23+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 "Language: uk\n"
 
 #: ../bin/indicator-weather:694
@@ -46,10 +46,12 @@ msgstr "Грози"
 msgid "Mixed rain and snow"
 msgstr "Дощ зі снігом"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "Дощ та мокрий сніг"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "Мокрий сніг"
@@ -70,10 +72,17 @@ msgstr "Дощ з градом"
 msgid "Showers"
 msgstr "Зливи"
 
+#. A flurry is defined as a light snow shower, lasting for
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 #: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "Завірюха"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "Невеликий снігопад"
@@ -111,6 +120,7 @@ msgstr "Серпанок"
 msgid "Smoky"
 msgstr "Імла"
 
+#. Same as "Breezy" or "Light Winds"
 #: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "Поривчастий вітер"
@@ -136,6 +146,7 @@ msgstr "Здебільшого хмарно"
 msgid "Partly cloudy"
 msgstr "Почасти хмарно"
 
+#. A near- or total absence of clouds
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "Ясно"
@@ -144,6 +155,7 @@ msgstr "Ясно"
 msgid "Sunny"
 msgstr "Сонячно"
 
+#. Used to describe pleasant weather conditions
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "Сприятливо"
@@ -172,6 +184,10 @@ msgstr "Подекуди зливи"
 msgid "Heavy snow"
 msgstr "Сильний сніг"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "Подекуди снігопади"
@@ -180,6 +196,10 @@ msgstr "Подекуди снігопади"
 msgid "Thundershowers"
 msgstr "Грозові зливи"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "Хурделиця"
@@ -220,22 +240,33 @@ msgstr "По відчуттю"
 msgid "Wind"
 msgstr "Вітер"
 
+#. Abbreviation for "Not Applicable"
 #: ../bin/indicator-weather:1402
 msgid "N/A"
 msgstr ""
 
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 #: ../bin/indicator-weather:1404
 msgid "Calm"
 msgstr "Спокійно"
 
+#. Sunrise or sun up is the instant at which the upper edge
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 #: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "Схід сонця"
 
+#. Sunset or sundown is the daily disappearance of the Sun
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 #: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "Захід сонця"
 
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1470
 msgid "Weather Indicator requires a newer version of pywapi"
 msgstr ""
@@ -294,6 +325,7 @@ msgstr "Прогноз погоди"
 msgid "Preferences..."
 msgstr "Налаштування..."
 
+#. Menu item to open the "About Weather Indicator" dialog
 #: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "Про програму…"
@@ -343,15 +375,18 @@ msgstr ""
 msgid "Weather Forecast for"
 msgstr "Прогноз погоди для"
 
+#. The highest temperature for a particular day.
 #: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "Висока"
 
+#. The lowest temperature for a particular day.
 #: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "Низька"
 
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 #: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
 msgstr "Не можу знайти ідентифікатор місця для"
@@ -413,6 +448,7 @@ msgstr "Додати адресу"
 msgid "Please search our database for your location:"
 msgstr "Будь-ласка зробіть пошук вашого місцезнаходження у нашій базі"
 
+#. Verb form of the word, the button text for finding a location
 #: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "Пошук"
@@ -495,10 +531,12 @@ msgstr "Повідомлення під час кожної зміни пого�
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>Джерело даних погоди</b>"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:303
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:318
 msgid "Weather.com"
 msgstr ""
@@ -552,6 +590,7 @@ msgstr ""
 msgid "Apparent Temperature (Australia)"
 msgstr ""
 
+#. Weather conditions
 #: ../data/ui/PreferencesDialog.ui:629
 msgid "Conditions"
 msgstr ""
@@ -584,6 +623,7 @@ msgstr "Міль на годину (mph)"
 msgid "Kilometers per hour (km/h)"
 msgstr "Кілометрів за годину (км/г)"
 
+#. Alternate wind speed scale
 #: ../data/ui/PreferencesDialog.ui:803
 msgid "Beaufort number"
 msgstr ""

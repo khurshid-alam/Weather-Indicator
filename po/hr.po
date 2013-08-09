@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-13 22:48-0400\n"
-"PO-Revision-Date: 2013-06-14 04:09+0000\n"
-"Last-Translator: Miroslav Matejaš <silverspace@ubuntu-hr.org>\n"
+"PO-Revision-Date: 2013-07-30 19:53+0000\n"
+"Last-Translator: Paolo Pelesk <ted.teddy.cro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-06-15 05:27+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-07-31 05:38+0000\n"
+"X-Generator: Launchpad (build 16718)\n"
 "Language: hr\n"
 
 #: ../bin/indicator-weather:694
@@ -46,10 +46,12 @@ msgstr "Oluje"
 msgid "Mixed rain and snow"
 msgstr "Miješana kiša i led"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "Miješana kiša i susnježica"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "Miješani snijeg i susnježica"
@@ -70,10 +72,17 @@ msgstr "Ledena kiša"
 msgid "Showers"
 msgstr "Pljuskovi"
 
+#. A flurry is defined as a light snow shower, lasting for
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 #: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "Snježni naleti"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "Lagani ljetni pljuskovi"
@@ -111,6 +120,7 @@ msgstr "Izmaglica"
 msgid "Smoky"
 msgstr "Dim"
 
+#. Same as "Breezy" or "Light Winds"
 #: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "Vijavica"
@@ -136,6 +146,7 @@ msgstr "Uglavnom oblačno"
 msgid "Partly cloudy"
 msgstr "Djelomično oblačno"
 
+#. A near- or total absence of clouds
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "Čisto bez oblaka"
@@ -144,6 +155,7 @@ msgstr "Čisto bez oblaka"
 msgid "Sunny"
 msgstr "Sunčano"
 
+#. Used to describe pleasant weather conditions
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "Vedro"
@@ -172,6 +184,10 @@ msgstr "Razasuti pljuskovi"
 msgid "Heavy snow"
 msgstr "Jak snijeg"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "Raštrkani snijeg"
@@ -180,6 +196,10 @@ msgstr "Raštrkani snijeg"
 msgid "Thundershowers"
 msgstr "Grmljavinski pljuskovi"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "Mećava"
@@ -214,31 +234,42 @@ msgstr "Temperatura"
 
 #: ../bin/indicator-weather:1100
 msgid "Feels Like"
-msgstr ""
+msgstr "Ugođaj"
 
 #: ../bin/indicator-weather:1346 ../bin/indicator-weather:1352
 msgid "Wind"
 msgstr "Vjetar"
 
+#. Abbreviation for "Not Applicable"
 #: ../bin/indicator-weather:1402
 msgid "N/A"
-msgstr ""
+msgstr "Nedostupno"
 
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 #: ../bin/indicator-weather:1404
 msgid "Calm"
-msgstr ""
+msgstr "Mirno"
 
+#. Sunrise or sun up is the instant at which the upper edge
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 #: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "Izlazak sunca"
 
+#. Sunset or sundown is the daily disappearance of the Sun
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 #: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "Zalazak sunca"
 
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1470
 msgid "Weather Indicator requires a newer version of pywapi"
-msgstr ""
+msgstr "Indikator vremena potražuje noviju verziju pywapi"
 
 #. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1473
@@ -249,6 +280,10 @@ msgid ""
 "\n"
 "Visit https://launchpad.net/python-weather-api for more information."
 msgstr ""
+"Minimalna potrebna verzija je 0.3.2 koja je novija od instalirane.\n"
+"Molimo nadogradite pywapi i zatim ponovo pokrenite Indikator vremena.\n"
+"\n"
+"Posjetite https://launchpad.net/python-weather-api za više informacija."
 
 #. Short wind direction - north
 msgid "N"
@@ -294,6 +329,7 @@ msgstr "Dugoročna prognoza"
 msgid "Preferences..."
 msgstr "Osobitosti"
 
+#. Menu item to open the "About Weather Indicator" dialog
 #: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "O programu"
@@ -326,13 +362,14 @@ msgstr "Vremenska prognoza"
 
 #: ../bin/indicator-weather:2164
 msgid "Homepage"
-msgstr ""
+msgstr "Početna stranica"
 
 #: ../bin/indicator-weather:2165
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Miroslav Matejaš https://launchpad.net/~silverspace+amd64\n"
+"  Paolo Pelesk https://launchpad.net/~teddx\n"
 "  Saša Teković https://launchpad.net/~hseagle2015\n"
 "  Tomislav Krznar https://launchpad.net/~tomislav-krznar\n"
 "  antisa https://launchpad.net/~antisa\n"
@@ -340,20 +377,23 @@ msgstr ""
 
 #: ../bin/indicator-weather:2453
 msgid "Weather Forecast for"
-msgstr ""
+msgstr "Vremenska prognoza za"
 
+#. The highest temperature for a particular day.
 #: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "Visoka"
 
+#. The lowest temperature for a particular day.
 #: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "Niska"
 
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 #: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
-msgstr ""
+msgstr "Ne mogu pronaći id lokacije za"
 
 #: ../bin/indicator-weather:2693 ../data/ui/Assistant.ui:184
 msgid "Label:"
@@ -370,39 +410,39 @@ msgstr "Produžena prognoza"
 #: ../data/ui/ExtendedForecast.ui:23
 msgid ""
 "Forecast information cannot be fetched. Connection cannot be established."
-msgstr ""
+msgstr "Prognoza ne može biti preuzeta. Neuspješno postavljanje veze."
 
 #: ../data/ui/ExtendedForecast.ui:57
 msgid "Today"
-msgstr ""
+msgstr "Danas"
 
 #: ../data/ui/ExtendedForecast.ui:181
 msgid "Tomorrow"
-msgstr ""
+msgstr "Sutra"
 
 #: ../data/ui/ExtendedForecast.ui:305
 msgid "Sunday"
-msgstr ""
+msgstr "Nedjelja"
 
 #: ../data/ui/ExtendedForecast.ui:426
 msgid "Monday"
-msgstr ""
+msgstr "Ponedjeljak"
 
 #: ../data/ui/ExtendedForecast.ui:547
 msgid "Tuesday"
-msgstr ""
+msgstr "Utorak"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Srijeda"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Četvrtak"
 
 msgid "Friday"
-msgstr ""
+msgstr "Petak"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Subota"
 
 #: ../data/ui/Assistant.ui:9
 msgid "Add a location"
@@ -412,6 +452,7 @@ msgstr "Dodaj lokaciju"
 msgid "Please search our database for your location:"
 msgstr "Molim pretražite našu bazu podataka za vašu lokaciju:"
 
+#. Verb form of the word, the button text for finding a location
 #: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "Pretraži"
@@ -494,13 +535,15 @@ msgstr "Koristi obavijesti za svaku promjenu vremena"
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>Izvor podataka za vremensku prognozu</b>"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:303
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:318
 msgid "Weather.com"
-msgstr ""
+msgstr "Weather.com"
 
 #: ../data/ui/PreferencesDialog.ui:355
 msgid "General"
@@ -508,52 +551,53 @@ msgstr "Općenito"
 
 #: ../data/ui/PreferencesDialog.ui:379
 msgid "<b>Weather Conditions</b>"
-msgstr ""
+msgstr "<b>Stanje vremena</b>"
 
 #: ../data/ui/PreferencesDialog.ui:401
 msgid "Relative temperature (\"Feels like\")"
-msgstr ""
+msgstr "Relativna temperatura (\"Osjet\")"
 
 #: ../data/ui/PreferencesDialog.ui:416
 msgid "Wind speed and direction"
-msgstr ""
+msgstr "Brzina i smjer vjetra"
 
 #: ../data/ui/PreferencesDialog.ui:432
 msgid "Sunrise and sunset times"
-msgstr ""
+msgstr "Vrijeme izlaska i zalaska sunca"
 
 #. Formula to use for calculating 'feels like' temperature for hot weather.
 #: ../data/ui/PreferencesDialog.ui:473
 msgid "<b>Relative Heat Formula</b>"
-msgstr ""
+msgstr "<b>Relativna formula topline</b>"
 
 #: ../data/ui/PreferencesDialog.ui:495
 msgid "Heat Index (US)"
-msgstr ""
+msgstr "Indeks vrućine (US)"
 
 #: ../data/ui/PreferencesDialog.ui:511
 msgid "Humidex (Canada)"
-msgstr ""
+msgstr "Humidex (Canada)"
 
 #. Formula to use for calculating 'feels like' temperature for cold weather.
 #: ../data/ui/PreferencesDialog.ui:552
 msgid "<b>Wind Chill Formula</b>"
-msgstr ""
+msgstr "<b>Formula hladnoće vjetra</b>"
 
 #. The Joint Action Group for temperature Indices (JAG/TI) is chaired by the
 #. U.S. National Weather Service. Its goal is to internationally upgrade and
 #. standardize the index for temperature extremes (e.g., Wind Chill Index).
 #: ../data/ui/PreferencesDialog.ui:574
 msgid "JAG/TI Wind Chill Index (US/UK/Canada)"
-msgstr ""
+msgstr "JAG/TI Wind Chill Index (US/UK/Canada)"
 
 #: ../data/ui/PreferencesDialog.ui:590
 msgid "Apparent Temperature (Australia)"
-msgstr ""
+msgstr "Stvarna temperatura (Australija)"
 
+#. Weather conditions
 #: ../data/ui/PreferencesDialog.ui:629
 msgid "Conditions"
-msgstr ""
+msgstr "Uvjeti"
 
 #: ../data/ui/PreferencesDialog.ui:654
 msgid "<b>Temperature Scale</b>"
@@ -573,7 +617,7 @@ msgstr "<b>Oznaka brzine vjetra</b>"
 
 #: ../data/ui/PreferencesDialog.ui:755
 msgid "Meters per second (m/s)"
-msgstr ""
+msgstr "Metara po sekundi (m/s)"
 
 #: ../data/ui/PreferencesDialog.ui:771
 msgid "Miles per hour (mph)"
@@ -581,11 +625,12 @@ msgstr "Milja na sat (mph)"
 
 #: ../data/ui/PreferencesDialog.ui:787
 msgid "Kilometers per hour (km/h)"
-msgstr ""
+msgstr "Kilometara na sat (km/h)"
 
+#. Alternate wind speed scale
 #: ../data/ui/PreferencesDialog.ui:803
 msgid "Beaufort number"
-msgstr ""
+msgstr "Beaufortov broj"
 
 #: ../data/ui/PreferencesDialog.ui:819
 msgid "Knots"

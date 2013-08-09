@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2013-06-13 22:48-0400\n"
-"PO-Revision-Date: 2013-07-10 09:35+0000\n"
+"PO-Revision-Date: 2013-07-17 05:47+0000\n"
 "Last-Translator: Joshua Tasker <Unknown>\n"
 "Language-Team: Catalan <ca@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-07-11 05:24+0000\n"
+"X-Launchpad-Export-Date: 2013-07-18 06:22+0000\n"
 "X-Generator: Launchpad (build 16696)\n"
 
 #: ../bin/indicator-weather:694
@@ -45,10 +45,12 @@ msgstr "Tempesta elèctrica"
 msgid "Mixed rain and snow"
 msgstr "Pluja i neu"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "Pluja i aiguaneu"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "Neu i aiguaneu"
@@ -69,10 +71,17 @@ msgstr "Pluja glaçada"
 msgid "Showers"
 msgstr "Ruixats"
 
+#. A flurry is defined as a light snow shower, lasting for
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 #: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "Nevades lleugeres"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "Nevades lleugeres"
@@ -110,6 +119,7 @@ msgstr "Boirina"
 msgid "Smoky"
 msgstr "Boira espessa"
 
+#. Same as "Breezy" or "Light Winds"
 #: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "Tempestuós"
@@ -135,6 +145,7 @@ msgstr "Majorment ennuvolat"
 msgid "Partly cloudy"
 msgstr "Parcialment ennuvolat"
 
+#. A near- or total absence of clouds
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "Assolellat"
@@ -143,6 +154,7 @@ msgstr "Assolellat"
 msgid "Sunny"
 msgstr "Assolellat"
 
+#. Used to describe pleasant weather conditions
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "Bon temps"
@@ -171,6 +183,10 @@ msgstr "Ruixats dispersos"
 msgid "Heavy snow"
 msgstr "Nevades fortes"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "Nevades disperses"
@@ -179,6 +195,10 @@ msgstr "Nevades disperses"
 msgid "Thundershowers"
 msgstr "Tempestes"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "Nevades fortes"
@@ -219,22 +239,33 @@ msgstr ""
 msgid "Wind"
 msgstr "Vent"
 
+#. Abbreviation for "Not Applicable"
 #: ../bin/indicator-weather:1402
 msgid "N/A"
 msgstr "N/D"
 
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 #: ../bin/indicator-weather:1404
 msgid "Calm"
 msgstr "Calmat"
 
+#. Sunrise or sun up is the instant at which the upper edge
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 #: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "Alba"
 
+#. Sunset or sundown is the daily disappearance of the Sun
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 #: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "Ocàs"
 
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1470
 msgid "Weather Indicator requires a newer version of pywapi"
 msgstr ""
@@ -293,6 +324,7 @@ msgstr "Pronòstic"
 msgid "Preferences..."
 msgstr "Preferències..."
 
+#. Menu item to open the "About Weather Indicator" dialog
 #: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "Quant a..."
@@ -341,15 +373,18 @@ msgstr ""
 msgid "Weather Forecast for"
 msgstr ""
 
+#. The highest temperature for a particular day.
 #: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "Màxima"
 
+#. The lowest temperature for a particular day.
 #: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "Minima"
 
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 #: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
 msgstr "No s'ha pogut trobar l'identificador d'ubicació per a"
@@ -411,6 +446,7 @@ msgstr "Afegir una ubicació"
 msgid "Please search our database for your location:"
 msgstr "Siusplau, cerca a la nostra base de dades la teva ubicació:"
 
+#. Verb form of the word, the button text for finding a location
 #: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "Cerca:"
@@ -495,10 +531,12 @@ msgstr ""
 msgid "<b>Weather Data Source</b>"
 msgstr "Font de la informació del temps"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:303
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:318
 msgid "Weather.com"
 msgstr "Weather.com"
@@ -552,6 +590,7 @@ msgstr ""
 msgid "Apparent Temperature (Australia)"
 msgstr ""
 
+#. Weather conditions
 #: ../data/ui/PreferencesDialog.ui:629
 msgid "Conditions"
 msgstr ""
@@ -584,6 +623,7 @@ msgstr "Milles per hora (mph)"
 msgid "Kilometers per hour (km/h)"
 msgstr "Quilòmetres per hora (km/h)"
 
+#. Alternate wind speed scale
 #: ../data/ui/PreferencesDialog.ui:803
 msgid "Beaufort number"
 msgstr ""

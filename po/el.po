@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: weather-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-06-13 22:48-0400\n"
-"PO-Revision-Date: 2013-06-14 04:12+0000\n"
+"PO-Revision-Date: 2013-07-17 05:47+0000\n"
 "Last-Translator: Joshua Tasker <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-06-15 05:26+0000\n"
-"X-Generator: Launchpad (build 16667)\n"
+"X-Launchpad-Export-Date: 2013-07-18 06:23+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 "Language: el\n"
 
 #: ../bin/indicator-weather:694
@@ -46,10 +46,12 @@ msgstr "Καταιγίδες"
 msgid "Mixed rain and snow"
 msgstr "Μικτή βροχή και χιόνι"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:773
 msgid "Mixed rain and sleet"
 msgstr "Μικτή βροχή και χιονόνερο"
 
+#. Use American meaning of sleet - see http://en.wikipedia.org/wiki/Sleet
 #: ../bin/indicator-weather:774
 msgid "Mixed snow and sleet"
 msgstr "Μικτό χιόνι και χιονόνερο"
@@ -70,10 +72,17 @@ msgstr "Παγωμένη βροχή"
 msgid "Showers"
 msgstr "Μπόρα"
 
+#. A flurry is defined as a light snow shower, lasting for
+#. only a short period of time. This quick, light snowfall
+#. usually results in little or no accumulation.
 #: ../bin/indicator-weather:780
 msgid "Snow flurries"
 msgstr "Πιθανές Χιονοπτώσεις"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:781
 msgid "Light snow showers"
 msgstr "Ελαφρά χιονόπτωση"
@@ -111,6 +120,7 @@ msgstr "Καταχνιά"
 msgid "Smoky"
 msgstr "Ομιχλώδες"
 
+#. Same as "Breezy" or "Light Winds"
 #: ../bin/indicator-weather:790
 msgid "Blustery"
 msgstr "θορυβώδης"
@@ -136,6 +146,7 @@ msgstr "Κυρίως συννεφιά"
 msgid "Partly cloudy"
 msgstr "Μερική συννεφιά"
 
+#. A near- or total absence of clouds
 #: ../bin/indicator-weather:798 ../data/ui/ExtendedForecast.ui:453
 msgid "Clear"
 msgstr "Καθαρός"
@@ -144,6 +155,7 @@ msgstr "Καθαρός"
 msgid "Sunny"
 msgstr "Λιακάδα"
 
+#. Used to describe pleasant weather conditions
 #: ../bin/indicator-weather:800 ../bin/indicator-weather:801
 msgid "Fair"
 msgstr "Αίθριος"
@@ -172,6 +184,10 @@ msgstr "Διάσπαρτες βροχοπτώσεις"
 msgid "Heavy snow"
 msgstr "Έντονη χιονόπτωση"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:809
 msgid "Scattered snow showers"
 msgstr "Διάσπαρτες μπόρες χιονιού"
@@ -180,6 +196,10 @@ msgstr "Διάσπαρτες μπόρες χιονιού"
 msgid "Thundershowers"
 msgstr "Καταιγίδες"
 
+#. A snow shower is a brief period of snowfall in which the
+#. intensity can be variable and may change rapidly.
+#. This intermittent snowfall could accumulate up to a few
+#. inches over a given period of time.
 #: ../bin/indicator-weather:813
 msgid "Snow showers"
 msgstr "Μπόρες χιονιού"
@@ -220,22 +240,33 @@ msgstr ""
 msgid "Wind"
 msgstr "Άνεμος"
 
+#. Abbreviation for "Not Applicable"
 #: ../bin/indicator-weather:1402
 msgid "N/A"
 msgstr ""
 
+#. Describes wind speed. Synonyms are still, tranquil, windless, etc.
 #: ../bin/indicator-weather:1404
 msgid "Calm"
 msgstr ""
 
+#. Sunrise or sun up is the instant at which the upper edge
+#. of the Sun appears over the eastern horizon in the morning.
+#. Not to be confused with dawn, which is the time that marks
+#. the beginning of the twilight before sunrise.
 #: ../bin/indicator-weather:1410
 msgid "Sunrise"
 msgstr "Ανατολή"
 
+#. Sunset or sundown is the daily disappearance of the Sun
+#. below the western half of the horizon.
+#. Not to be confused with dusk, which is the darkest stage
+#. of twilight after sunset.
 #: ../bin/indicator-weather:1414
 msgid "Sunset"
 msgstr "Δύση"
 
+#. You may translate 'Python Weather API' in place of 'pywapi'.
 #: ../bin/indicator-weather:1470
 msgid "Weather Indicator requires a newer version of pywapi"
 msgstr ""
@@ -294,6 +325,7 @@ msgstr "Πρόγνωση"
 msgid "Preferences..."
 msgstr "Προτιμήσεις…"
 
+#. Menu item to open the "About Weather Indicator" dialog
 #: ../bin/indicator-weather:1792
 msgid "About..."
 msgstr "Περί..."
@@ -343,15 +375,18 @@ msgstr ""
 msgid "Weather Forecast for"
 msgstr ""
 
+#. The highest temperature for a particular day.
 #: ../bin/indicator-weather:2527
 msgid "High"
 msgstr "Υψηλή"
 
+#. The lowest temperature for a particular day.
 #: ../bin/indicator-weather:2530
 msgid "Low"
 msgstr "Χαμηλή"
 
-#. Location id for Yahoo/Weather.com, e.g. JAXX0085 is id for Tokyo, Japan.
+#. Location id for Yahoo/Weather.com.
+#. For example, JAXX0085 is id for Tokyo, Japan.
 #: ../bin/indicator-weather:2666
 msgid "Could not find location id for"
 msgstr ""
@@ -413,6 +448,7 @@ msgstr "Προσθήκη τοποθεσίας"
 msgid "Please search our database for your location:"
 msgstr "Παρακαλούμε αναζητήστε στη βάση δεδομένων μας για την τοποθεσία σας:"
 
+#. Verb form of the word, the button text for finding a location
 #: ../data/ui/Assistant.ui:68
 msgid "Search"
 msgstr "Αναζήτηση"
@@ -495,10 +531,12 @@ msgstr "Ειδοποιήσεις για κάθε αλλαγή του καιρο�
 msgid "<b>Weather Data Source</b>"
 msgstr "<b>Πηγή δεδομένων καιρού</b>"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:303
 msgid "Yahoo!"
 msgstr "Yahoo!"
 
+#. Data source name, does not need to be translated
 #: ../data/ui/PreferencesDialog.ui:318
 msgid "Weather.com"
 msgstr ""
@@ -552,6 +590,7 @@ msgstr ""
 msgid "Apparent Temperature (Australia)"
 msgstr ""
 
+#. Weather conditions
 #: ../data/ui/PreferencesDialog.ui:629
 msgid "Conditions"
 msgstr ""
@@ -584,6 +623,7 @@ msgstr "Μίλια ανά ώρα (μ/ω)"
 msgid "Kilometers per hour (km/h)"
 msgstr ""
 
+#. Alternate wind speed scale
 #: ../data/ui/PreferencesDialog.ui:803
 msgid "Beaufort number"
 msgstr ""
