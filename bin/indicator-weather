@@ -312,6 +312,7 @@ class UnitSystem:
     """ Class with available measurement unit systems """
     SI = 1
     IMPERIAL = 2
+    KELVIN = 3
 
 class WindUnits:
     """ Class for available wind unit systems """
@@ -692,14 +693,12 @@ class Forecast:
 
         log.debug("Forecast: units set to %s" % self.metric_system)
         # Check units, default to imperial
-        if self.metric_system == UnitSystem.SI:
-            self.unitsystem = 'metric'
-        elif self.metric_system == UnitSystem.IMPERIAL:
-            self.unitsystem = 'imperial'
+        if self.metric_system == UnitSystem.SI or self.metric_system == UnitSystem.KELVIN:
+            units = 'metric'
         else:
-            self.unitsystem = 'imperial'
+            units = 'imperial'
 
-        self.forecast = pywapi.get_weather_from_weather_com(self.location_id, self.unitsystem)
+        self.forecast = pywapi.get_weather_from_weather_com(self.location_id, units)
         if 'error' in self.forecast:
             log.debug("Forecast: error reading forecast for %s. %s" %
                       (self.location_id, self.forecast['error']))
@@ -731,6 +730,14 @@ class Forecast:
         for forecast in self.forecast['forecasts']:
             self.highdata.append(forecast["high"])
             self.lowdata.append(forecast["low"])
+
+        # Unless user chose 'Kelvin' as temperature units... then we have to convert
+        if self.metric_system == UnitSystem.KELVIN:
+            for i in xrange(len(self.highdata)):
+                if 'N/A' != self.highdata[i]:
+                    self.highdata[i] = unicode(int(round(float(self.highdata[i])+273.15)))
+                if 'N/A' != self.lowdata[i]:
+                    self.lowdata[i] = unicode(int(round(float(self.lowdata[i])+273.15)))
 
         return (self.highdata, self.lowdata)
 
@@ -854,7 +861,7 @@ class Weather:
         """ Initialize and get fresh weather data """
         self.__weather_datasource = weather_datasource
         self.__metric_system = metric_system
-        self._wind_unit = wind_unit
+        self.__wind_unit = wind_unit
         self.__current_condition = None
         self.__heat_index = heat_index
         self.__chill_index = chill_index
@@ -863,17 +870,15 @@ class Weather:
         self.__time_zone = time_zone
         self.__dst = dst
 
-        if self.__metric_system == UnitSystem.SI:
-            unit_system = 'metric'
-        elif self.__metric_system == UnitSystem.IMPERIAL:
-            unit_system = 'imperial'
+        if self.__metric_system == UnitSystem.SI or self.__metric_system == UnitSystem.KELVIN:
+            units = 'metric'
         else:
-            unit_system = 'imperial'
+            units = 'imperial'
 
         # Get data from Weather.com
         if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
             self.__report = pywapi.get_weather_from_weather_com(
-                                                    location_id, unit_system)
+                                                    location_id, units)
             ##self.__localized_report = self.__report
             log.debug("Weather: checking Weather.com report for "
                       "weather condition and icon name")
@@ -897,7 +902,7 @@ class Weather:
 
         # Get data from Yahoo
         if self.__weather_datasource == WeatherDataSource.YAHOO:
-            self.__report = pywapi.get_weather_from_yahoo(location_id, unit_system)
+            self.__report = pywapi.get_weather_from_yahoo(location_id, units)
             ##self.__localized_report = self.__report
             log.debug("Weather: checking Yahoo report for "
                       "weather condition and icon name")
@@ -1090,6 +1095,10 @@ class Weather:
                         self.__report['units']['temperature' ] == u"F")):
                     _value = self.__report['current_conditions']['temperature']
                     _unit = u"°%s" % self.__report['units']['temperature']
+                elif (self.__metric_system == UnitSystem.KELVIN and
+                        self.__report['units']['temperature'] == u"C"):
+                    _value = unicode(int(round(float(self.__report['current_conditions']['temperature'])+273.15)))
+                    _unit = u"K"
             if (self.__weather_datasource == WeatherDataSource.YAHOO and
                 'temp' in self.__report['condition'] and
                 'temperature' in self.__report['units']):
@@ -1099,6 +1108,10 @@ class Weather:
                         self.__report['units']['temperature'] == u"F")):
                     _value = self.__report['condition']['temp']
                     _unit = u"°%s" % self.__report['units']['temperature']
+                elif (self.__metric_system == UnitSystem.KELVIN and
+                        self.__report['units']['temperature'] == u"C"):
+                    _value = unicode(int(round(float(self.__report['condition']['temp'])+273.15)))
+                    _unit = u"K"
         except KeyError:
             pass
 ##        # round the value if required
@@ -1152,7 +1165,7 @@ class Weather:
         e = vapour pressure in hPa (mbar), given by:
         e = 6.11 * exp [5417.7530 * ( (1/273.16) - (1/dewpoint) ) ]
         where dewpoint is expressed in Kelvins
-        (temperature in K = temperature in °C + 273.1)
+        (temperature in K = temperature in °C + 273.15)
         and 5417.7530 is a rounded constant based on the molecular weight
         of water, latent heat of evaporation, and the universal gas constant.
 
@@ -1171,7 +1184,7 @@ class Weather:
             else:
                 dew_point_c = float(self.__report['current_conditions']['dewpoint'])
                 temp_c = float(self.__report['current_conditions']['temperature'])
-            vapour_pressure = 6.11 * exp(5417.7530 * ( (1/273.16) - (1/(dew_point_c+273.16))))
+            vapour_pressure = 6.11 * exp(5417.7530 * ( (1/273.6) - (1/(dew_point_c+273.16))))
             humidex = temp_c + (0.5555)*(vapour_pressure  - 10.0)
             # Humidex is meaningless if it is lower than temperature
             if humidex < temp_c:
@@ -1183,6 +1196,11 @@ class Weather:
                 #return (u"%s: %s°F" % (_("Humidex"), NumberFormatter.format_float(humidex_f, 1))).replace(".0", "")
                 #return (NumberFormatter.format_float(humidex_f, 1).replace(".0", ""), u"°F")
                 return (int(round(humidex_f)), u"°F")
+            elif self.__metric_system == UnitSystem.KELVIN:
+                #return ("%s: %.1f" % (_("Humidex"), humidex+273.15)).replace(".0", "")
+                #return (u"%s: %s" % (_("Humidex"), NumberFormatter.format_float(humidex+273.15, 1))).replace(".0", "")
+                #return (NumberFormatter.format_float(humidex+273.15, 1).replace(".0", ""), u"K")
+                return (int(round(humidex+273.15)), u"K")
             else:
                 #return ("%s: %.1f" % (_("Humidex"), humidex)).replace(".0", "")
                 #return (u"%s: %s" % (_("Humidex"), NumberFormatter.format_float(humidex, 1))).replace(".0", "")
@@ -1209,40 +1227,47 @@ class Weather:
         #TODO: Update with NOAA data
         _value = None
 
-        if self.__weather_datasource == WeatherDataSource.YAHOO:
-            log.debug("Weather: get_heat_index: weather_datasource is Yahoo, "
-                      "checking temp and humidity")
-            if self.__report['units']['temperature'] == "C":
-                units = 'metric'
-            elif self.__report['units']['temperature'] == "F":     # else here?
-                units = 'imperial'
-            T = float(self.__report['condition']['temp'])
-            R = float(self.__report['atmosphere']['humidity'])
-            _value = pywapi.heat_index(T, R, units)
+        try:
+            if self.__weather_datasource == WeatherDataSource.YAHOO:
+                log.debug("Weather: get_heat_index: weather_datasource is Yahoo, "
+                          "checking temp and humidity")
+                if self.__report['units']['temperature'] == "C":
+                    units = 'metric'
+                elif self.__report['units']['temperature'] == "F":     # else here?
+                    units = 'imperial'
+                T = float(self.__report['condition']['temp'])
+                R = float(self.__report['atmosphere']['humidity'])
+                _value = pywapi.heat_index(T, R, units)
 
-        if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            log.debug("Weather: get_heat_index: weather_datasource is "
-                      "Weather.com, checking temp and humidity")
-            if self.__report['units']['temperature'] == "C":
-                units = 'metric'
-            elif self.__report['units']['temperature'] == "F":  # else here?
-                units = 'imperial'
-            T = float(self.__report['current_conditions']['temperature'])
-            R = float(self.__report['current_conditions']['humidity'])
-            _value = pywapi.heat_index(T, R, units)
+            if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
+                log.debug("Weather: get_heat_index: weather_datasource is "
+                          "Weather.com, checking temp and humidity")
+                if self.__report['units']['temperature'] == "C":
+                    units = 'metric'
+                elif self.__report['units']['temperature'] == "F":  # else here?
+                    units = 'imperial'
+                T = float(self.__report['current_conditions']['temperature'])
+                R = float(self.__report['current_conditions']['humidity'])
+                _value = pywapi.heat_index(T, R, units)
+        except KeyError:
+            pass
 
         # Heat Index is only valid for temp >= 80°F and humidity >= 40%)
         if _value is None:
             return (_value, "")
-        if units == 'metric':
+        if units == 'imperial': 
+            #return (u"%s: %s°F" % (_("Heat Index"), NumberFormatter.format_float(heat_index, 1))).replace(".0", "")
+            #return (NumberFormatter.format_float(_value, 1).replace(".0", ""), u"°F")
+            return (int(round(_value)), u"°F")
+        elif self.__metric_system == UnitSystem.KELVIN:
+            #return (u"%s: %s°C" % (_("Heat Index"), NumberFormatter.format_float(heat_index+273.15, 1))).replace(".0", "")
+            #return (NumberFormatter.format_float(_value+273.15, 1).replace(".0", ""), u"K")
+            return (int(round(_value+273.15)), u"K")
+        else:
             #return (u"%s: %s°C" % (_("Heat Index"), NumberFormatter.format_float(heat_index, 1))).replace(".0", "")
             #return (NumberFormatter.format_float(_value, 1).replace(".0", ""), u"°C")
             return (int(round(_value)), u"°C")
 
-        elif units == 'imperial': # else here?
-            #return (u"%s: %s°F" % (_("Heat Index"), NumberFormatter.format_float(heat_index, 1))).replace(".0", "")
-            #return (NumberFormatter.format_float(_value, 1).replace(".0", ""), u"°F")
-            return (int(round(_value)), u"°F")
 
     def get_wind_chill(self):
         """ Calculate wind chill index and get text string for label
@@ -1293,24 +1318,30 @@ class Weather:
             if T_a <= -50 or T_a >= 50 or V <= 3.0:
                 return (_value, "")
 
-        if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
-            log.debug("Weather: get_wind_chill: weather_datasource is "
-                      "Weather.com, checking temp and humidity")
-            T_a = float(self.__report['current_conditions']['temperature'])
-            wind_speed = self.__report['current_conditions']['wind']['speed']
-            V = (0.0 if wind_speed in ['calm','N/A'] else float(wind_speed))
-            if T_a <= -45 or T_a >= 10 or V <= 4.8:
-                return (_value, "")
-
-        if units == 'metric':
-            _value = 13.12 + 0.6215 * T_a - 11.37 * pow(V, 0.16) + 0.3965 * T_a * pow(V, 0.16)
-            return (int(round(_value)), u"°C")
-        elif units == 'imperial':
-            _value = 35.74 + 0.6215 * T_a - 35.75 * pow(V, 0.16) + 0.4275 * T_a * pow(V, 0.16)
-            return (int(round(_value)), u"°F")
+        try:
+            if self.__weather_datasource == WeatherDataSource.WEATHER_COM:
+                log.debug("Weather: get_wind_chill: weather_datasource is "
+                          "Weather.com, checking temp and humidity")
+                T_a = float(self.__report['current_conditions']['temperature'])
+                wind_speed = self.__report['current_conditions']['wind']['speed']
+                V = (0.0 if wind_speed in ['calm','N/A'] else float(wind_speed))
+                if T_a <= -45 or T_a >= 10 or V <= 4.8:
+                    return (_value, "")
+        except KeyError:
+            pass
 
         if _value is None:
             return (_value, "")
+
+        if units == 'imperial':
+            _value = 35.74 + 0.6215 * T_a - 35.75 * pow(V, 0.16) + 0.4275 * T_a * pow(V, 0.16)
+            return (int(round(_value)), u"°F")
+        elif self.__metric_system == UnitSystem.KELVIN:
+            _value = 13.12 + 0.6215 * T_a - 11.37 * pow(V, 0.16) + 0.3965 * T_a * pow(V, 0.16)
+            return (int(round(_value+273.15)), u"K")
+        else:
+            _value = 13.12 + 0.6215 * T_a - 11.37 * pow(V, 0.16) + 0.3965 * T_a * pow(V, 0.16)
+            return (int(round(_value)), u"°C")
 
     def get_apparent_temp(self):
         """ Calculate Australian apparent temperature and get text string for label
@@ -1370,39 +1401,45 @@ class Weather:
         e = (rh / 100) * 6.105 * exp((17.27 * T_a) / (237.7 + T_a))
         _value = T_a + 0.33 * e - 0.70 * ws - 4.00
 
+        if _value is None:
+            return (_value, "")
+        
         # Now convert back to °F
         if units == 'imperial':
             _value = (_value*9.0/5.0) + 32.0
             return (int(round(_value)), u"°F")
-        if units == 'metric':
+        elif self.__metric_system == UnitSystem.KELVIN:
+            return (int(round(_value+273.15)), u"K")
+        else:
             return (int(round(_value)), u"°C")
 
-        if _value is None:
-            return (_value, "")
 
     def get_wind_label(self):
         """ Get text string for current wind speed and direction """
         wind_direction = "---"
         wind_speed = ""
         wind_units = ""
-        if self.__weather_datasource == WeatherDataSource.WEATHER_COM \
-           and 'current_conditions' in self.__report:
-            # Create a wind_info structure from Weather.com data
-            wind_direction = u"%s (%s°)" % (_(self.__report['current_conditions']['wind']['text']),
-                                            self.__report['current_conditions']['wind']['direction'])
-            wind_speed = self.__report['current_conditions']['wind']['speed']
-            wind_units = self.__report['units']['speed']
-            if wind_speed == "calm":
-                wind_speed = 0
-        if self.__weather_datasource == WeatherDataSource.YAHOO \
-           and 'wind' in self.__report:
-            # Create a wind_info structure from Yahoo data
-            wind_direction = u"%s (%s°)" % (_(pywapi.get_wind_direction(self.__report['wind']['direction'])), self.__report['wind']['direction'])
-            wind_speed = self.__report['wind']['speed']
-            wind_units = _(self.__report['units']['speed'])
-        wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
+        try:
+            if self.__weather_datasource == WeatherDataSource.WEATHER_COM: # \
+               #and 'current_conditions' in self.__report:
+                # Create a wind_info structure from Weather.com data
+                wind_direction = u"%s (%s°)" % (_(self.__report['current_conditions']['wind']['text']),
+                                                self.__report['current_conditions']['wind']['direction'])
+                wind_speed = self.__report['current_conditions']['wind']['speed']
+                wind_units = self.__report['units']['speed']
+                if wind_speed == "calm":
+                    wind_speed = 0
+            if self.__weather_datasource == WeatherDataSource.YAHOO: # \
+               #and 'wind' in self.__report:
+                # Create a wind_info structure from Yahoo data
+                wind_direction = u"%s (%s°)" % (_(pywapi.get_wind_direction(self.__report['wind']['direction'])), self.__report['wind']['direction'])
+                wind_speed = self.__report['wind']['speed']
+                wind_units = _(self.__report['units']['speed'])
+        except KeyError:
+            pass
 
         try:
+            wind_info = [_("Wind") + ":", wind_direction, wind_speed, wind_units]
             _value = float(wind_speed)
         except ValueError as ex:
             log.error("Could not parse '%s' as wind speed." % str(wind_speed))
@@ -1410,35 +1447,35 @@ class Weather:
 
         # Parse Wind_direction - convert to selected scale
         if wind_units == "mph":
-            if (self._wind_unit == WindUnits.MPH):
+            if (self.__wind_unit == WindUnits.MPH):
                 _unit  = __("mph", "mph", _value)
-            if (self._wind_unit == WindUnits.MPS):
+            if (self.__wind_unit == WindUnits.MPS):
                 _value *= 0.44704
                 _unit  = __("m/s", "m/s", _value)
-            if (self._wind_unit == WindUnits.BEAUFORT):
+            if (self.__wind_unit == WindUnits.BEAUFORT):
                 if _value >= 0.0:
                     _value = pywapi.wind_beaufort_scale(_value, WindUnits.MPH)
                 _unit  = ""
-            if (self._wind_unit == WindUnits.KPH):
+            if (self.__wind_unit == WindUnits.KPH):
                 _value *= 1.609344
                 _unit  = __("km/h", "km/h", _value)
-            if (self._wind_unit == WindUnits.KNOTS):
+            if (self.__wind_unit == WindUnits.KNOTS):
                 _value *= 0.868976241900648
                 _unit  = __("knot", "knots", _value)
         elif wind_units == "km/h":
-            if (self._wind_unit == WindUnits.MPH):
+            if (self.__wind_unit == WindUnits.MPH):
                 _value *= 0.621371
                 _unit  = __("mph", "mph", _value)
-            if (self._wind_unit == WindUnits.MPS):
+            if (self.__wind_unit == WindUnits.MPS):
                 _value *= 0.277778
                 _unit  = __("m/s", "m/s", _value)
-            if (self._wind_unit == WindUnits.BEAUFORT):
+            if (self.__wind_unit == WindUnits.BEAUFORT):
                 if _value >= 0.0:
                     _value = pywapi.wind_beaufort_scale(_value, WindUnits.KPH)
                 _unit  = ""
-            if (self._wind_unit == WindUnits.KPH):
+            if (self.__wind_unit == WindUnits.KPH):
                 _unit  = __("km/h", "km/h", _value)
-            if (self._wind_unit == WindUnits.KNOTS):
+            if (self.__wind_unit == WindUnits.KNOTS):
                 _value *= 0.539957
                 _unit  = __("knot", "knots", _value)
         else:
@@ -1471,7 +1508,8 @@ class indicator_weather(threading.Thread):
     # Settings values
     # Formats: setting value, object name (for preferences dialog), value assigned (optional)
     metric_systems = { 'S': ('si',       UnitSystem.SI),
-                       'I': ('imperial', UnitSystem.IMPERIAL)}
+                       'I': ('imperial', UnitSystem.IMPERIAL),
+                       'K': ('kelvin',   UnitSystem.KELVIN)}
 
     weather_sources = { 'Y': ('yahoo',  WeatherDataSource.YAHOO),
                         'W': ('weather-com', WeatherDataSource.WEATHER_COM)}
@@ -1738,6 +1776,11 @@ class indicator_weather(threading.Thread):
         self.menu.append(self.city_show)
         self.city_show.show()
 
+    ##Breaker
+        breaker = Gtk.SeparatorMenuItem()
+        breaker.show()
+        self.menu.append(breaker)
+
     ##Condition
         self.cond_show = Gtk.MenuItem()
         self.cond_show.set_sensitive(True)
@@ -1890,9 +1933,7 @@ class indicator_weather(threading.Thread):
             self.update_weather(False)
 
     def monitor_upower(self): #, sleep_handler, resume_handler, log):
-        """
-        Attempts to connect to UPower interface
-        """
+        """ Attempts to connect to UPower interface """
         # http://upower.freedesktop.org/docs/UPower.html
         try:
             # python-dbus is deprecated, migrated to GDBus
@@ -1928,9 +1969,7 @@ class indicator_weather(threading.Thread):
     
     def on_system_sleep(self, connection, sender_name, object_path,
                         interface_name, signal_name, parameters, user_data):
-        """Callback from UPower that system suspends/hibernates
-
-        """
+        """ Callback from UPower that system suspends/hibernates """
         # store time
         self.sleep_time = datetime.datetime.utcnow()
         log.debug("Indicator: system goes to sleep at %s" % self.sleep_time)
@@ -1942,9 +1981,7 @@ class indicator_weather(threading.Thread):
 
     def on_system_resume(self, connection, sender_name, object_path,
                         interface_name, signal_name, parameters, user_data):
-        """Callback from UPower that system resumes
-
-        """
+        """ Callback from UPower that system resumes """
         now = datetime.datetime.utcnow()
         log.debug("Indicator: system resumes at %s" % now)
         # if we have places set
@@ -2251,6 +2288,8 @@ class indicator_weather(threading.Thread):
         self.aboutdialog.set_copyright(ifile.read().replace('\x0c', ''))
         ifile.close()
 
+        self.aboutdialog.set_comments(" ".join(("using Python Weather API version",pywapi.__version__)))
+
         ifile = open(os.path.join(PROJECT_ROOT_DIRECTORY,
                                   "share/common-licenses/GPL-3"), "r")
         self.aboutdialog.set_license(ifile.read().replace('\x0c', ''))
@@ -2305,7 +2344,7 @@ class PreferencesDialog(Gtk.Dialog):
                    wi.heat, wi.chill))
         self.builder = builder
 
-        # Set correct wind_unit using dictionary of wind value and object name
+        # Set correct units using dictionary of values and object names
         self.builder.get_object(wi.metric_systems[wi.unit][0]).set_active(True)
         self.builder.get_object(wi.notifications[wi.notif]).set_active(True)
         self.builder.get_object(wi.wind_systems[wi.wind][0]).set_active(True)
@@ -2610,13 +2649,15 @@ class ExtendedForecast(Gtk.Window):
             # Fill in High and Low temperatures
             if wi.metric_system == UnitSystem.SI:
                 tempunit = u"°C"
+            elif wi.metric_system == UnitSystem.KELVIN:
+                tempunit = u"K"
             else:
                 tempunit = u"°F"
             for i in xrange(0,5):
-                label = "%s: %s%s" % (_('High'), highdata[i],tempunit)
+                label = "%s: %s %s" % (_('High'), highdata[i], tempunit)
                 self.builder.get_object('day%stemphigh' %
                                         str(i+1)).set_label(label)
-                label = "%s: %s%s" % (_('Low'), lowdata[i],tempunit)
+                label = "%s: %s %s" % (_('Low'), lowdata[i], tempunit)
                 self.builder.get_object('day%stemplow' %
                                         str(i+1)).set_label(label)
 
