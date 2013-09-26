@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.06.01 'Rainy 7'"
+VERSION = "13.7.0 'Rainy 7'"
 
 from indicator_weather.helpers import *
 
@@ -2361,6 +2361,7 @@ class PreferencesDialog(Gtk.Dialog):
         log.debug("Preferences: Loading places")
         if wi.places != None:
             for place in wi.places:
+                # TODO: Check value of 'place' for bad/invalid Unicode encoding (see LP: #1216657)
                 if len(place)>1 and place[0] is not None:
                     log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
                     newplace = list()
@@ -2532,7 +2533,7 @@ class PreferencesDialog(Gtk.Dialog):
             log.debug("Preferences: Places changed to '%s'" % wi.places)
             wi.settings.set_value("places", wi.places)
             wi.placechosen = 0
-            if (type(wi.place) != None):
+            if (wi.place is not None):
                 for i in xrange(len(wi.places)):
                     if wi.places[i] is not None and wi.places[i][0] == wi.place[0]:
                         wi.placechosen = i
@@ -2580,8 +2581,9 @@ class ExtendedForecast(Gtk.Window):
         self.builder.get_object('extended_forecast').set_title("%s %s" %
                     (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
+        # TODO: catch KeyError in case there is no weather-com id present
         forecast = Forecast(wi.metric_system,
-                            wi.current_location.location_details['yahoo id'],
+                            wi.current_location.location_details['weather-com id'],
                             locale_name)
         forecast.prepare_forecast_data()
         if forecast.error_message != None:

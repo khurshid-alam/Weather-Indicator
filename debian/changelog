@@ -1,3 +1,10 @@
+indicator-weather (13.7.0) quantal; urgency=low
+
+  * Use Weather.com ID for forecast instead of Yahoo ID (LP: #1222220)
+  * Don't crash when adding first location on new install (LP: #1224138)
+
+ -- Joshua <jtasker@gmail.com>  Thu, 26 Sep 2013 03:02:14 -0400
+
 indicator-weather (13.06.01) quantal; urgency=low
 
   * Show installed version of pywapi (Python Weather API) in About dialog
