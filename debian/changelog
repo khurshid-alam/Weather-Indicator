@@ -2,6 +2,7 @@ indicator-weather (13.7.0) quantal; urgency=low
 
   * Use Weather.com ID for forecast instead of Yahoo ID (LP: #1222220)
   * Don't crash when adding first location on new install (LP: #1224138)
+  * debian/control: new dependency on gir1.2-notify-0.7 (LP: #1215206)
 
  -- Joshua <jtasker@gmail.com>  Thu, 26 Sep 2013 03:02:14 -0400
 
