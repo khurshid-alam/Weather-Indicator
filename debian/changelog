@@ -1,10 +1,15 @@
 indicator-weather (13.7.0) quantal; urgency=low
 
+  * Reordering locations in Preferences updates order in menu (LP: #703843)
+  * Cancel button in Preferences dialog reverts all changes (LP: #734358)
+  * Assistant shows spinner instead of blocking UI updates (LP: #748116)
+  * Don't remove/create menu when updating weather info (LP: #800347)
+  * Dialog command buttons can be focused using Tab key (LP: #853774)
   * Use Weather.com ID for forecast instead of Yahoo ID (LP: #1222220)
   * Don't crash when adding first location on new install (LP: #1224138)
   * debian/control: new dependency on gir1.2-notify-0.7 (LP: #1215206)
 
- -- Joshua <jtasker@gmail.com>  Thu, 26 Sep 2013 03:02:14 -0400
+ -- Joshua Tasker <jtasker@gmail.com>  Tues, 1 Oct 2013 12:40:27 -0400
 
 indicator-weather (13.06.01) quantal; urgency=low
 

@@ -357,6 +357,7 @@ class Location:
         self.location_details['full name'] = geonames_details[0]
         self.location_details['latitude'] = geonames_details[2]
         self.location_details['longitude'] = geonames_details[3]
+        #TODO: Add Yr.no as data source
         self.prepare_location_for_google(geonames_details)
         self.prepare_location_for_yahoo(geonames_details)
         self.prepare_location_for_weather_com(geonames_details)
@@ -364,18 +365,15 @@ class Location:
         #self.location_details['noaa id'] = None
         self.prepare_time_zone(self.location_details['latitude'],
                                self.location_details['longitude'])
-
         # check mandatory attributes
         if not hasattr(self, 'location_code') or \
            'latitude' not in self.location_details or \
            'longitude' not in self.location_details:
             return (False, 'location_id')
-
         # check that we have at least one supported data source
         if 'yahoo id' not in self.location_details and \
            'weather-com id' not in self.location_details:
             return (False, 'data_source')
-
         return (True, None)
 
     def prepare_location_for_google(self, geonames_details):
@@ -386,8 +384,6 @@ class Location:
             self.location_details['google id'] = ",,,%s,%s" % (lat, lon)
         except (ValueError, TypeError) as ex:
             log.error(ex)
-        # except Exception as e:
-        #     log.error(e)
 
     def prepare_location_for_yahoo(self, geonames_details):
         """ Get location details in English for Yahoo """
@@ -1830,41 +1826,7 @@ class indicator_weather(threading.Thread):
 
     ##Cities
         if len(self.places) != 1:
-
-            locations_menu = Gtk.Menu()
-            locations_menu.set_sensitive(True)
-            self.city_show.set_submenu(locations_menu)
-
-            # locations_show = Gtk.MenuItem(_("Locations"))
-            # locations_show.set_submenu(locations_menu)
-            # locations_show.set_sensitive(True)
-            # locations_show.show()
-            # self.menu.append(locations_show)
-
-            # ##Breaker
-            # breaker = Gtk.SeparatorMenuItem()
-            # breaker.show()
-            # self.menu.append(breaker)
-
-            log.debug("Indicator: menu_normal: adding first location menu item '%s'" %
-                      self.places[0][1])
-            loco1 = Gtk.RadioMenuItem.new_with_label([], self.places[0][1])
-            if self.placechosen == 0:
-                loco1.set_active(True)
-            loco1.connect("toggled", self.on_city_changed, self.places[0][0])
-            loco1.show()
-            locations_menu.append(loco1)
-            group = loco1.get_group()
-            for place in self.places[1:]:
-                log.debug("Indicator: menu_normal: adding location menu item '%s'" %
-                          place[1])
-                loco = Gtk.RadioMenuItem.new_with_label(group, place[1])
-                if self.places.index(place) == self.placechosen:
-                    loco.set_active(True)
-                loco.connect("toggled", self.on_city_changed, place[0])
-                loco.show()
-                locations_menu.append(loco)
-                group = loco.get_group()
+            self.menu_locations()
 
     # ##Breaker
     #     breaker = Gtk.SeparatorMenuItem()
@@ -1902,6 +1864,32 @@ class indicator_weather(threading.Thread):
 
         self.winder.set_menu(self.menu)
         self.update_label(" ")
+
+    def menu_locations(self):
+        """ Show a submenu for the added locations """
+        locations_menu = Gtk.Menu()
+        locations_menu.set_sensitive(True)
+        self.city_show.set_submenu(locations_menu)
+
+        log.debug("Indicator: menu_locations: adding first location menu item '%s'" %
+                  self.places[0][1])
+        loco1 = Gtk.RadioMenuItem.new_with_label([], self.places[0][1])
+        if self.placechosen == 0:
+            loco1.set_active(True)
+        loco1.connect("toggled", self.on_city_changed, self.places[0][0])
+        loco1.show()
+        locations_menu.append(loco1)
+        group = loco1.get_group()
+        for place in self.places[1:]:
+            log.debug("Indicator: menu_locations: adding location menu item '%s'" %
+                      place[1])
+            loco = Gtk.RadioMenuItem.new_with_label(group, place[1])
+            if self.places.index(place) == self.placechosen:
+                loco.set_active(True)
+            loco.connect("toggled", self.on_city_changed, place[0])
+            loco.show()
+            locations_menu.append(loco)
+            group = loco.get_group()
 
     def on_city_changed(self, widget, woeid):
         """ Another city has been selected from radiobutton """
@@ -2003,9 +1991,8 @@ class indicator_weather(threading.Thread):
         """ Schedule the next weather update """
         if hasattr(self, "rate_id"):
             GObject.source_remove(self.rate_id)
-        if rate_override:
+        if rate_override is not None:
             self.rate_id = GObject.timeout_add(
-##                int(rate_override) * 60000, self.update_weather)
                 int(rate_override * 60000), self.update_weather)
         else:
             self.rate_id = GObject.timeout_add(
@@ -2050,10 +2037,6 @@ class indicator_weather(threading.Thread):
             log.debug("Indicator: loading weather from cache "
                       "for %s" % self.places[self.placechosen])
             cached_weather = self.settings.get_weather(self.places[self.placechosen][0])
-            # if cached_weather is not None:
-            #     #cached_weather = eval(cached_weather)
-            #     log.debug("Indicator: loading weather from cache "
-            #               "for %s" % self.places[self.placechosen])
         except Exception as e:
             cached_Weather = None
             log.error(e)
@@ -2070,7 +2053,8 @@ class indicator_weather(threading.Thread):
             return
 
         try:
-            self.menu_normal()
+            if self.menu is None or self.winder.get_menu() != self.menu:
+                self.menu_normal()
             self.set_refresh_label(True)
             self.icon = cached_weather['icon']
             if (self.icon == False):
@@ -2155,7 +2139,8 @@ class indicator_weather(threading.Thread):
                 weather.get_sunset_label(),
                 weather.get_temperature_string())
                 )
-            self.menu_normal()
+            if (self.menu is None or self.winder.get_menu() != self.menu):
+                self.menu_normal()
             self.update_refresh_label(0)
             self.city_show.set_label(self.places[self.placechosen][1])
             self.cond_show.set_label(self.condition)
@@ -2221,28 +2206,29 @@ class indicator_weather(threading.Thread):
         cache_thread = threading.Thread(target=self.get_cached_weather,
                                                 name='Cache', args=(self.queue,))
         cache_thread.start()
-
         # Then, start a new thread with real data pickup
         fetcher_thread = threading.Thread(target=self.get_new_weather_data,
                                           name='Fetcher',
                                           args=(self.notif, self.queue))
         fetcher_thread.start()
-
         # Update the menu with the cached weather
         cache_thread.join()
         try:
             num, cached_weather = self.queue.get()
             self.show_cached_weather(cached_weather)
+            self.queue.task_done()
         except Queue.Empty:
             pass
-
         # Update the menu with the new weather
         fetcher_thread.join()
         try:
             num, weather = self.queue.get()
             self.show_new_weather_data(weather)
+            self.queue.task_done()
         except Queue.Empty:
             pass
+        # ensure the function is removed from the event sources
+        return notif
 
     def get_weather(self):
         """ Get current weather for selected location """
@@ -2364,16 +2350,31 @@ class PreferencesDialog(Gtk.Dialog):
                 # TODO: Check value of 'place' for bad/invalid Unicode encoding (see LP: #1216657)
                 if len(place)>1 and place[0] is not None:
                     log.debug("Preferences: Places: got (%s, %s)" % (place[1], place[0]))
+                    place_details = json.dumps(wi.settings.get_location_details(place[0]))
                     newplace = list()
                     newplace.append(place[1])
                     newplace.append(place[0])
-                    place_details = json.dumps(wi.settings.get_location_details(place[0]))
                     newplace.append(place_details)
 
                     self.builder.get_object('citieslist').append(newplace)
                     self.builder.get_object('ok_button').set_sensitive(True)
 
         self.builder.connect_signals(self)
+        # Attach a "drag-data-changed" signal to manage data
+        model = self.builder.get_object('location_list').get_model()
+        model.connect("row-changed", self.on_drag_data_changed)
+        self.new_places = [x for x in wi.places]
+        self.added_places = []
+
+    def on_drag_data_changed(self, model, treepath, treeiter):
+        """ City dragged - reorder location list """
+        log.debug("Preferences: Dragged '%s' to list position %s" %
+                  (model[treeiter][0], str(treepath)))
+        obj = [unicode(model[treeiter][1]), unicode(model[treeiter][0])]
+        self.new_places.remove(obj)
+        index = int(str(treepath))
+        self.new_places.insert(index, obj)
+        wi.places_changed = True
 
     def on_remove_location(self, widget):
         """ 'Remove' clicked - remove location from list """
@@ -2382,17 +2383,8 @@ class PreferencesDialog(Gtk.Dialog):
         if iter != None:
             log.debug("Preferences: Removing location %s (code %s)" %
                       (model[iter][0], model[iter][1]))
-            newplaces = []
-            for place in wi.places:
-                # if place[1] != model[iter][0] and \
-                #    place[0] != model[iter][1]:
-                if place[0] != model[iter][1]:
-                    newplaces.append(place)
-            if newplaces != wi.places:
-                wi.places = newplaces
-                log.debug("Preferences: update settings object")
-                wi.settings.set_value("places", wi.places)
-
+            obj = [unicode(model[iter][1]), unicode(model[iter][0])]
+            self.new_places.remove(obj)
             model.remove(iter)
             wi.places_changed = True
 
@@ -2405,6 +2397,18 @@ class PreferencesDialog(Gtk.Dialog):
         if ((not hasattr(self, 'assistant')) or (not self.assistant.get_visible())):
             self.assistant = Assistant()
             self.assistant.show()
+
+    def on_select_location(self, widget):
+        """ Location selection changed - enable/disable buttons """
+        (model, iter) = widget.get_selected()
+        if iter is None:
+            # nothing selected, disable buttons
+            # self.builder.get_object('edit').set_sensitive(False)
+            self.builder.get_object('remove').set_sensitive(False)
+        else:
+            # location selected, enable buttons
+            # self.builder.get_object('edit').set_sensitive(True)
+            self.builder.get_object('remove').set_sensitive(True)
 
     def ok(self, widget, data=None):
         """ 'OK' clicked - save settings """
@@ -2461,7 +2465,7 @@ class PreferencesDialog(Gtk.Dialog):
         # Notifications
         for k in wi.notifications:
             if self.builder.get_object(wi.notifications[k]).get_active():
-                new_notification  = k
+                new_notification = k
 
         if (wi.notif != new_notification):
             wi.notif = new_notification
@@ -2472,7 +2476,7 @@ class PreferencesDialog(Gtk.Dialog):
         # Wind Units
         for k in wi.wind_systems:
             if self.builder.get_object(wi.wind_systems[k][0]).get_active():
-                new_wind_unit   = k
+                new_wind_unit = k
                 new_wind_system = wi.wind_systems[k][1]
 
         if (wi.wind != new_wind_unit):
@@ -2511,7 +2515,7 @@ class PreferencesDialog(Gtk.Dialog):
         # Weather source
         for k in wi.weather_sources:
             if self.builder.get_object(wi.weather_sources[k][0]).get_active():
-                new_source   = k
+                new_source = k
                 new_weather_source = wi.weather_sources[k][1]
 
         if (wi.source != new_source):
@@ -2530,22 +2534,34 @@ class PreferencesDialog(Gtk.Dialog):
 
         # If places have changed - update weather data
         if wi.places_changed:
+            # Update settings object
+            if self.added_places not in (None, []):
+                for place in self.added_places:
+                    location_code = place[1]
+                    location_details = place[2]
+                    wi.settings.save_location_details(
+                        location_details, str(location_code)
+                    )
+            # Update places list
+            old_place = wi.places[wi.placechosen]
+            wi.places = self.new_places
             log.debug("Preferences: Places changed to '%s'" % wi.places)
             wi.settings.set_value("places", wi.places)
             wi.placechosen = 0
-            if (wi.place is not None):
-                for i in xrange(len(wi.places)):
-                    if wi.places[i] is not None and wi.places[i][0] == wi.place[0]:
-                        wi.placechosen = i
-            wi.place = wi.places[0]
+            if wi.places not in (None, []):
+                wi.placechosen = wi.places.index(wi.place)
+            wi.place = wi.places[wi.placechosen]
+            # only update weather if a new place was selected
+            if old_place[0] != wi.place[0]:
+                need_to_update_weather = True    
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
             wi.location_details = wi.settings.get_location_details(wi.place[0])
-            need_to_update_weather = True
+            wi.menu_locations()
             wi.places_changed = False
 
         if need_to_update_weather:
-            wi.schedule_weather_update(0.003)
+            Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, wi.update_weather, (False, ))
 
         if need_to_update_indicator:
             wi.update_label(wi.previous_label_value)
@@ -2555,6 +2571,7 @@ class PreferencesDialog(Gtk.Dialog):
     def cancel(self, widget, data=None):
         """ 'Cancel' clicked - forget all changes """
         log.debug("Preferences: Cancelling")
+        wi.places_changed = False
         self.destroy()
 
 class ExtendedForecast(Gtk.Window):
@@ -2675,6 +2692,7 @@ class Assistant(Gtk.Assistant):
     """ Class for a wizard, which helps to add a new location in location list """
     __gtype_name__ = "Assistant"
 
+
     def __new__(cls):
         """ Create new object """
         log.debug("Assistant: creating new Assistance instance")
@@ -2689,12 +2707,12 @@ class Assistant(Gtk.Assistant):
         self.builder = builder
         self.builder.connect_signals(self)
         self.assistant = self.builder.get_object("assistant")
-        self.assistant.set_page_complete(self.builder.get_object("label"),True)
-        self.assistant.set_page_complete(self.builder.get_object("review"),True)
+        self.assistant.set_page_complete(self.builder.get_object("citylabel"),False)
+        self.assistant.set_page_complete(self.builder.get_object("review"),False)
 
         # Set up combobox
         log.debug("Assistant: setting up location combobox")
-        self.store = Gtk.ListStore(str, str, str, str, str)
+        self.store = Gtk.ListStore(str, str, str, str, str)      #TODO: should this be unicode?
         self.location_input_combo = self.builder.get_object("combolocations")
         self.location_input_combo.set_model(self.store)
         self.location_input_combo.set_entry_text_column(0)
@@ -2708,12 +2726,50 @@ class Assistant(Gtk.Assistant):
         """ 'Get cities' button clicked - get suggested cities list """
         new_text = self.location_entry.get_text()
         log.debug("Assistant: looking for location '%s'" % new_text)
+        # Clear up existing suggestions
+        self.store.clear()
+        # start and show the spinner
+        self.builder.get_object("spinner").start()
+        self.builder.get_object("spinner").show()
+        # Get the city names
+        self.city_names_thread = threading.Thread(target=self.search_city_names,
+                                           name='SearchNames', args=(new_text, ))
+        self.city_names_thread.start()
+
+    def add_city_names(self, cities):
+        """ Matches found - add city names to the combo box """
+        # hide and stop the spinner
+        self.builder.get_object("spinner").hide()
+        self.builder.get_object("spinner").stop()
+        for city in cities['geonames']:
+            # Create a full city name, consisting of city name,
+            # administrative areas names and country name
+            if 'adminName2' in city:
+                displayed_city_name = u', '.join(
+                    (city['name'], city['adminName1'],
+                    city['adminName1'], city['countryName'])
+                    )
+            elif 'adminName1' in city:
+                displayed_city_name = u', '.join(
+                    (city['name'], city['adminName1'], city['countryName'])
+                    )
+            else:
+                displayed_city_name = u', '.join((city['name'],
+                                                city['countryName']))
+            self.store.append(
+                [displayed_city_name.encode('utf-8'), unicode(city['geonameId']),
+                unicode(city['lat']), unicode(city['lng']),
+                unicode(city['name'])]
+                )
+            self.location_input_combo.popup()
+        return False
+
+    def search_city_names(self, search_string):
+        """ Search requested - retrieve matching city names """
+        # Get suggested city names from GeoNames DB in native locale
         try:
-            # Clear up exising suggestions
-            self.store.clear()
-            # Get suggested city names from GeoNames DB in native locale
             baseurl = 'http://api.geonames.org/searchJSON'
-            params = {'q': new_text, 'featureClass': 'P', 'maxRows': '10',
+            params = {'q': search_string, 'featureClass': 'P', 'maxRows': '10',
                       'lang': locale_name, 'username': 'indicatorweather'}
             url = '?'.join((baseurl, urlencode(params)))
             log.debug("Assistant: Search Geonames location details, url %s" % url)
@@ -2729,29 +2785,7 @@ class Assistant(Gtk.Assistant):
                 json_response = handler.read()
             cities = json.loads(json_response)
             handler.close()
-
-            for city in cities['geonames']:
-                # Create a full city name, consisting of city name,
-                # administrative areas names and country name
-                if 'adminName2' in city:
-                    displayed_city_name = u', '.join(
-                        (city['name'], city['adminName1'],
-                        city['adminName1'], city['countryName'])
-                        )
-                elif 'adminName1' in city:
-                    displayed_city_name = u', '.join(
-                        (city['name'], city['adminName1'], city['countryName'])
-                        )
-                else:
-                    displayed_city_name = u', '.join((city['name'],
-                                                    city['countryName']))
-                self.store.append(
-                    [displayed_city_name.encode('utf-8'), unicode(city['geonameId']),
-                    unicode(city['lat']), unicode(city['lng']),
-                    unicode(city['name'])]
-                    )
-                self.location_input_combo.popup()
-
+            Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.add_city_names, cities)
         except urllib2.URLError:
             log.error("Assistant: error reaching url '%s'" % url)
 
@@ -2759,60 +2793,95 @@ class Assistant(Gtk.Assistant):
         """ A city is selected from suggested list """
         if self.location_input_combo.get_active() != -1:
             self.place_selected = self.store[self.location_input_combo.get_active()]
-            self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
+            log.debug("Assistant: city '%s' selected from suggested list" % self.place_selected[4])
+            log.debug("Assistant: got location with code %s" % self.place_selected[1])
+            # start and show the spinner
+            self.builder.get_object("spinner").start()
+            self.builder.get_object("spinner").show()
+            # Get the location details
+            self.location = Location(wi.metric_system, wi.wind_unit,
+                                     wi.heat_index, wi.chill_index)
+            self.location_thread = threading.Thread(target=self.build_location,
+                                               name='Location', args=(self.place_selected, ))
+            self.location_thread.start()
         else:
             self.place_selected = None
             self.location = None
             self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
 
+    def build_location(self, geonames_details):
+        """ Location selected - get the location data """
+        result, error_type = self.location.prepare_location(geonames_details)
+        Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.check_location, (result, error_type))
+
+    def check_location(self, data):
+        """ Location prepared - verify the data is valid """
+        result, error_type = data
+        current_page = self.assistant.get_current_page()
+        # hide and stop the spinner
+        self.builder.get_object("spinner").hide()
+        self.builder.get_object("spinner").stop()
+        if result:
+            log.debug(u"Assistant: Page %s: City %s found" % 
+                      (current_page, self.place_selected[0].decode('utf-8')))
+            # Set a short city name as default label
+            log.debug("Assistant: Page %s: Setting City label to short name - %s" %
+                      (current_page, self.place_selected[4]))
+            self.builder.get_object("entrylbl").set_text(self.place_selected[4])
+            self.assistant.set_page_complete(self.builder.get_object("placeinput"),True)
+        else:
+            if error_type == 'location_id':
+                # Error occurred while getting location data
+                log.error("Assistant: Page %s: Location with code %s was NOT found" %
+                          (current_page, self.place_selected[1]))
+                err_title = "%s '%s'" % (_("Could not find location id for"),
+                           self.place_selected[0].decode('utf-8'))
+                err_text = "Unknown error occurred while picking up location data. " + \
+                           "Please try again later."
+            elif error_type == 'data_source':
+                # No valid data sources for chosen location
+                log.error("Assistant: Page %s: Location '%s' is not supported by current data sources" %
+                          (current_page, self.location.location_details['full name']))
+                err_title = "%s '%s'" % (_("No data for location"),
+                           self.place_selected[0].decode('utf-8'))
+                err_text = "The current weather data sources do not support the chosen location. " + \
+                           "Please select another location."
+            # Show error dialog
+            md = Gtk.MessageDialog(
+                self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, err_title
+                )
+            md.format_secondary_text(err_text)
+            md.run()
+            self.location_entry.set_text('')
+            self.place_selected = None
+            self.location = None
+            self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
+            md.destroy()
+            self.assistant.set_current_page(3)
+        # wait for thread to finish
+        self.location_thread.join()
+        # ensure the function is removed from the event sources
+        return False
+
+    def on_entrylbl_changed(self, widget):
+        """ City label text changed - disable or enable 'Continue' button """
+        if self.builder.get_object("entrylbl").get_text() == '':
+            self.assistant.set_page_complete(self.builder.get_object("citylabel"), False)
+            self.assistant.set_page_complete(self.builder.get_object("review"), False)
+        else:
+            self.assistant.set_page_complete(self.builder.get_object("citylabel"), True)            
+            self.assistant.set_page_complete(self.builder.get_object("review"), True)            
+
     def next_page(self, current_page, data):
         """ Create a location object out of a selected location """
-        log.debug("Assistant: moved to page %s" % current_page)
+        #log.debug("Assistant: moved to page %s" % current_page)
         if (self.assistant.get_current_page() == 0) and \
            not self.location and self.place_selected:
-            # Label input page
-            log.debug("Assistant: Page %s: got location with code %s" %
-                      (current_page, self.place_selected[1]))
-            self.location = Location(wi.metric_system, wi.wind_unit,
-                                     wi.heat_index, wi.chill_index)
-            (result, error_type) = self.location.prepare_location(self.place_selected)
-            if result:
-                log.debug(u"Assistant: Page %s: City %s found" % (
-                          current_page, self.place_selected[0].decode('utf-8')))
-                # Set a short city name as default label
-                self.builder.get_object("entrylbl").set_text(self.place_selected[4])
-            else:
-                if error_type == 'location_id':
-                    # Error occurred while getting location data
-                    log.error("Assistant: Page %s: Location with code %s was NOT found" %
-                              (current_page, self.place_selected[1]))
-                    err_title = "%s '%s'" % (_("Could not find location id for"),
-                               self.place_selected[0].decode('utf-8'))
-                    err_text = "Unknown error occurred while picking up location data. " + \
-                               "Please try again later."
-                elif error_type == 'data_source':
-                    # No valid data sources for chosen location
-                    log.error("Assistant: Page %s: Location '%s' is not supported by current data sources" %
-                              (current_page, self.location.location_details['full name']))
-                    err_title = "%s '%s'" % (_("No data for location"),
-                               self.place_selected[0].decode('utf-8'))
-                    err_text = "The current weather data sources do not support the chosen location. " + \
-                               "Please select another location."
-                # Show error dialog
-                md = Gtk.MessageDialog(
-                    self.assistant, Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                    Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, err_title
-                    )
-                md.format_secondary_text(err_text)
-                md.run()
-                self.location_entry.set_text('')
-                self.place_selected = None
-                self.location = None
-                self.assistant.set_page_complete(self.builder.get_object("placeinput"), False)
-                md.destroy()
-                return 3
+            # Select city page
+            return 0
         elif self.assistant.get_current_page() == 1:
-            # Confirmation page
+            # Label input page
             lbl = self.builder.get_object("entrylbl").get_text()
             log.debug("Assistant: Page %s: City label is %s" %
                       (current_page, lbl))
@@ -2829,37 +2898,40 @@ class Assistant(Gtk.Assistant):
             self.builder.get_object("labellbl").set_label('<b>%s</b>' % lbl)
             self.builder.get_object("placelbl").set_label(
                 '<b>%s</b>' % self.place_selected[0])
-
+            return 2
+        elif self.assistant.get_current_page() == 3:
+            # Confirmation page
+            pass
         return self.assistant.get_current_page() + 1
 
-    def on_cancel(self,widget):
+    def on_cancel(self, widget):
         """ 'Cancel' clicked """
         log.debug("Assistant: Cancelled")
         self.destroy()
 
-    def on_apply(self,widget):
+    def on_apply(self, widget):
         """ 'Apply' clicked - save location details, add an entry in a location list """
         (location_code, location_details) = self.location.export_location_details()
         log.debug(u"Assistant: Apply: adding location ('%s', '%s')" %
                   (self.location.location_details['label'], location_code))
-        newplace = list()
-        newplace.append(self.location.location_details['label'])
-        newplace.append(str(location_code))
-        newplace.append(str(location_details))
-        wi.settings.save_location_details(
-            location_details, str(location_code)
-            )
-        wi.prefswindow.builder.get_object('citieslist').append(newplace)
+        # for prefs dialog
+        new_city = list()
+        new_city.append(self.location.location_details['label'])
+        new_city.append(str(location_code))
+        new_city.append(str(location_details))
+        # for dconf 'locations'
+        added_place = list()
+        added_place.append(self.location.location_details['label'])
+        added_place.append(str(location_code))
+        added_place.append(location_details)
+        # for dconf 'places'
+        new_place = list()
+        new_place.append(str(location_code))
+        new_place.append(self.location.location_details['label'])
 
-        newplaces = list()
-        item = wi.prefswindow.builder.get_object('citieslist').get_iter_first()
-        while (item != None):
-            newplace = list()
-            newplace.append(wi.prefswindow.builder.get_object('citieslist').get_value(item, 1))
-            newplace.append(wi.prefswindow.builder.get_object('citieslist').get_value(item, 0).decode('utf-8'))
-            newplaces.append(newplace)
-            item = wi.prefswindow.builder.get_object('citieslist').iter_next(item)
-        wi.places = newplaces
+        wi.prefswindow.added_places.append(added_place)
+        wi.prefswindow.new_places.append(new_place)
+        wi.prefswindow.builder.get_object('citieslist').append(new_city)
         wi.places_changed = True
 
         # Enable 'OK' button in Preferences

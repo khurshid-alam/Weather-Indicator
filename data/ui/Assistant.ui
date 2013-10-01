@@ -21,21 +21,41 @@
         <property name="spacing">6</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkLabel" id="lblplaceinput">
+          <object class="GtkBox" id="place_caption_vbox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="xalign">0</property>
-            <property name="yalign">0</property>
-            <property name="ypad">6</property>
-            <property name="label" translatable="yes">Please search our database for your location:</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">word-char</property>
+            <property name="border_width">12</property>
+            <property name="spacing">6</property>
+            <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkLabel" id="lblplaceinput">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="xalign">0</property>
+                <property name="yalign">0</property>
+                <property name="ypad">6</property>
+                <property name="label" translatable="yes">Please search our database for your location:</property>
+                <property name="wrap">True</property>
+                <property name="wrap_mode">word-char</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinner" id="spinner">
+                <property name="visible">False</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>            
+            </child>
           </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkBox" id="city_input_vbox">
@@ -67,8 +87,8 @@
               <object class="GtkButton" id="getcities">
                 <property name="label" translatable="yes">Search</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="receives_default">False</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
                 <signal name="clicked" handler="on_get_city_names" swapped="no"/>
               </object>
               <packing>
@@ -90,7 +110,7 @@
       </packing>
     </child>
     <child>
-      <object class="GtkBox" id="label">
+      <object class="GtkBox" id="citylabel">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="border_width">12</property>
@@ -114,6 +134,7 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="invisible_char">•</property>
+            <signal name="changed" handler="on_entrylbl_changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
