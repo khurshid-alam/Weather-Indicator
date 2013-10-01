@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.7.0 'Rainy 7'"
+VERSION = "13.7.1 'Rainy 7'"
 
 from indicator_weather.helpers import *
 
@@ -2383,7 +2383,7 @@ class PreferencesDialog(Gtk.Dialog):
         if iter != None:
             log.debug("Preferences: Removing location %s (code %s)" %
                       (model[iter][0], model[iter][1]))
-            obj = [unicode(model[iter][1]), unicode(model[iter][0])]
+            obj = [unicode(model[iter][1]), unicode(model[iter][0].decode('utf-8'))]
             self.new_places.remove(obj)
             model.remove(iter)
             wi.places_changed = True

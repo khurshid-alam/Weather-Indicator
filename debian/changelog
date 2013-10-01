@@ -1,3 +1,9 @@
+indicator-weather (13.7.1) quantal; urgency=low
+
+  * Fix a Unicode encoding issue that prevented removing locations
+
+ -- Joshua Tasker <jtasker@gmail.com>  Tue, 01 Oct 2013 01:54:28 -0400
+
 indicator-weather (13.7.0) quantal; urgency=low
 
   * Reordering locations in Preferences updates order in menu (LP: #703843)
