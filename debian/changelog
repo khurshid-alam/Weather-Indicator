@@ -1,3 +1,14 @@
+indicator-weather (13.7.2) quantal; urgency=low
+
+  * If unable to read location details, reset to defaults (LP: #1193990)
+  # Don't crash in Forecast if no Weather.com ID present (LP: #1233778)
+  * Reset list of saved places if invalid or unreadable (LP: #1234514)
+  * Dragging a location down in the list put it in the wrong position
+  * Fixed another crash when adding initial location (LP: #1234529)
+  * Use set_attention_icon_full instead of deprecated set_attention_icon
+
+ -- Joshua Tasker <jtasker@gmail.com>  Thu, 03 Oct 2013 20:58:02 -0400
+
 indicator-weather (13.7.1) quantal; urgency=low
 
   * Fix a Unicode encoding issue that prevented removing locations

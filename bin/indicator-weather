@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.7.1 'Rainy 7'"
+VERSION = "13.7.2 'Rainy 7'"
 
 from indicator_weather.helpers import *
 
@@ -500,11 +500,6 @@ class Location:
         city = json.loads(json_response)
         handler.close()
 
-        # if 'adminName1' in city:
-        #     displayed_city_name = ', '.join((city['name'],
-        #                                      city['adminName1'],
-        #                                      city['countryName']))
-        # elif 'name' in city:
         if 'name' in city:
             displayed_city_name = ', '.join((city['name'],
                                              city['countryName']))
@@ -530,8 +525,6 @@ class Location:
             loc_id = loc_id_result[0][0]
             self.location_details['weather-com id'] = loc_id
             log.debug("Location: location id is %s" % loc_id)
-        # except Exception as e:
-        #     log.error(e)
 
     def prepare_time_zone(self, lat, lon):
         """ Get timezone of location with specified lat/lon """
@@ -704,7 +697,6 @@ class Forecast:
         try:
             for forecast in self.forecast['forecasts']:
                 self.daysofweek.append(_(forecast["day_of_week"]))
-
                 # Yahoo forecast icon URL is "http://l.yimg.com/a/i/us/we/52/<code>.gif"
                 icon_name = forecast["day"]["icon"]
                 self.icons.append(icon_name)
@@ -721,12 +713,10 @@ class Forecast:
         """ Parse high and low values for forecast data """
         self.highdata = []
         self.lowdata = []
-
         # Since we are now using Weather.com, forecast will always be in correct units
         for forecast in self.forecast['forecasts']:
             self.highdata.append(forecast["high"])
             self.lowdata.append(forecast["low"])
-
         # Unless user chose 'Kelvin' as temperature units... then we have to convert
         if self.metric_system == UnitSystem.KELVIN:
             for i in xrange(len(self.highdata)):
@@ -734,7 +724,6 @@ class Forecast:
                     self.highdata[i] = unicode(int(round(float(self.highdata[i])+273.15)))
                 if 'N/A' != self.lowdata[i]:
                     self.lowdata[i] = unicode(int(round(float(self.lowdata[i])+273.15)))
-
         return (self.highdata, self.lowdata)
 
     def get_forecast_daysofweek(self):
@@ -1540,7 +1529,7 @@ class indicator_weather(threading.Thread):
 
         self.status_update_lock.acquire(True)
         self.winder.set_status(AppIndicator.IndicatorStatus.ACTIVE)
-        self.winder.set_attention_icon("weather-indicator-error")
+        self.winder.set_attention_icon_full("weather-indicator-error", "Network connection unavailable")
         self.status_update_lock.release()
 
         self.refreshed_minutes_ago = -1
@@ -1594,6 +1583,7 @@ class indicator_weather(threading.Thread):
         self.wind_unit = WindUnits.MPH
         self.place = None
         self.menu = None
+        self.city_show = None
         self.condition = None
         self.icon = None
         self.heat_index = RelativeFormula.HUMIDEX
@@ -1700,6 +1690,7 @@ class indicator_weather(threading.Thread):
         self.menu_update_lock.acquire(True)
         if self.places in (False, None, '', '[]', "['']"):
             log.debug("Indicator: could not parse places")
+            self.places = []
             self.menu_noplace()
             self.menu_update_lock.release()
         else:
@@ -1718,14 +1709,15 @@ class indicator_weather(threading.Thread):
 
             if self.location_details in (False, None, '', '[]', "['']"):
                 log.debug("Indicator: could not parse current location details")
+                # reset places and create default menu
+                self.places = []
+                self.place = None
                 self.menu_noplace()
                 self.menu_update_lock.release()
             else:
-                #self.menu_normal()
+                self.menu_normal()
                 self.menu_update_lock.release()
                 self.update_weather()
-                #self.schedule_weather_update(0.003)
-
 
     def update_label(self, label):
         """ Set the label of the indicator """
@@ -1909,9 +1901,6 @@ class indicator_weather(threading.Thread):
                 self.menu_update_lock.acquire(True)
                 self.menu_noplace()
                 self.menu_update_lock.release()
-            ##else:
-            ##    #self.location_details = eval(self.location_details)
-            ##    self.location_details = json.loads(self.location_details)
             self.settings.set_value("placechosen", self.placechosen)
             # refresh timezone data on location change (for dst)
             self.current_location.prepare_time_zone(
@@ -2345,7 +2334,7 @@ class PreferencesDialog(Gtk.Dialog):
         self.builder.get_object('show_suntimes').set_active(wi.show_suntimes)
 
         log.debug("Preferences: Loading places")
-        if wi.places != None:
+        if wi.places is not None:
             for place in wi.places:
                 # TODO: Check value of 'place' for bad/invalid Unicode encoding (see LP: #1216657)
                 if len(place)>1 and place[0] is not None:
@@ -2371,9 +2360,12 @@ class PreferencesDialog(Gtk.Dialog):
         log.debug("Preferences: Dragged '%s' to list position %s" %
                   (model[treeiter][0], str(treepath)))
         obj = [unicode(model[treeiter][1]), unicode(model[treeiter][0])]
+        old_index = self.new_places.index(obj)
+        new_index = int(str(treepath))
+        if new_index > old_index:
+            new_index -= 1
         self.new_places.remove(obj)
-        index = int(str(treepath))
-        self.new_places.insert(index, obj)
+        self.new_places.insert(new_index, obj)
         wi.places_changed = True
 
     def on_remove_location(self, widget):
@@ -2543,21 +2535,22 @@ class PreferencesDialog(Gtk.Dialog):
                         location_details, str(location_code)
                     )
             # Update places list
-            old_place = wi.places[wi.placechosen]
             wi.places = self.new_places
             log.debug("Preferences: Places changed to '%s'" % wi.places)
             wi.settings.set_value("places", wi.places)
-            wi.placechosen = 0
-            if wi.places not in (None, []):
-                wi.placechosen = wi.places.index(wi.place)
-            wi.place = wi.places[wi.placechosen]
             # only update weather if a new place was selected
-            if old_place[0] != wi.place[0]:
+            if wi.place in wi.places:
+                wi.placechosen = wi.places.index(wi.place)
+            else:
+                wi.placechosen = 0
+                wi.place = wi.places[wi.placechosen]
                 need_to_update_weather = True    
+            # Update settings
             log.debug("Preferences: Place Chosen changed to '%s'" % wi.placechosen)
             wi.settings.set_value("placechosen", wi.placechosen)
             wi.location_details = wi.settings.get_location_details(wi.place[0])
-            wi.menu_locations()
+            if len(wi.places) != 1:
+                wi.menu_locations()
             wi.places_changed = False
 
         if need_to_update_weather:
@@ -2598,9 +2591,15 @@ class ExtendedForecast(Gtk.Window):
         self.builder.get_object('extended_forecast').set_title("%s %s" %
                     (_('Weather Forecast for'), wi.places[wi.placechosen][1]))
         log.debug("ExtendedForecast: getting forecast data")
-        # TODO: catch KeyError in case there is no weather-com id present
-        forecast = Forecast(wi.metric_system,
+        try:
+            # try with weather.com id first
+            forecast = Forecast(wi.metric_system,
                             wi.current_location.location_details['weather-com id'],
+                            locale_name)
+        except KeyError:
+            # no weather.com id, use yahoo id
+            forecast = Forecast(wi.metric_system,
+                            wi.current_location.location_details['yahoo id'],
                             locale_name)
         forecast.prepare_forecast_data()
         if forecast.error_message != None:
