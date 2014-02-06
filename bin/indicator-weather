@@ -55,7 +55,7 @@ if (os.path.exists(os.path.join(PROJECT_ROOT_DIRECTORY, 'indicator_weather'))
     sys.path.insert(0, PROJECT_ROOT_DIRECTORY)
     os.putenv('PYTHONPATH', PROJECT_ROOT_DIRECTORY) # for subprocesses
 
-VERSION = "13.7.2 'Rainy 7'"
+VERSION = "13.8.0 'Rainy 8'"
 
 from indicator_weather.helpers import *
 
@@ -699,8 +699,12 @@ class Forecast:
                 self.daysofweek.append(_(forecast["day_of_week"]))
                 # Yahoo forecast icon URL is "http://l.yimg.com/a/i/us/we/52/<code>.gif"
                 icon_name = forecast["day"]["icon"]
+                # if current time is after sunset, no daytime forecast is returned
+                if len(icon_name) == 0:
+                    icon_name = forecast["night"]["icon"]
                 self.icons.append(icon_name)
                 # Use the translated text from Weather._WeathercomConditions
+                log.debug("Forecast: prepare_forecast_data: getting condition for icon_name %s" % repr(icon_name))    # DEBUG
                 self.conditions.append(Weather._WeathercomConditions.get(icon_name)[3])
 
             self.error_message = None
@@ -1540,14 +1544,14 @@ class indicator_weather(threading.Thread):
         self.monitor_upower()
 
         # pywapi is too old, user must upgrade
-        if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.3':
+        if not hasattr(pywapi, "__version__") or pywapi.__version__ < '0.3.7':
             md = Gtk.MessageDialog(
                     None, Gtk.DialogFlags.DESTROY_WITH_PARENT,
                     Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
                     "%s" % (_("Weather Indicator requires a newer version of pywapi"))
             )
             md.format_secondary_text(
-                _("The minimum version required is 0.3.3, which is newer than "
+                _("The minimum version required is 0.3.7, which is newer than "
                 "the installed version.\nPlease upgrade pywapi then restart "
                 "Weather Indicator.\n\nVisit https://launchpad.net/python-weather-api "
                 "for more information.")
@@ -1759,7 +1763,7 @@ class indicator_weather(threading.Thread):
         self.menu = Gtk.Menu()
 
     ##City
-        self.city_show = Gtk.MenuItem()
+        self.city_show = Gtk.MenuItem(" ")
         self.city_show.set_sensitive(True)
         self.menu.append(self.city_show)
         self.city_show.show()
@@ -1770,43 +1774,43 @@ class indicator_weather(threading.Thread):
         self.menu.append(breaker)
 
     ##Condition
-        self.cond_show = Gtk.MenuItem()
+        self.cond_show = Gtk.MenuItem(" ")
         self.cond_show.set_sensitive(True)
         self.cond_show.show()
         self.menu.append(self.cond_show)
 
     ##Temperature
-        self.temp_show = Gtk.MenuItem()
+        self.temp_show = Gtk.MenuItem(" ")
         self.temp_show.set_sensitive(True)
         self.temp_show.show()
         self.menu.append(self.temp_show)
 
     ##Relative Temperature
-        self.relative_show = Gtk.MenuItem()
+        self.relative_show = Gtk.MenuItem(" ")
         self.relative_show.set_sensitive(True)
         self.relative_show.show()
         self.menu.append(self.relative_show)
 
     ##Humidity
-        self.humid_show = Gtk.MenuItem()
+        self.humid_show = Gtk.MenuItem(" ")
         self.humid_show.set_sensitive(True)
         self.humid_show.show()
         self.menu.append(self.humid_show)
 
     ##Wind
-        self.wind_show = Gtk.MenuItem()
+        self.wind_show = Gtk.MenuItem(" ")
         self.wind_show.set_sensitive(True)
         self.wind_show.show()
         self.menu.append(self.wind_show)
 
     ##Sunrise
-        self.sunrise_show = Gtk.MenuItem()
+        self.sunrise_show = Gtk.MenuItem(" ")
         self.sunrise_show.set_sensitive(True)
         self.sunrise_show.show()
         self.menu.append(self.sunrise_show)
 
     ##Sunset
-        self.sunset_show = Gtk.MenuItem()
+        self.sunset_show = Gtk.MenuItem(" ")
         self.sunset_show.set_sensitive(True)
         self.sunset_show.show()
         self.menu.append(self.sunset_show)
@@ -1825,8 +1829,7 @@ class indicator_weather(threading.Thread):
     #     breaker.show()
     #     self.menu.append(breaker)
 
-        self.refresh_show = Gtk.MenuItem()
-        #label will be set later
+        self.refresh_show = Gtk.MenuItem(_("Refresh"))
         self.refresh_show.connect("activate", self.update_weather)
         self.refresh_show.show()
         self.menu.append(self.refresh_show)
@@ -2128,11 +2131,16 @@ class indicator_weather(threading.Thread):
                 weather.get_sunset_label(),
                 weather.get_temperature_string())
                 )
+            log.debug("show_new_weather_data: checking menu")   # DEBUG
             if (self.menu is None or self.winder.get_menu() != self.menu):
+                log.debug("show_new_weather_data: calling menu_normal()")   # DEBUG
                 self.menu_normal()
             self.update_refresh_label(0)
+            log.debug("show_new_weather_data: calling city_show.set_label('%s')" % self.places[self.placechosen][1])   # DEBUG
             self.city_show.set_label(self.places[self.placechosen][1])
+            log.debug("show_new_weather_data: calling cond_show.set_label('%s')" % self.condition)   # DEBUG
             self.cond_show.set_label(self.condition)
+            log.debug("show_new_weather_data: calling temp_show.set_label('%s')" % weather.get_temperature_label())   # DEBUG
             self.temp_show.set_label(weather.get_temperature_label())
             _relative_label = weather.get_relative_label()
             if (self.show_relative and "---" not in _relative_label):
@@ -2557,6 +2565,8 @@ class PreferencesDialog(Gtk.Dialog):
             Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, wi.update_weather, (False, ))
 
         if need_to_update_indicator:
+            if not hasattr(wi, 'previous_label_value'):
+                wi.previous_label_value = " "
             wi.update_label(wi.previous_label_value)
 
         self.destroy()
@@ -2672,7 +2682,11 @@ class ExtendedForecast(Gtk.Window):
             else:
                 tempunit = u"°F"
             for i in xrange(0,5):
-                label = "%s: %s %s" % (_('High'), highdata[i], tempunit)
+                # if high temp has already been reached, no value for high temp is returned
+                if len(highdata[i]) == 0:
+                    label = "%s: %s" % (_('High'), _('N/A'))
+                else:
+                    label = "%s: %s %s" % (_('High'), highdata[i], tempunit)
                 self.builder.get_object('day%stemphigh' %
                                         str(i+1)).set_label(label)
                 label = "%s: %s %s" % (_('Low'), lowdata[i], tempunit)

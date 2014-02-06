@@ -71,11 +71,16 @@ class ProxyMonitor:
         ProxyMonitor.log = log
         try:
             # GConf is deprecated; leaving it here for legacy systems
-            if "org.gnome.system.proxy.http" in DCONF_SCHEMAS:
-                # load dconf settings
-                proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
-                ProxyMonitor.dconf_proxy_changed(proxy_settings)
-                proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
+            if "org.gnome.system.proxy" in DCONF_SCHEMAS:
+                # check for proxy mode='none'
+                proxy_settings = Gio.Settings.new("org.gnome.system.proxy")
+                proxy_mode = proxy_settings.get_string("mode")
+                log.debug("ProxyMonitor: proxy mode is '%s'" % proxy_mode)
+                if proxy_mode == "manual":
+                    # load dconf settings
+                    proxy_settings = Gio.Settings.new("org.gnome.system.proxy.http")
+                    ProxyMonitor.dconf_proxy_changed(proxy_settings)
+                    proxy_settings.connect("changed", ProxyMonitor.dconf_proxy_changed)
             else:
                 # load gconf settings
                 client = GConf.Client.get_default()

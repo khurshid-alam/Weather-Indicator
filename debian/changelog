@@ -1,7 +1,13 @@
+indicator-weather (13.8.0) saucy; urgency=low
+  * Use proxy settings only if proxy mode set to 'manual' (LP: #1241060)
+  * Don't crash in Forecast when time is after sunset (LP: #1247338)
+  * Fix for changed GTK.MenuItem() behavior, thanks István Váradi (LP: #1243857)
+  * debian/control: update pywapi dependency to 0.3.7
+
 indicator-weather (13.7.2) quantal; urgency=low
 
   * If unable to read location details, reset to defaults (LP: #1193990)
-  # Don't crash in Forecast if no Weather.com ID present (LP: #1233778)
+  * Don't crash in Forecast if no Weather.com ID present (LP: #1233778)
   * Reset list of saved places if invalid or unreadable (LP: #1234514)
   * Dragging a location down in the list put it in the wrong position
   * Fixed another crash when adding initial location (LP: #1234529)
