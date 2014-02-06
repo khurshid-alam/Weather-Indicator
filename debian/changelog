@@ -4,6 +4,8 @@ indicator-weather (13.8.0) saucy; urgency=low
   * Fix for changed GTK.MenuItem() behavior, thanks István Váradi (LP: #1243857)
   * debian/control: update pywapi dependency to 0.3.7
 
+ -- Joshua Tasker <jtasker@gmail.com>  Wed, 05 Feb 2014 20:33:56 -0500
+
 indicator-weather (13.7.2) quantal; urgency=low
 
   * If unable to read location details, reset to defaults (LP: #1193990)
@@ -237,11 +239,11 @@ indicator-weather (11.05.30~precise1) precise; urgency=low
   * New release in Cloudy series
   * Fix for LP: #776586 "I get "Unknown error occurred while picking up weather data" when trying to open forecast."
   * Fix for LP: #784935 "indicator-weather crash - KeyError: 'wind_condition'"
-  * Fix for LP: #788780	"indicator disappears with no reason"
-  * Fix for LP: #774406	"Insufficient http-proxy detection", thanks Panagiotis
-  * Fix for LP: #782572	"The log should contain Weather Indicator version"
-  * Fix for LP: #780585	"Celsius is not an SI unit"
-  * Fix for LP: #780817	"units mislabeled as kph"
+  * Fix for LP: #788780 "indicator disappears with no reason"
+  * Fix for LP: #774406 "Insufficient http-proxy detection", thanks Panagiotis
+  * Fix for LP: #782572 "The log should contain Weather Indicator version"
+  * Fix for LP: #780585 "Celsius is not an SI unit"
+  * Fix for LP: #780817 "units mislabeled as kph"
 
  -- Vadim Rutkovsky <roignac@gmail.com>  Mon, 30 May 2011 03:20:58 -0700
 
@@ -405,10 +407,10 @@ indicator-weather (11.02.13~precise) precise; urgency=low
   * Fix for LP: #705673 "Add city dialogs should have city tree"
   * Fix for LP: #710870 "Indicator-weather crashed with AttributeError in get_city(): indicator_weather instance has no attribute '_wind_unit'"
   * Fix for LP: #707681 "Allow only one instance of WI"
-  * Fix for LP: #712680	"Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
+  * Fix for LP: #712680 "Full city name from 'Australasia & Oceania' is not displayed on Assistant page 2"
   * Fix for LP: #706805 "indicator-weather crashed with AttributeError in get_city(): 'Assistant' object has no attribute 'metric_system'"
   * Fix for LP: #706796 "indicator-weather crashed with ImportError in __main__: No module named gtkcrashhandler"
-  * Fix for LP: #703681 "Indicator-Weather doesn't recheck for Internet	connectivity"
+  * Fix for LP: #703681 "Indicator-Weather doesn't recheck for Internet connectivity"
   * Fix for LP: #703842 "Menus look pale in Ambiance theme"
   * Fix for LP: #703617 "Use icons of ubuntus date indicator"
   * Fix for LP: #703693 "Weather applet does not start (icon missing)"
