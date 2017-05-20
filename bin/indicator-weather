@@ -431,7 +431,7 @@ class Location:
             return
         else:
             # only look at the the first woeid result
-            woeid = woeid_result[0][0]
+            woeid = woeid_result
             self.location_code = woeid
             log.debug("Location: woeid is %s" % woeid)
 
