@@ -533,7 +533,7 @@ class Location:
         self.location_details['timezone id'] = None
         self.location_details['dst'] = None
         # Grab utc datetime from earthtools.org
-        url = 'http://www.earthtools.org/timezone-1.1/%s/%s' % (lat, lon)
+        url = 'http://new.earthtools.org/timezone-1.1/%s/%s' % (lat, lon)
         try:
             log.debug("Location: Get utc datetime, url %s" % url)
             handler = urllib2.urlopen(url)
@@ -923,7 +923,7 @@ class Weather:
         self.__sunrise_t = None
         self.__sunset_t = None
         # Grab local datetime from earthtools.org
-        url = 'http://www.earthtools.org/timezone-1.1/%s/%s' % \
+        url = 'http://new.earthtools.org/timezone-1.1/%s/%s' % \
             (self.__lat, self.__lon)
         try:
             log.debug("Weather: Get local datetime, url %s" % url)
