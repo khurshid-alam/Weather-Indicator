@@ -948,7 +948,7 @@ class Weather:
         localtime = datetime.datetime.strptime(localtime.rsplit(' ',1)[0],
                                                '%Y-%m-%d %H:%M:%S')
         # Grab sunrise/sunset data from met.no
-        baseurl = 'http://api.met.no/weatherapi/sunrise/1.0/'
+        baseurl = 'http://api.met.no/weatherapi/sunrise/1.1/'
         query = 'lat=%s;lon=%s;date=%s' % (self.__lat, self.__lon,
                                            localtime.date().isoformat())
         url = '?'.join((baseurl, query))
